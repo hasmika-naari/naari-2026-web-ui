@@ -1,0 +1,106 @@
+<footer class="footer-area ">
+    <div class="footer-top-area container">
+        <div class="row">
+            <div class="col-lg-5 col-md-6 col-sm-6">
+                <div class="single-footer-widget mb-30">
+                    <ul class="contact-us-link text-center">
+                        <li>
+                            <div class="logo  wow fadeInUp text-center" data-wow-offset="10" data-wow-duration="1s" *ngIf="(isDesktop || isTablet) && browser">
+                                <a routerLink="/" class="d-inline-block"><img style="max-width: 75%;" src="assets/img/guru-class-time-tp-bg-full-h-white.png" alt="image"></a>
+                            </div>
+                            <div class="logo  wow fadeInUp  text-center" data-wow-offset="10" data-wow-duration="1s" *ngIf="isMobile && browser">
+                                <a routerLink="/" class="d-inline-block"><img style="max-width: 75%;" src="assets/img/guru-class-time-tp-bg-full-h-white.png" alt="image"></a>
+                            </div>
+                        </li>
+                        <li class="text-center">
+                            <span class="text-center   wow fadeInUp footer-about-us"   data-wow-offset="10" data-wow-duration="1s">
+                                Naarideals.com: Your Destination for Women's Best Deals. Discover exclusive offers and discounts tailored to women's needs. Find unbeatable deals on fashion, beauty, health, and more, all in one place
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-6 col-lg-2 col-md-6 col-sm-6">
+                <div class="single-footer-widget mb-30">
+                    <h3>Support</h3>
+                    <ul class="support-link">
+                        <li class=" wow fadeInUp" data-wow-offset="10" data-wow-duration="1s"><i class="icon-Double-arrow"></i><a [routerLink]="['/privacy']">Privacy</a></li>
+                        <li class="  wow fadeInUp" data-wow-offset="10" data-wow-duration="1s"><i class="icon-Double-arrow"></i><a [routerLink]="['/terms']">Terms</a></li>
+                        <li class="  wow fadeInUp" data-wow-offset="10" data-wow-duration="1s"><i class="icon-Double-arrow"></i><a [routerLink]="['/faq']">FAQs</a></li>
+                        <li class="  wow fadeInUp" data-wow-offset="10" data-wow-duration="1s"><i class="icon-Double-arrow"></i><a [routerLink]="['/contact-us']">Contact Us</a></li>
+                        <li class=" wow fadeInUp" data-wow-offset="10" data-wow-duration="1s"><i class="icon-Double-arrow"></i><a [routerLink]="['/login']"> Login</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class=" col-6 col-lg-2 col-md-6 col-sm-6">
+                <div class="single-footer-widget mb-30">
+                    <h3 class="  wow fadeInUp" data-wow-offset="10" data-wow-duration="1s" *ngIf="!isMobile">Contact Us</h3>
+                    <ul class="contact-us-link" *ngIf="!isMobile">
+                        <li class="  wow fadeInUp" data-wow-offset="10" data-wow-duration="1s">
+                            <a href="#" target="_blank">Naari Deals Team</a>
+                        </li>
+                        <li class="  wow fadeInUp" data-wow-offset="10" data-wow-duration="1s">
+                            <a href="mailto:hello@naarideals.com">admin&#64;naarideals.com</a>
+                        </li>
+                    </ul>
+                    <ul class="social-link  wow fadeInUp" data-wow-offset="10" data-wow-duration="2s">
+                        <li><a href="https://www.facebook.com/people/Naari-Deals/100088113458576" class="d-block" target="_blank"><i class='bx bxl-facebook'></i></a></li>
+                        <li><a href="https://www.instagram.com/naarideals/?igshid=YmMyMTA2M2Y%3D" class="d-block" target="_blank"><i class='bx bxl-instagram'></i></a></li>
+                        <li><a href="https://chat.whatsapp.com/C3OZtNNrgOg5p2uIoRVhVs"  target="_blank" class="d-block"><i class='bx bxl-whatsapp'></i></a></li>
+                    </ul>
+                    <div>
+                        <img  class="  wow fadeInUp" data-wow-offset="10" data-wow-duration="2s"
+                        src="https://www.positivessl.com/images/seals/positivessl_trust_seal_lg_222x54.png"
+                        />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="single-footer-widget mb-30">
+                    <div class="col-lg-12 col-md-12 col-sm-12 text-center" *ngIf="!isMobile && browser">
+                        <div>
+                            <div class='wow fadeInUp'  data-wow-offset="10" data-wow-duration="2s">
+                                <a href="https://play.google.com/store/apps/details?id=com.hasmika.naarideals" target="_blank">
+                                    <img [src]="mobileAppUrl" style="height:240px;"/>
+                                </a>
+                            </div>
+                            <div class='wow fadeInUp'  data-wow-offset="10" data-wow-duration="2s">
+                                <a href="https://play.google.com/store/apps/details?id=com.hasmika.naarideals" target="_blank">
+                                    <img [src]="getItOnUrl" style="height:50px;"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+</footer>
+<div class="footer-bottom-area" *ngIf="browser">
+    <p *ngIf="isMobile" style="color: #7782a7;font-size: 14px; text-align: center;padding-left: 20px;"><i class='bx bx-copyright   wow fadeInUp'  data-wow-offset="10" data-wow-duration="2s"></i>2024 <a routerLink="/" target="_blank">Naari Deals</a>  | All rights reserved.</p>
+
+        <mat-accordion class="example-headers-align wow fadeInUp"  data-wow-offset="10" data-wow-duration="2s" multi>
+            <mat-expansion-panel color="primary" #declimer>
+              <mat-expansion-panel-header>
+                <mat-panel-title *ngIf="!isMobile">
+                    <p><i class='bx bx-copyright   wow fadeInUp'  data-wow-offset="10" data-wow-duration="2s"></i>2024 <a routerLink="/" target="_blank">Naari Deals</a>  | All rights reserved.</p>
+                </mat-panel-title>
+                <mat-panel-description>
+                    <div *ngIf="declimer.expanded" style="width: 100%; text-align: right;">
+                        Hide Desclimer
+                    </div>
+                    <div *ngIf="!declimer.expanded" style="width: 100%; text-align: right;">
+                        Show Desclimer
+                    </div>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+          
+              <p class='wow fadeInUp'  data-wow-offset="10" data-wow-duration="2s">
+                Naarideals.com utilizes affiliate programs as a means of monetization. This implies that if you make a purchase through one of the outbound links on this website, we may receive a commission. As an Amazon Associate, we are eligible to earn commissions from qualifying purchases made on Amazon.com. We want to transparently disclose our participation in affiliate programs to ensure full disclosure and maintain the trust of our users.
+             </p> 
+          
+            </mat-expansion-panel>
+         </mat-accordion>
+</div>
+<ngx-scrolltop style="position: fixed;bottom:150px;"></ngx-scrolltop>

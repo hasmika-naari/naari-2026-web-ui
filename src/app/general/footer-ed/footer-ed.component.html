@@ -1,0 +1,137 @@
+<footer class="footer-area">
+    <div [class.container-div-mobile]="isMobile" [class.container-div]="!isMobile">
+        <div  [class.ml--25]="isMobile" [class.mr--25]="isMobile"
+        [class.ml--100]="isDesktop" [class.mr--100]="isDesktop"
+        [class.ml--50]="isTablet" [class.mr--50]="isTablet" >
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-footer-widget mb-30" *ngIf="!isMobile">
+                        <div class="logo">
+                            <a routerLink="/" class="d-inline-block" *ngIf="!isMobile">
+                                <img class="  wow fadeInUp"
+                                data-wow-offset="10" data-wow-duration="1s"
+                                src="assets/img/guru-class-time-tp-bg-full.png" alt="image"></a>
+                        </div>
+                    </div>
+                    <div class="single-footer-widget mb-0" *ngIf="isMobile">
+                        <div class="logo">
+                            <a routerLink="/" class="d-inline-block" >
+                                <img class="  wow fadeInUp"
+                                data-wow-offset="10" data-wow-duration="1s"
+                                src="assets/img/guru-class-time-tp-bg-full-h.png" alt="image"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-5 col-xs-6" *ngIf="!isMobile">
+                    <div class="single-footer-widget mb-30 mt--25">
+                        <h3>Support</h3>
+                        <ul class="support-link">
+                            <li class=" wow fadeInUp" data-wow-offset="10" data-wow-duration="1s"><i class="icon-Double-arrow"></i><a [routerLink]="['/privacy']">Privacy</a></li>
+                            <li class="  wow fadeInUp" data-wow-offset="10" data-wow-duration="1s"><i class="icon-Double-arrow"></i><a [routerLink]="['/terms']">Terms</a></li>
+                            <li class="  wow fadeInUp" data-wow-offset="10" data-wow-duration="1s"><i class="icon-Double-arrow"></i><a [routerLink]="['/faq']">FAQs</a></li>
+                            <li class="  wow fadeInUp" data-wow-offset="10" data-wow-duration="1s"><i class="icon-Double-arrow"></i><a [routerLink]="['/contact-us']">Contact Us</a></li>
+                            <li class=" wow fadeInUp" data-wow-offset="10" data-wow-duration="1s"><i class="icon-Double-arrow"></i><a [routerLink]="['/login']"> Login</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-5 col-xs-5">
+                    <div class="single-footer-widget mb-5 mt--25">
+                        <h3 class="  wow fadeInUp" data-wow-offset="10" data-wow-duration="1s" *ngIf="!isMobile">Contact Us</h3>
+                        <ul class="contact-us-link" *ngIf="!isMobile">
+                            <li class="  wow fadeInUp" data-wow-offset="10" data-wow-duration="1s">
+                                <i class='bx bx-map'></i>
+                                <a href="#" target="_blank">Naari Deals Team</a>
+                            </li>
+                            <!-- <li class="  wow fadeInUp" data-wow-offset="10" data-wow-duration="1s">
+                                <i class='bx bx-phone-call'></i>
+                                <a href="tel:+11234567890">+1 (xxx) xxx xxxx</a>
+                            </li> -->
+                            <li class="  wow fadeInUp" data-wow-offset="10" data-wow-duration="1s">
+                                <i class='bx bx-envelope'></i>
+                                <a href="mailto:hello@naarideals.com">admin&#64;naarideals.com</a>
+                            </li>
+                        </ul>
+                        <ul class="social-link  wow fadeInUp" data-wow-offset="10" data-wow-duration="2s">
+                            <li><a href="https://www.facebook.com/people/Naari-Deals/100088113458576" class="d-block" target="_blank"><i class='bx bxl-facebook'></i></a></li>
+                            <!-- <li><a href="#" class="d-block" target="_blank"><i class='bx bxl-twitter'></i></a></li> -->
+                            <li><a href="https://www.instagram.com/naarideals/?igshid=YmMyMTA2M2Y%3D" class="d-block" target="_blank"><i class='bx bxl-instagram'></i></a></li>
+                            <li><a href="https://chat.whatsapp.com/C3OZtNNrgOg5p2uIoRVhVs" *ngIf="country === 'usa'" target="_blank" class="d-block"><i class='bx bxl-whatsapp'></i></a></li>
+                            <li><a href="https://chat.whatsapp.com/EB8UQJflmNrCq6pvZojsJR" *ngIf="country === 'india'" target="_blank" class="d-block"><i class='bx bxl-whatsapp'></i></a></li>
+                            <!-- <li><a href="#" class="d-block" target="_blank"><i class='bx bxl-linkedin'></i></a></li> -->
+                            <!-- <li><a href="#" class="d-block" target="_blank"><i class='bx bxl-pinterest-alt'></i></a></li> -->
+                        </ul>
+                        <div>
+                            <img  class="  wow fadeInUp" data-wow-offset="10" data-wow-duration="2s"
+                            src="https://www.positivessl.com/images/seals/positivessl_trust_seal_lg_222x54.png"
+                            />
+                        </div>
+                    </div>
+                    
+                    <!-- <div class="single-footer-widget mb-30">
+                        <h3 class="  wow fadeInUp"  data-wow-offset="10" data-wow-duration="1s">Newsletter</h3>
+                        <div class="newsletter-box">
+                            <p class="  wow fadeInUp"  data-wow-offset="10" data-wow-duration="1s">To get the latest news and latest updates from us.</p>
+                            <form class="newsletter-form   wow fadeInUp"  data-wow-offset="10" data-wow-duration="1s">
+                                <label>Your e-mail address:</label>
+                                <input type="email" class="input-newsletter" placeholder="Enter your email" name="EMAIL">
+                                <button type="submit">Subscribe</button>
+                            </form>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 text-center" *ngIf="!isMobile">
+                    <div>
+                        <div class='wow fadeInUp'  data-wow-offset="10" data-wow-duration="2s">
+                            <a href="https://play.google.com/store/apps/details?id=com.hasmika.naarideals" target="_blank">
+                                <img [src]="mobileAppUrl" style="height:240px;"/>
+                            </a>
+                        </div>
+                        <div class='wow fadeInUp'  data-wow-offset="10" data-wow-duration="2s">
+                            <a href="https://play.google.com/store/apps/details?id=com.hasmika.naarideals" target="_blank">
+                                <img [src]="getItOnUrl" style="height:50px;"/>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom-area">
+        <div  [class.ml--25]="isMobile" [class.mr--25]="isMobile"
+        [class.ml--100]="isDesktop" [class.mr--100]="isDesktop"
+        [class.ml--50]="isTablet" [class.mr--50]="isTablet">
+           
+            <!-- <img style="position: relative;float: right;"
+                src="https://www.positivessl.com/images/seals/positivessl_trust_seal_lg_222x54.png"
+                /> -->
+               <!-- <script language="JavaScript" type="text/javascript">
+                    TrustLogo("https://www.positivessl.com/images/seals/positivessl_trust_seal_sm_124x32.png", "POSDV", "top");
+              </script> -->
+         </div>
+         <mat-accordion class="example-headers-align" multi>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <p><i class='bx bx-copyright   wow fadeInUp'  data-wow-offset="10" data-wow-duration="2s"></i>2024 <a routerLink="/" target="_blank">Naari Deals</a>  | All rights reserved.</p>
+                </mat-panel-title>
+                <mat-panel-description>
+                    <div style="width: 100%; text-align: right;">
+                        Show Desclimer
+                    </div>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+          
+              <p class='wow fadeInUp'  data-wow-offset="10" data-wow-duration="2s">
+                Naarideals.com utilizes affiliate programs as a means of monetization. This implies that if you make a purchase through one of the outbound links on this website, we may receive a commission. As an Amazon Associate, we are eligible to earn commissions from qualifying purchases made on Amazon.com. We want to transparently disclose our participation in affiliate programs to ensure full disclosure and maintain the trust of our users.
+             </p> 
+          
+            </mat-expansion-panel>
+         </mat-accordion>
+    </div>
+</footer>
+<div class="rn-progress-parent   wow fadeInUp"  data-wow-offset="10" data-wow-duration="1s">
+    <svg class="rn-back-circle svg-inner" width="100%" height="100%" viewBox="-1 -1 102 102">
+        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+    </svg>
+</div>
+<!-- <ngx-scrolltop></ngx-scrolltop> -->

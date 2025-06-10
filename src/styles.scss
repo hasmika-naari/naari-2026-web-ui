@@ -1,0 +1,292 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.elevation-classes();
+@include mat.app-background();
+
+// Define the theme object.
+$naari-theme: mat.define-theme((
+    color: (
+        theme-type: light,
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+    ),
+    density: (
+        scale: 0,
+    )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+:root {
+    @include mat.all-component-themes($naari-theme);
+}
+
+// Comment out the line below if you want to use the pre-defined typography utility classes.
+// For more information: https://material.angular.io/guide/typography#using-typography-styles-in-your-application.
+// @include mat.typography-hierarchy($naari-theme);
+
+// Comment out the line below if you want to use the deprecated `color` inputs.
+// @include mat.color-variants-backwards-compatibility($naari-theme);
+
+/* You can add global styles to this file, and also import other style files */
+:root {
+    --fontFamily: "Poppins", sans-serif;
+    --headingFontFamily: "Inter", sans-serif;
+    --primaryColor: #E91E63;
+    --dangerColor: #EE368C;
+    --infoColor: #2DB6F5;
+    --warningColor: #ffb264;
+    --successColor: #2ed47e;
+    --darkColor: #262626;
+    --blackColor: #5b5b98;
+    --whiteColor: #ffffff;
+    --bodyColor: #a9a9c8;
+    --transition: .5s;
+    --fontSize: 14px;
+
+
+      // Original Wif styles
+    --fontFamily1: Poppins, sans-serif !important;
+    --fontFamily2: 'Open Sans', sans-serif !important;
+    --fontFamily3: 'Playfair Display', serif !important;
+    --secondColor:  #007a53 ;// #b81f89; //#ff1949;
+    --mainColor:  #E91E63 ;// #b81f89; //#ff1949;
+    --mainColor2: #E30073;
+    --mainColor4: #F89BB7;
+    --mainColor5: #fdebe9; //#f9c9c266
+    --mainColor3: #ff3d00;
+    --secondaryColor: #3a6773;
+    --secondaryColorLight: #20434d3f;
+    --infoColor3: #1a6cca;
+    --optionalColor: rgb(249, 107, 7);
+    --whiteColor: #ffffff;
+    --whiteTrnasparentColor: #ffffff8f;
+    --darkThemeBackgroundColor: #303030;
+    --blackColor: #231F40;
+    --blackColor2: #383858;
+    --blackColor3: #292b2cc4;
+    --blackColor4: #484a4bea;
+    --dashboardBackgroud: #fafbfd;
+    --blackTransparentColor:#282835 !important;
+    --paragraphColor:#101013; // #727695;
+    --titleColor: #6c708d;
+    --grayButtonColor: #0000000f;
+    --grayButtonTextColor: #524D4D;
+    --grayTabButtonColor: #0000000f;
+    --grayTabButtonTextColor: #524d4dd0;
+    --grayTabButtonHoverColor: #f8f8f8;
+    --cardBackgroundCOlor: #f5f5f5;
+    --cardBorderColor: #a6a6a6;
+    --darkGrayColor: #322f48;
+    --logoTextFloatingColor: #FFD358;
+    --templateColor2Opcacity05: #b81f8a88;
+    --templateBgcolor: #282835;
+    --transparentPrimaryColor: #0404048a;
+    --fontSize: 14px;
+    --transition: .5s;
+
+    --mdc-filled-text-field-label-text-size: 14px;
+    --mdc-filled-text-field-label-text-tracking: normal;
+    --mdc-filled-text-field-label-text-weight: 300;
+    --mdc-outlined-text-field-label-text-size: 14px;
+    --mdc-outlined-text-field-label-text-tracking: normal;
+    --mdc-outlined-text-field-label-text-weight: 300;
+
+    --mat-form-field-container-text-line-height: 24px;
+    --mat-form-field-container-text-size: 14px;
+    --mat-form-field-container-text-weight: 300;
+    --mat-form-field-outlined-label-text-populated-size: 14px;
+
+    --mat-form-field-container-height: 42px;
+    --mat-form-field-filled-label-display: block;
+    --mat-form-field-container-vertical-padding: 10px;
+    --mat-form-field-filled-with-label-container-padding-top: 4px;
+    --mat-form-field-filled-with-label-container-padding-bottom: 4px;
+
+    --mat-mdc-form-field-floating-label-scale: 0.85;
+    --mdc-icon-button-state-layer-size: 40px !important;
+
+    .mat-mdc-icon-button.mat-mdc-button-base {
+        --mdc-icon-button-state-layer-size: 40px !important;
+        width: var(--mdc-icon-button-state-layer-size);
+        height: var(--mdc-icon-button-state-layer-size);
+        padding: 12px;
+    }
+
+    // primeNg Colors    
+    --primary-color: #f05b45;  /* Custom primary color */
+    --primary-color-text: #ffffff;
+    --primary-button-border-color: #f05b45; /* Custom border color */
+    --secondary-color: #3a6773; /* Custom secondary color */
+    --secondary-color-text: #ffffff;
+
+    --border-radius: 8px; /* Custom border radius */
+
+    --p-form-field-padding-y: 0.55rem !important
+}
+
+@import './styles/global_styles.scss';
+
+// _Variable
+@import "./variable";
+
+// Utilities CSS
+@import "./utilities";
+
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    padding: 0;
+    letter-spacing: 0.15px;
+    color: var(--darkColor);
+    background-color: #f5f7fa;
+    font: {
+        weight: 400;
+        size: var(--fontSize);
+        family: var(--fontFamily);
+    };
+}
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, .display-1, .display-2, .display-3, .display-4, .display-5, .display-6 {
+    color: var(--darkColor);
+    letter-spacing: 0.18px;
+    margin: {
+        top: 0;
+        bottom: 15px;
+    };
+    font: {
+        family: var(--headingFontFamily);
+        weight: 600;
+    };
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+a {
+    transition: var(--transition);
+    color: var(--darkColor);
+    text-decoration: none;
+    outline: 0 !important;
+
+    &:hover {
+        text-decoration: none;
+        color: var(--primaryColor);
+    }
+}
+p {
+    font-size: var(--fontSize);
+    color: var(--bodyColor);
+    line-height: 1.8;
+    margin: {
+        bottom: 15px;
+        top: 0;
+    };
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+.d-table {
+    width: 100%;
+    height: 100%;
+
+    &-cell {
+        vertical-align: middle;
+    }
+}
+img {
+    max-width: 100%;
+    height: auto;
+}
+.mb-25 {
+    margin-bottom: 25px !important;
+}
+input {
+    color: var(--blackColor);
+    font: {
+        weight: normal;
+        size: var(--fontSize);
+        family: var(--fontFamily);
+    };
+    &::placeholder {
+        color: var(--bodyColor);
+    }
+}
+:focus {
+    outline: 0 !important;
+}
+.heading-font-family {
+    font-family: var(--headingFontFamily) !important;
+}
+
+// Font Size
+.fs-14 {
+    font-size: 14px !important;
+}
+.fs-15 {
+    font-size: 15px !important;
+}
+.fs-16 {
+    font-size: 16px !important;
+}
+
+// UI Kit CSS
+@import "./ui-kit";
+
+// Dark CSS
+@import "./dark";
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    body {
+        font-size: 13px;
+    }
+    p {
+        font-size: 13px;
+    }
+    .mb-25 {
+        margin-bottom: 20px !important;
+    }
+    input {
+        font-size: 13px;
+    }
+
+    // Font Size
+    .fs-14 {
+        font-size: 13px !important;
+    }
+    .fs-15 {
+        font-size: 14px !important;
+    }
+    .fs-16 {
+        font-size: 15px !important;
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}
+
+
+//////////////////////////////////////
+ 

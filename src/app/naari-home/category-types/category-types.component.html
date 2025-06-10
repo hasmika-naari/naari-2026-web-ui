@@ -1,0 +1,29 @@
+<div class="gct-features-list">
+    <owl-carousel-o [options]="categoryTypesSlideConfig" class="new-course-slider owl-theme">
+        <ng-template carouselSlide *ngFor="let dealType of dealTypes;let i=index;" >
+            <div  class="gct-features-list-item-box-mobile wow fadeInUp"    data-wow-duration="1s"
+                    [attr.data-wow-delay]="(+i*200).toString() + 'ms'"  (click)="gotoDeals($event, dealType)"
+                (mouseover)="hover=true" (mouseleave)="hover=false"
+                [style.backgroundColor]="dealType.bgColor">
+                <div class="icon"
+                        [ngStyle]="{borderColor: hover==true  ? dealType.bgColor : 'rgba(255, 255, 255, 0.1)' }">
+                    <i [class]='dealType.icon' [class.show-opacity]="dealType.status !== 'active'"
+                    [ngStyle]="{color: hover==true  ? dealType.bgColor : '#fff' }" ></i>
+                </div>
+                <h3 class="pb-0 mb-0  wow fadeInUp"  [class.show-opacity]="dealType.status !== 'active'"
+                     data-wow-duration="4s">{{dealType.title}}</h3>
+                <small class=" wow fadeInUp" style="color:white;letter-spacing: 1px;font-size:large;" [class.show-opacity]="dealType.status !== 'active'"
+                     data-wow-duration="4s">{{dealType.subTitle}}</small>
+                <div class="dealtype-deal-number-div">
+                    <!-- <i class="special-pick" [class]='dealType.icon'  style="font-size:large ;position: relative;left: 0px;top: 3px;"  
+                    *ngIf="dealType?.code === 'SPECIALPICK'" ></i>
+                    <i  style="font-size: x-larg ;position: relative;left: 0px;top: 3px;"
+                    *ngIf="dealType?.code !== 'SPECIALPICK'" class='bx bx-purchase-tag'></i> -->
+                    <!-- <fa-icon  style="font-size: x-larg ;position: relative;left: 0px;top: 3px;"
+                        *ngIf="dealType?.code !== 'SPECIALPICK'"  [icon]="faTags"></fa-icon>  -->
+                    <span class="display-label">{{dealType?.dealCount }}</span>
+                </div>
+            </div>
+        </ng-template>
+    </owl-carousel-o>
+</div>

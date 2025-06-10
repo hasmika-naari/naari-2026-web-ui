@@ -1,0 +1,23 @@
+<div class="gct-lovein-features-list  container" >
+    <owl-carousel-o [options]="categoryTypesSlideConfig" class="gct-lovein-slider owl-theme">
+        <ng-template carouselSlide *ngFor="let dealType of dealTypes; let i = index;" >
+            <div class="mb-30 wow fadeInUp"  [class.gct-lovein-list-item-box]="!isMobile"
+                    [class.gct-lovein-list-item-box-mobile]="isMobile"    data-wow-duration="1s"
+                    [attr.data-wow-delay]="(+i*150).toString() + 'ms'" 
+                      (click)="gotoLovin($event, dealType)"
+                (mouseover)="hover=true" (mouseleave)="hover=false"
+                [style.background]="'url(' + dealType.bgImageUrl + ')'"
+                >
+                <div style="position: absolute; left:0px;right:0px;bottom:0px;top:0px;height: 200px;">
+                    <div class="info-section-div">
+                        <h3 class=" pb-0 mb-0 "  [class.show-opacity]="dealType.status !== 'active'"
+                              >{{dealType.title}}</h3>
+                        <small  style="color:white;letter-spacing: 1px;" 
+                                [class.show-opacity]="dealType.status !== 'active'"
+                             >{{dealType.subTitle}}</small>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </owl-carousel-o>
+</div>

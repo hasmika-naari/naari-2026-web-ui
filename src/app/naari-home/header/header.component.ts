@@ -1,0 +1,113 @@
+import { CommonModule, NgOptimizedImage, isPlatformBrowser } from '@angular/common';
+import { Component, OnInit, HostListener, Input, inject, Signal, PLATFORM_ID, OnChanges, SimpleChanges, Inject } from '@angular/core';
+import { Router, RouterLink, RouterModule } from '@angular/router';
+import { PCategory } from '@app/services/deals.model';
+import { SignalStore } from '@app/services/store/signal-store';
+import { UserState } from '@app/services/store/user-store';
+import { UserStoreService } from '@app/services/store/user-store.service';
+import { Account } from '@app/services/profile.model';
+import { NgbModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { SaasSidebarComponent } from './sidebar/sidebar.component';
+import { DeviceDetectorService } from 'ngx-device-detector';
+import { ThemeCustomizerService } from '@app/services/theme-customizer/theme-customizer.service';
+
+@Component({
+    selector: 'app-header',
+    imports: [CommonModule, NgOptimizedImage, RouterModule, RouterLink, NgbModule, NgbNavModule,
+        SaasSidebarComponent],
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss']
+})
+export class HeaderStyleComponent implements OnInit, OnChanges {
+
+    isSticky: boolean = false;
+    @Input() menuList: Array<PCategory> = new Array<PCategory>();
+    @Input() mobile: boolean =  false;
+    @HostListener('window:scroll', ['$event'])
+    checkScroll() {
+        const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        if (scrollPosition >= 50) {
+            this.isSticky = true;
+        } else {
+            this.isSticky = false;
+        }
+    }
+
+    isToggled = false;
+    isMobile = false;
+    isTablet = false;
+    isDesktop = true;
+    isBrowser: boolean = false;
+    // private readonly userStore = inject(SignalStore<UserState>);
+    // readonly account = this.userStore.select(x => x.account);
+    // readonly token = this.userStore.select(x => x.token);
+    private userStore: UserStoreService = inject(UserStoreService);
+    userAccount: Signal<Account> = this.userStore.getUserAccount();
+    isLoggedIn: Signal<boolean> = this.userStore.getUserLoggedIn();
+    // public platformId: object =  inject(PLATFORM_ID);
+    private deviceService: DeviceDetectorService=  inject(DeviceDetectorService);
+    private router: Router=  inject(Router);
+    
+    constructor(
+        public themeService: ThemeCustomizerService,
+        @Inject(PLATFORM_ID) public platformId: object,
+    ) {
+        this.themeService.isToggled$.subscribe((isToggled: boolean) => {
+            this.isToggled = isToggled;
+        });
+    }
+
+    toggleTheme() {
+        this.themeService.toggleTheme();
+    }
+
+    ngOnInit(): void {
+        console.log('Header : ngOnInit = ' + this.platformId);
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        console.log('Header: ngOnChanges = ' + this.platformId);
+        if(isPlatformBrowser(this.platformId)){
+            this.isBrowser = true;
+            console.log('Header: ngOnChanges = ' + this.isBrowser);
+          if(this.deviceService.isDesktop()){
+            this.isDesktop = true;
+            this.isMobile = false;
+            this.isTablet = false;
+          }else if(this.deviceService.isMobile()){
+            this.isMobile = true;
+            this.isDesktop = false;
+            this.isTablet = false;
+          }else if(this.deviceService.isTablet()){
+            this.isTablet = true;
+            this.isMobile = false;
+            this.isDesktop = false;
+          }
+
+          console.log('Header: ngOnChanges = ' + this.isMobile);
+
+        }
+    }
+
+    classApplied = false;
+    toggleClass() {
+        this.classApplied = !this.classApplied;
+    }
+
+    classApplied2 = false;
+    toggleClass2() {
+        this.classApplied2 = !this.classApplied2;
+    }
+
+    classApplied3 = false;
+    toggleClass3() {
+        this.classApplied3 = !this.classApplied3;
+    }
+
+    logout($event: any){
+        this.userStore.logout();
+        this.router.navigateByUrl('/');
+
+    }
+
+}
