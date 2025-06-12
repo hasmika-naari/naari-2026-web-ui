@@ -328,6 +328,21 @@
     }
 }
 
+.section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+
+  .title-block {
+    text-align: left;
+  }
+
+  .default-btn {
+    white-space: nowrap; // Prevent breaking into two lines
+  }
+}
+
 /* Max width 767px */
 @media only screen and (max-width: 767px) {
 
@@ -585,8 +600,16 @@
 .shop-now-btn {
   font-size: 0.85rem;
   padding: 0.4rem 0.75rem;
-}
+  color: var(--blackColor3) !important;
 
+  &:hover{
+    color: var(--mainColor) !important;
+  }
+}
+.my-tertiary-bg {
+  background-color: var(--md-sys-color-tertiary);
+  color: var(--md-sys-color-on-tertiary);
+}
 
 .category-tile {
   background-size: cover;

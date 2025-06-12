@@ -1,4 +1,4 @@
-import { Brand, Category, DealDataItem, DealType, Merchant, PCategory } from "../deals.model";
+import { Brand, Category, DealDataItem, DealSorting, DealType, Merchant, PCategory } from "../deals.model";
 import { Account } from "../profile.model";
 
   
@@ -8,7 +8,10 @@ import { Account } from "../profile.model";
     pCategories: Array<PCategory>;
     brands: Array<Brand>;
     merchants: Array<Merchant>;
-    allDeals: Array<DealDataItem>;
+    dailyDeals: Array<DealDataItem>;
+    selectedHomeFilter: string;
+    selectedHomeSorting: DealSorting;
+    filteredDailyDeals: Array<DealDataItem>;
   }
   
   export const dealsStateConfig = {
@@ -18,6 +21,9 @@ import { Account } from "../profile.model";
       pCategories: new Array<PCategory>(),
       brands: new Array<Brand>(),
       merchants: new Array<Merchant>(),
-      allDeals: new Array<DealDataItem>
+      dailyDeals: new Array<DealDataItem>,
+      filteredDailyDeals: new Array<DealDataItem>,
+      selectedHomeFilter: '',
+      selectedHomeSorting: new DealSorting()
     }
   };

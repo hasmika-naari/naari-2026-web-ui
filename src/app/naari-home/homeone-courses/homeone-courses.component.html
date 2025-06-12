@@ -6,15 +6,17 @@
 
 
     <div class="container" *ngIf="categories && categories.length">
-
-        <div class="section-title text-start">
-            <span class="sub-title">Discover Deals</span>
-            <h2>Popular Categories</h2>
-            <a routerLink="/courses-2-columns-style-1" class="default-btn">
-                <i class='bx bx-show-alt icon-arrow before'></i>
-                <span class="label">All Categories</span>
-                <i class="bx bx-show-alt icon-arrow after"></i></a>
-        </div>
+            <div class="naari-section-title d-flex justify-content-between align-items-center">
+                <div class="title-block text-start">
+                    <span class="sub-title">Discover Deals</span>
+                    <h2>Popular Categories</h2>
+                </div>
+                <button routerLink="/courses-2-columns-style-1"  matButton color="tertiary" >
+                    <!-- <i class='bx bx-show-alt icon-arrow before'></i> -->
+                    <span class="label">All Categories</span>
+                    <!-- <i class="bx bx-show-alt icon-arrow after"></i> -->
+                </button>
+            </div>
         <ul class="nav-tabset">
             <li class="nav-tab" [ngClass]="{'active': currentTab === 'tab2'}">
                 <span (click)="switchTab($event, 'tab2')">Clothing</span>
@@ -55,12 +57,12 @@
                             <div class="blur-box">
                                 <p class="category-subtitle">{{ +item.subTitle != 0 ? item.subTitle : 'No Deals' }}</p>
                                 <h5>{{ item.title }}</h5>
-                                <a [routerLink]="['/deals/' + item.code]"
+                                <button [routerLink]="['/deals/' + item.code]"
                                     mat-raised-button 
-                                    color="primary"
+                                    color="tertiary"
                                     class="shop-now-btn mt-2">
-                                Shop now
-                                </a>
+                                Shop now 
+                            </button>
                             </div>
                         </div>
                     </div>
@@ -87,7 +89,7 @@
                                 <h5>{{ item.title }}</h5>
                                 <a [routerLink]="['/deals/' + item.code]"
                                     mat-raised-button 
-                                    color="primary"
+                                    color="tertiary"
                                     class="shop-now-btn mt-2">
                                 Shop now
                                 </a>
@@ -116,7 +118,7 @@
                                 <h5>{{ item.title }}</h5>
                                 <a [routerLink]="['/deals/' + item.code]"
                                     mat-raised-button 
-                                    color="primary"
+                                    color="tertiary"
                                     class="shop-now-btn mt-2">
                                 Shop now
                                 </a>
@@ -145,7 +147,7 @@
                                 <h5>{{ item.title }}</h5>
                                 <a [routerLink]="['/deals/' + item.code]"
                                     mat-raised-button 
-                                    color="primary"
+                                    color="tertiary"
                                     class="shop-now-btn mt-2">
                                 Shop now
                                 </a>
@@ -174,7 +176,7 @@
                                 <h5>{{ item.title }}</h5>
                                 <a [routerLink]="['/deals/' + item.code]"
                                     mat-raised-button 
-                                    color="primary"
+                                    color="tertiary"
                                     class="shop-now-btn mt-2">
                                 Shop now
                                 </a>
@@ -202,7 +204,7 @@
                                 <h5>{{ item.title }}</h5>
                                 <a [routerLink]="['/deals/' + item.code]"
                                     mat-raised-button 
-                                    color="primary"
+                                   color="tertiary"
                                     class="shop-now-btn mt-2">
                                 Shop now
                                 </a>
@@ -231,7 +233,7 @@
                                 <h5>{{ item.title }}</h5>
                                 <a [routerLink]="['/deals/' + item.code]"
                                     mat-raised-button 
-                                    color="primary"
+                                   color="tertiary"
                                     class="shop-now-btn mt-2">
                                 Shop now
                                 </a>

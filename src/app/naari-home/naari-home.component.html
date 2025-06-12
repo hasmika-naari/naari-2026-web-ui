@@ -1,39 +1,32 @@
-<app-header [menuList]="pCategories" [mobile]="isMobile" ></app-header>
+<app-header [menuList]="pCategories()" [mobile]="isMobile" ></app-header>
 <app-main-banner [browser]="browser" [desktop]="isDesktop" [tablet]="isTablet"  [dealTypes]="dealTypes" ></app-main-banner>
  <div class="feature-div-mobile-position loaded" *ngIf="browser && isMobile">
     <div  *ngIf="browser && isMobile">
-        <!-- <app-feature-types ></app-feature-types> -->
+        <app-feature-types ></app-feature-types>
     </div>
     <div   class="container" *ngIf="browser && isMobile">
         <app-category-types *ngIf="browser" [dealTypes]="dealTypes"></app-category-types>
     </div>
 </div>
 
-<div style="width: 100%;position:relative" class="container" >
+<div style="width: 100%;position:relative" class="container mt-4" >
     <div  fxLayout="row wrap"  class="products-wrapper" >
         <div [class.col-12]="isDesktop" [class.col-12]="isMobile" [class.col-12]="isTablet" style="width: 100%;">
             <div *ngIf="isDesktop && browser" fxLayout="row wrap"  >
 
                 <div fxFlex="100"> 
-                    <mat-card class="pagenation-deals p-0 text-right   wow fadeInUp" data-wow-offset="10" 
+                    <mat-card class="pagenation-deals p-0 text-start   wow fadeInUp" data-wow-offset="10" 
                     data-wow-duration="1s"  data-wow-delay="90ms">   
-                    <div class="row align-items-center justify-content-center flex-wrap">
-
-                        <!-- Left Spacer / Optional Content -->
-                        <div class="col-12 col-sm-2 d-flex justify-content-start align-items-center mb-2 mb-sm-0">
-                            <!-- Add content here if needed -->
-                        </div>
-
+                    <div class="row align-items-left justify-content-left flex-wrap">
                         <!-- Center Title Section -->
-                        <div class="col-12 col-sm-8 text-center" [class.mt--25]="isMobile">
+                        <div class="col-12 col-sm-9 text-left" [class.mt--25]="isMobile">
                             <div class="home-section-title">
                             <small class="sub-title">Discover Super Deals</small>
-                            <h2 class="text-center">Load Savings</h2>
+                            <h2 class="text-left">Load Savings</h2>
                             </div>
                         </div>
-
                         <!-- Right Sort Menu -->
-                        <div class="col-12 col-sm-2 d-flex justify-content-end align-items-center mt-2 mt-sm-0">
+                        <div class="col-12 col-sm-3 d-flex justify-content-end align-items-center mt-2 mt-sm-0">
                             <a class="option-selection-text" mat-button [matMenuTriggerFor]="sortMenu1" #sortMenu1Trigger="matMenuTrigger">
                             {{selectedSorting.title}}
                             <i class='bx bx-sort-alt-2 icon'></i>
@@ -49,33 +42,6 @@
                         </div>
 
                     </div>
-                        <!-- <div  fxLayout="row wrap" fxLayoutAlign="center center">
-                            <div fxFlex="20" [fxFlex.xs]="100"  fxLayoutAlign="start center"> 
-                              
-                            </div> 
-                            <span fxFlex></span>
-                            <div [fxFlex.xs]="100" class="home-section-title text-center" fxLayoutAlign="center center" [class.mt--25]="isMobile" >
-                                <small class="sub-title" >Discover Super Deals</small>
-                                <h2 class="text-center " > 
-                                    Load Savings
-                                </h2>
-                            </div>
-                            <span fxFlex></span>
-                            <div  fxLayoutAlign="end center" fxFlex="20" [fxFlex.xs]="100"> 
-                                <a class="option-selection-text " mat-button [matMenuTriggerFor]="sortMenu1" #sortMenu1Trigger="matMenuTrigger" >
-                                   {{selectedSorting.title}}
-                                   <i class='bx bx-sort-alt-2 icon'></i>
-                               </a>
-                               
-                               <mat-menu #sortMenu1="matMenu" xPosition="before" class="app-dropdown" overlapTrigger="true">
-                                   <span (mouseleave)="sortMenu1Trigger.closeMenu()">
-                                       <button mat-menu-item *ngFor="let sort of sortings" (click)="changeSorting(sort)">
-                                           <span>{{sort.title}}</span>
-                                       </button>
-                                   </span>
-                               </mat-menu>   
-                            </div>
-                        </div> -->
                     </mat-card>
                 </div>
             </div>
@@ -119,166 +85,126 @@
                         </div>
 
             </div>
-            <div  fxLayout="row wrap"  fxLayoutAlign="center center">
-                 <div *ngFor="let deal of dailyDeals | paginate: { itemsPerPage: count, currentPage: page }; let i = index;"
-                    class="col-12 col-sm-6 col-md-4 mb-4"
-                    [ngClass]="'col-lg-' + viewCol">
-                    
-                    <mat-card class="product-item text-center deal-discount-tag">
-                    
-                    <mat-chip-listbox *ngIf="deal.discountType == '%' && (+deal.discount > 0)">
-                        <mat-chip-option color="warn" selected>{{deal.discount}}% OFF</mat-chip-option>
-                    </mat-chip-listbox>
+            <div class="row justify-content-start">
+                <div
+                    *ngFor="let deal of dailyDeals() | paginate: { itemsPerPage: count, currentPage: page }; let i = index"
+                    class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
+                >
+             <mat-card class="deal-card-modern p-3 d-flex flex-column h-100 position-relative">
 
-                    <mat-chip-listbox *ngIf="deal.discountType !== '%'" class="list-view">
-                        <mat-chip-option color="warn" selected>{{deal.discountType}} {{deal.discount}} OFF</mat-chip-option>
-                    </mat-chip-listbox>
-
-                    <a [routerLink]="['/deal/', deal.id]" style="height: 200px; display: flex;" class="image-link">
-                        <img [ngSrc]="deal.imageUrl" width="200" height="500"
-                            style="max-height:300px; margin: auto; width:auto; height:auto; display: block;" alt="">
-                    </a>
-
-                    <span *ngIf="deal.highlight" class="deal-highlight-caro-div"
-                            [ngStyle]="{backgroundColor: deal.highlightColor}">
-                        <span [ngStyle]="{color: deal.highlightColor === '#ffd300' ? '#555' : '#fff'}">{{deal.highlight}}</span>
+                <!-- Top Row: Wishlist + Discount -->
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <button class="icon-btn wishlist" matIconButton (click)="addToWishlist(deal)" aria-label="Wishlist">
+                    <i class="bx bx-heart"></i>
+                    </button>
+                    <span *ngIf="deal.discount" class="discount-tag">
+                    {{ deal.discount }}% OFF
                     </span>
-
-                    <div *ngIf="showStartDate(deal.startDate)" class="deal-start-date-caro-div">
-                        <div style="font-size: x-small; letter-spacing:1px;">
-                        Deal Starts From: <span class="start-date">{{deal.startDate}}</span>
-                        </div>
-                    </div>
-
-                    <span class="merchant-name">{{deal.merchant}}</span>
-
-                    <h3>
-                        <a [routerLink]="['/deal/', deal.id]" class="deal-subject-title">{{deal.title}}</a>
-                    </h3>
-
-                    <div class="prices">
-                        <div class="w-100 d-flex align-items-start">
-                        <i *ngIf="(+deal.discount > 0)" class="bx bxs-hot hotjar-app-icon"></i>
-                        <p class="new-price mt-0 mb-0">
-                            <span style="font-size: medium; position: relative; right: -3px;" *ngIf="country === 'usa'">$</span>
-                            <span style="font-size: medium; position: relative; right: -3px;" *ngIf="country !== 'usa'">₹</span>
-                            {{deal.currentPrice | number : '1.2-2'}}
-                        </p>
-                        </div>
-
-                        <div class="w-100 d-flex align-items-start">
-                        <p class="old-price text-muted mt-0 mb-0 ml-2" *ngIf="(+deal.discount > 0)">
-                            <span style="font-size: small; position: relative; right: -3px;" *ngIf="country === 'usa'">$</span>
-                            <span style="font-size: small; position: relative; right: -3px;" *ngIf="country !== 'usa'">₹</span>
-                            {{deal.originalPrice | number : '1.2-2'}}
-                        </p>
-                        </div>
-                    </div>
-
-                    <div class="courses-box-footer">
-                        <ul>
-                        <li class="social-share" (click)="shareOnWhatsApp($event, deal)">
-                            <i class='bx bx-share-alt'></i> share
-                        </li>
-                        <li class="view-deal" [routerLink]="['/deal/', deal.id]">
-                            <i class='bx bx-show'></i> view
-                        </li>
-                        </ul>
-                    </div>
-
-                    </mat-card>
                 </div>
-                <!-- <div *ngFor="let deal of dailyDeals | paginate: { itemsPerPage: count, currentPage: page };let i = index;"
-                    fxFlex="100" [fxFlex.gt-sm]="viewCol" fxFlex.xs="50" fxFlex.sm="33.3" class="col"  
-                   >
-                    <mat-card class="product-item text-center deal-discount-tag">
-                        <mat-chip-listbox *ngIf="deal.discountType == '%' && (+deal.discount > 0)"  >
-                            <mat-chip-option color="warn" selected  >{{deal.discount}}% OFF</mat-chip-option>
-                        </mat-chip-listbox>
-                        <mat-chip-listbox *ngIf="deal.discountType !== '%'" class="list-view" >
-                            <mat-chip-option color="warn" selected  >{{deal.discountType}} {{deal.discount}} OFF</mat-chip-option>
-                        </mat-chip-listbox>
-                        <a  [routerLink]="['/deal/', deal.id]" style="height: 200px ;display: flex;" class="image-link "
-                        >
-                            <img [ngSrc]="deal.imageUrl" width="200" height="500"  style="max-height:300px;
-                            margin: auto; width:auto;height:auto;
-                            display: block;" alt="">
-                        
-                        </a>
-                        <span  *ngIf="deal.highlight" class="deal-highlight-caro-div"
-                                [ngStyle]="{backgroundColor: deal.highlightColor}" >
-                            <span [ngStyle]="{color: deal.highlightColor === '#ffd300'?'#555':'#fff'}">{{deal.highlight}}</span>
-                        </span>
-                        <div *ngIf="showStartDate(deal.startDate)" class="deal-start-date-caro-div ">
-                            <div style="font-size: x-small;letter-spacing:1px;" >
-                                Deal Starts From :    <span class="start-date">{{deal.startDate}}</span>
-                            </div>
-                        </div>         
-                        <span class="merchant-name" >{{deal.merchant}}</span>
-                        <h3><a [routerLink]="['/deal/', deal.id]" class="deal-subject-title"> {{deal.title}}</a></h3>
-                        <div fxLayout="row wrap" fxLayoutAlign="start start" class="prices" >
-                                <div fxFlex="100" fxLayoutAlign="start start">
-                                    <i *ngIf="(+deal.discount > 0)" class="bx bxs-hot hotjar-app-icon"></i>
-                                    <p class="new-price mt--0 mb--0 ">
-                                        <span style="font-size:medium;position: relative;right: -3px;" *ngIf="country === 'usa'">$</span>
-                                        <span style="font-size:medium;position: relative;right: -3px;" *ngIf="country !== 'usa'">₹</span>
-                                        {{deal.currentPrice | number : '1.2-2'}}
-                                    </p>
-                                </div>
-                                <div fxFlex="100" fxLayoutAlign="start start">
-                                    <p class="old-price text-muted mt--0 mb--0 ml--3" *ngIf="(+deal.discount > 0)">
-                                        <span style="font-size:small;position: relative;right: -3px;" *ngIf="country === 'usa'">$</span>
-                                        <span style="font-size:small;position: relative;right: -3px;" *ngIf="country !== 'usa'">₹</span>
-                                        {{deal.originalPrice | number : '1.2-2'}}
-                                    </p>
-                                </div> 
-                        </div> 
-                        <div class="courses-box-footer">
-                            <ul>
-                                <li class="social-share" 
-                                    (click)="shareOnWhatsApp($event, deal)">
-                                    <i class='bx bx-share-alt'></i> share
-                                </li>
-                                <li class="view-deal" [routerLink]="['/deal/', deal.id]">
-                                    <i class='bx bx-show'></i> view
-                                </li>
-                            </ul>
-                        </div>
-                    </mat-card>
+
+                <!-- Image Section -->
+                <a [routerLink]="['/deal/', deal.id]" class="deal-image-wrapper mb-2">
+                    <img
+                    [ngSrc]="deal.imageUrl"
+                    width="280"
+                    height="280"
+                    class="img-fluid"
+                    alt="Product"
+                    />
+                </a>
+
+                <!-- Merchant -->
+                <!-- <div class="text-muted fw-medium small text-start mb-1 merchant-name">
+                    {{ deal.merchant }}
                 </div> -->
-            </div>
+                <div class="merchant-name d-flex align-items-center">
+                    <!-- <i class="bx bx-store me-2 text-muted fs-5"></i> -->
+                    <span class="text-truncate">{{ deal.merchant }}</span>
+                </div>
+
+                <!-- Title -->
+                <h6 class="deal-title text-start text-truncate-2 mb-2">
+                    <a [routerLink]="['/deal/', deal.id]" class="text-dark text-decoration-none">
+                    {{ deal.title }}
+                    </a>
+                </h6>
+
+                <!-- Price Info -->
+                <div class="d-flex gap-2 align-items-baseline text-start mb-3">
+                    <span class="text-danger fw-bold fs-5">
+                    {{ country === 'usa' ? '$' : '₹' }}{{ deal.currentPrice | number : '1.2-2' }}
+                    </span>
+                    <span *ngIf="deal.originalPrice" class="text-muted text-decoration-line-through fs-6 fw-semibold">
+                    {{ country === 'usa' ? '$' : '₹' }}{{ deal.originalPrice | number : '1.2-2' }}
+                    </span>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="d-flex justify-content-end gap-4 mt-auto">
+                     <button matIconButton class="icon-btn share" (click)="shareOnWhatsApp($event, deal)">
+                        <mat-icon>share</mat-icon>
+                    </button>
+                    <button matIconButton [routerLink]="['/deal/', deal.id]" class="icon-btn view">
+                        <mat-icon>visibility</mat-icon>
+                    </button>
+                </div>
+                </mat-card>
+                </div>
+                </div>
+
             <div class="col-sm-12 text-center" *ngIf="((deals?.length === 0)  && isShowContent)">
                 <img src="assets/images/empty-search.jpg" class="img-fluid mb-4 ">
                   <h3 class="  wow fadeInUp" data-wow-offset="50" data-wow-duration="3s"  data-wow-delay="900ms">Sorry! Couldn't find the Deals you were looking For!!!    </h3>
                   <p class="  wow fadeInUp" data-wow-offset="50"  data-wow-duration="3s"  data-wow-delay="900ms">Please check other options.</p>
-              </div>
-            <div  fxLayout="row wrap">
-                <div fxFlex="100"> 
-                    <mat-card class="pagenation-deals p-0 text-right" >    
-                        <div  fxLayout="row wrap" fxLayoutAlign="center center">
-                            <div fxFlex="40" fxFlex.xs="100" fxLayoutAlign="start center"> 
-                            </div> 
-                            <span *ngIf="isDesktop" fxFlex></span>
-                            <div *ngIf="(isDesktop || isTablet) && browser" fxFlex="40" fxFlex.xs="100" fxLayoutAlign="end center">       
-                                <pagination-controls class="product-pagination   wow fadeInUp" [autoHide]="autoHide" [maxSize]="maxSize" 
-                                data-wow-offset="50" data-wow-duration="1s"  data-wow-delay="900ms" (pageChange)="onPageChanged($event)">
-                                </pagination-controls>
-                            </div>
-                            <div *ngIf="isMobile  && browser" fxFlex="100" fxFlex.xs="100" fxLayoutAlign="center center">       
-                                <pagination-controls class="product-pagination   wow fadeInUp" [autoHide]="autoHide" [maxSize]="maxSize" 
-                                data-wow-offset="50" data-wow-duration="1s"  data-wow-delay="900ms" (pageChange)="onPageChanged($event)">
-                                </pagination-controls>
-                            </div>
-                        </div>
-                    </mat-card>
-                </div>
             </div>
+          <div class="row">
+            <div class="col-12">
+                <mat-card class="pagenation-deals p-0 text-end">
+                <div class="row align-items-center justify-content-end">
+                    <!-- Empty Left Section (visible on desktop & tablet only) -->
+                    <div class="col-md-5 col-12 d-flex align-items-center justify-content-start">
+                    <!-- You can add content here if needed -->
+                    </div>
+
+                    <!-- Spacer for desktop -->
+                    <div *ngIf="isDesktop" class="d-none d-md-block col-md"></div>
+
+                    <!-- Pagination for desktop and tablet -->
+                    <div *ngIf="(isDesktop || isTablet) && browser" class="col-md-5 col-12 d-flex align-items-center justify-content-end">
+                    <pagination-controls
+                        class="product-pagination wow fadeInUp"
+                        [autoHide]="autoHide"
+                        [maxSize]="maxSize"
+                        data-wow-offset="50"
+                        data-wow-duration="1s"
+                        data-wow-delay="900ms"
+                        (pageChange)="onPageChanged($event)">
+                    </pagination-controls>
+                    </div>
+
+                    <!-- Pagination for mobile -->
+                    <div *ngIf="isMobile && browser" class="col-12 d-flex align-items-center justify-content-center">
+                    <pagination-controls
+                        class="product-pagination wow fadeInUp"
+                        [autoHide]="autoHide"
+                        [maxSize]="maxSize"
+                        data-wow-offset="50"
+                        data-wow-duration="1s"
+                        data-wow-delay="900ms"
+                        (pageChange)="onPageChanged($event)">
+                    </pagination-controls>
+                    </div>
+                </div>
+                </mat-card>
+            </div>
+            </div>
+
         </div>
     </div>
 </div>
 <section >
     @defer (on viewport;) {
-        <app-homeone-courses [isMobile]="isMobile" [categories]="categories" ></app-homeone-courses>
+        <app-homeone-courses [isMobile]="isMobile" [categories]="categories()" ></app-homeone-courses>
       } @placeholder (minimum 2000ms) {
         <h1>All Categories</h1>
       } @loading {

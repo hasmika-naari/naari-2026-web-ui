@@ -1,12 +1,12 @@
 import { CommonModule, NgOptimizedImage, isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { Component, OnInit, PLATFORM_ID, TransferState, inject, makeStateKey } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Signal, TransferState, inject, makeStateKey } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
+import { MatButtonModule, MatFabButton } from '@angular/material/button';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import * as _ from 'lodash';
@@ -34,7 +34,7 @@ import { FooterWorkifenceComponent } from '@app/pages/landing/footer-wifence/foo
     selector: 'app-home-page-three',
     imports: [CommonModule, RouterLink, RouterOutlet, NgOptimizedImage,
         MainBannerComponent, NgxPaginationModule, FooterEdComponent, FooterComponent,
-        MatButtonModule, MatChipsModule, MatIconModule, BecomePartnerComponent,
+        MatButtonModule, MatChipsModule, MatIconModule, BecomePartnerComponent, 
         MatMenuModule, LanguageSubscribeComponent, CategoryTypesComponent, HomeoneCoursesComponent,
         MatCardModule, HeaderStyleComponent, FeatureTypesComponent, MatProgressBarModule, FooterWorkifenceComponent        
     ],
@@ -61,13 +61,13 @@ export class NaariHomePageComponent implements OnInit {
     ];
     
     deals!: Array<DealDataItem>;
-  categories: Array<Category> = new Array<Category>();
-  pCategories: Array<PCategory> = new Array<PCategory>();
+  // categories: Array<Category> = new Array<Category>();
+  // pCategories: Array<PCategory> = new Array<PCategory>();
   merchants: Array<Merchant> = new Array<Merchant>();
 
   slides!: Array<Slide>;
   dealTypes: Array<DealType>  = new Array<DealType>();;
-  dailyDeals: Array<DealDataItem> = new Array<DealDataItem>();
+  // dailyDeals: Array<DealDataItem> = new Array<DealDataItem>();
   isShowContent = true;
   hover = true;
   browser = false;
@@ -113,6 +113,11 @@ export class NaariHomePageComponent implements OnInit {
   private deviceService: DeviceDetectorService=  inject(DeviceDetectorService);
   private dealsStoreService: DealsStoreService = inject(DealsStoreService);
 
+  pCategories: Signal< Array<PCategory>> = this.dealsStoreService.getPcCategories();
+  categories: Signal< Array<Category>> = this.dealsStoreService.getCategories();
+  dailyDeals: Signal<Array<DealDataItem>> = this.dealsStoreService.getAllDailyDeals();
+
+
   constructor() { 
     const content =
     'Naari Deals - Femine Specials';
@@ -129,8 +134,11 @@ export class NaariHomePageComponent implements OnInit {
     debugger;
     if(isPlatformServer(this.platformId)){
         console.log('naari-home - ngOnInit + isPlatformServer ' + this.platformId);
+          const data = { message: 'Hello from SSR!' };
+            console.log('Hydrating data at server:', data);
       this.fetchData();
     }else{
+      console.log('Reading Hydrated data:');
       this.loadFetcheddata();
     }
 
@@ -165,14 +173,14 @@ export class NaariHomePageComponent implements OnInit {
     // if(!this.dailyDeals.length){
       this.dealsService.getDealsByCountry('usa', this.platformId).subscribe((deals) => {
           this.deals = [...deals];
-          this.dailyDeals = [...deals];
+          // this.dailyDeals = [...deals];
 
           if(isPlatformServer(this.platformId)){
             this.transferState.set<DealDataItem[]>(
               makeStateKey('dealsTable'), deals
             );
           }else{
-               this.dealsStoreService.updateDeals(deals);
+              //  this.dealsStoreService.updateDeals(deals);
             }
       });
     // }
@@ -187,25 +195,25 @@ export class NaariHomePageComponent implements OnInit {
         // this.transferState.set<CategoryListItem[]>(
         //   makeStateKey('categoriesTable'), categoriesTable
         // );
-        this.categories = [...categories];
-        const sizeOptions = ['large', 'medium', 'small'];
-        console.log('naari-home - getCategoriesByCountry+ ' + this.platformId);
-        this.categories = this.categories.map(category => ({
-          ...category,
-          size: sizeOptions[Math.floor(Math.random() * sizeOptions.length)]
-        }));
+        // this.categories = [...categories];
+        // const sizeOptions = ['large', 'medium', 'small'];
+        // console.log('naari-home - getCategoriesByCountry+ ' + this.platformId);
+        // this.categories = this.categories.map(category => ({
+        //   ...category,
+        //   size: sizeOptions[Math.floor(Math.random() * sizeOptions.length)]
+        // }));
         /// divide into parentList
-        // Group categories by parent and map them to the desired format
-        this.pCategories = [..._.map(
-            _.groupBy(categories, 'parent'),
-            (categories, parent) => ({ parent, categories }))];
+        // // Group categories by parent and map them to the desired format
+        // this.pCategories = [..._.map(
+        //     _.groupBy(categories, 'parent'),
+        //     (categories, parent) => ({ parent, categories }))];
             if(isPlatformServer(this.platformId)){
               console.log('naari-home - fetchData pCategories+ ' + this.platformId);
               this.transferState.set<CategoryListItem[]>(
                 makeStateKey('categoriesTable'), categories
               );
             }else{
-               this.dealsStoreService.updateCategories(categories);
+              //  this.dealsStoreService.updateCategories(categories);
             }
           
           // //console.log(groupedCategories);
@@ -225,7 +233,7 @@ export class NaariHomePageComponent implements OnInit {
               makeStateKey('dealTypes'), this.dealTypes
             );
           }else {
-                this.dealsStoreService.updateDealTypes(this.dealTypes);
+                // this.dealsStoreService.updateDealTypes(this.dealTypes);
           }
         });
       }
@@ -237,7 +245,7 @@ export class NaariHomePageComponent implements OnInit {
             makeStateKey('brands'), brands
           );
         }else{
-               this.dealsStoreService.updateBrands(brands);
+              //  this.dealsStoreService.updateBrands(brands);
         }
       });
 
@@ -249,7 +257,7 @@ export class NaariHomePageComponent implements OnInit {
             makeStateKey('merchants'), merchants
           );
         }else{
-               this.dealsStoreService.updateMerchants(merchants);
+              //  this.dealsStoreService.updateMerchants(merchants);
         }
       });
     // }
@@ -258,6 +266,9 @@ export class NaariHomePageComponent implements OnInit {
   // }
   }
 
+  addToWishlist(deal: any){
+
+  }
   
   gotToShop(dealUrl: any){
     window.open(dealUrl);
@@ -279,20 +290,15 @@ export class NaariHomePageComponent implements OnInit {
     // } 
   }
   public changeSorting(sort: any){
-    ;
-
     this.selectedSorting = sort;
-    if(this.selectedSorting && this.selectedSorting.title === 'Lowest Discount First'){
-      ;
-      this.dailyDeals = [..._.orderBy(this.deals, d => +d.discount, ['asc'])];
-    }else if(this.selectedSorting && this.selectedSorting.title === 'Highest Discount First'){
-      ;
-      this.dailyDeals = [..._.orderBy(this.deals, d => +d.discount,  ['desc'])];
-    }else{
-      ;
-      this.dailyDeals = [...this.deals];
-    }
-    ;
+    // if(this.selectedSorting && this.selectedSorting.title === 'Lowest Discount First'){
+    //   this.dailyDeals = [..._.orderBy(this.deals, d => +d.discount, ['asc'])];
+    // }else if(this.selectedSorting && this.selectedSorting.title === 'Highest Discount First'){
+    //   this.dailyDeals = [..._.orderBy(this.deals, d => +d.discount,  ['desc'])];
+    // }else{
+    //   this.dailyDeals = [...this.deals];
+    // }
+    this.dealsStoreService.sortDailyDeals( this.selectedSorting);
     window.scrollTo(0, document.documentElement.clientHeight - 50);
   }
   public openProductDialog(deal: DealDataItem){   
@@ -321,6 +327,8 @@ export class NaariHomePageComponent implements OnInit {
      }
      if(this.transferState.hasKey(makeStateKey('dealsTable'))){
       this.deals = this.transferState.get(makeStateKey('dealsTable'), []);
+      this.dealsStoreService.updateDailyDeals(this.transferState.get(makeStateKey('dealsTable'), []));
+
       // this.dailyDeals = [...this.deals];
      }else{
       this.fetchData();
@@ -334,7 +342,7 @@ export class NaariHomePageComponent implements OnInit {
       this.fetchData();
      }
      if(this.transferState.hasKey(makeStateKey('categoriesTable'))){
-      this.categories = this.transferState.get(makeStateKey('categoriesTable'), []);
+      // this.categories = this.transferState.get(makeStateKey('categoriesTable'), []);
       this.dealsStoreService.updateCategories(this.transferState.get(makeStateKey('categoriesTable'), []));
 
      }else{
