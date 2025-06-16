@@ -14,16 +14,41 @@ import _ from "lodash";
   export class DealsStoreService {
     state = signal<DealsState>({ 
         dealTypes: new  Array<DealType>(), 
+        selectedDealType: new DealType(), 
+        selectedCategory: new Category(), 
         categories: new  Array<Category>(), 
         pCategories: new Array<PCategory>(),
         brands: new Array<Brand>(),
         merchants: new Array<Merchant>(),
         dailyDeals: new Array<DealDataItem>(),
         filteredDailyDeals: new Array<DealDataItem>(),
+        deals: new Array<DealDataItem>(),
+        filteredDeals: new Array<DealDataItem>(),
         selectedHomeFilter: '',
-        selectedHomeSorting: new DealSorting()
+        selectedHomeSorting: new DealSorting(),
+        selectedDeal: new DealDataItem(),
+        relatedDeals: new Array<DealDataItem>()
        });
 
+    sortDeals(sorting: DealSorting) {
+        this.state.update((state) => {
+          let deals: Array<DealDataItem> = [];
+
+          if (sorting?.title === 'Lowest Discount First') {
+            deals = _.orderBy(state.deals, d => +d.discount, ['asc']);
+          } else if (sorting?.title === 'Highest Discount First') {
+            deals = _.orderBy(state.deals, d => +d.discount, ['desc']);
+          } else {
+            deals = [...state.deals];
+          }
+
+          return {
+            ...state,
+            deals: [...deals],
+            filteredDeals: [...deals]
+          };
+        });
+    }    
 
     sortDailyDeals(sorting: DealSorting) {
       this.state.update((state) => {
@@ -60,6 +85,47 @@ import _ from "lodash";
       ...state,
       dailyDeals: [...deals],
       filteredDailyDeals: [...deals]
+      }));
+    }   
+
+    updateDeals(deals:  Array<DealDataItem>) {
+      /// Implement Filter code here..
+      this.state.update((state) => ({
+      ...state,
+      deals: [...deals],
+      filteredDeals: [...deals]
+      }));
+    }  
+
+    updateSelectedDeal(deal:  DealDataItem) {
+      /// Implement Filter code here..
+      this.state.update((state) => ({
+      ...state,
+      selectedDeal: deal,
+      }));
+    }   
+
+    updateSelectedDealType(dealType:  DealType) {
+      /// Implement Filter code here..
+      this.state.update((state) => ({
+      ...state,
+      selectedDealType: dealType,
+      }));
+    }
+    
+    updateSelectedCategory(ctagory:  Category) {
+      /// Implement Filter code here..
+      this.state.update((state) => ({
+      ...state,
+      selectedCategory: ctagory,
+      }));
+    }
+
+    updateRelatedDeals(deals:  Array<DealDataItem>) {
+      /// Implement Filter code here..
+      this.state.update((state) => ({
+      ...state,
+      relatedDeals: [...deals],
       }));
     }   
 
@@ -137,4 +203,27 @@ import _ from "lodash";
       return computed(() => this.state().filteredDailyDeals);
     } 
 
+    getSelectedDeal(): Signal<DealDataItem> {
+      return computed(() => this.state().selectedDeal);
+    } 
+
+    getRelatedDeals(): Signal<Array<DealDataItem>> {
+      return computed(() => this.state().relatedDeals);
+    }
+
+    getSelectedCategory(): Signal<Category> {
+      return computed(() => this.state().selectedCategory);
+    }
+
+    getSelectedDealType(): Signal<DealType> {
+      return computed(() => this.state().selectedDealType);
+    }
+
+    getDeals(): Signal<Array<DealDataItem>> {
+      return computed(() => this.state().deals);
+    }
+
+    getFilteredDeals(): Signal<Array<DealDataItem>> {
+      return computed(() => this.state().filteredDeals);
+    }
   }

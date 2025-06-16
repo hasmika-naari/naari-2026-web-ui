@@ -1,0 +1,209 @@
+<div
+    class="register-area"
+    [class.dark-register-area]="themeService.isDark()"
+>
+    <div class="row m-0">
+        <div class="col-lg-6 col-md-12 p-0">
+            <div class="register-image">
+                <img src="assets/img/register-bg3.jpg" alt="image">
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-12 p-0">
+            <div class="register-content">
+                <div  class="row h-100 align-content-center" *ngIf="!showActivationForm">
+                    <div class="col-12 align-content-center">
+                        <div class="register-form">
+                            <div
+                                class="logo"
+                                [class.d-none]="themeService.isDark()"
+                            >
+                                <a routerLink="/">
+                                    <img src="assets/img/black-logo.png" alt="image">
+                                </a>
+                            </div>
+                            <div
+                                class="logo d-none"
+                                [class.d-block]="themeService.isDark()"
+                            >
+                                <a routerLink="/">
+                                    <img src="assets/img/logo.png" alt="image">
+                                </a>
+                            </div>
+                            <h3>Open up your Naarideals.com <br>Account now</h3>
+                            <p>Already signed up? <a class="login-button" routerLink="/login">Log in</a></p>
+                            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                                <div class="form-group">
+                                    <input
+                                      type="text"
+                                      placeholder="Email Id"
+                                      formControlName="email"
+                                      class="form-control"
+                                      [ngClass]="{ 'is-invalid': registrationSubmitted && f['email'].errors }"
+                                    />
+                                    @if (registrationSubmitted && f['email'].errors) {
+                                    <div class="invalid-feedback">
+                                      @if (f['email'].errors['required']) {
+                                      <div>Email is required</div>
+                                      } @if (f['email'].errors['email']) {
+                                      <div>Email is invalid</div>
+                                      }
+                                    </div>
+                                    }
+                                  </div>
+                                <div class="form-group">
+                                    <input type="text" placeholder="User Name" class="form-control"
+                                    formControlName="username" [ngClass]="{ 'is-invalid': registrationSubmitted && f['username'].errors }">
+                                    @if (registrationSubmitted && f['username'].errors) {
+                                        <div class="invalid-feedback">
+                                          @if (f['username'].errors['required']) {
+                                          <div>username is required</div>
+                                          }
+                                        </div>
+                                    }
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" placeholder="Password"   formControlName="password"
+                                    class="form-control"  [ngClass]="{ 'is-invalid': registrationSubmitted && f['password'].errors }">
+                                    @if (registrationSubmitted && f['password'].errors) {
+                                        <div class="invalid-feedback">
+                                          @if (f['password'].errors['required']) {
+                                          <div>Password is required</div>
+                                          } @if (f['password'].errors['minlength']) {
+                                          <div>Password must be at least 6 characters</div>
+                                          } @if (f['password'].errors['maxlength']) {
+                                          <div>Username must not exceed 40 characters</div>
+                                          }
+                                        </div>
+                                        }
+                                </div>
+                                <div class="form-group">
+                                    <input
+                                      type="password"
+                                      placeholder="Confirm Password" 
+                                      formControlName="confirmPassword"
+                                      class="form-control"
+                                      [ngClass]="{ 'is-invalid': registrationSubmitted && f['confirmPassword'].errors }"
+                                    />
+                                    @if (registrationSubmitted && f['confirmPassword'].errors) {
+                                    <div class="invalid-feedback">
+                                      @if (f['confirmPassword'].errors['required']) {
+                                      <div>Confirm Password is required</div>
+                                      } @if (f['confirmPassword'].errors['matching']) {
+                                      <div>Confirm Password does not match</div>
+                                      }
+                                    </div>
+                                    }
+                                  </div>
+                                  <!-- <div class="form-group form-check">
+                                    <input
+                                      type="checkbox"
+                                      formControlName="acceptTerms"
+                                      class="form-check-input"
+                                      [ngClass]="{ 'is-invalid': submitted && f['acceptTerms'].errors }"
+                                    />
+                                    <label for="acceptTerms" class="form-check-label"
+                                      >I have read and agree to the Terms</label
+                                    >
+                                    @if (submitted && f['acceptTerms'].errors) {
+                                    <div class="invalid-feedback">Accept Terms is required</div>
+                                    }
+                                  </div> -->
+                                  <button type="submit">Register</button>
+                                  <div class="d-flex justify-content-between register-buttons">
+                                      <a routerLink="/"><i class="icofont-home"></i> Back Home</a>
+                                      <a href="" (click)="onReset()">Reset  Form</a>
+                                  </div>
+                                <!-- <div  class="form-group row justify-content-between">
+                                    <div class="col-4">
+                                        <button type="button" routerLink="/" class="btn btn-primary">
+                                            Home
+                                        </button>
+                                    </div>
+                                    <div class="col-4">
+                                        <button type="submit" class="btn btn-primary">
+                                            Register
+                                        </button>
+                                    </div>
+                                    <div class="col-4">
+                                        <button
+                                        type="button"
+                                        (click)="onReset()"
+                                        class="btn btn-warning"
+                                        >
+                                        Reset
+                                        </button>
+                                    </div>
+                                  </div> -->
+                                <!-- <div class="connect-with-social">
+                                    <span>Or</span>
+                                    <button type="submit" class="facebook"><i class='bx bxl-facebook'></i> Connect with Facebook</button>
+                                    <button type="submit" class="twitter"><i class='bx bxl-twitter'></i> Connect with Twitter</button>
+                                </div> -->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row  h-100 align-content-center" *ngIf="showActivationForm">
+                    <div class="col-12 align-content-center">
+                        <div class="register-form">
+                            <div
+                                class="logo"
+                                [class.d-none]="themeService.isDark()"
+                            >
+                                <a routerLink="/">
+                                    <img src="assets/img/black-logo.png" alt="image">
+                                </a>
+                            </div>
+                            <div
+                                class="logo d-none"
+                                [class.d-block]="themeService.isDark()"
+                            >
+                                <a routerLink="/">
+                                    <img src="assets/img/logo.png" alt="image">
+                                </a>
+                            </div>
+                            <h3>Activate your Account</h3>
+                            <p>Already signed up? <a class="login-button" routerLink="/login">Log in</a></p>
+                            <form [formGroup]="activationForm" (ngSubmit)="onActivationSubmit()">
+                                <div class="form-group">
+                                    <input type="text" placeholder="User Name" class="form-control disabled"
+                                        formControlName="username"  
+                                          [ngClass]="{ 'is-invalid': activationSubmitted && af['username'].errors }">
+                                        @if (activationSubmitted && af['username'].errors) {
+                                            <div class="invalid-feedback">
+                                            @if (af['username'].errors['required']) {
+                                            <div>username is required</div>
+                                            }
+                                            </div>
+                                        }
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" placeholder="Activation Code"   formControlName="code"
+                                    class="form-control"  [ngClass]="{ 'is-invalid': activationSubmitted && af['code'].errors }">
+                                    @if (activationSubmitted && af['code'].errors) {
+                                        <div class="invalid-feedback">
+                                          @if (af['code'].errors['required']) {
+                                          <div>code is required</div>
+                                          } @if (af['code'].errors['minlength']) {
+                                          <div>code must be at least 6 characters</div>
+                                          } @if (af['code'].errors['maxlength']) {
+                                          <div>Code must not exceed 6 characters</div>
+                                          }
+                                        </div>
+                                        }
+                                </div>
+                                <div  class="form-group d-flex justify-content-between">
+                                    <button type="submit" class="btn btn-primary">Activate</button>
+                                </div>
+                                <div class="d-flex justify-content-between register-buttons">
+                                    <a routerLink="/"><i class="icofont-home"></i> Back Home</a>
+                                    <a routerLink="/register" >Register</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

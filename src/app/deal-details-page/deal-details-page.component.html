@@ -1,0 +1,121 @@
+<app-header [color]="headerColor" [menuList]="pCategories()"></app-header>
+<section style="position: relative;top:125px;">
+    <div class="page-title-area item-bg3">
+        <div id="dealmask" class="dealmask"></div> 
+        <div class="container gx-0">
+            <div class="details-page-title-content">
+                <ul>
+                    <li><span (click)="gotoHome($event)">Home</span></li>
+                    <li>Deal Details</li>
+                </ul>
+                <!-- <h2>Deal Details</h2> -->
+            </div>
+        </div>
+    </div>
+</section>
+<section style="position: relative;top:50px;">
+    <div
+        class="product-details-area pt-100 pb-70"
+        [class.dark-product-details-area]="themeService.isDark()"
+    >
+        <div class="container details-section gx-0">
+            <div class="row">
+                <div class="col-lg-5 col-md-12 left-section">
+                    <div class="products-details-image deal-discount-tag">
+                        <!-- <owl-carousel-o [options]="detailsImageSlides">
+                            <ng-template carouselSlide> -->
+                                <img *ngIf="localSelectedDeal.imageUrl" [ngSrc]="localSelectedDeal.imageUrl" 
+                                        width="200" height="400" 
+                                        style="width: auto;" 
+                                        alt="image">
+                            <!-- </ng-template>
+                        </owl-carousel-o> -->
+
+                        <mat-chip-listbox *ngIf="localSelectedDeal.discountType == '%' && (+localSelectedDeal.discount > 0)"  >
+                            <mat-chip-option color="warn" selected  >{{localSelectedDeal.discount}}% OFF</mat-chip-option>
+                        </mat-chip-listbox>
+                        <mat-chip-listbox *ngIf="localSelectedDeal.discountType !== '%'" class="list-view" >
+                            <mat-chip-option color="warn" selected  >{{localSelectedDeal.discountType}} {{localSelectedDeal.discount}} OFF</mat-chip-option>
+                        </mat-chip-listbox>
+                    </div>
+                
+                </div>
+                <div class="col-lg-7 col-md-12">
+                    <div class="courses-details-header">
+                        <div class="courses-meta">
+                            <ul>
+                                <li (click)="shareOnWhatsApp($event, localSelectedDeal)">
+                                    <i class='bx bx-share-alt'></i>
+                                    <span>Share</span>
+                                    <a routerLink="/single-courses">With Friends</a>
+                                </li>
+                                <li>
+                                    <i class='bx bx-money'></i>
+                                    <span>Price</span>
+                                    <a  class="current-price" style="font-weight: 700;color:#0eb582;" href="">
+                                        {{localSelectedDeal.currentPrice | number : '1.2-2' | currency}}
+                                            <small *ngIf="+localSelectedDeal.discount > 0" style="font-weight: 400;opacity:0.8;color:#252525;" 
+                                            class="old-price">{{localSelectedDeal.originalPrice | number : '1.2-2'  | currency}}</small>
+                                    </a>
+                                </li>
+                                <li (click)="gotToShop(localSelectedDeal.dealUrl)">
+                                    <i class='bx bx-show'></i>
+                                    <span>Grab</span>
+                                    <a  >Go To Deal</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="product-details-desc">
+                        <h3>{{localSelectedDeal.title}}</h3>
+                        <div class="col-lg-12 col-md-12 mt--50">
+                            <div class="products-details-tab">
+                                <ul class="nav-tabset">
+                                    <li class="nav-tab" >
+                                        <span class="active" (click)="switchTab($event, 'tab1')">Description</span>
+                                    </li>
+                                    <!-- <li class="nav-tab" [ngClass]="{'active': currentTab === 'tab2'}">
+                                        <span (click)="switchTab($event, 'tab2')">Additional information</span>
+                                    </li> -->
+                                </ul>
+                                <div class="tabs-container">
+                                    <div class="pane" id="tab1" *ngIf="currentTab === 'tab1'">
+                                        <div class="products-details-tab-content">
+                                            <p [innerHTML]="localSelectedDeal.description"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="product-add-to-cart">
+                            <button type="submit"  matButton="outlined" (click)="gotToShop(localSelectedDeal.dealUrl)">
+                                <!-- <i class='bx bx-show icon-arrow before'></i> -->
+                                <span class="label">Grab The Deal</span>
+                                <!-- <i class="bx bx-show icon-arrow after"></i> -->
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+        <div class="blog-area pt-100 pb-70">
+            <div class="container">
+                <div class="section-title text-start">
+                    <span class="sub-title">Explore More</span>
+                    <h2>Related Deals</h2>
+                    <!-- <a routerLink="/blog-style-1" class="default-btn"><i class='bx bx-book-reader icon-arrow before'></i><span class="label">Read All</span><i class="bx bx-book-reader icon-arrow after"></i></a> -->
+                </div>
+                <app-deals-blog [deals]="localRelatedDeals"></app-deals-blog>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <app-language-subscribe [isMobile]="isMobile" ></app-language-subscribe>
+</section>
+<!-- <app-footer></app-footer> -->
+ <div class="content-footer">
+    <app-work-ifence-footer></app-work-ifence-footer>
+ </div>

@@ -48,7 +48,7 @@ $naari-theme: mat.define-theme((
     --darkColor: #262626;
     --blackColor: #5b5b98;
     --whiteColor: #ffffff;
-    --bodyColor: #a9a9c8;
+    --bodyColor: #5b5b6b;
     --transition: .5s;
     --fontSize: 14px;
 
@@ -608,4 +608,118 @@ input {
     border-radius: 6px !important;
   }
 
+
+
+  .page-title-content {
+    ul {
+        padding-left: 0;
+        margin-bottom: 0px;
+        list-style-type: none;
+
+        li {
+            display: inline-block;
+            margin-right: 30px;
+            position: relative;
+            color: var(--blackColor);
+
+            a {
+                display: inline-block;
+                color: var(--blackColor);
+                opacity: .85;
+
+                &:hover, &:focus {
+                    color: var(--mainColor);
+                    opacity: 1;
+                }
+            }
+            &::before {
+                content: "\ea50";
+                color: var(--blackColor);
+                position: absolute;
+                right: -25px;
+                top: -4px;
+                opacity: .85;
+                font: {
+                    family: 'boxicons'!important;
+                    weight: normal;
+                    style: normal;
+                    variant: normal;
+                    size: 20px;
+                };
+            }
+            &:last-child {
+                margin-right: 0;
+
+                &::before {
+                    display: none;
+                }
+            }
+        }
+    }
+    h2 {
+        color: var(--blackColor);
+        margin-bottom: 0;
+        font: {
+            size: 42px;
+            weight: 700;
+        };
+    }
+}
+
+
+  .details-page-title-content {
+    ul {
+        padding-left: 0;
+        margin-bottom: 0px;
+        list-style-type: none;
+
+        li {
+            display: inline-block;
+            margin-right: 30px;
+            position: relative;
+            color: var(--blackColor);
+
+            span {
+                display: inline-block;
+                color: var(--blackColor);
+                opacity: .85;
+                cursor: pointer;
+                &:hover, &:focus {  
+                    color: var(--mainColor);
+                    opacity: 1;
+                }
+            }
+            &::before {
+                content: "\ea50";
+                color: var(--blackColor);
+                position: absolute;
+                right: -25px;
+                top: -4px;
+                opacity: .85;
+                font: {
+                    family: 'boxicons'!important;
+                    weight: normal;
+                    style: normal;
+                    variant: normal;
+                    size: 20px;
+                };
+            }
+            &:last-child {
+                margin-right: 0;
+
+                &::before {
+                    display: none;
+                }
+            }
+        }
+    }
+    h2 {
+        color: var(--blackColor);
+        margin-bottom: 0;
+        font: {
+            size: 42px;
+            weight: 700;
+        };
+    }
+}
 

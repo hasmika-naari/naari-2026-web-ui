@@ -1,6 +1,6 @@
 import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { ActivatedRouteSnapshot, BaseRouteReuseStrategy, DetachedRouteHandle, PreloadAllModules, 
-        provideRouter, RouteReuseStrategy, withComponentInputBinding, withInMemoryScrolling, withPreloading, 
+        provideRouter, RouteReuseStrategy, withComponentInputBinding, withEnabledBlockingInitialNavigation, withInMemoryScrolling,  
         withRouterConfig, withViewTransitions } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -16,22 +16,26 @@ import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-br
 console.info('Angular CDK version', CDK_VERSION.full);
 console.info('Angular Material version', MAT_VERSION.full);
 
+
 export class AppRouteReuseStrategy implements BaseRouteReuseStrategy {
   shouldDetach(route: ActivatedRouteSnapshot): boolean {
     return false;
   }
+
   store(route: ActivatedRouteSnapshot, detachedTree: DetachedRouteHandle): void {
-    throw new Error('Method not implemented.');
+    // Do nothing
   }
+
   shouldAttach(route: ActivatedRouteSnapshot): boolean {
     return false;
   }
+
   retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle | null {
     return null;
   }
-  public shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-    // console.log('Check For Shoudl Reuse Route -- ' + future.routeConfig?.path + '====' + curr.routeConfig?.path + "---" + future.data['reuseComponent']) ;
-    return future.data['reuseComponent'];
+
+  shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
+    return future.routeConfig === curr.routeConfig;
   }
 }
 
@@ -60,9 +64,8 @@ export const appConfig: ApplicationConfig = {
                 withRouterConfig({
                 onSameUrlNavigation: 'reload',
                 }),
-                
+                withEnabledBlockingInitialNavigation(),
                 withViewTransitions(),
-                withPreloading(PreloadAllModules),
                 withInMemoryScrolling({
                 scrollPositionRestoration: 'enabled',
                 anchorScrolling: 'enabled'

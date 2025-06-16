@@ -1,6 +1,5 @@
 import { CommonModule, NgOptimizedImage, isPlatformBrowser } from '@angular/common';
 import { Component, Input, OnInit, PLATFORM_ID, afterNextRender, inject } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
@@ -13,7 +12,7 @@ import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 @Component({
     selector: 'app-deals-blog',
     imports: [CommonModule, NgOptimizedImage, RouterModule, MatCardModule,
-        FlexLayoutModule, CarouselModule, MatButtonModule, MatChipsModule],
+        CarouselModule, MatButtonModule, MatChipsModule],
     templateUrl: './deals-blog.component.html',
     styleUrls: ['./deals-blog.component.scss']
 })

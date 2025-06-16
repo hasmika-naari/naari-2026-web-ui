@@ -145,9 +145,6 @@ export class NaariHomePageComponent implements OnInit {
     if(isPlatformBrowser(this.platformId)){
       // this.loadFetcheddata();
       this.browser = true;
-      // setTimeout(() => {
-      //   this.isActionInProgress = false;
-      // }, 10);
     if(this.deviceService.isDesktop()){
       this.isDesktop = true;
       this.isMobile = false;
@@ -266,8 +263,8 @@ export class NaariHomePageComponent implements OnInit {
   // }
   }
 
-  addToWishlist(deal: any){
-
+  addToWishlist(deal: DealDataItem){
+      this.dealsStoreService.updateDailyDeals(this.transferState.get(makeStateKey('dealsTable'), []));
   }
   
   gotToShop(dealUrl: any){

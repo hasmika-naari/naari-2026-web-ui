@@ -212,6 +212,14 @@ export class PasswordRequest {
 
   constructor() {}
 }
+
+export class PasswordResetRequest {
+    
+  public currentPassword?: any;
+  public newPassword?: any;
+
+  constructor() {}
+}
  
 export class PasswordResult{
   public username?: any;

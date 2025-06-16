@@ -95,7 +95,8 @@
                 <!-- Top Row: Wishlist + Discount -->
                 <div class="d-flex justify-content-between align-items-start mb-2">
                     <button class="icon-btn wishlist" matIconButton (click)="addToWishlist(deal)" aria-label="Wishlist">
-                    <i class="bx bx-heart"></i>
+                        <i *ngIf="!deal.selected" class="bx bx-heart"></i>
+                        <i *ngIf="deal.selected" class="bx bxs-heart"></i>
                     </button>
                     <span *ngIf="deal.discount" class="discount-tag">
                     {{ deal.discount }}% OFF
@@ -203,40 +204,47 @@
     </div>
 </div>
 <section >
-    @defer (on viewport;) {
+    <ng-container *ngIf="browser">
+       @defer (on viewport;) {
         <app-homeone-courses [isMobile]="isMobile" [categories]="categories()" ></app-homeone-courses>
       } @placeholder (minimum 2000ms) {
-        <h1>All Categories</h1>
+        <h1>Loading</h1>
       } @loading {
         <span>Loading...</span>
       } @error {
         <span>Something went wrong :(</span>
       }
-    
+    </ng-container>
 </section>
-@defer (on viewport;) {
-    <section>
-        <app-become-partner></app-become-partner>
-    </section>
-  } @placeholder (minimum 2000ms) {
-    <h1>become Partner</h1>
-  } @loading {
-    <span>Loading...</span>
-  } @error {
-    <span>Something went wrong :(</span>
-  }
-
-  @defer (on viewport;) {
-    <section>
-        <app-language-subscribe [isMobile]="isMobile" ></app-language-subscribe>
-    </section>
-  } @placeholder (minimum 2000ms) {
-    <h1>become Partner</h1>
-  } @loading {
-    <span>Loading...</span>
-  } @error {
-    <span>Something went wrong :(</span>
-  }  <!-- Footer -->
+<section >
+    <ng-container *ngIf="browser">
+    @defer (on viewport;) {
+        <section>
+            <app-become-partner></app-become-partner>
+        </section>
+    } @placeholder (minimum 2000ms) {
+        <h1>Loading...</h1>
+    } @loading {
+        <span>Loading...</span>
+    } @error {
+        <span>Something went wrong :(</span>
+    }
+    </ng-container>
+</section>
+<section >
+    <ng-container *ngIf="browser">
+        @defer (on viewport;) {
+            <section>
+                <app-language-subscribe [isMobile]="isMobile" ></app-language-subscribe>
+            </section>
+        } @placeholder (minimum 2000ms) {
+            <h1>Loading...</h1>
+        } @loading {
+            <span>Loading...</span>
+        } @error {
+            <span>Something went wrong :(</span>
+        }  <!-- Footer -->
+    </ng-container>
   <div class="content-footer">
     <app-work-ifence-footer></app-work-ifence-footer>
   </div>

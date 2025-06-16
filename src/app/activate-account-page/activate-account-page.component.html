@@ -1,0 +1,76 @@
+<div
+    class="register-area"
+    [class.dark-register-area]="themeService.isDark()"
+>
+    <div class="row m-0">
+        <div class="col-lg-6 col-md-12 p-0">
+            <div class="register-image">
+                <img src="assets/img/register-bg3.jpg" alt="image">
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-12 p-0">
+            <div class="register-content">
+                <div class="row  h-100 align-content-center" >
+                    <div class="col-12 align-content-center">
+                        <div class="register-form">
+                            <div
+                                class="logo"
+                                [class.d-none]="themeService.isDark()"
+                            >
+                                <a routerLink="/">
+                                    <img src="assets/img/black-logo.png" alt="image">
+                                </a>
+                            </div>
+                            <div
+                                class="logo d-none"
+                                [class.d-block]="themeService.isDark()"
+                            >
+                                <a routerLink="/">
+                                    <img src="assets/img/logo.png" alt="image">
+                                </a>
+                            </div>
+                            <h3>Activate your Account</h3>
+                            <p>Already signed up? <a class="login-button" routerLink="/login">Log in</a></p>
+                            <form [formGroup]="activationForm" (ngSubmit)="onActivationSubmit()">
+                                <div class="form-group">
+                                    <input type="text" placeholder="User Name" class="form-control disabled"
+                                        formControlName="username"  
+                                          [ngClass]="{ 'is-invalid': activationSubmitted && af['username'].errors }">
+                                        @if (activationSubmitted && af['username'].errors) {
+                                            <div class="invalid-feedback">
+                                            @if (af['username'].errors['required']) {
+                                            <div>username is required</div>
+                                            }
+                                            </div>
+                                        }
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" placeholder="Activation Code"   formControlName="code"
+                                    class="form-control"  [ngClass]="{ 'is-invalid': activationSubmitted && af['code'].errors }">
+                                    @if (activationSubmitted && af['code'].errors) {
+                                        <div class="invalid-feedback">
+                                          @if (af['code'].errors['required']) {
+                                          <div>code is required</div>
+                                          } @if (af['code'].errors['minlength']) {
+                                          <div>code must be at least 6 characters</div>
+                                          } @if (af['code'].errors['maxlength']) {
+                                          <div>Code must not exceed 6 characters</div>
+                                          }
+                                        </div>
+                                        }
+                                </div>
+                                <div  class="form-group d-flex justify-content-between">
+                                    <button type="submit" class="btn btn-primary">Activate</button>
+                                 </div>
+                                 <div class="d-flex justify-content-between register-buttons">
+                                     <a routerLink="/"><i class="icofont-home"></i> Back Home</a>
+                                     <a routerLink="/register" >Register</a>
+                                 </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

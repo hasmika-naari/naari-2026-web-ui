@@ -23,7 +23,8 @@ export class HeaderStyleComponent implements OnInit, OnChanges {
     isSticky: boolean = false;
     @Input() menuList: Array<PCategory> = new Array<PCategory>();
     @Input() mobile: boolean =  false;
-    @HostListener('window:scroll', ['$event'])
+    @Input() color: boolean =  false;
+    @HostListener('window:scroll')
     checkScroll() {
         const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
         if (scrollPosition >= 50) {

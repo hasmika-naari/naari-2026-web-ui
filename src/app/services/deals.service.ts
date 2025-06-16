@@ -82,9 +82,9 @@ export class DealsService {
   getApprovedDeals(envi: object): Observable<any> {
     // let baseUrl = envi.toString() === 'server'?this.appConstants.BASE_SSR_API_URL:this.appConstants.BASE_API_URL;
     let baseUrl = this.appConstants.BASE_API_URL;
-    if(isPlatformBrowser(this.platformId)){
-      baseUrl = '';
-    }
+    // if(isPlatformBrowser(this.platformId)){
+    //   baseUrl = '';
+    // }
 
     let queryUrl = baseUrl +  '/api/naari-deals?approved.equals=true&page=0&size=2000&sort=id,asc';
     ////console.log('getDeals: api call');
@@ -111,9 +111,9 @@ export class DealsService {
   getDealsByCountryAndBrand(country: string, brand: string, envi: object): Observable<any> {
     // let baseUrl = envi.toString() === 'server'?this.appConstants.BASE_SSR_API_URL:this.appConstants.BASE_API_URL;
     let baseUrl = this.appConstants.BASE_API_URL;
-    if(isPlatformBrowser(this.platformId)){
-      baseUrl = '';
-    }
+    // if(isPlatformBrowser(this.platformId)){
+    //   baseUrl = '';
+    // }
     let queryUrl = baseUrl +  '/api/naari-deals?approved.equals=true&country.contains=' + country + '&brand.contains=' + brand + '&page=0&size=200&sort=id,asc';
     ////console.log('getDealsByCountryAndBrand: api call');
     return this.http
@@ -124,9 +124,9 @@ export class DealsService {
   getDealsByCountryAndCategory(country: string, category: string, envi: object): Observable<any> {
     // let baseUrl = envi.toString() === 'server'?this.appConstants.BASE_SSR_API_URL:this.appConstants.BASE_API_URL;
     let baseUrl = this.appConstants.BASE_API_URL;
-    if(isPlatformBrowser(this.platformId)){
-      baseUrl = '';
-    }
+    // if(isPlatformBrowser(this.platformId)){
+    //   baseUrl = '';
+    // }
     let queryUrl = baseUrl +  '/api/naari-deals?approved.equals=true&country.contains=' + country + '&category.equals=' + category +'&page=0&size=200&sort=id,asc';
     //console.log('getDealsByCountryAndCategory: URL ' + queryUrl);
     
@@ -139,9 +139,9 @@ export class DealsService {
   getDealsByCountryCategoryAndDealType(country: string,type: string,category: string, envi: object): Observable<any> {
     // let baseUrl = envi.toString() === 'server'?this.appConstants.BASE_SSR_API_URL:this.appConstants.BASE_API_URL;
     let baseUrl = this.appConstants.BASE_API_URL;
-    if(isPlatformBrowser(this.platformId)){
-      baseUrl = '';
-    }
+    // if(isPlatformBrowser(this.platformId)){
+    //   baseUrl = '';
+    // }
     let queryUrl = baseUrl +  '/api/naari-deals?approved.equals=true&country.contains=' 
           + country + '&category.equals=' + category + '&tags.contains=' + type +'&page=0&size=200&sort=id,asc';
           //console.log('getDealsByCountryCategoryAndDealType: URL ' + queryUrl);
@@ -155,9 +155,9 @@ export class DealsService {
   getDealsByCountryAndDealType(country: string,type: string, envi: object ): Observable<any> {
     // let baseUrl = envi.toString() === 'server'?this.appConstants.BASE_SSR_API_URL:this.appConstants.BASE_API_URL;
     let baseUrl = this.appConstants.BASE_API_URL;
-    if(isPlatformBrowser(this.platformId)){
-      baseUrl = '';
-    }
+    // if(isPlatformBrowser(this.platformId)){
+    //   baseUrl = '';
+    // }
     let queryUrl = baseUrl +  '/api/naari-deals?approved.equals=true&country.contains=' 
           + country + '&tags.contains=' + type +'&page=0&size=200&sort=id,asc';
           //console.log('getDealsByCountryAndDealType: URL ' + queryUrl);
@@ -248,9 +248,9 @@ export class DealsService {
   getMerchantsByCountryAndType(country: string, mtype: string, envi: object): Observable<any> {
     // let baseUrl = envi.toString() === 'server'?this.appConstants.BASE_SSR_API_URL:this.appConstants.BASE_API_URL;
     let baseUrl = this.appConstants.BASE_API_URL;
-    if(isPlatformBrowser(this.platformId)){
-      baseUrl = '';
-    }
+    // if(isPlatformBrowser(this.platformId)){
+    //   baseUrl = '';
+    // }
     let queryUrl = baseUrl +  '/api/merchants-and-social/?type=' + mtype +'&country=' + country;
     //console.log('getMerchantsByCountryAndType: URL ' + queryUrl);
     ////console.log('getMerchants: api call');
@@ -263,9 +263,9 @@ export class DealsService {
   createMerchant(merchant : Merchant,envi: object): Observable<any> {
     // let baseUrl = envi.toString() === 'server'?this.appConstants.BASE_SSR_API_URL:this.appConstants.BASE_API_URL;
     let baseUrl = this.appConstants.BASE_API_URL;
-    if(isPlatformBrowser(this.platformId)){
-      baseUrl = '';
-    }
+    // if(isPlatformBrowser(this.platformId)){
+    //   baseUrl = '';
+    // }
 
     let queryUrl = baseUrl +  '/api/naari-deals/merchants-and-social';
     ////console.log('createMerchant: api call');
@@ -277,9 +277,9 @@ export class DealsService {
   updateMerchant(merchant : Merchant,envi: object): Observable<any> {
     // let baseUrl = envi.toString() === 'server'?this.appConstants.BASE_SSR_API_URL:this.appConstants.BASE_API_URL;
     let baseUrl = this.appConstants.BASE_API_URL;
-    if(isPlatformBrowser(this.platformId)){
-      baseUrl = '';
-    }
+    // if(isPlatformBrowser(this.platformId)){
+    //   baseUrl = '';
+    // }
     let queryUrl = baseUrl +  '/api/naari-deals/merchants-and-social/'+ merchant.id;
     ////console.log('updateMerchant: api call');
     return this.http
@@ -290,9 +290,9 @@ export class DealsService {
   deleteMerchant(merchantId : string,envi: object): Observable<any> {
     // let baseUrl = envi.toString() === 'server'?this.appConstants.BASE_SSR_API_URL:this.appConstants.BASE_API_URL;
     let baseUrl = this.appConstants.BASE_API_URL;
-    if(isPlatformBrowser(this.platformId)){
-      baseUrl = '';
-    }
+    // if(isPlatformBrowser(this.platformId)){
+    //   baseUrl = '';
+    // }
     let queryUrl = baseUrl +  '/api/naari-deals/merchants-and-social/'+ merchantId;
     ////console.log('deleteMerchant: api call');
     return this.http
@@ -303,9 +303,9 @@ export class DealsService {
   getSlidesByCountryAndTag(country: string, tag: string,envi: object): Observable<any> {
     // let baseUrl = envi.toString() === 'server'?this.appConstants.BASE_SSR_API_URL:this.appConstants.BASE_API_URL;
     let baseUrl = this.appConstants.BASE_API_URL;
-    if(isPlatformBrowser(this.platformId)){
-      baseUrl = '';
-    }
+    // if(isPlatformBrowser(this.platformId)){
+    //   baseUrl = '';
+    // }
     let queryUrl = baseUrl +  '/api/slides?country.contains=' + country  + '&tags.contains=' + tag +'&sort=id,asc';
     ////console.log('getHomeSlides: api call');
     return this.http
@@ -317,9 +317,9 @@ export class DealsService {
   getDealsByCategoryTypeAndCountry(categoryType : string, country: string,envi: object): Observable<any> {
     // let baseUrl = envi.toString() === 'server'?this.appConstants.BASE_SSR_API_URL:this.appConstants.BASE_API_URL;
     let baseUrl = this.appConstants.BASE_API_URL;
-    if(isPlatformBrowser(this.platformId)){
-      baseUrl = '';
-    }
+    // if(isPlatformBrowser(this.platformId)){
+    //   baseUrl = '';
+    // }
     let queryUrl = baseUrl +  '/api/naari-deals?approved.equals=true&category.equals=' + categoryType +'&country.contains=' + country;
     ////console.log('getDealsByCategoryTypeAndCountry: api call');
     return this.http
@@ -345,9 +345,9 @@ export class DealsService {
   getCategoryTypesByCountry(country: string,envi: object): Observable<any> {
     // let baseUrl = envi.toString() === 'server'?this.appConstants.BASE_SSR_API_URL:this.appConstants.BASE_API_URL;
     let baseUrl = this.appConstants.BASE_API_URL;
-    if(isPlatformBrowser(this.platformId)){
-      baseUrl = '';
-    }
+    // if(isPlatformBrowser(this.platformId)){
+    //   baseUrl = '';
+    // }
     let queryUrl = baseUrl +  '/api/nd-get-category-types-by-country?country=' + country;
     ////console.log('getCategoryTypesByCountry: api call');
     return this.http
@@ -359,9 +359,9 @@ export class DealsService {
   getDealDetailsById(dealId: any,envi: object): Observable<any> {
     // let baseUrl = envi.toString() === 'server'?this.appConstants.BASE_SSR_API_URL:this.appConstants.BASE_API_URL;
     let baseUrl = this.appConstants.BASE_API_URL;
-    if(isPlatformBrowser(this.platformId)){
-      baseUrl = '';
-    }
+    // if(isPlatformBrowser(this.platformId)){
+    //   baseUrl = '';
+    // }
     // let baseUrl = '';
     // if (isPlatformServer(this.platformId)) {
     //   baseUrl = this.appConstants.BASE_API_SSR_URL;
@@ -372,7 +372,7 @@ export class DealsService {
     //   ////console.log('getDealDetailsById: api call ' + baseUrl);
     // }
     let queryUrl = baseUrl + this.appConstants.GET_DEAL_DETAILS_BY_ID + "?id.equals=" + dealId + "&page=0&size=20";
-    ////console.log('getDealDetailsById: api call : ' + queryUrl);
+    console.log('getDealDetailsById: api call : ' + queryUrl);
     return this.http
       .get<any>(queryUrl)
       .pipe(catchError(this.handleError));

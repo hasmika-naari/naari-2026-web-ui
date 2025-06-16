@@ -2,15 +2,15 @@
     <div id="mask" class="mask"></div> 
     <div class="d-table info-box">
         <div class="d-table-cell">
-            <div class="container">
+            <div class="container container-position" >
                 <div class="banner-content fade-in-down-feature">
                     <span class="sub-title fade-in-up-text"  >Savings Hub</span>
                     <h1 class="fade-in-up-text sub-message"  >Chic deals for her, where style meets savings.</h1>
                 </div>
-                <div class="feature-div-position loaded"  >
+                <div class="feature-div-position loaded" style="min-height: 150px;" >
                     <app-feature-types *ngIf="browser && (desktop || tablet)"></app-feature-types>
                 </div>
-                <div   class="container" style="position: relative;top:125px;" *ngIf="browser && (desktop || tablet)">
+                <div   class="container" style="position: relative;top:45px;min-height:150px;" *ngIf="browser && (desktop || tablet)">
                     <app-category-types *ngIf="browser" [dealTypes]="dealTypes"></app-category-types>
                 </div>
             </div>

@@ -23,7 +23,83 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
 import { NaariHomePageComponent } from './naari-home/naari-home.component';
 
 export const routes: Routes = [
-    { path: '', component: NaariHomePageComponent, data: {reuseComponent: true, breadcrumb: 'Naari Deals - Femine Specials'}},
+    { path: '', 
+       redirectTo: 'home',
+       pathMatch: 'full'  
+    },
+    { path: 'home', component: NaariHomePageComponent, data: {reuseComponent: true, breadcrumb: 'Naari Deals - Femine Specials'}},
+     {
+        path: 'deal/:id',
+        loadComponent: () => 
+            import('./deal-details-page/deal-details-page.component')
+                .then(m => m.DealDetailsPageComponent), data: {reuseComponent: true, breadcrumb: 'Deal Details'}
+    },
+    {
+            path: 'deals',
+            loadComponent: () => 
+                import('./deals-list/deals-list.component')
+                    .then(m => m.DealsListComponent), data: {reuseComponent: true, breadcrumb: 'Deals By Category' },
+    },
+      {
+        path: 'login',
+        loadComponent: () => 
+            import('./login-page/login-page.component')
+                .then(m => m.LoginPageComponent), data: {reuseComponent: true, breadcrumb: 'Login' },
+    },
+    {
+        path: 'reset-password',
+        loadComponent: () => 
+            import('./reset-password-page/reset-password-page.component')
+                .then(m => m.ResetPasswordPageComponent), data: {reuseComponent: true, breadcrumb: 'Change Password' },
+    },
+    {
+        path: 'register',
+        loadComponent: () => 
+            import('./register-page/register-page.component')
+                .then(m => m.RegisterPageComponent), data: {reuseComponent: true, breadcrumb: 'Register' },
+    },
+    {
+        path: 'activate',
+        loadComponent: () => 
+            import('./activate-account-page/activate-account-page.component')
+                .then(m => m.ActivateAccountPageComponent), data: {reuseComponent: true, breadcrumb: 'Activate' },
+    },
+    {
+        path: 'bio-profile',
+        loadComponent: () => 
+            import('./bio-profile/bio-profile-page.component')
+                .then(m => m.BioProfilePageComponent), data: {reuseComponent: true, breadcrumb: 'Bio Profile' },
+    },
+    {
+        path: 'boutiques',
+        loadComponent: () => 
+            import('./boutique-page/boutique-page.component')
+                .then(m => m.BoutiquePageComponent), data: {reuseComponent: true, breadcrumb: 'Boutique' },
+    },
+    {
+        path: 'contact-us',
+        loadComponent: () => 
+            import('./contact-page/contact-page.component')
+                .then(m => m.ContactComponent), data: {reuseComponent: true, breadcrumb: 'Contact Us' },
+    },
+    {
+        path: 'faq',
+        loadComponent: () => 
+            import('./faq-page/faq-page.component')
+                .then(m => m.FaqPageComponent), data: {reuseComponent: true, breadcrumb: 'FAQ' },
+    },
+    {
+        path: 'terms',
+        loadComponent: () => 
+            import('./terms-page/terms-page.component')
+                .then(m => m.TermsPageComponent), data: {reuseComponent: true, breadcrumb: 'Terms' },
+    },
+    {
+        path: 'privacy',
+        loadComponent: () => 
+            import('./privacy-page/privacy-page.component')
+                .then(m => m.PrivacyPageComponent), data: {reuseComponent: true, breadcrumb: 'Pricacy' },
+    },
     {
         path: 'apps',
         component: AppsComponent,

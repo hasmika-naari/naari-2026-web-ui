@@ -150,7 +150,7 @@ constructor(
         // No value in localStorage for the given key
         console.log('No value found in localStorage');
         if(!locationPath.includes('activate') && !locationPath.includes('reset-finish') ){
-          this.router.navigateByUrl('/');
+          // this.router.navigateByUrl('/');
         }
       }
       let parsedUserName;

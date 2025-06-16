@@ -1,0 +1,127 @@
+<div
+    class="login-area"
+    [class.dark-login-area]="themeService.isDark()"
+>
+    <div class="row m-0">
+        <div class="col-lg-6 col-md-12 p-0">
+            <div [class.login-image]="!isMobile" [class.mobile-login-image]="isMobile">
+                <img src="assets/images/background/login.jpg" alt="image">
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-12 p-0">
+            <div class="login-content">
+                <div class="d-table">
+                    <div class="d-table-cell">
+                        <div class="login-form">
+                            <div
+                                class="logo"
+                                [class.d-none]="themeService.isDark()"
+                            >
+                                <a routerLink="/">
+                                    <img src="assets/img/black-logo.png" alt="image">
+                                </a>
+                            </div>
+                            <div
+                                class="logo d-none"
+                                [class.d-block]="themeService.isDark()"
+                            >
+                                <a routerLink="/">
+                                    <img src="assets/img/logo.png" alt="image">
+                                </a>
+                            </div>
+                            @if (!isForgotPassword){
+                                <div>
+                                    <h3>Welcome Back</h3>
+                                    <p>Please Use Credentials to Login!</p>
+                                </div>
+                            <mat-progress-bar *ngIf="actionInProgress && submitted" color="primary" mode="indeterminate"></mat-progress-bar>
+                                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                                    <div class="form-group">
+                                        <input type="email" placeholder="Your user name" class="form-control"
+                                        formControlName="username" [ngClass]="{ 'is-invalid': submitted && f['username'].errors }">
+                                        @if (submitted && f['username'].errors) {
+                                            <div class="invalid-feedback">
+                                            @if (f['username'].errors['required']) {
+                                            <div>username is required</div>
+                                            }
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" placeholder="Your password"   formControlName="password"
+                                        class="form-control"  [ngClass]="{ 'is-invalid': submitted && f['password'].errors }">
+                                        @if (submitted && f['password'].errors) {
+                                            <div class="invalid-feedback">
+                                            @if (f['password'].errors['required']) {
+                                            <div>Password is required</div>
+                                            } @if (f['password'].errors['minlength']) {
+                                            <div>Password must be at least 6 characters</div>
+                                            } @if (f['password'].errors['maxlength']) {
+                                            <div>Username must not exceed 40 characters</div>
+                                            }
+                                            </div>
+                                            }
+                                    </div>
+                                    <button type="submit">Login</button>
+                                    <div class="d-flex justify-content-between forgot-password">
+                                        <a class="naari-link-btn"  routerLink="/"><i class="icofont-home link-icon"></i>Home</a>
+                                        <a class="naari-link-btn"  routerLink="/register"><i class="icofont-edit link-icon"></i>Register</a>
+                                        <a class="naari-link-btn" (click)="forgotPassword($event)"><i class="icofont-edit link-icon"></i> Forgot Password?</a>
+                                        <!-- <a  (click)="forgotPassword($event)">Forgot Password?</a> -->
+                                    </div>
+                                    <!-- <div class="connect-with-social">
+                                        <button type="submit" class="facebook"><i class='bx bxl-facebook'></i> Connect with Facebook</button>
+                                        <button type="submit" class="twitter"><i class='bx bxl-twitter'></i> Connect with Twitter</button>
+                                    </div> -->
+                                </form>
+                            }
+                            @if (isForgotPassword){
+                                <div>
+                                    <h3>Password Help</h3>
+                                    <p>Reset Your Password!</p>
+                                </div>
+                                <mat-progress-bar *ngIf="actionInProgress && forgotPasswordFormSubmitted" color="primary" mode="indeterminate"></mat-progress-bar>
+                                <form [formGroup]="forgotPasswordForm" (ngSubmit)="forgotPasswordSubmit($event)">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Your User Name" class="form-control"
+                                        formControlName="username" [ngClass]="{ 'is-invalid': forgotPasswordFormSubmitted && fpwf['username'].errors }">
+                                        @if (forgotPasswordFormSubmitted && fpwf['username'].errors) {
+                                            <div class="invalid-feedback">
+                                            @if (fpwf['username'].errors['required']) {
+                                            <div>username is required</div>
+                                            }
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="email" placeholder="Your Email"   formControlName="email"
+                                        class="form-control"  [ngClass]="{ 'is-invalid': forgotPasswordFormSubmitted && fpwf['email'].errors }">
+                                        @if (forgotPasswordFormSubmitted && fpwf['email'].errors) {
+                                            <div class="invalid-feedback">
+                                            @if (fpwf['email'].errors['required']) {
+                                            <div>Email is required</div>
+                                            } @if (fpwf['email'].errors['minlength']) {
+                                            <div>Password must be at least 6 characters</div>
+                                            }
+                                            </div>
+                                            }
+                                    </div>
+                                    <button type="submit" >Reset Password</button>
+                                    <div class="d-flex justify-content-between forgot-password">
+                                        <a class="naari-link-btn"  routerLink="/"><i class="icofont-home link-icon"></i>Home</a>
+                                        <a class="naari-link-btn"  routerLink="/register"><i class="icofont-edit link-icon"></i>Register</a>
+                                        <a class="naari-link-btn" (click)="switchToLogin($event)"><i class="icofont-edit link-icon"></i>Login Now?</a>
+                                    </div>
+                                    <!-- <div class="connect-with-social">
+                                        <button type="submit" class="facebook"><i class='bx bxl-facebook'></i> Connect with Facebook</button>
+                                        <button type="submit" class="twitter"><i class='bx bxl-twitter'></i> Connect with Twitter</button>
+                                    </div> -->
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

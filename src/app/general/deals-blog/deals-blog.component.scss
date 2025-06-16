@@ -4,7 +4,7 @@
 
     &.bg-image {
         background: {
-            image: url(../../../../assets/img/health-coaching/bg-image2.jpg);
+            image: url(../../../assets/img/health-coaching/bg-image2.jpg);
             position: center center;
             repeat: no-repeat;
             size: cover;
@@ -234,6 +234,7 @@
         }
     }
     &:hover, &:focus {
+        cursor: pointer;
         .post-image {
             &::before, &::after {
                 opacity: 1;

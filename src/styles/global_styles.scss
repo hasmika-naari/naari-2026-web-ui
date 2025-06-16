@@ -2,12 +2,12 @@
     Default CSS
     =================================================*/
     $font_family: 'Poppins', sans-serif;
-    $template_color: #FFD358; // #b81f89;
-    $template_bgcolor: #282835;
+    $template_color: #b81f89; // #b81f89;
+    $template_bgcolor: #ffffff;
     $transparent-primary_color: #0404048a;
 
-    $template_color2: #f0c03b;
-    $template_color_dark: #FFD358;  // #b81f89;
+    $template_color2: #006742;
+    $template_color_dark: #b81f89;  // #b81f89;
     $title-h1-color: #f7ecea;
     $template_color2-opcacity05: #b81f8a88;  // #b81f8a88;
     $white_color: #ffffff;
@@ -988,7 +988,7 @@ Subscribe CSS
 
 .feature-div-position{
     position: relative;
-    top:100px;
+    top:15px;
     height: 200px !important;
     width: 100%;
     border-radius: 8px;
@@ -2508,8 +2508,8 @@ Subscribe CSS
 
 .feature-div-position{
     position: relative;
-    top:100px;
-    height: 200px !important;
+    top:15px;
+    height: 170px !important;
     width: 100%;
     border-radius: 8px;
     opacity: 0; /* Initially hidden */
