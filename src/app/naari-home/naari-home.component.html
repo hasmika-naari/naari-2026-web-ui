@@ -1,4 +1,4 @@
-<app-header [menuList]="pCategories()" [mobile]="isMobile" ></app-header>
+<app-header [menuList]="pCatsLocal" [mobile]="isMobile" ></app-header>
 <app-main-banner [browser]="browser" [desktop]="isDesktop" [tablet]="isTablet"  [dealTypes]="dealTypes" ></app-main-banner>
  <div class="feature-div-mobile-position loaded" *ngIf="browser && isMobile">
     <div  *ngIf="browser && isMobile">
@@ -88,7 +88,7 @@
             <div class="row justify-content-start">
                 <div
                     *ngFor="let deal of dailyDeals() | paginate: { itemsPerPage: count, currentPage: page }; let i = index"
-                    class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
+                    class="col-12 col-sm-6 col-md-2 col-lg-2 mb-4  card-item"
                 >
              <mat-card class="deal-card-modern p-3 d-flex flex-column h-100 position-relative">
 

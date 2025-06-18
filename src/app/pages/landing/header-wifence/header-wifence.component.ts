@@ -45,7 +45,7 @@ export class HeaderWorkIfenceComponent implements OnInit, AfterViewInit, AfterVi
     isDesktop = true;
     browser = false;
 
-    @HostListener('window:scroll', ['$event'])
+    @HostListener('window:scroll')
     checkScroll() {
         const scrollPosition = this.window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
         if (scrollPosition >= 50) {
@@ -121,7 +121,7 @@ export class HeaderWorkIfenceComponent implements OnInit, AfterViewInit, AfterVi
     }
     goToDashboard($event: any){
         if(this.userActiveRole().role === 'ROLE_ADMIN'){
-            this.router.navigateByUrl("/user/dashboard-admin");
+            this.router.navigateByUrl("/admin/dashboard");
         }else if(this.userActiveRole().role === 'ROLE_USER'){
             this.router.navigateByUrl("/user/dashboard");
         }
@@ -133,7 +133,9 @@ export class HeaderWorkIfenceComponent implements OnInit, AfterViewInit, AfterVi
 
     ngAfterViewInit() {
         // AOS.refresh(); // Ensures AOS scans new elements
-        AOS.init();
+         if(isPlatformBrowser(this.platformId)){
+            AOS.init();
+         }
       }
     ngAfterViewChecked() {
     // AOS.refreshHard(); // Forces AOS to scan for hidden elements

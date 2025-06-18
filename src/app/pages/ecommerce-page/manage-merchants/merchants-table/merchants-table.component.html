@@ -1,0 +1,96 @@
+<div class="pl--20 pr--20 pt--15 filter-div">
+  <div fxLayout fxLayoutWrap fxLayout="row wrap" fxLayoutAlign="start center"  >
+    <div  fxFlex="calc(5% - 10px)" fxFlex.xs="calc(90% - 10px)" fxFlex.sm="calc(20% - 10px)"
+            fxFlex.md="calc(10% - 10px)" fxFlex.lg="calc(5% - 10px)" fxFlex.xl="calc(5% - 10px)" 
+            fxLayoutAlign="start center" >
+            <mat-form-field style="width: 70px;" >
+              <mat-label>Country</mat-label>
+              <mat-select [value]="selectedCountry" (selectionChange)="selectionChangeHandler($event)" >
+                <mat-option  value="2">All </mat-option>
+                <mat-option  *ngFor="let country of countries" 
+                      [value]="country.value">{{country.value}}
+                  </mat-option>
+              </mat-select>
+          </mat-form-field>
+          <mat-form-field style="width: 170px;" class=" ml--10">
+            <mat-label>Status</mat-label>
+            <mat-select [value]="selectedStatus" (selectionChange)="selectionStatusChangeHandler($event)" >
+                <mat-option  value="2">All </mat-option>
+                <mat-option  value="1">Approved </mat-option>
+                <mat-option  value="0">Not Approved </mat-option>
+            </mat-select>
+        </mat-form-field>
+          <mat-form-field class="streach-h-100 ml--10"  style="max-width: 400px ;" >
+            <mat-label>Title</mat-label>
+            <input  #Title maxlength="128"  placeholder="Title" matInput (keyup)="inputChangeHandler($event)" >
+            <mat-hint align="end">{{Title.value.length}} / 128</mat-hint>
+          </mat-form-field>
+          <span fxFlex></span>
+          <button mat-icon-button (click)="refreshData($event)" >
+            <mat-icon>refresh</mat-icon>
+        </button>
+    </div>
+  </div>
+</div> 
+ <div class="example-container mat-elevation-z8">
+  <mat-progress-bar *ngIf="(isActionInProgress$ | async)" color="primary" mode="indeterminate"></mat-progress-bar>
+  <mat-table #table [dataSource]="merchantsDataSource" >
+      <ng-container matColumnDef="action" sticky>
+        <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+        <mat-cell *matCellDef="let merchant">
+          <!-- Action Menu Items -->
+          <button mat-icon-button [matMenuTriggerFor]="mainMenu" (click)="menuClickHandler($event,merchant)" >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #mainMenu="matMenu">
+            <button mat-menu-item (click)="editMerchant(merchant)">
+              Edit Merchant
+            </button>
+            <button mat-menu-item (click)="deleteMerchant(merchant)">
+              Delete Merchant
+            </button>
+            <button mat-menu-item (click)="deActivateMerchant(merchant)">
+              De Activate Merchant
+            </button>
+            <button mat-menu-item (click)="activateMerchant(merchant)">
+              Activate Merchant
+            </button>
+          </mat-menu>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="title" sticky>
+        <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+        <mat-cell *matCellDef="let merchant"> {{merchant.title}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="type" sticky>
+        <mat-header-cell *matHeaderCellDef> TYpe </mat-header-cell>
+        <mat-cell *matCellDef="let merchant"> {{merchant.type}} </mat-cell>
+      </ng-container>
+  
+      <!-- Name Column -->
+      <ng-container matColumnDef="city">
+        <mat-header-cell *matHeaderCellDef> City </mat-header-cell>
+        <mat-cell *matCellDef="let merchant"> {{merchant.city}} </mat-cell>
+      </ng-container>
+  
+      <!-- Weight Column -->
+      <ng-container matColumnDef="country">
+        <mat-header-cell *matHeaderCellDef> Country </mat-header-cell>
+        <mat-cell *matCellDef="let merchant"> {{merchant.country}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+        <mat-cell *matCellDef="let merchant"> {{merchant.status}} </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></mat-header-row>
+      <mat-row   [class.make-selected]="row.selected === true" (click)="selectRow($event, row)"
+          
+          *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  
+  </div>
+  <mat-paginator #paginator
+  [pageSize]="200"
+  [pageSizeOptions]="[50, 100, 200]" 
+  class="mat-paginator-sticky">
+</mat-paginator>

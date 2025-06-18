@@ -117,7 +117,7 @@ export class AppUtilService {
                           let roles: Array<WifRole> = [];
                           account.authorities.forEach(authr => {
                             if(authr === 'ROLE_ADMIN'){
-                              roles.push({title:'App Admin ',role:authr, url: '/user/dashboard-admin' });
+                              roles.push({title:'App Admin ',role:authr, url: '/admin/dashboard' });
                             }else if(authr === 'ROLE_USER'){
                               roles.push({title: 'Member' ,role:authr, url: '/user/dashboard' });
                             }

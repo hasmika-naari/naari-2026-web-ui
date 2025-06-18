@@ -1,0 +1,242 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav mode="over" class="sidenav bg-white naari-card">
+    <!-- Filters -->
+    <div class="p-3 naari-card">
+      <h5>Filters</h5>
+
+      <!-- Status -->
+      <mat-form-field appearance="fill" class="w-100 mb-3">
+        <mat-label>Status</mat-label>
+        <mat-icon matPrefix>check_circle</mat-icon>
+        <mat-select  #selectedStatusT [value]="selectedStatus" (selectionChange)="selectionStatusChangeHandler($event)">
+          <mat-option value="-1">All</mat-option>
+          <mat-option value="true">Approved</mat-option>
+          <mat-option value="false">Not Approved</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Category -->
+      <mat-form-field appearance="fill" class="w-100 mb-3">
+        <mat-label>Category</mat-label>
+        <mat-icon matPrefix>category</mat-icon>
+        <mat-select [value]="selectedCategory" (selectionChange)="selectionCategoryChangeHandler($event)">
+          <mat-option value="All">All Categories</mat-option>
+          <mat-option *ngFor="let cat of categoriesLocal" [value]="cat.code">{{ cat.title }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Title -->
+      <mat-form-field appearance="fill" class="w-100 mb-3">
+        <mat-label>Title</mat-label>
+        <mat-icon matPrefix>edit</mat-icon>
+        <input #Title maxlength="128" placeholder="Title" matInput (keyup)="inputChangeHandler($event)">
+        <mat-icon matSuffix>filter_alt</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <mat-card class="naari-card add-product-card mb-25 bg-white border-none d-block">
+      <mat-card-header>
+          <mat-card-title>
+              <h5 class="mt-0 mb-0">
+                  Add A Product
+              </h5>
+          </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+          <form>
+              <div class="row">
+                  <div class="col-lg-12">
+                      <label class="label d-block fw-medium mb-10">
+                          Product Title
+                      </label>
+                    <mat-form-field appearance="fill" class="w-100">
+                      <span matPrefix>
+                          <i-feather name="edit-3" style="margin-right: 8px; margin-top: 4px;"></i-feather>
+                      </span>
+                      <mat-label>Enter product title</mat-label>
+                      <input matInput placeholder=" ">
+                      </mat-form-field>
+                  </div>
+              </div>
+          </form>
+      </mat-card-content>
+    </mat-card>
+
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-card class="products-filter-card mb-2 bg-white border-none d-block">
+      <mat-card-header class="p-2">
+        <div class="d-flex justify-content-between align-items-center w-100">
+         <div class="d-flex align-items-center">
+          <!-- Filter Icon -->
+          <button mat-icon-button (click)="sidenav.toggle()">
+            <mat-icon>filter_list</mat-icon>
+          </button>
+
+          <!-- Title and Subtitle stacked -->
+          <div class="ms-2">
+            <mat-card-title class="mb-0">
+              <h2 class="mb-0">Posted Deals</h2>
+            </mat-card-title>
+            <mat-card-subtitle class="mb-0">
+              <!-- <h5 class="mb-0">All current active and past posted deals</h5> -->
+               <div class="selected-filters d-lg-flex align-items-center">
+                    <ul class="p-0 mb-0 mt-0">
+                        <li class="d-inline-block position-relative fw-medium text-primary">
+                           {{ statusLabel }}
+                            <button type="button" class="p-0 bg-transparent border-none cursor-pointer">
+                                <i *ngIf="+selectedStatus !== -1" class="ri-close-fill" (click)="removeStausFilter()"></i>
+                            </button>
+                        </li>
+                        <li class="d-inline-block position-relative fw-medium text-primary">
+                            {{selectedCat}}
+                            <button type="button" class="p-0 bg-transparent border-none cursor-pointer">
+                                <i *ngIf="selectedCategory !== 'All'" class="ri-close-fill" (click)="removeCategoryFilter()"></i>
+                            </button>
+                        </li>
+                    </ul>
+                    <button mat-button type="button">
+                        Clear All
+                    </button>
+                </div>
+            </mat-card-subtitle>
+          </div>
+        </div>
+
+           
+          <div>
+             <button mat-icon-button class="list-action-icon-btn" [disabled]="isActionInProgress">
+                <mat-icon>add</mat-icon>
+            </button>
+            <button mat-icon-button (click)="refreshData($event)" class="list-action-icon-btn" [disabled]="isActionInProgress">
+              <mat-icon>refresh</mat-icon>
+            </button>
+            <button mat-icon-button [matMenuTriggerFor]="actionsMenu" [disabled]="isActionInProgress" class="list-action-icon-btn">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <mat-menu #actionsMenu="matMenu" class="menu-right-align">
+          <button mat-menu-item>
+            <div class="menu-item-content">
+              <span class="menu-text">Post Deal</span>
+              <mat-icon>add</mat-icon>
+            </div>
+          </button>
+          <button mat-menu-item>
+            <div class="menu-item-content">
+              <span class="menu-text">Delete All Expired Deals - US</span>
+              <mat-icon>delete_forever</mat-icon>
+            </div>
+          </button>
+          <button mat-menu-item>
+            <div class="menu-item-content">
+              <span class="menu-text">Delete All Expired Deals - IN</span>
+              <mat-icon>delete_forever</mat-icon>
+            </div>
+          </button>
+          <button mat-menu-item>
+            <div class="menu-item-content">
+              <span class="menu-text">Delete Selected Deals</span>
+              <mat-icon>delete</mat-icon>
+            </div>
+          </button>
+          <button mat-menu-item>
+            <div class="menu-item-content">
+              <span class="menu-text">Load Amazon Deals</span>
+              <mat-icon>cloud_download</mat-icon>
+            </div>
+          </button>
+        </mat-menu>
+      </mat-card-header>
+        <mat-progress-bar *ngIf="isActionInProgress" color="primary" mode="indeterminate"></mat-progress-bar>
+    </mat-card>
+
+    <div class="example-container mat-elevation-z8">
+      <div [ngClass]="{
+            'ml--25 mr--25': isMobile,
+            'ml--100 mr--100': isDesktop,
+            'ml--50 mr--50': isTablet
+          }">
+        <div class="row products-wrapper">
+          <div *ngFor="let deal of allFilteredDeals()" class="col-12 col-sm-6 col-md-2 col-lg-{{ viewCol }}" 
+              style="padding-left: 8px;padding-right: 8px;">
+            <mat-card class="deal-card" [class.deal-card-selected]="deal.selected">
+              <div class="checkbox-wrapper">
+                <mat-checkbox [ngModel]="deal.selected" color="primary" (ngModelChange)="setDealSelected($event, deal)">
+                </mat-checkbox>
+              </div>
+
+              <div *ngIf="showStartDate(deal.startDate)" class="deal-start-date">
+                <div class="start-date-label">
+                  Deal Starts From: <span class="start-date">{{ deal.startDate }}</span>
+                </div>
+              </div>
+
+              <a [routerLink]="['/deals/deal/', deal.id]" class="image-wrapper">
+                <img [src]="deal.imageUrl" alt="deal image">
+              </a>
+
+              <span *ngIf="deal.highlight" class="highlight-badge"
+                    [ngStyle]="{ backgroundColor: deal.highlightColor }">
+                <span [ngStyle]="{ color: deal.highlightColor === '#fbf5d6' ? '#555' : '#fff' }">
+                  {{ deal.highlight }}
+                </span>
+              </span>
+
+              <span class="merchant-name">{{ deal.merchant }}</span>
+
+              <a [routerLink]="['/deals/deal/', deal.id]" class="deal-title">
+                {{ deal.title }}
+              </a>
+
+              <div class="deal-prices">
+                <mat-icon class="hotjar-icon">whatshot</mat-icon>
+                <div class="price-texts">
+                  <p class="new-price">
+                    <span *ngIf="deal.country === 'usa'">$</span>
+                    <span *ngIf="deal.country !== 'usa'">₹</span>
+                    {{ deal.currentPrice | number : '1.2-2' }}
+                  </p>
+                  <p class="old-price" *ngIf="deal.originalPrice">
+                    <span *ngIf="deal.country === 'usa'">$</span>
+                    <span *ngIf="deal.country !== 'usa'">₹</span>
+                    {{ deal.originalPrice | number : '1.2-2' }}
+                  </p>
+                </div>
+              </div>
+
+              <div class="divider mt-2"></div>
+
+              <div class="deal-actions d-flex justify-content-between align-items-center">
+                <span class="approval-status">{{ deal.approved ? 'Approved' : 'Not Approved' }}</span>
+                <button mat-icon-button [matMenuTriggerFor]="mainMenu" (click)="menuClickHandler($event, deal)">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #mainMenu="matMenu">
+                  <button mat-menu-item [disabled]="!deal?.dealUrl" (click)="checkDeal(deal)">Check Deal URL</button>
+                  <button mat-menu-item (click)="editDeal(deal)">Edit Deal</button>
+                  <button mat-menu-item (click)="deleteDeal(deal)">Delete Deal</button>
+                  <button mat-menu-item (click)="expireDeal(deal)">Expire Deal</button>
+                  <button mat-menu-item (click)="deActivateDeal(deal)">De Activate Deal</button>
+                  <button mat-menu-item (click)="activateDeal(deal)">Activate Deal</button>
+                  <button mat-menu-item (click)="approveDeal(deal)">Approve Deal</button>
+                </mat-menu>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+
+        <div class="col-12 text-center" *ngIf="dealsLoaded && !allFilteredDeals().length && !isActionInProgress">
+          <img src="assets/images/empty-search.jpg" class="img-fluid mb-4">
+          <h3>Sorry! Couldn't find the Deals you were looking For!!!</h3>
+          <p>Please check other options.</p>
+        </div>
+      </div>
+      <app-work-ifence-footer></app-work-ifence-footer>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

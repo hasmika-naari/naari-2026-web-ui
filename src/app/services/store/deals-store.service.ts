@@ -23,7 +23,8 @@ import _ from "lodash";
         dailyDeals: new Array<DealDataItem>(),
         filteredDailyDeals: new Array<DealDataItem>(),
         deals: new Array<DealDataItem>(),
-        filteredDeals: new Array<DealDataItem>(),
+        allDeals: new Array<DealDataItem>(),
+        filteredAllDeals: new Array<DealDataItem>(),
         selectedHomeFilter: '',
         selectedHomeSorting: new DealSorting(),
         selectedDeal: new DealDataItem(),
@@ -45,7 +46,7 @@ import _ from "lodash";
           return {
             ...state,
             deals: [...deals],
-            filteredDeals: [...deals]
+            filteredAllDeals: [...deals]
           };
         });
     }    
@@ -75,7 +76,7 @@ import _ from "lodash";
       this.state.update((state) => ({
       ...state,
       dailyDeals: [...deals],
-      filteredDailyDeals: [...deals]
+      filteredDailyDeals: [...deals, ...deals]
       }));
     }   
 
@@ -84,18 +85,57 @@ import _ from "lodash";
       this.state.update((state) => ({
       ...state,
       dailyDeals: [...deals],
-      filteredDailyDeals: [...deals]
+      filteredDailyDeals: [...deals, ...deals]
       }));
     }   
 
-    updateDeals(deals:  Array<DealDataItem>) {
-      /// Implement Filter code here..
-      this.state.update((state) => ({
+updateAllDeals(deals: Array<DealDataItem>, status: any, category: string, title: string) {
+  const filteredDeals = deals.filter(deal => {
+    const statusMatch = +status === -1 ? true : String(deal.approved) === String(status);
+    const categoryMatch = (category === 'All') ? true: (deal.category === category);
+    const titleMatch = title
+      ? deal.title.toLowerCase().includes(title.toLowerCase())
+      : true;
+
+    return statusMatch && categoryMatch && titleMatch;
+  });
+
+  const sortedFilteredDeals = _.orderBy(filteredDeals, d => +d.discount, ['desc']);
+
+  this.state.update((state) => ({
+    ...state,
+    allDeals: [...deals],
+    filteredAllDeals: [...sortedFilteredDeals]
+  }));
+}
+
+
+filterAllDeals(status: any, category: string, title: string) {
+  const toBoolean = (value: any): boolean =>
+    value === true || value === 'true';
+
+  this.state.update((state) => {
+    let filteredAllDeals: Array<DealDataItem> = state.allDeals.filter(deal => {
+      const statusMatch = +status === -1 ? true : deal.approved === toBoolean(status);
+      const categoryMatch = (category === 'All') ? true: (deal.category === category);
+      const titleMatch = title
+        ? deal.title.toLowerCase().includes(title.toLowerCase())
+        : true;
+
+      return statusMatch && categoryMatch && titleMatch;
+    });
+
+    // Sort by discount descending
+    filteredAllDeals = _.orderBy(filteredAllDeals, d => +d.discount, ['desc']);
+
+    return {
       ...state,
-      deals: [...deals],
-      filteredDeals: [...deals]
-      }));
-    }  
+      filteredAllDeals: [...filteredAllDeals]
+    };
+  });
+}
+
+
 
     updateSelectedDeal(deal:  DealDataItem) {
       /// Implement Filter code here..
@@ -223,7 +263,7 @@ import _ from "lodash";
       return computed(() => this.state().deals);
     }
 
-    getFilteredDeals(): Signal<Array<DealDataItem>> {
-      return computed(() => this.state().filteredDeals);
+    getFilteredAllDeals(): Signal<Array<DealDataItem>> {
+      return computed(() => this.state().filteredAllDeals);
     }
   }

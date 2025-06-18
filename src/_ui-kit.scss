@@ -1,7 +1,7 @@
 // Mat Card
 .mat-mdc-card {
     &.naari-card {
-        box-shadow: unset;
+        box-shadow: unset !important;
         border-radius: 6px;
         padding: 30px 25px;
 
@@ -361,7 +361,7 @@
                 }
                 .mat-mdc-text-field-wrapper {
                     border-radius: 10px;
-                    padding: 0 15px 0 60px;
+                    padding: 0 15px 0 10px;
                     border: 1px solid #f5f7fa;
                 }
                 .date-input {
@@ -1501,7 +1501,7 @@ blockquote {
     .mat-mdc-card {
         &.naari-card {
             padding: 20px;
-
+            box-shadow: unset !important;
             .mat-mdc-card-header {
                 margin-bottom: 20px;
 
@@ -1633,7 +1633,7 @@ blockquote {
     .mat-mdc-card {
         &.naari-card {
             padding: 25px 20px;
-
+            box-shadow: unset !important;
             .mat-mdc-card-header {
                 .mat-mdc-card-header-text {
                     .mat-mdc-card-title {

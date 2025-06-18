@@ -31,9 +31,9 @@ private localStorageService: LocalStorageService
 
 signInPre(loginRequest: LoginRequest): Observable<any> {
   let baseUrl = this.appConstants.BASE_API_URL;
-  if(isPlatformBrowser(this.platformId)){
-    baseUrl = '';
-  }
+  // if(isPlatformBrowser(this.platformId)){
+  //   baseUrl = '';
+  // }
 let url:string = baseUrl + this.appConstants.SIGN_IN_PRE_URL;
 return this.http
   .post<any>(url, loginRequest)
@@ -42,9 +42,9 @@ return this.http
 
 signIn(loginRequest: LoginRequest): Observable<any> {
   let baseUrl = this.appConstants.BASE_API_URL;
-  if(isPlatformBrowser(this.platformId)){
-    baseUrl = '';
-  }
+  // if(isPlatformBrowser(this.platformId)){
+  //   baseUrl = '';
+  // }
 let url:string = baseUrl + this.appConstants.SIGN_IN_URL;
 return this.http
   .post<any>(url, loginRequest)
@@ -53,9 +53,9 @@ return this.http
 
 getAccountProfile() {
   let baseUrl = this.appConstants.BASE_API_URL;
-  if(isPlatformBrowser(this.platformId)){
-    baseUrl = '';
-  }
+  // if(isPlatformBrowser(this.platformId)){
+  //   baseUrl = '';
+  // }
 let url:string = baseUrl + this.appConstants.ACCOUNT_URL;
 // 
 console.log('getAccount: api call');
@@ -66,9 +66,9 @@ return this.http
 
 getLoginProfile(userName:any) {
   let baseUrl = this.appConstants.BASE_API_URL;
-  if(isPlatformBrowser(this.platformId)){
-    baseUrl = '';
-  }
+  // if(isPlatformBrowser(this.platformId)){
+  //   baseUrl = '';
+  // }
 let url:string = baseUrl + this.appConstants.GET_LOGIN_PROFILE_URL;
  url = url + '/' + userName;
 console.log('getAccount: api call');
@@ -96,9 +96,9 @@ doPersistLocalActiveChildProfile(chProfile:Profile): Observable<Profile> {
 
 signUp(signUpRequest: RegisterRequest) {
   let baseUrl = this.appConstants.BASE_API_URL;
-  if(isPlatformBrowser(this.platformId)){
-    baseUrl = '';
-  }
+  // if(isPlatformBrowser(this.platformId)){
+  //   baseUrl = '';
+  // }
 let url:string = baseUrl + this.appConstants.SIGNUP_URL;
 // 
 console.log('signup: api call');
@@ -109,12 +109,12 @@ return this.http
 
 checkUserName(userNameCheckRequest: CheckUserNameRequest) {
   let baseUrl = this.appConstants.BASE_API_URL;
-  if(isPlatformBrowser(this.platformId)){
-    baseUrl = '';
-    console.log('checkUserName: api call - isPlatformBrowser');
-  }else{
-    console.log('checkUserName: api call - isPlatformServer');
-  }
+  // if(isPlatformBrowser(this.platformId)){
+  //   baseUrl = '';
+  //   console.log('checkUserName: api call - isPlatformBrowser');
+  // }else{
+  //   console.log('checkUserName: api call - isPlatformServer');
+  // }
 let url:string = baseUrl + this.appConstants.CHECK_USER_NAME_URL;
 // 
 console.log('checkUserName: api call');
@@ -125,9 +125,9 @@ return this.http
 
 sendMessagetoUser() {
   let baseUrl = this.appConstants.BASE_API_URL;
-  if(isPlatformBrowser(this.platformId)){
-    baseUrl = '';
-  }
+  // if(isPlatformBrowser(this.platformId)){
+  //   baseUrl = '';
+  // }
 let url:string = baseUrl + this.appConstants.SEND_MESSAGE_TO_USER_URL + 'teja';
 // 
 console.log('sendMessagetoUser: api call');
@@ -143,9 +143,9 @@ return this.http
 
 sendBroadMessagetoUser() {
   let baseUrl = this.appConstants.BASE_API_URL;
-  if(isPlatformBrowser(this.platformId)){
-    baseUrl = '';
-  }
+  // if(isPlatformBrowser(this.platformId)){
+  //   baseUrl = '';
+  // }
 let url:string = baseUrl + this.appConstants.SEND_BROADCAST_MESSAGE_URL;
 // 
 console.log('sendBroadMessagetoUser: api call');
@@ -160,9 +160,9 @@ return this.http
 
 saveLoginProfile(loginProfile: LoginProfileUpdateRequest) {
   let baseUrl = this.appConstants.BASE_API_URL;
-  if(isPlatformBrowser(this.platformId)){
-    baseUrl = '';
-  }
+  // if(isPlatformBrowser(this.platformId)){
+  //   baseUrl = '';
+  // }
 let url:string = baseUrl + this.appConstants.SAVE_LOGIN_PROFILE_URL + '/' + loginProfile.id;
 // 
 console.log('saveLoginProfile: api call');
@@ -175,9 +175,9 @@ return this.http
 
 patchLoginProfile(loginProfile: LoginProfileUpdateRequest) {
   let baseUrl = this.appConstants.BASE_API_URL;
-  if(isPlatformBrowser(this.platformId)){
-    baseUrl = '';
-  }
+  // if(isPlatformBrowser(this.platformId)){
+  //   baseUrl = '';
+  // }
 let url:string = baseUrl + this.appConstants.SAVE_LOGIN_PROFILE_URL + '/' + loginProfile.id;
 // 
 console.log('saveLoginProfile: api call');
@@ -191,9 +191,9 @@ return this.http
 
 saveContact(contact: ContactListItem) {
   let baseUrl = this.appConstants.BASE_API_URL;
-  if(isPlatformBrowser(this.platformId)){
-    baseUrl = '';
-  }
+  // if(isPlatformBrowser(this.platformId)){
+  //   baseUrl = '';
+  // }
 let url:string = baseUrl + this.appConstants.SAVE_LOGIN_PROFILE_URL;
 // 
 console.log('saveLoginProfile: api call');
@@ -207,9 +207,9 @@ return of(contact);
 
 removeContact(contact: ContactListItem) {
   let baseUrl = this.appConstants.BASE_API_URL;
-  if(isPlatformBrowser(this.platformId)){
-    baseUrl = '';
-  }
+  // if(isPlatformBrowser(this.platformId)){
+  //   baseUrl = '';
+  // }
 let url:string = baseUrl + this.appConstants.SAVE_LOGIN_PROFILE_URL;
 // 
 console.log('saveLoginProfile: api call');
@@ -223,27 +223,27 @@ return of(contact);
 
 initiateResetPassword(reset : PasswordResetRqst){
   let baseUrl = this.appConstants.BASE_API_URL;
-  if(isPlatformBrowser(this.platformId)){
-    baseUrl = '';
-  }
+  // if(isPlatformBrowser(this.platformId)){
+  //   baseUrl = '';
+  // }
   const url = this.appConstants.BASE_API_URL + '/api/wif-reset-password/init';
   return this.http.post<any>(url,reset).pipe(catchError(this.handleError))
 }
 
 finishResetPassword(reset : PasswordResetFinishRqst){
   let baseUrl = this.appConstants.BASE_API_URL;
-  if(isPlatformBrowser(this.platformId)){
-    baseUrl = '';
-  }
+  // if(isPlatformBrowser(this.platformId)){
+  //   baseUrl = '';
+  // }
   const url = this.appConstants.BASE_API_URL + '/api/wif-reset-password/finish';
   return this.http.post<any>(url,reset).pipe(catchError(this.handleError))
 }
 
 saveBioProfile(bioProfile: BioProfileAddRequest) {
   let baseUrl = this.appConstants.BASE_API_URL;
-  if(isPlatformBrowser(this.platformId)){
-    baseUrl = '';
-  }
+  // if(isPlatformBrowser(this.platformId)){
+  //   baseUrl = '';
+  // }
 let url:string = baseUrl + this.appConstants.SAVE_BIO_PROFILE_URL;
 // 
 console.log('saveBioProfile: api call');
@@ -255,9 +255,9 @@ return this.http
 
 updateBioProfile(bioProfile: BioProfileAddRequest) {
   let baseUrl = this.appConstants.BASE_API_URL;
-  if(isPlatformBrowser(this.platformId)){
-    baseUrl = '';
-  }
+  // if(isPlatformBrowser(this.platformId)){
+  //   baseUrl = '';
+  // }
 let url:string = baseUrl + this.appConstants.SAVE_BIO_PROFILE_URL + '/' + bioProfile.id;
 // 
 console.log('UpdateBioProfile: api call');
@@ -269,9 +269,9 @@ return this.http
 
 getBioProfile(userName: string) {
   let baseUrl = this.appConstants.BASE_API_URL;
-  if(isPlatformBrowser(this.platformId)){
-    baseUrl = '';
-  }
+  // if(isPlatformBrowser(this.platformId)){
+  //   baseUrl = '';
+  // }
 let url:string = baseUrl + this.appConstants.GET_BIO_PROFILE_URL;
 
 url = url + '/' + userName;
@@ -282,9 +282,9 @@ return this.http
 
 getContactList(userId: string) {
   let baseUrl = this.appConstants.BASE_API_URL;
-  if(isPlatformBrowser(this.platformId)){
-    baseUrl = '';
-  }
+  // if(isPlatformBrowser(this.platformId)){
+  //   baseUrl = '';
+  // }
 let url:string = baseUrl + this.appConstants.GET_CONTACTS;
 
 url = url + '/' + userId;
@@ -296,9 +296,9 @@ return this.http
 
 saveAddress(address: Address) {
   let baseUrl = this.appConstants.BASE_API_URL;
-  if(isPlatformBrowser(this.platformId)){
-    baseUrl = '';
-  }
+  // if(isPlatformBrowser(this.platformId)){
+  //   baseUrl = '';
+  // }
 let url:string = baseUrl + this.appConstants.SAVE_ADDRESS_URL;
 // 
 console.log('save Address: api call');
@@ -339,9 +339,9 @@ return this.http
 
 getAddress(userName: string) {
   let baseUrl = this.appConstants.BASE_API_URL;
-  if(isPlatformBrowser(this.platformId)){
-    baseUrl = '';
-  }
+  // if(isPlatformBrowser(this.platformId)){
+  //   baseUrl = '';
+  // }
 let url:string = baseUrl + this.appConstants.GET_ADDRESS_URL+ '/' +userName;
 // 
 console.log('save Address: api call');
@@ -353,9 +353,9 @@ return this.http
 
 removeAddress(id: string) {
   let baseUrl = this.appConstants.BASE_API_URL;
-  if(isPlatformBrowser(this.platformId)){
-    baseUrl = '';
-  }
+  // if(isPlatformBrowser(this.platformId)){
+  //   baseUrl = '';
+  // }
 let url:string = baseUrl + this.appConstants.REMOVE_ADDRESS_URL+ '/' +id;
 // 
 console.log('Remove Address: api call');
@@ -368,9 +368,9 @@ return this.http
 
 updateAddress(address: Address) {
   let baseUrl = this.appConstants.BASE_API_URL;
-  if(isPlatformBrowser(this.platformId)){
-    baseUrl = '';
-  }
+  // if(isPlatformBrowser(this.platformId)){
+  //   baseUrl = '';
+  // }
 let url:string = baseUrl + this.appConstants.SAVE_ADDRESS_URL+ '/' +address.id;
 // 
 console.log('Update Address: api call');
@@ -395,9 +395,9 @@ getStates(country: string) {
 submitActivationCode(activationCodeSubmitReqest: ActivationCodeSubmitRequest) {
 // let activate: CheckUserNameRequest = new CheckUserNameRequest();
 let baseUrl = this.appConstants.BASE_API_URL;
-  if(isPlatformBrowser(this.platformId)){
-    baseUrl = '';
-  }
+  // if(isPlatformBrowser(this.platformId)){
+  //   baseUrl = '';
+  // }
 let url:string = baseUrl + this.appConstants.SUBMIT_ACTIVATION_CODE_URL;
 url = url + '?activationCode=' + activationCodeSubmitReqest.activationCode + '&username=' + activationCodeSubmitReqest.username;
 // 
@@ -411,9 +411,9 @@ return this.http
 
 getActivationCode(activationCodeReqest: ActivationCodeRequest) {
   let baseUrl = this.appConstants.BASE_API_URL;
-  if(isPlatformBrowser(this.platformId)){
-    baseUrl = '';
-  }
+  // if(isPlatformBrowser(this.platformId)){
+  //   baseUrl = '';
+  // }
 let url:string = baseUrl + this.appConstants.GET_ACTIVATION_CODE_URL;
 url = url + '?emailId='+activationCodeReqest.emailId + '&username=' + activationCodeReqest.username;
 console.log('signup: api call');
@@ -424,9 +424,9 @@ return this.http
 
 getPassword(passwordReqest: PasswordResult) {
   let baseUrl = this.appConstants.BASE_API_URL;
-  if(isPlatformBrowser(this.platformId)){
-    baseUrl = '';
-  }
+  // if(isPlatformBrowser(this.platformId)){
+  //   baseUrl = '';
+  // }
 let url:string = baseUrl + this.appConstants.GET_PASSWORD_URL;
 // 
 console.log('Get Password: api call');

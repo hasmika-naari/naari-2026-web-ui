@@ -1,0 +1,36 @@
+.mat-card-header-text{
+    width: 0px !important;
+    display: none;
+}
+
+.deals-table-container-card{
+    width: 100% !important;
+    // height: 88vh !important;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background-color: transparent;
+    // box-shadow: 0 8px 16px #92b8ff33!important;
+    box-shadow: none;
+    border: none;
+    border-radius: 5px 5px 0 0!important;
+    transition: var(--transition)!important;
+    padding-bottom: 100px;
+}
+::ng-deep .menu-right-align .mat-menu-item {
+  padding-right: 0; /* Optional: reduce right gap */
+}
+
+::ng-deep .menu-item-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+::ng-deep .menu-text {
+  text-align: right;
+  margin-right: 8px;
+  white-space: nowrap;
+}
+

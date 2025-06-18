@@ -1,0 +1,104 @@
+<div class="pl--20 pr--20 pt--15 filter-div">
+  <div fxLayout fxLayoutWrap fxLayout="row wrap" fxLayoutAlign="start center"  >
+    <div  fxFlex="calc(5% - 10px)" fxFlex.xs="calc(90% - 10px)" fxFlex.sm="calc(20% - 10px)"
+            fxFlex.md="calc(10% - 10px)" fxFlex.lg="calc(5% - 10px)" fxFlex.xl="calc(5% - 10px)" 
+            fxLayoutAlign="start center" >
+            <mat-form-field style="width: 70px;" >
+              <mat-label>Country</mat-label>
+              <mat-select [value]="selectedCountry" (selectionChange)="selectionChangeHandler($event)" >
+                  <mat-option  *ngFor="let country of countries" 
+                      [value]="country.value">{{country.value}}
+                  </mat-option>
+              </mat-select>
+          </mat-form-field>
+          <mat-form-field style="width: 170px;" class=" ml--10">
+            <mat-label>Status</mat-label>
+            <mat-select [value]="selectedStatus" (selectionChange)="selectionStatusChangeHandler($event)" >
+                <mat-option   value="-1">All </mat-option>  
+                <mat-option  value="true">Approved </mat-option>
+                <mat-option  value="false">Not Approved </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field style="width: 170px;" class=" ml--10">
+            <mat-label>Category</mat-label>
+            <mat-select [value]="selectedCategory" (selectionChange)="selectionCategoryChangeHandler($event)" >
+                <mat-option *ngFor="let cat of (categories$ | async)"  [value]="cat.code">{{cat.title}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+          <mat-form-field class="streach-h-100 ml--10"  style="max-width: 400px ;" >
+            <mat-label>Title</mat-label>
+            <input  #Title maxlength="128"  placeholder="Title" matInput (keyup)="inputChangeHandler($event)" >
+            <mat-hint align="end">{{Title.value.length}} / 128</mat-hint>
+          </mat-form-field>
+          <span fxFlex></span>
+          <button mat-icon-button (click)="refreshData($event)" >
+            <mat-icon>refresh</mat-icon>
+        </button>
+    </div>
+  </div>
+</div> 
+ <div class="example-container mat-elevation-z8">
+  <div    [class.ml--25]="isMobile" [class.mr--25]="isMobile"
+            [class.ml--100]="isDesktop" [class.mr--100]="isDesktop"
+            [class.ml--50]="isTablet" [class.mr--50]="isTablet" >
+        <mat-progress-bar *ngIf="(isActionInProgress$ | async)" color="primary" mode="indeterminate"></mat-progress-bar>
+        <div  fxLayout="row wrap" class="products-wrapper">
+            <div *ngFor="let deal of filterDeals"
+                fxFlex="100" [fxFlex.gt-sm]="viewCol" fxFlex.sm="33.3" class="col">
+                <mat-card class="product-item text-center">
+                    <mat-chip-list *ngIf="deal.discount">
+                        <mat-chip color="warn" selected="true">{{deal.discount}}% OFF</mat-chip>
+                    </mat-chip-list>
+                    <a [routerLink]="['/deals/deal/', deal.id]" style="height: 250px ;display: flex;" class="image-link">
+                        <img [src]="deal.imageUrl"  style="max-height: 100% ;
+                        margin: auto;
+                        display: block;" alt="">
+                    </a>
+                    <span class="merchant-name">{{deal.merchant}}</span>
+                    <a [routerLink]="['/deals/deal/', deal.id]" class="title text-truncate">
+                        {{deal.title}}
+                    </a>
+                    <div fxLayout="row" fxLayoutAlign="start center" class="prices">
+                            <fa-icon class="hotjar-app-icon"  [icon]="faHotjar"></fa-icon>
+                            <p class="new-price  mt--5 mb--5">${{deal.currentPrice | number : '1.2-2'}}</p>
+                            <p class="old-price text-muted mt--5 mb--5" *ngIf="deal.originalPrice">
+                                ${{deal.originalPrice | number : '1.2-2'}}
+                            </p>
+                    </div>                            
+                    <div class="divider mt-2"></div>
+                    <div class="icons text-right">
+                      {{deal.approved?'Approved':'Not-Approved'}}
+                      <button mat-icon-button [matMenuTriggerFor]="mainMenu" (click)="menuClickHandler($event,deal)" >
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+                      <mat-menu #mainMenu="matMenu">
+                        <button mat-menu-item [disabled]="!deal?.dealUrl" (click)="checkDeal(deal)">
+                          Check Deal URL
+                        </button>
+                        <button mat-menu-item (click)="editDeal(deal)">
+                          Edit Deal
+                        </button>
+                        <button mat-menu-item (click)="deleteDeal(deal)">
+                          Delete Deal
+                        </button>
+                        <button mat-menu-item (click)="expireDeal(deal)">
+                          Expire Deal
+                        </button>
+                        <button mat-menu-item (click)="deActivateDeal(deal)">
+                          De Activate Deal
+                        </button>
+                        <button mat-menu-item (click)="activateDeal(deal)">
+                          Activate Deal
+                        </button>
+                        <button mat-menu-item (click)="approveDeal(deal)">
+                          Approve Deal
+                        </button>
+                      </mat-menu>
+                        <!-- <app-controls [deal]="deal" (onOpenProductDialog)="openProductDialog(deal)"></app-controls> -->
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+  </div>
+</div>
+ 

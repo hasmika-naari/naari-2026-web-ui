@@ -1,4 +1,4 @@
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule, isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
 import { DealsService } from '@app/services/deals.service';
@@ -27,7 +27,7 @@ export class FooterWorkifenceComponent implements OnInit {
 
   ngOnInit(): void {
 
-   if((this.platformId)){
+   if(isPlatformBrowser(this.platformId)){
       // this.loadFetcheddata();
       this.browser = true;
       // setTimeout(() => {

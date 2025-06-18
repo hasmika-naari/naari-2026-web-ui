@@ -1,0 +1,52 @@
+<div class="p-1">
+  <mat-card class="p-0 deals-table-container-card">
+   <!-- <div class="d-flex justify-content-between align-items-center p-2">
+    <h2 class="mb-0">Posted Deals</h2>
+
+    <button mat-icon-button [matMenuTriggerFor]="actionsMenu" [disabled]="isActionInProgress">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+
+   <mat-menu #actionsMenu="matMenu" class="menu-right-align">
+      <button mat-menu-item>
+        <div class="menu-item-content">
+          <span class="menu-text">Post Deal</span>
+          <mat-icon>add</mat-icon>
+        </div>
+      </button>
+      <button mat-menu-item>
+        <div class="menu-item-content">
+          <span class="menu-text">Delete All Expired Deals - US</span>
+          <mat-icon>delete_forever</mat-icon>
+        </div>
+      </button>
+      <button mat-menu-item>
+        <div class="menu-item-content">
+          <span class="menu-text">Delete All Expired Deals - IN</span>
+          <mat-icon>delete_forever</mat-icon>
+        </div>
+      </button>
+      <button mat-menu-item>
+        <div class="menu-item-content">
+          <span class="menu-text">Delete Selected Deals</span>
+          <mat-icon>delete</mat-icon>
+        </div>
+      </button>
+      <button mat-menu-item>
+        <div class="menu-item-content">
+          <span class="menu-text">Load Amazon Deals</span>
+          <mat-icon>cloud_download</mat-icon>
+        </div>
+      </button>
+    </mat-menu>
+    </div> -->
+    <!-- <mat-divider></mat-divider> -->
+    <mat-card-content class="p-0">
+      <app-deals-image-view
+        *ngIf="isImageView === 'image'"
+        (idNums)="setSelectedIds($event)"
+        (edit)="editDealDialog($event)">
+      </app-deals-image-view>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,5 +1,5 @@
 import { CommonModule, NgOptimizedImage, isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { Component, OnInit, PLATFORM_ID, Signal, TransferState, inject, makeStateKey } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Signal, TransferState, effect, inject, makeStateKey } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatChipsModule } from '@angular/material/chips';
@@ -102,6 +102,15 @@ export class NaariHomePageComponent implements OnInit {
   isMobile = false;
   isTablet = false;
   isDesktop = true;
+
+  updateLocalDealEffect = effect(() => {
+    const pcats = this.pCategories();
+    if (pcats) {
+      this.pCatsLocal = [...pcats];
+    }
+  });
+
+
   private seoService:SeoService = inject(SeoService);
   private appService: AppUtilService =  inject(AppUtilService);
   private dealsService: DealsService= inject(DealsService);
@@ -113,6 +122,7 @@ export class NaariHomePageComponent implements OnInit {
   private deviceService: DeviceDetectorService=  inject(DeviceDetectorService);
   private dealsStoreService: DealsStoreService = inject(DealsStoreService);
 
+  pCatsLocal: Array<PCategory> = [];
   pCategories: Signal< Array<PCategory>> = this.dealsStoreService.getPcCategories();
   categories: Signal< Array<Category>> = this.dealsStoreService.getCategories();
   dailyDeals: Signal<Array<DealDataItem>> = this.dealsStoreService.getAllDailyDeals();
@@ -126,7 +136,6 @@ export class NaariHomePageComponent implements OnInit {
 
   this.seoService.setMetaDescription(content);
   this.seoService.setMetaTitle(title);
-
 
   }
 

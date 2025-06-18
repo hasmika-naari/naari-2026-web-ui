@@ -363,7 +363,7 @@ export class DealsListComponent implements OnInit, OnDestroy {
         console.log('This is isPlatformBrowser...');
       
         if(this.transferState.hasKey(makeStateKey('dealsByFilter'))){
-          this.dealsStoreService.updateDeals(this.transferState.get(makeStateKey('dealsByFilter'), []));
+          // this.dealsStoreService.updateDeals(this.transferState.get(makeStateKey('dealsByFilter'), []));
         }else{
           // this.fetchData(this.selectedDealId);
         }

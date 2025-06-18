@@ -14,7 +14,8 @@ import { Account } from "../profile.model";
     relatedDeals: Array<DealDataItem>;
     dailyDeals: Array<DealDataItem>;
     deals: Array<DealDataItem>;
-    filteredDeals: Array<DealDataItem>;
+    allDeals: Array<DealDataItem>;
+    filteredAllDeals: Array<DealDataItem>;
     selectedHomeFilter: string;
     selectedHomeSorting: DealSorting;
     filteredDailyDeals: Array<DealDataItem>;
@@ -32,7 +33,8 @@ import { Account } from "../profile.model";
       dailyDeals: new Array<DealDataItem>,
       filteredDailyDeals: new Array<DealDataItem>,
       deals: new Array<DealDataItem>(),
-      filteredDeals: new Array<DealDataItem>(),
+      allDeals: new Array<DealDataItem>(),
+      filteredAllDeals: new Array<DealDataItem>(),
       selectedHomeFilter: '',
       selectedHomeSorting: new DealSorting(),
       selectedDeal: new DealDataItem(),

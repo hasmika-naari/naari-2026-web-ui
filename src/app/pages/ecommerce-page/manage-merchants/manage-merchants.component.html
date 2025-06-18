@@ -1,0 +1,16 @@
+<div class="p-1">
+    <mat-card class="p-0 table-container-card"> 
+            <div fxLayout="row wrap" fxLayoutAlign="start center" class="p-2">
+                <h2>Available Merchants</h2>
+               
+                <span fxFlex></span>
+                <button mat-raised-button color="primary" 
+                (click)="openNewMerchantDialog($event)">Add Merchant</button>
+            </div>
+            <mat-divider></mat-divider>
+        <mat-card-content>
+            <app-merchants-table *ngIf="!isImageView" (edit)="editMerchantDialog($event)" ></app-merchants-table>
+            <app-merchant-image-view *ngIf="isImageView" (edit)="editMerchantDialog($event)"></app-merchant-image-view>
+        </mat-card-content>
+    </mat-card>
+</div>

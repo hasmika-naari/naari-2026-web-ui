@@ -1,0 +1,14 @@
+.mat-card-header-text{
+    width: 0px !important;
+    display: none;
+}
+
+.table-container-card{
+    width: 100% !important;
+    height: 88vh !important;
+    overflow-x: hidden;
+    background-color: var(--whiteColor)!important;
+    box-shadow: 0 8px 16px #92b8ff33!important;
+    border-radius: 5px 5px 0 0!important;
+    transition: var(--transition)!important;
+}

@@ -1,0 +1,254 @@
+///////////////
+:host {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Force font on all elements within this component */
+:host * {
+  font-family: 'Poppins', sans-serif;
+}
+
+:host{
+  .mat-icon{
+      font-family: 'Material Icons' !important;
+  }
+
+  .mat-card{
+    background-color: var(--whiteColor) !important;
+    box-shadow: none !important;
+  }
+
+}
+
+::ng-deep .remember-check .mdc-label {
+  font-size: 14px !important;
+}
+
+
+.enabled-button {
+    background-color: #f05b4e;
+    color: white;
+    border: 1px solid #f05b4e;
+    font-size: 1rem;
+    cursor: pointer;
+
+    &:hover{
+      background-color: var(--secondaryColor) !important;
+      color: white !important;
+      border: 1px solid var(--secondaryColor) !important;
+    }
+  }
+  
+  .disabled-button {
+    // background-color: #;
+    // color: white;
+    // border: 1px solid #f5a39d;
+    cursor:default;
+    font-size: 1rem;
+  }
+
+
+/* Apply colors to PrimeNG components */
+.p-button {
+  background-color: var(--primary-color);
+  color: var(--primary-color-text);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--primary-button-border-color); /* Change border color */
+  &:hover{
+    background-color: var(--secondaryColor) !important;
+    color: white !important;
+    border: 1px solid var(--secondaryColor) !important;
+  }
+}
+
+.w-link-button{
+  color: var(--primary-color) !important;
+  background-color: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+  &:hover{
+      // background-color: var(--secondaryColor) !important;
+      background-color: transparent !important;
+      color: var(--secondaryColor) !important;
+  }
+
+}
+
+
+  /* Custom class for button to place icon above text */
+.icon-top-button .p-button-icon-left {
+  display: block; /* Make icon occupy its own block */
+  margin: 0 auto; /* Center the icon horizontally */
+  margin-bottom: 5px; /* Space between icon and text */
+}
+
+.icon-top-button .p-button-label {
+  display: block;
+  text-align: center; /* Center-align text */
+}
+
+.login-overlay {
+  position: fixed; /* Full-screen overlay */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  z-index: 999;    /* Slightly lower than the centered-div to make sure it's behind */
+}
+
+.login-centered-div {
+  position: fixed; /* Ensures the div stays in the same place while scrolling */
+  top: 50%;        /* Positions the div vertically at 50% of the screen height */
+  left: 50%;       /* Positions the div horizontally at 50% of the screen width */
+  transform: translate(-50%, -50%); /* Moves the div back to center as top/left is based on the top-left corner */
+  z-index: 1000;   /* Ensures the div stays on top of other content */
+  background-color: white; /* Change to match the background */
+  padding: 20px;   /* Add some padding for content inside the div */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: adds a shadow for visual depth */
+  border-radius: 8px; /* Optional: adds rounded corners */
+  width: 300px;    /* Adjust the width as needed */
+  height: auto;    /* Adjust height if needed */
+}
+
+/* Ensure the section takes the full height of the viewport */
+.login-page-full-section {
+  // display: flex;
+  // flex-direction: column;
+  // height: auto; /* Change from min-height: 100vh */
+
+  position: fixed;
+  top:0px;
+  left:0px;
+  right:0px;
+  bottom:0px;
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+
+/* Allows the content to expand and push the footer down */
+.content-wrapper {
+  flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // padding: 20px;
+    min-height: auto; /* Allow content to grow naturally */
+}
+
+/* Prevents the footer from being overlapped */
+app-work-ifence-footer {
+  flex-shrink: 0;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+.blank-layout-container{
+  min-height: 100vh !important;
+}
+
+
+//////////////////
+/* Ensure the page takes up the full viewport */
+.login-page-full-section {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Ensure the header stays at the top */
+.content-header {
+  flex-shrink: 0;
+}
+
+/* Allow the content to grow dynamically */
+.content-wrapper {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // padding: 20px;
+}
+
+/* Ensure the main container expands properly */
+.container-fluid {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Ensure form content does not overlap */
+mat-form-field {
+  width: 100%;
+}
+
+/* Push footer to the bottom */
+.content-footer {
+  flex-shrink: 0;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+// /* Ensure body and html allow scrolling */
+// body, html {
+//   height: auto;
+//   overflow-x: hidden;
+//   overflow-y: auto;
+// }
+
+// /* Adjust buttons for better visibility */
+// button:disabled {
+//   background-color: lightgray !important;
+//   cursor: not-allowed !important;
+// }
+
+// /* Fix spacing for social sign-in buttons */
+// .social-button {
+//   align-items: center;
+//   display: flex;
+//   justify-content: center;
+//   border-radius: 5px;
+// }
+
+// /* Ensure mat-card doesn't overlap */
+// .boxed-auth {
+//   max-width: 500px;
+//   width: 100%;
+// }
+
+// /* Ensure proper spacing for forgot password section */
+.forgot-password-link {
+  // color: #007bff;
+  cursor: pointer;
+  // font-weight: bold;
+
+  &:hover{
+    // color: var(--primary-color);
+    // font-weight: bold;
+    text-decoration: underline;
+  }
+}
+
+// /* Adjust "Create an Account" link */
+// .create-account-link {
+//   color: #007bff;
+//   font-weight: bold;
+//   text-decoration: none;
+// }
+
+// .create-account-link i {
+//   margin-right: 5px;
+// }
+
+// /* Ensure footer is positioned correctly */
+// app-work-ifence-footer {
+//   width: 100%;
+// }
+
+
+
+

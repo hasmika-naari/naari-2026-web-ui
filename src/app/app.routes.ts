@@ -21,6 +21,20 @@ import { PrivacyPolicyComponent } from './settings/privacy-policy/privacy-policy
 import { TermsConditionsComponent } from './settings/terms-conditions/terms-conditions.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { NaariHomePageComponent } from './naari-home/naari-home.component';
+import { EcommercePageComponent } from './pages/ecommerce-page/ecommerce-page.component';
+import { EProductsGridComponent } from './pages/ecommerce-page/e-products-grid/e-products-grid.component';
+import { EProductsListComponent } from './pages/ecommerce-page/e-products-list/e-products-list.component';
+import { EProductDetailsComponent } from './pages/ecommerce-page/e-product-details/e-product-details.component';
+import { ECreateProductComponent } from './pages/ecommerce-page/e-create-product/e-create-product.component';
+import { ECartComponent } from './pages/ecommerce-page/e-cart/e-cart.component';
+import { ECheckoutComponent } from './pages/ecommerce-page/e-checkout/e-checkout.component';
+import { EOrdersListComponent } from './pages/ecommerce-page/e-orders-list/e-orders-list.component';
+import { EOrderDetailsComponent } from './pages/ecommerce-page/e-order-details/e-order-details.component';
+import { ECustomersListComponent } from './pages/ecommerce-page/e-customers-list/e-customers-list.component';
+import { ESellersComponent } from './pages/ecommerce-page/e-sellers/e-sellers.component';
+import { ESellerDetailsComponent } from './pages/ecommerce-page/e-seller-details/e-seller-details.component';
+import { ManageDealsComponent } from './pages/ecommerce-page/manage-deals/manage-deals.component';
+import { EDealsGridComponent } from './pages/ecommerce-page/e-deals-grid/e-deals-grid.component';
 
 export const routes: Routes = [
     { path: '', 
@@ -40,6 +54,12 @@ export const routes: Routes = [
                 import('./deals-list/deals-list.component')
                     .then(m => m.DealsListComponent), data: {reuseComponent: true, breadcrumb: 'Deals By Category' },
     },
+     {
+        path: 'sign-in',
+        loadComponent: () => 
+            import('./pages/authentication/login-page/login-page.component')
+                .then(m => m.LoginPageComponent), data: {reuseComponent: true, breadcrumb: 'Sign In' }
+    },
       {
         path: 'login',
         loadComponent: () => 
@@ -55,7 +75,7 @@ export const routes: Routes = [
     {
         path: 'register',
         loadComponent: () => 
-            import('./register-page/register-page.component')
+            import('./pages/authentication/register-page/register-page.component')
                 .then(m => m.RegisterPageComponent), data: {reuseComponent: true, breadcrumb: 'Register' },
     },
     {
@@ -122,6 +142,25 @@ export const routes: Routes = [
         ]
     },
     {path: 'my-profile', component: MyProfileComponent},
+    {
+        path: 'admin',
+        component: EcommercePageComponent,
+        children: [
+            {path: 'dashboard', component: EProductsGridComponent},
+            {path: 'deals-list', component: ManageDealsComponent},
+            {path: 'deals-grid', component: EDealsGridComponent},
+            {path: 'products-list', component: EProductsListComponent},
+            {path: 'product-details', component: EProductDetailsComponent},
+            {path: 'create-product', component: ECreateProductComponent},
+            {path: 'cart', component: ECartComponent},
+            {path: 'checkout', component: ECheckoutComponent},
+            {path: 'orders-list', component: EOrdersListComponent},
+            {path: 'order-details', component: EOrderDetailsComponent},
+            {path: 'customers-list', component: ECustomersListComponent},
+            {path: 'sellers', component: ESellersComponent},
+            {path: 'seller-details', component: ESellerDetailsComponent}
+        ]
+    },
     {
         path: 'settings',
         component: SettingsComponent,
