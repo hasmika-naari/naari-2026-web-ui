@@ -393,23 +393,35 @@
   //////////////////@at-root
  ::ng-deep .menu-right-align .mat-menu-item {
   padding-right: 0;
+  &:hover{
+    .mat-icon{
+      color: var(--primaryColor30) !important
+    }
+  }
 }
 
 ::ng-deep .menu-item-content {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
+
+  &:hover{
+    .mat-icon{
+      color: var(--primaryColor30) !important
+    }
+  }
 }
 
 ::ng-deep .menu-text {
-  text-align: right;
+  text-align: left;
   margin-right: 8px;
   white-space: nowrap;
 }
 
 ::ng-deep .menu-item-content mat-icon {
   min-width: 24px;
+ 
 }
 
 .products-filter-card{

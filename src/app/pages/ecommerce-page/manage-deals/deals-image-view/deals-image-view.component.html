@@ -140,34 +140,34 @@
         </div>
 
         <mat-menu #actionsMenu="matMenu" class="menu-right-align">
-          <button mat-menu-item>
+          <!-- <button mat-menu-item>
             <div class="menu-item-content">
-              <span class="menu-text">Post Deal</span>
               <mat-icon>add</mat-icon>
+              <span class="menu-text">Post Deal</span>
             </div>
-          </button>
+          </button> -->
           <button mat-menu-item>
-            <div class="menu-item-content">
+            <div class="menu-item-content" (click)="deleteExpiredDealsByCountry('usa')">
+              <mat-icon>delete_forever</mat-icon>
               <span class="menu-text">Delete All Expired Deals - US</span>
-              <mat-icon>delete_forever</mat-icon>
             </div>
           </button>
           <button mat-menu-item>
-            <div class="menu-item-content">
+            <div class="menu-item-content" (click)="deleteExpiredDealsByCountry('india')">
+              <mat-icon>delete_forever</mat-icon>
               <span class="menu-text">Delete All Expired Deals - IN</span>
-              <mat-icon>delete_forever</mat-icon>
             </div>
           </button>
           <button mat-menu-item>
-            <div class="menu-item-content">
-              <span class="menu-text">Delete Selected Deals</span>
+            <div class="menu-item-content" (click)="deleteSelectedDeals($event)">
               <mat-icon>delete</mat-icon>
+              <span class="menu-text">Delete Selected Deals</span>
             </div>
           </button>
           <button mat-menu-item>
-            <div class="menu-item-content">
-              <span class="menu-text">Load Amazon Deals</span>
+            <div class="menu-item-content" (click)="loadAmazonDeals($event)">
               <mat-icon>cloud_download</mat-icon>
+              <span class="menu-text">Load Amazon Deals</span>
             </div>
           </button>
         </mat-menu>

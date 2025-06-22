@@ -14,6 +14,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
     selector: 'app-amazon-deal-dialog',
+    standalone: true,
     imports: [CommonModule, MatSelectModule, MatDatepickerModule, MatAutocompleteModule, MatProgressBarModule, ReactiveFormsModule],
     templateUrl: './amazon-deal-dialog.component.html',
     styleUrls: ['./amazon-deal-dialog.component.scss']

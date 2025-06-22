@@ -43,9 +43,7 @@
     <!-- <mat-divider></mat-divider> -->
     <mat-card-content class="p-0">
       <app-deals-image-view
-        *ngIf="isImageView === 'image'"
-        (idNums)="setSelectedIds($event)"
-        (edit)="editDealDialog($event)">
+        *ngIf="isImageView === 'image'">
       </app-deals-image-view>
     </mat-card-content>
   </mat-card>

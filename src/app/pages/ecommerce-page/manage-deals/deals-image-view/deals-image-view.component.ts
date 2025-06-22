@@ -46,8 +46,13 @@ import {
   PCategory,
   Slide,
   DealType,
-  DealDataItem
+  DealDataItem,
+  AmazonDealDataRequestItem
 } from '@app/services/deals.model';
+import _ from 'lodash';
+import { response } from 'express';
+import { AmazonDealDialogComponent } from '../amazon-deal-dialog/amazon-deal-dialog.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-deals-image-view',
@@ -55,8 +60,8 @@ import {
   imports: [
     CommonModule, MatMenuModule, MatIconModule, FontAwesomeModule, RouterModule, MatChipsModule,
     MatButtonModule, FormsModule, MatSelectModule, MatCardModule, MatAutocompleteModule,
-    MatProgressBarModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule,
-    MatCheckboxModule, MatSidenavModule, FooterWorkifenceComponent
+    MatProgressBarModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatDialogModule,
+    MatCheckboxModule, MatSidenavModule, FooterWorkifenceComponent, AmazonDealDialogComponent
   ],
   templateUrl: './deals-image-view.component.html',
   styleUrls: ['./deals-image-view.component.scss'],
@@ -107,7 +112,8 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
 
   constructor(
     private cd: ChangeDetectorRef,
-    iconLibrary: FaIconLibrary
+    iconLibrary: FaIconLibrary,
+    public dialog: MatDialog,
   ) {
     iconLibrary.addIcons(faHotjar, faWhatsapp);
 
@@ -139,31 +145,31 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
     });
   }
 
-ngOnInit(): void {
-  if (isPlatformBrowser(this.platformId)) {
-    this.browser = true;
+  ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.browser = true;
 
-    requestAnimationFrame(() => {
-      this.isActionInProgress = true;
-      this.cd.detectChanges(); // <== Force re-render immediately
+      requestAnimationFrame(() => {
+        this.isActionInProgress = true;
+        this.cd.detectChanges(); // <== Force re-render immediately
 
-      const content = 'Naari Deals - Femine Specials';
-      const title = 'Naari Deals - Femine Specials';
-      this.seoService.setMetaDescription(content);
-      this.seoService.setMetaTitle(title);
+        const content = 'Naari Deals - Femine Specials';
+        const title = 'Naari Deals - Femine Specials';
+        this.seoService.setMetaDescription(content);
+        this.seoService.setMetaTitle(title);
 
-      if (this.deviceService.isDesktop()) this.isDesktop = true;
-      else if (this.deviceService.isMobile()) this.isMobile = true;
-      else if (this.deviceService.isTablet()) this.isTablet = true;
+        if (this.deviceService.isDesktop()) this.isDesktop = true;
+        else if (this.deviceService.isMobile()) this.isMobile = true;
+        else if (this.deviceService.isTablet()) this.isTablet = true;
 
-      if (window.innerWidth < 1280) this.viewCol = 25;
+        if (window.innerWidth < 1280) this.viewCol = 25;
 
-      this.loadFetcheddata();
-    });
-  } else {
-    this.fetchData();
+        this.loadFetcheddata();
+      });
+    } else {
+      this.fetchData();
+    }
   }
-}
 
 
   fetchData(): void {
@@ -199,21 +205,35 @@ ngOnInit(): void {
     const dealTypesKey = makeStateKey<DealType[]>('dealTypes');
     const categoriesKey = makeStateKey<Category[]>('categoriesTable');
 
+    let keysFound = false;
+
     if (this.transferState.hasKey(dealsKey)) {
       const deals = this.transferState.get(dealsKey, [] as DealDataItem[]);
       this.dealsStoreService.updateAllDeals(deals, this.selectedStatus, this.selectedCategory, this.selectedText);
       this.dealsLoaded = true;
+      keysFound = true;
       setTimeout(() => this.isActionInProgress = false, 400);
     }
 
     if (this.transferState.hasKey(dealTypesKey)) {
       this.dealTypes = this.transferState.get(dealTypesKey, [] as DealType[]);
+        keysFound = true;
     }
 
     if (this.transferState.hasKey(categoriesKey)) {
       const categories = this.transferState.get(categoriesKey, [] as Category[]);
       this.dealsStoreService.updateCategories(categories);
+        keysFound = true;
     }
+     // Even if TransferState keys don't exist, stop loader
+    setTimeout(() => {
+      this.isActionInProgress = false;
+
+      // If no keys found, optionally fetch
+      if (!keysFound) {
+        this.fetchData(); // fallback
+      }
+    }, 400);
   }
 
   refreshData(): void {
@@ -238,10 +258,89 @@ ngOnInit(): void {
     this.router.navigateByUrl('admin/edit-deal/' + deal.id);
   }
 
-  deleteDeal(deal: DealDataItem) {}
-  expireDeal(deal: DealDataItem) {}
-  deActivateDeal(deal: DealDataItem) {}
-  activateDeal(deal: DealDataItem) {}
+  deleteDeal(deal: DealDataItem) {
+     this.dealsService.deleteDeal(deal.id).subscribe(res => {
+      this.dealsService.getDealsByCountry('usa', this.platformId).subscribe(deals => {
+        this.dealsStoreService.updateAllDeals(deals, this.selectedStatus, this.selectedCategory,  this.selectedText);
+      });
+    });
+  }
+
+   deleteSelectedDeals($event: any){
+    // Get selected deals (assuming `selected` is a boolean field)
+    const selectedDeals = this.allFilteredDeals().filter(deal => deal.selected);
+
+    // Get array of IDs as strings
+    const selectedDealIds: string[] = selectedDeals.map(deal => String(deal.id));
+    if(selectedDealIds.length){
+     this.dealsService.deleteSelectedDeals(selectedDealIds).subscribe(response => {
+        this.dealsService.getDealsByCountry('usa', this.platformId).subscribe(deals => {
+        this.dealsStoreService.updateAllDeals(deals, this.selectedStatus, this.selectedCategory,  this.selectedText);
+      });
+      });
+    }
+  }
+
+  deleteExpiredDealsByCountry(country:string){
+      this.dealsService.deleteAllExipredDeals(country).subscribe(response => {
+        this.dealsService.getDealsByCountry('usa', this.platformId).subscribe(deals => {
+        this.dealsStoreService.updateAllDeals(deals, this.selectedStatus, this.selectedCategory,  this.selectedText);
+      });
+      });
+  }
+
+  expireDeal(deal: DealDataItem) {
+
+  }
+
+    loadAmazonDeals($event: any){
+     debugger;
+    const dialogRef = this.dialog.open(AmazonDealDialogComponent, {
+      maxWidth: '60vw',
+      maxHeight: '60vh',
+      data: { },
+      panelClass: ['theme-dialog'],
+      autoFocus: false,
+      direction: 'ltr' 
+    });
+    dialogRef.afterClosed().subscribe((amazonDealsRequest: AmazonDealDataRequestItem) => {
+      debugger;
+      if(amazonDealsRequest){
+        this.isActionInProgress = true;
+        this.dealsService.loadAmazonDeals(amazonDealsRequest).subscribe(res => {
+
+          setTimeout(() => {
+              this.dealsService.getDealsByCountry('usa', this.platformId).subscribe(deals => {
+                this.dealsStoreService.updateAllDeals(deals, this.selectedStatus, this.selectedCategory,  this.selectedText);
+                    this.isActionInProgress = false;
+
+                });
+              }, 1000);
+
+        })
+          // this.dealsFacade.loadAmazonDeals(amazonDealsRequest);
+      }
+    });
+  }
+
+  deActivateDeal(deal: DealDataItem) {
+    let uDeal: DealDataItem = _.cloneDeep(deal);
+    uDeal.active = 'false';
+    this.dealsService.updateDeal(uDeal).subscribe(res => {
+      this.dealsService.getDealsByCountry('usa', this.platformId).subscribe(deals => {
+        this.dealsStoreService.updateAllDeals(deals, this.selectedStatus, this.selectedCategory,  this.selectedText);
+      });
+    });
+  }
+  activateDeal(deal: DealDataItem) {
+      let uDeal: DealDataItem = _.cloneDeep(deal);
+    uDeal.active = 'true';
+    this.dealsService.updateDeal(uDeal).subscribe(res => {
+      this.dealsService.getDealsByCountry('usa', this.platformId).subscribe(deals => {
+        this.dealsStoreService.updateAllDeals(deals, this.selectedStatus, this.selectedCategory,  this.selectedText);
+      });
+    });
+  }
   approveDeal(deal: DealDataItem) {}
   menuClickHandler(event: MouseEvent, deal: DealDataItem) { event.stopPropagation(); }
 
