@@ -36,7 +36,7 @@ export class AdvancedFormComponent {
         if (this.authForm.valid) {
             this.router.navigate(['/']);
         } else {
-            console.log('Form is invalid. Please check the fields.');
+            //consolie.log('Form is invalid. Please check the fields.');
         }
     }
 

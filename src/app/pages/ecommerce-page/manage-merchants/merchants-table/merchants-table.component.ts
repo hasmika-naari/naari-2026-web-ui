@@ -262,7 +262,7 @@ export class MerchantsTableComponent implements OnInit {
   onPage(event: MouseEvent) {
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
-      console.log('paged!', event);
+      //consolie.log('paged!', event);
     }, 100);
   }
 

@@ -164,7 +164,7 @@ export class MatFileUploadComponent implements OnInit, OnDestroy, OnChanges {
     if(changes["file"]){
       this.upload();
     }
-    console.log('Child Profile: Input Changed');
+    //consolie.log('Child Profile: Input Changed');
   }
 
   public upload(): void {

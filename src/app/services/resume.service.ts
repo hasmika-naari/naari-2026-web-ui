@@ -32,13 +32,13 @@ export class ResumeService {
         'responseType': "arraybuffer" // This line adds responseType to the headers
       });
 
-    //console.log('postDeal: api call');
+    ////consolie.log('postDeal: api call');
     return this.httpClient.post(queryUrl, resumeTemplate, {headers : headers, responseType : 'arraybuffer'})
       .pipe(catchError(this.handleError));
   }
 
   private handleError(error: any): Observable<never> {
-    //console.log('Get Playlist API: Error');
+    ////consolie.log('Get Playlist API: Error');
     return throwError(error || 'Get Playlist API: Error');
   }
 
@@ -52,7 +52,7 @@ export class ResumeService {
     }
     let queryUrl = baseUrl + this.appConstants.SAVE_RESUME_AND_DOWNLOAD;
 
-    //console.log('postDeal: api call');
+    ////consolie.log('postDeal: api call');
     return this.httpClient.post(queryUrl, jobRequest)
       .pipe(catchError(this.handleError));
   }
@@ -74,7 +74,7 @@ export class ResumeService {
         'responseType': "arraybuffer" // This line adds responseType to the headers
       });
 
-    //console.log('postDeal: api call');
+    ////consolie.log('postDeal: api call');
     return this.httpClient.get(queryUrl, {headers : headers, responseType : 'arraybuffer'})
       .pipe(catchError(this.handleError));
   }
@@ -95,7 +95,7 @@ export class ResumeService {
         'responseType': "arraybuffer" // This line adds responseType to the headers
       });
 
-    //console.log('postDeal: api call');
+    ////consolie.log('postDeal: api call');
     return this.httpClient.get(queryUrl, {headers : headers, responseType : 'arraybuffer'})
       .pipe(catchError(this.handleError));
   }
@@ -107,7 +107,7 @@ export class ResumeService {
     }
     let queryUrl = baseUrl + this.appConstants.SAVE_RESUMES;
 
-    //console.log('postDeal: api call');
+    ////consolie.log('postDeal: api call');
     return this.httpClient.post<any>(queryUrl, jobResume)
       .pipe(catchError(this.handleError));
   }
@@ -119,7 +119,7 @@ export class ResumeService {
     }
     let queryUrl = baseUrl + this.appConstants.UPLOAD_PROFILE_IMAGE + "?path=" + path + "&filename=" + fileName + "&oldFileName=" + oldFileName;
 
-    //console.log('postDeal: api call');
+    ////consolie.log('postDeal: api call');
     return this.http.post(queryUrl, imageBytes)
       .pipe(catchError(this.handleError));
   }
@@ -131,7 +131,7 @@ export class ResumeService {
     }
     let queryUrl = baseUrl + this.appConstants.SAVE_RESUMES;
 
-    //console.log('postDeal: api call');
+    ////consolie.log('postDeal: api call');
     return this.httpClient.post<any>(queryUrl, jobResume)
       .pipe(catchError(this.handleError));
   }
@@ -144,7 +144,7 @@ export class ResumeService {
     let queryUrl = baseUrl + this.appConstants.UPDATE_USER_RESUME_PRIMARY_VALUE + "?id= " + id + "&value=" + value;
 
 
-    //console.log('postDeal: api call');
+    ////consolie.log('postDeal: api call');
     return this.httpClient.post(queryUrl, "")
       .pipe(catchError(this.handleError));
   }
@@ -157,7 +157,7 @@ export class ResumeService {
     let queryUrl = baseUrl + this.appConstants.UPDATE_USER_RESUME_STATUS_VALUE + "?id= " + id + "&value=" + value;
 
 
-    //console.log('postDeal: api call');
+    ////consolie.log('postDeal: api call');
     return this.httpClient.post(queryUrl, "")
       .pipe(catchError(this.handleError));
   }
@@ -170,7 +170,7 @@ export class ResumeService {
     let queryUrl = baseUrl + this.appConstants.UPDATE_USER_RESUME_ACCESS_VALUE + "?id= " + id + "&value=" + value;
 
 
-    //console.log('postDeal: api call');
+    ////consolie.log('postDeal: api call');
     return this.httpClient.post(queryUrl, "")
       .pipe(catchError(this.handleError));
   }
@@ -182,7 +182,7 @@ export class ResumeService {
     }
     let queryUrl = baseUrl + this.appConstants.DELETE_RESUME + '/' + id;
 
-    //console.log('postDeal: api call');
+    ////consolie.log('postDeal: api call');
     return this.httpClient.delete(queryUrl)
       .pipe(catchError(this.handleError));
   }
@@ -194,7 +194,7 @@ export class ResumeService {
     }
     let queryUrl = baseUrl + this.appConstants.DELETE_JOB_APPLICATION + '/' + id;
 
-    //console.log('postDeal: api call');
+    ////consolie.log('postDeal: api call');
     return this.httpClient.delete(queryUrl)
       .pipe(catchError(this.handleError));
   }
@@ -220,7 +220,7 @@ export class ResumeService {
     }
     let queryUrl = baseUrl + this.appConstants.SAVE_JOB_APPLICATION;
 
-    //console.log('postDeal: api call');
+    ////consolie.log('postDeal: api call');
     return this.httpClient.post(queryUrl, data)
       .pipe(catchError(this.handleError));
   }
@@ -232,7 +232,7 @@ export class ResumeService {
     }
     let queryUrl = baseUrl + this.appConstants.SAVE_JOB_APPLICATION;
 
-    //console.log('postDeal: api call');
+    ////consolie.log('postDeal: api call');
     return this.httpClient.post(queryUrl, data)
       .pipe(catchError(this.handleError));
   }
@@ -244,7 +244,7 @@ export class ResumeService {
     }
     let queryUrl = baseUrl + this.appConstants.UPDATE_JOB_APPLICATION_STATUS + '/' + japp.id;
    
-    //console.log('postDeal: api call');
+    ////consolie.log('postDeal: api call');
     return this.httpClient.patch(queryUrl, japp)
       .pipe(catchError(this.handleError));
   }
@@ -275,7 +275,7 @@ export class ResumeService {
     }
     let queryUrl = baseUrl + this.appConstants.DELETE_EXTERNAL_RESUME + "?keyname=" + keyname;
 
-    //console.log('postDeal: api call');
+    ////consolie.log('postDeal: api call');
     return this.httpClient.delete(queryUrl)
       .pipe(catchError(this.handleError));
   }
@@ -287,7 +287,7 @@ export class ResumeService {
     }
     let queryUrl = baseUrl + this.appConstants.DELETE_VENDOR_CONTACT + '/' + id;
 
-    //console.log('postDeal: api call');
+    ////consolie.log('postDeal: api call');
     return this.httpClient.delete(queryUrl)
       .pipe(catchError(this.handleError));
   }
@@ -299,7 +299,7 @@ export class ResumeService {
     }
     let queryUrl = baseUrl + this.appConstants.DELETE_CLIENT_CONTACT + '/' + id;
 
-    //console.log('postDeal: api call');
+    ////consolie.log('postDeal: api call');
     return this.httpClient.delete(queryUrl)
       .pipe(catchError(this.handleError));
   }
@@ -311,7 +311,7 @@ export class ResumeService {
     }
     let queryUrl = baseUrl + this.appConstants.DELETE_INTERVIEW_ROUND + "/" + id;
 
-    //console.log('postDeal: api call');
+    ////consolie.log('postDeal: api call');
     return this.httpClient.delete(queryUrl)
       .pipe(catchError(this.handleError));
   }
@@ -334,7 +334,7 @@ export class ResumeService {
     }
     let queryUrl = this.appConstants.BASE_API_URL + this.appConstants.REQUEST_OPENAI;
 
-    //console.log('postDeal: api call');
+    ////consolie.log('postDeal: api call');
     return this.httpClient.post(queryUrl, prompt)
       .pipe(catchError(this.handleError));
   }

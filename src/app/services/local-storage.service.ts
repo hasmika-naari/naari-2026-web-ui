@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-const APP_PREFIX = 'wifence-';
+const APP_PREFIX = 'naari-';
 const USER_KEY = 'auth-user';
 
 @Injectable({

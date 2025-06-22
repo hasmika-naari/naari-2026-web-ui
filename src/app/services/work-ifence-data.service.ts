@@ -31,7 +31,7 @@ export class WorkIfenceDataService {
     // 
     let queryUrl = this.appConstants.BASE_API_URL +  '/api/naari-deals';
 
-    ////console.log('postDeal: api call');
+    //////consolie.log('postDeal: api call');
     return this.http
       .post<any>(queryUrl, deal)
       .pipe(catchError(this.handleError));
@@ -64,7 +64,7 @@ export class WorkIfenceDataService {
     // 
     let queryUrl = this.appConstants.BASE_API_URL +  '/api/naari-deals/' + deal.id;
 
-    ////console.log('postDeal: api call');
+    //////consolie.log('postDeal: api call');
     return this.http
       .put<any>(queryUrl, deal)
       .pipe(catchError(this.handleError));
@@ -74,7 +74,7 @@ export class WorkIfenceDataService {
     // 
     let queryUrl = this.appConstants.BASE_API_URL +  '/api/email-subscriptions';
 
-    ////console.log('postDeal: api call');
+    //////consolie.log('postDeal: api call');
     return this.http
       .post<any>(queryUrl, subscription)
       .pipe(catchError(this.handleError));
@@ -88,7 +88,7 @@ export class WorkIfenceDataService {
     }
     let queryUrl = baseUrl +  '/api/get-job-application-by-userid/' + userId;
     // 
-    ////console.log('getDeals: api call');
+    //////consolie.log('getDeals: api call');
     return this.http
       .get<any>(queryUrl)
       .pipe(catchError(this.handleError));
@@ -104,7 +104,7 @@ export class WorkIfenceDataService {
 
     let queryUrl = baseUrl +  '/api/naari-deals?approved.equals=true&page=0&size=2000&sort=id,asc';
     // 
-    ////console.log('getDeals: api call');
+    //////consolie.log('getDeals: api call');
     return this.http
       .get<any>(queryUrl)
       .pipe(catchError(this.handleError));
@@ -117,9 +117,9 @@ export class WorkIfenceDataService {
       baseUrl = '';
     }
     let queryUrl = baseUrl +  '/api/naari-deals?approved.equals=true&country.contains=' + country +'&page=0&size=200&sort=id,asc';
-    //console.log('getDealsByCountry: URL ' + queryUrl);
+    ////consolie.log('getDealsByCountry: URL ' + queryUrl);
     
-    ////console.log('getDeals: api call');
+    //////consolie.log('getDeals: api call');
     return this.http
       .get<any>(queryUrl)
       .pipe(catchError(this.handleError));
@@ -133,7 +133,7 @@ export class WorkIfenceDataService {
     }
     let queryUrl = baseUrl +  '/api/naari-deals?approved.equals=true&country.contains=' + country + '&brand.contains=' + brand + '&page=0&size=200&sort=id,asc';
     // 
-    ////console.log('getDealsByCountryAndBrand: api call');
+    //////consolie.log('getDealsByCountryAndBrand: api call');
     return this.http
       .get<any>(queryUrl)
       .pipe(catchError(this.handleError));
@@ -146,9 +146,9 @@ export class WorkIfenceDataService {
       baseUrl = '';
     }
     let queryUrl = baseUrl +  '/api/naari-deals?approved.equals=true&country.contains=' + country + '&category.equals=' + category +'&page=0&size=200&sort=id,asc';
-    //console.log('getDealsByCountryAndCategory: URL ' + queryUrl);
+    ////consolie.log('getDealsByCountryAndCategory: URL ' + queryUrl);
     
-    ////console.log('getDealsByCountryAndCategory: api call');
+    //////consolie.log('getDealsByCountryAndCategory: api call');
     return this.http
       .get<any>(queryUrl)
       .pipe(catchError(this.handleError));
@@ -162,9 +162,9 @@ export class WorkIfenceDataService {
     }
     let queryUrl = baseUrl +  '/api/naari-deals?approved.equals=true&country.contains=' 
           + country + '&category.equals=' + category + '&tags.contains=' + type +'&page=0&size=200&sort=id,asc';
-          //console.log('getDealsByCountryCategoryAndDealType: URL ' + queryUrl);
+          ////consolie.log('getDealsByCountryCategoryAndDealType: URL ' + queryUrl);
     
-    ////console.log('getDeals: api call');
+    //////consolie.log('getDeals: api call');
     return this.http
       .get<any>(queryUrl)
       .pipe(catchError(this.handleError));
@@ -178,9 +178,9 @@ export class WorkIfenceDataService {
     }
     let queryUrl = baseUrl +  '/api/naari-deals?approved.equals=true&country.contains=' 
           + country + '&tags.contains=' + type +'&page=0&size=200&sort=id,asc';
-          //console.log('getDealsByCountryAndDealType: URL ' + queryUrl);
+          ////consolie.log('getDealsByCountryAndDealType: URL ' + queryUrl);
     
-    ////console.log('getDeals: api call');
+    //////consolie.log('getDeals: api call');
     return this.http
       .get<any>(queryUrl)
       .pipe(catchError(this.handleError));
@@ -190,7 +190,7 @@ export class WorkIfenceDataService {
   getBrands(country: string) {
     let queryUrl = this.appConstants.BASE_API_URL +  '/api/brands?country.contains=' + country +  '&sort=id,asc';
     // 
-    ////console.log('getBrands: api call');
+    //////consolie.log('getBrands: api call');
     return this.http
       .get<any>(queryUrl)
       .pipe(catchError(this.handleError));
@@ -203,9 +203,9 @@ export class WorkIfenceDataService {
       baseUrl = '';
     }
     let queryUrl = baseUrl +  '/api/job-types?country.contains=' + country + '&sort=id,asc';
-    //console.log('getDealTypes: URL ' + queryUrl);
+    ////consolie.log('getDealTypes: URL ' + queryUrl);
     
-    ////console.log('getDealTypes: api call');
+    //////consolie.log('getDealTypes: api call');
     return this.http
       .get<any>(queryUrl)
       .pipe(catchError(this.handleError));
@@ -219,7 +219,7 @@ export class WorkIfenceDataService {
     }  
     let queryUrl = baseUrl +  '/api/slides?country.contains=' + country + '&tags.contains=' + 'HOME' +'&page=0&size=200&sort=id,asc';
     // 
-    ////console.log('getHomeSlides: api call');
+    //////consolie.log('getHomeSlides: api call');
     return this.http
       .get<any>(queryUrl)
       .pipe(catchError(this.handleError));
@@ -233,7 +233,7 @@ export class WorkIfenceDataService {
     }
     let queryUrl = baseUrl +  '/api/slides?country.contains=' + country + '&tags.contains=' + 'DEALS' +'&page=0&size=200&sort=id,asc';
 
-    ////console.log('getHomeSlides: api call');
+    //////consolie.log('getHomeSlides: api call');
     return this.http
       .get<any>(queryUrl)
       .pipe(catchError(this.handleError));
@@ -247,7 +247,7 @@ export class WorkIfenceDataService {
     }
     let queryUrl = baseUrl +  '/api/merchants-and-social/';
     // 
-    ////console.log('getMerchants: api call');
+    //////consolie.log('getMerchants: api call');
     return this.http
       .get<any>(queryUrl)
       .pipe(catchError(this.handleError));
@@ -260,9 +260,9 @@ export class WorkIfenceDataService {
       baseUrl = '';
     }
     let queryUrl = baseUrl +  '/api/merchants-and-social/?type=' + mtype +'&country=' + country;
-    //console.log('getMerchantsByCountryAndType: URL ' + queryUrl);
+    ////consolie.log('getMerchantsByCountryAndType: URL ' + queryUrl);
     // 
-    ////console.log('getMerchants: api call');
+    //////consolie.log('getMerchants: api call');
     return this.http
       .get<any>(queryUrl)
       .pipe(catchError(this.handleError));
@@ -277,7 +277,7 @@ export class WorkIfenceDataService {
     }
 
     let queryUrl = baseUrl +  '/api/naari-deals/merchants-and-social';
-    ////console.log('createMerchant: api call');
+    //////consolie.log('createMerchant: api call');
     return this.http
       .post<any>(queryUrl, merchant)
       .pipe(catchError(this.handleError));
@@ -290,7 +290,7 @@ export class WorkIfenceDataService {
       baseUrl = '';
     }
     let queryUrl = baseUrl +  '/api/naari-deals/merchants-and-social/'+ merchant.id;
-    ////console.log('updateMerchant: api call');
+    //////consolie.log('updateMerchant: api call');
     return this.http
       .put<any>(queryUrl, merchant)
       .pipe(catchError(this.handleError));
@@ -303,7 +303,7 @@ export class WorkIfenceDataService {
       baseUrl = '';
     }
     let queryUrl = baseUrl +  '/api/naari-deals/merchants-and-social/'+ merchantId;
-    ////console.log('deleteMerchant: api call');
+    //////consolie.log('deleteMerchant: api call');
     return this.http
       .delete<any>(queryUrl)
       .pipe(catchError(this.handleError));
@@ -317,7 +317,7 @@ export class WorkIfenceDataService {
     }
     let queryUrl = baseUrl +  '/api/slides?country.contains=' + country  + '&tags.contains=' + tag +'&sort=id,asc';
     // 
-    ////console.log('getHomeSlides: api call');
+    //////consolie.log('getHomeSlides: api call');
     return this.http
       .get<any>(queryUrl)
       .pipe(catchError(this.handleError));
@@ -332,7 +332,7 @@ export class WorkIfenceDataService {
     }
     let queryUrl = baseUrl +  '/api/naari-deals?approved.equals=true&category.equals=' + categoryType +'&country.contains=' + country;
     // 
-    ////console.log('getDealsByCategoryTypeAndCountry: api call');
+    //////consolie.log('getDealsByCategoryTypeAndCountry: api call');
     return this.http
       .get<any[]>(queryUrl)
       .pipe(catchError(this.handleError));
@@ -346,9 +346,9 @@ export class WorkIfenceDataService {
     //   baseUrl = '';
     // }
     let queryUrl = baseUrl +  '/api/categories?country.contains=' + country;
-    //console.log('getCategoriesByCountry: envi:' + envi.toString() + ' URL ' + queryUrl);
+    ////consolie.log('getCategoriesByCountry: envi:' + envi.toString() + ' URL ' + queryUrl);
     
-    ////console.log('getCategoriesByCountry: api call');
+    //////consolie.log('getCategoriesByCountry: api call');
     return this.http
       .get<any>(queryUrl)
       .pipe(catchError(this.handleError));
@@ -363,7 +363,7 @@ export class WorkIfenceDataService {
     }
     let queryUrl = baseUrl +  '/api/nd-get-category-types-by-country?country=' + country;
     // 
-    ////console.log('getCategoryTypesByCountry: api call');
+    //////consolie.log('getCategoryTypesByCountry: api call');
     return this.http
       .get<any>(queryUrl)
       .pipe(catchError(this.handleError));
@@ -379,14 +379,14 @@ export class WorkIfenceDataService {
     // let baseUrl = '';
     // if (isPlatformServer(this.platformId)) {
     //   baseUrl = this.appConstants.BASE_API_SSR_URL;
-    //   ////console.log('getDealDetailsById: api call ' + baseUrl);
+    //   //////consolie.log('getDealDetailsById: api call ' + baseUrl);
 
     // }else{
     //   baseUrl = this.appConstants.BASE_API_URL;
-    //   ////console.log('getDealDetailsById: api call ' + baseUrl);
+    //   //////consolie.log('getDealDetailsById: api call ' + baseUrl);
     // }
     let queryUrl = baseUrl + this.appConstants.GET_DEAL_DETAILS_BY_ID + "?id.equals=" + dealId + "&page=0&size=20";
-    ////console.log('getDealDetailsById: api call : ' + queryUrl);
+    //////consolie.log('getDealDetailsById: api call : ' + queryUrl);
     return this.http
       .get<any>(queryUrl)
       .pipe(catchError(this.handleError));
@@ -456,7 +456,7 @@ export class WorkIfenceDataService {
   notificationMarkAsread(id : string){
     let queryUrl = this.appConstants.BASE_API_URL +  '/api/naari-notification-markasread' + '/' + id;
 
-    ////console.log('notificationMarkAsread: api call');
+    //////consolie.log('notificationMarkAsread: api call');
     return this.http
       .put<any>(queryUrl, "")
       .pipe(catchError(this.handleError));
@@ -482,7 +482,7 @@ export class WorkIfenceDataService {
 
   getDealCategoryTypesByCountry(country: string,envi: object) {
     // let baseUrl = envi.toString() === 'server'?this.appConstants.BASE_SSR_API_URL:this.appConstants.BASE_API_URL;
-    ////console.log('getDealCategoryTypesByCountry API call');
+    //////consolie.log('getDealCategoryTypesByCountry API call');
 
     // let courseOptions = [
     //   {
@@ -578,7 +578,7 @@ export class WorkIfenceDataService {
   }
 
   private handleError(error: any): Observable<never> {
-    ////console.log('Get Playlist API: Error');
+    //////consolie.log('Get Playlist API: Error');
     return throwError(error || 'Get Playlist API: Error');
   }
 }

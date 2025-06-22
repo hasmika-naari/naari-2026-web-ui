@@ -49,8 +49,8 @@ export class FooterWorkifenceComponent implements OnInit {
       // let userName:string = this._localStorageService.getItem("userName");
       // let passWord:string = this._localStorageService.getItem("passWord");
       // 
-      // console.log('UserName: ' + userName);
-      // console.log('passWord: ' + passWord);
+      // //consolie.log('UserName: ' + userName);
+      // //consolie.log('passWord: ' + passWord);
       // this.appUtilService.loginWithCredentials(userName, passWord, '/user/dashboard');
     }
   }

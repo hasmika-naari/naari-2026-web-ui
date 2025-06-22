@@ -76,7 +76,7 @@ export class HeaderWorkIfenceComponent implements OnInit, AfterViewInit, AfterVi
     ngOnInit(): void {
         if(isPlatformBrowser(this.platformId)){
             this.browser = true;
-            console.log('ITS Browser Running');
+            //consolie.log('ITS Browser Running');
           }
         if(this.browser){
             if(this.deviceService.isDesktop()){

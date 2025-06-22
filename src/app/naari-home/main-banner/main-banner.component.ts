@@ -33,7 +33,7 @@ export class MainBannerComponent implements OnInit {
             this.dealTypes = [...dealTypes.filter((d: DealType) => d.status === 'active')];
         }
         if(isPlatformServer(this.platformId)){
-          console.log('naari-home - fetchData dealTypes+ ' + this.platformId);
+          //consolie.log('naari-home - fetchData dealTypes+ ' + this.platformId);
           this.transferState.set<DealType[]>(
             makeStateKey('dealTypes'), this.dealTypes
           );

@@ -201,8 +201,8 @@ export class LandingComponent implements OnInit {
     // let userName:string = this._localStorageService.getItem("userName");
     // let passWord:string = this._localStorageService.getItem("passWord");
     // 
-    // console.log('UserName: ' + userName);
-    // console.log('passWord: ' + passWord);
+    // //consolie.log('UserName: ' + userName);
+    // //consolie.log('passWord: ' + passWord);
     // this.appUtilService.loginWithCredentials(userName, passWord, '/user/dashboard');
   }
   }
@@ -210,7 +210,7 @@ export class LandingComponent implements OnInit {
   fetchData(): void{
 
     if(isPlatformServer(this.platformId)){
-      console.log('naari-home - fetchData + ' + this.platformId);
+      //consolie.log('naari-home - fetchData + ' + this.platformId);
     }
     // if(!this.dailyDeals.length){
       // this.dealsService.getCompetitionsByCountry('usa', this.platformId).subscribe((comps) => {
@@ -228,7 +228,7 @@ export class LandingComponent implements OnInit {
     //   this.slides = [...slides];
     // });
     // if(isPlatformBrowser(this.platformId)){
-    //   console.log('fetch Data Browser categories' + this.categories.length);
+    //   //consolie.log('fetch Data Browser categories' + this.categories.length);
     // } 
     // if(this.categories && !this.categories.length){
       // this.dealsService.getCategoriesByCountry('usa', this.platformId).subscribe((categories) => {
@@ -242,13 +242,13 @@ export class LandingComponent implements OnInit {
       //       _.groupBy(categories, 'parent'),
       //       (categories, parent) => ({ parent, categories }))];
       //       if(isPlatformServer(this.platformId)){
-      //         console.log('naari-home - fetchData pCategories+ ' + this.platformId);
+      //         //consolie.log('naari-home - fetchData pCategories+ ' + this.platformId);
       //         this.transferState.set<CategoryListItem[]>(
       //           makeStateKey('categoriesTable'), categories
       //         );
       //       }
           
-      //     // //console.log(groupedCategories);
+      //     // ////consolie.log(groupedCategories);
       // });
 
     
@@ -310,7 +310,7 @@ export class LandingComponent implements OnInit {
 
 
   loadFetcheddata(){
-    console.log('This is isPlatformBrowser...');
+    //consolie.log('This is isPlatformBrowser...');
      if(this.transferState.hasKey(makeStateKey('slideTable'))){
       this.slides = this.transferState.get(makeStateKey('slideTable'), []);
      }else{

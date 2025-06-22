@@ -87,7 +87,7 @@
             </div>
             <div class="row justify-content-start">
                 <div
-                    *ngFor="let deal of dailyDeals() | paginate: { itemsPerPage: count, currentPage: page }; let i = index"
+                    *ngFor="let deal of dailyDealsLocal | paginate: { itemsPerPage: count, currentPage: page }; let i = index"
                     class="col-12 col-sm-6 col-md-2 col-lg-2 mb-4  card-item"
                 >
              <mat-card class="deal-card-modern p-3 d-flex flex-column h-100 position-relative">
@@ -153,7 +153,7 @@
                 </div>
                 </div>
 
-            <div class="col-sm-12 text-center" *ngIf="((deals?.length === 0)  && isShowContent)">
+            <div class="col-sm-12 text-center" *ngIf="((dailyDealsLocal?.length === 0)  && isShowContent)">
                 <img src="assets/images/empty-search.jpg" class="img-fluid mb-4 ">
                   <h3 class="  wow fadeInUp" data-wow-offset="50" data-wow-duration="3s"  data-wow-delay="900ms">Sorry! Couldn't find the Deals you were looking For!!!    </h3>
                   <p class="  wow fadeInUp" data-wow-offset="50"  data-wow-duration="3s"  data-wow-delay="900ms">Please check other options.</p>
@@ -206,7 +206,7 @@
 <section >
     <ng-container *ngIf="browser">
        @defer (on viewport;) {
-        <app-homeone-courses [isMobile]="isMobile" [categories]="categories()" ></app-homeone-courses>
+        <app-homeone-courses [isMobile]="isMobile" [categories]="catsLocal" ></app-homeone-courses>
       } @placeholder (minimum 2000ms) {
         <h1>Loading</h1>
       } @loading {

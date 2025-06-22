@@ -1,5 +1,5 @@
 import { provideServerRendering, withRoutes } from '@angular/ssr';
-import { mergeApplicationConfig, ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { mergeApplicationConfig, ApplicationConfig, importProvidersFrom, APP_INITIALIZER, inject } from '@angular/core';
 import { appConfig } from './app.config';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 
@@ -9,9 +9,11 @@ import { provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/c
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { serverRoutes } from './app.routes.server';
+import { AppInitService } from './services/app-init.service';
+import { provideEnvironmentInitializer } from '@angular/core';
 
-console.info('Server: Angular CDK version', CDK_VERSION.full);
-console.info('Server: Angular Material version', MAT_VERSION.full);
+//consolie.info('Server: Angular CDK version', CDK_VERSION.full);
+//consolie.info('Server: Angular Material version', MAT_VERSION.full);
 
 
 const serverConfig: ApplicationConfig = {
@@ -20,7 +22,12 @@ const serverConfig: ApplicationConfig = {
         provideClientHydration(),
         provideHttpClient(withFetch(), withInterceptorsFromDi()),
         importProvidersFrom([BrowserModule, BrowserAnimationsModule, CarouselModule]),
-         provideAnimations() ]
+         provideAnimations(),
+         AppInitService,
+         provideEnvironmentInitializer(() => async () => {
+        const initService = inject(AppInitService);
+        await initService.loadInitialData();
+        }), ]
 };
 
 export const config = mergeApplicationConfig(appConfig, serverConfig);

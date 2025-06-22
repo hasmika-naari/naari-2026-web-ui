@@ -58,7 +58,7 @@ getAccountProfile() {
   // }
 let url:string = baseUrl + this.appConstants.ACCOUNT_URL;
 // 
-console.log('getAccount: api call');
+//consolie.log('getAccount: api call');
 return this.http
   .get<any>(url)
   .pipe(catchError(this.handleError));
@@ -71,7 +71,7 @@ getLoginProfile(userName:any) {
   // }
 let url:string = baseUrl + this.appConstants.GET_LOGIN_PROFILE_URL;
  url = url + '/' + userName;
-console.log('getAccount: api call');
+//consolie.log('getAccount: api call');
 return this.http
   .get<any>(url)
   .pipe(catchError(this.handleError));
@@ -101,7 +101,7 @@ signUp(signUpRequest: RegisterRequest) {
   // }
 let url:string = baseUrl + this.appConstants.SIGNUP_URL;
 // 
-console.log('signup: api call');
+//consolie.log('signup: api call');
 return this.http
   .post<any>(url, signUpRequest)
   .pipe(catchError(this.handleError));
@@ -111,13 +111,13 @@ checkUserName(userNameCheckRequest: CheckUserNameRequest) {
   let baseUrl = this.appConstants.BASE_API_URL;
   // if(isPlatformBrowser(this.platformId)){
   //   baseUrl = '';
-  //   console.log('checkUserName: api call - isPlatformBrowser');
+  //   //consolie.log('checkUserName: api call - isPlatformBrowser');
   // }else{
-  //   console.log('checkUserName: api call - isPlatformServer');
+  //   //consolie.log('checkUserName: api call - isPlatformServer');
   // }
 let url:string = baseUrl + this.appConstants.CHECK_USER_NAME_URL;
 // 
-console.log('checkUserName: api call');
+//consolie.log('checkUserName: api call');
 return this.http
   .post<any>(url, userNameCheckRequest)
   .pipe(catchError(this.handleError));
@@ -130,7 +130,7 @@ sendMessagetoUser() {
   // }
 let url:string = baseUrl + this.appConstants.SEND_MESSAGE_TO_USER_URL + 'teja';
 // 
-console.log('sendMessagetoUser: api call');
+//consolie.log('sendMessagetoUser: api call');
 let msg: MessageDTO = new MessageDTO();
   msg.messageContent = 'this is Test User Message';
   msg.from = 'Jana';
@@ -148,7 +148,7 @@ sendBroadMessagetoUser() {
   // }
 let url:string = baseUrl + this.appConstants.SEND_BROADCAST_MESSAGE_URL;
 // 
-console.log('sendBroadMessagetoUser: api call');
+//consolie.log('sendBroadMessagetoUser: api call');
 let msg: MessageDTO = new MessageDTO();
 msg.messageContent = 'this is Test Broadcast User Message';
 msg.from = 'Jana';
@@ -165,7 +165,7 @@ saveLoginProfile(loginProfile: LoginProfileUpdateRequest) {
   // }
 let url:string = baseUrl + this.appConstants.SAVE_LOGIN_PROFILE_URL + '/' + loginProfile.id;
 // 
-console.log('saveLoginProfile: api call');
+//consolie.log('saveLoginProfile: api call');
 //  let param: CheckUserNameRequest = new CheckUserNameRequest();
 // param.username = loginProfile.username;
 return this.http
@@ -180,7 +180,7 @@ patchLoginProfile(loginProfile: LoginProfileUpdateRequest) {
   // }
 let url:string = baseUrl + this.appConstants.SAVE_LOGIN_PROFILE_URL + '/' + loginProfile.id;
 // 
-console.log('saveLoginProfile: api call');
+//consolie.log('saveLoginProfile: api call');
 //  let param: CheckUserNameRequest = new CheckUserNameRequest();
 // param.username = loginProfile.username;
 return this.http
@@ -196,7 +196,7 @@ saveContact(contact: ContactListItem) {
   // }
 let url:string = baseUrl + this.appConstants.SAVE_LOGIN_PROFILE_URL;
 // 
-console.log('saveLoginProfile: api call');
+//consolie.log('saveLoginProfile: api call');
 //  let param: CheckUserNameRequest = new CheckUserNameRequest();
 // param.username = loginProfile.username;
 return of(contact);
@@ -212,7 +212,7 @@ removeContact(contact: ContactListItem) {
   // }
 let url:string = baseUrl + this.appConstants.SAVE_LOGIN_PROFILE_URL;
 // 
-console.log('saveLoginProfile: api call');
+//consolie.log('saveLoginProfile: api call');
 //  let param: CheckUserNameRequest = new CheckUserNameRequest();
 // param.username = loginProfile.username;
 return of(contact);
@@ -246,7 +246,7 @@ saveBioProfile(bioProfile: BioProfileAddRequest) {
   // }
 let url:string = baseUrl + this.appConstants.SAVE_BIO_PROFILE_URL;
 // 
-console.log('saveBioProfile: api call');
+//consolie.log('saveBioProfile: api call');
 return this.http
   .post<any>(url, bioProfile)
   .pipe(catchError(this.handleError));
@@ -260,7 +260,7 @@ updateBioProfile(bioProfile: BioProfileAddRequest) {
   // }
 let url:string = baseUrl + this.appConstants.SAVE_BIO_PROFILE_URL + '/' + bioProfile.id;
 // 
-console.log('UpdateBioProfile: api call');
+//consolie.log('UpdateBioProfile: api call');
 return this.http
   .put<any>(url, bioProfile)
   .pipe(catchError(this.handleError));
@@ -301,7 +301,7 @@ saveAddress(address: Address) {
   // }
 let url:string = baseUrl + this.appConstants.SAVE_ADDRESS_URL;
 // 
-console.log('save Address: api call');
+//consolie.log('save Address: api call');
 
 return this.http
   .post<any>(url, address)
@@ -316,7 +316,7 @@ changeEmailVerify(email: string) {
   // }
 let url:string = baseUrl + this.appConstants.CHANGE_EMAIL_VERIFY_URL;
 // 
-console.log('save Address: api call');
+//consolie.log('save Address: api call');
 
 return this.http
   .post<any>(url, {changeEmail: email})
@@ -330,7 +330,7 @@ changeEmail(email: string, acCode: string) {
   // }
 let url:string = baseUrl + this.appConstants.CHANGE_EMAIL_URL;
 // 
-console.log('save Address: api call');
+//consolie.log('save Address: api call');
 
 return this.http
   .post<any>(url, {changeEmail: email, activationCode: acCode})
@@ -344,7 +344,7 @@ getAddress(userName: string) {
   // }
 let url:string = baseUrl + this.appConstants.GET_ADDRESS_URL+ '/' +userName;
 // 
-console.log('save Address: api call');
+//consolie.log('save Address: api call');
 
 return this.http
   .get<any>(url)
@@ -358,7 +358,7 @@ removeAddress(id: string) {
   // }
 let url:string = baseUrl + this.appConstants.REMOVE_ADDRESS_URL+ '/' +id;
 // 
-console.log('Remove Address: api call');
+//consolie.log('Remove Address: api call');
 
 return this.http
   .delete<any>(url)
@@ -373,7 +373,7 @@ updateAddress(address: Address) {
   // }
 let url:string = baseUrl + this.appConstants.SAVE_ADDRESS_URL+ '/' +address.id;
 // 
-console.log('Update Address: api call');
+//consolie.log('Update Address: api call');
 
 return this.http
   .put<any>(url, address)
@@ -384,7 +384,7 @@ return this.http
 getStates(country: string) {
  
   let url:string = country === 'USA'? this.appConstants.GET_USA_STATES:this.appConstants.GET_INDIA_STATES;
-  console.log('save Address: api call');
+  //consolie.log('save Address: api call');
 
   return this.http
     .get<any>(url)
@@ -403,7 +403,7 @@ url = url + '?activationCode=' + activationCodeSubmitReqest.activationCode + '&u
 // 
 //activate.username = 'jana';
 
-console.log('signup: api call');
+//consolie.log('signup: api call');
 return this.http
 .post<any>(url, activationCodeSubmitReqest)
 .pipe(catchError(this.handleError));
@@ -416,7 +416,7 @@ getActivationCode(activationCodeReqest: ActivationCodeRequest) {
   // }
 let url:string = baseUrl + this.appConstants.GET_ACTIVATION_CODE_URL;
 url = url + '?emailId='+activationCodeReqest.emailId + '&username=' + activationCodeReqest.username;
-console.log('signup: api call');
+//consolie.log('signup: api call');
 return this.http
   .post<any>(url, activationCodeReqest)
   .pipe(catchError(this.handleError));
@@ -429,7 +429,7 @@ getPassword(passwordReqest: PasswordResult) {
   // }
 let url:string = baseUrl + this.appConstants.GET_PASSWORD_URL;
 // 
-console.log('Get Password: api call');
+//consolie.log('Get Password: api call');
 return this.http
   .post<any>(url, passwordReqest)
   .pipe(catchError(this.handleError));
@@ -440,7 +440,7 @@ uploadFile(file: File) {
 let url:string = '/api/aws-s3-upload?path=test';
 // let url:string = 'http://Workifence.com:8090/api/aws-s3-upload?path=test';
 // 
-console.log('uploadFile: api call');
+//consolie.log('uploadFile: api call');
 return this.http
   .post<any>(url, file)
   .pipe(catchError(this.handleError));

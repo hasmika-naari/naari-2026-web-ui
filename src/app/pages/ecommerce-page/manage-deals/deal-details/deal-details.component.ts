@@ -115,7 +115,7 @@ export class DealDetailsComponent implements OnInit {
   submitForm($event: any){
     $event.stopPropagation();
 
-    console.log(this.dealFormGroup.value);
+    //consolie.log(this.dealFormGroup.value);
     if(this.dealFormGroup.valid){
 
       let newDeal: DealDataItem = new DealDataItem();

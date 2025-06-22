@@ -35,6 +35,7 @@ import { ESellersComponent } from './pages/ecommerce-page/e-sellers/e-sellers.co
 import { ESellerDetailsComponent } from './pages/ecommerce-page/e-seller-details/e-seller-details.component';
 import { ManageDealsComponent } from './pages/ecommerce-page/manage-deals/manage-deals.component';
 import { EDealsGridComponent } from './pages/ecommerce-page/e-deals-grid/e-deals-grid.component';
+import { PostDealComponent } from './pages/ecommerce-page/manage-deals/post-deal/post-deal.component';
 
 export const routes: Routes = [
     { path: '', 
@@ -148,6 +149,8 @@ export const routes: Routes = [
         children: [
             {path: 'dashboard', component: EProductsGridComponent},
             {path: 'deals-list', component: ManageDealsComponent},
+            {path: 'post-deal', component: PostDealComponent},
+            {path: 'edit-deal/:id', component: PostDealComponent},
             {path: 'deals-grid', component: EDealsGridComponent},
             {path: 'products-list', component: EProductsListComponent},
             {path: 'product-details', component: EProductDetailsComponent},

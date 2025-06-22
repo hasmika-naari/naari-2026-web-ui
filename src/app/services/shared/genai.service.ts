@@ -18,13 +18,13 @@ export class GenAIService {
   }
 
   getLocalHtmlFile(fileName: string) {
-    console.log(`assets/templates/${fileName}`);
+    //consolie.log(`assets/templates/${fileName}`);
     
     return this.http.get(`assets/templates/${fileName}`, { responseType: 'text' });
   }
 
   async getGeminiProResponse(prompt : any) {
-    console.log("In Gemini Pro");
+    //consolie.log("In Gemini Pro");
     const genAI = new GoogleGenerativeAI("AIzaSyCPhWHAPmpCE7P40oAMo_Val_AlxRShyY8");
     const model = genAI.getGenerativeModel({ model: "gemini-pro"});
     const result = await model.generateContent(prompt);

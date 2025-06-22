@@ -40,7 +40,7 @@ export class BasicDialogComponent {
             data: {name: this.name, animal: this.animal},
         });
         dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
+            //consolie.log('The dialog was closed');
             this.animal = result;
         });
     }

@@ -326,7 +326,7 @@ export class RegisterPageComponent {
     }); 
 
       if(this.browser){
-        console.log('BROWSER: check for Device type');
+        //consolie.log('BROWSER: check for Device type');
         if(this.deviceService.isDesktop()){
           this.isDesktop = true;
           this.showBack = false;
@@ -356,7 +356,7 @@ export class RegisterPageComponent {
     }
   }
     onFirstFormSubmit(): void {
-      console.log('onSubmit - 1');
+      //consolie.log('onSubmit - 1');
       
 
        // Mark all form controls as touched to trigger validation
@@ -365,7 +365,7 @@ export class RegisterPageComponent {
       if (this.registerForm1.invalid) {
         return;
       }
-      console.log('onSubmit - 2');
+      //consolie.log('onSubmit - 2');
       this.showSignUpSecondStep = true;
 
       this.registerRequest.userType = this.registerForm1.controls['joinAs'].value;
@@ -375,18 +375,18 @@ export class RegisterPageComponent {
       this.registerRequest.dob = month + '/' + day + '/' + year;
       this.registerRequest.langKey = "en";
      
-      console.log('onSubmit - 3');
+      //consolie.log('onSubmit - 3');
   
     }
 
     onSecondFormSubmit():void{
-      console.log('onSecondFormSubmit - 1');
+      //consolie.log('onSecondFormSubmit - 1');
          // Mark all form controls as touched to trigger validation
          this.markFormGroupTouched(this.registerForm3);
       if (this.registerForm3.invalid || !this.isUserNameAvailable) {
         return;
       }
-      console.log('onSecondFormSubmit - 2');
+      //consolie.log('onSecondFormSubmit - 2');
       this.isLoading = true;
       this.registerRequest.firstName = this.registerForm3.controls['firstName'].value; 
       this.registerRequest.lastName = this.registerForm3.controls['lastName'].value; 
@@ -423,13 +423,13 @@ export class RegisterPageComponent {
     }
 
     onStudentFormSubmit(){
-      console.log('onStudentFormSubmit - 1');
+      //consolie.log('onStudentFormSubmit - 1');
          // Mark all form controls as touched to trigger validation
          this.markFormGroupTouched(this.registerForm3);
       if (this.registerForm3.invalid) {
         return;
       }
-      console.log('onStudentFormSubmit - 2');
+      //consolie.log('onStudentFormSubmit - 2');
 
       this.registerRequest.firstName = this.registerForm3.controls['firstName'].value; 
       this.registerRequest.lastName = this.registerForm3.controls['lastName'].value; 
@@ -471,7 +471,7 @@ export class RegisterPageComponent {
       let userNameRequest: CheckUserNameRequest = new CheckUserNameRequest();
       userNameRequest.login = this.registerForm3.get('userName')?.value;
       
-      console.log('checkUserName = ' + userNameRequest.login);
+      //consolie.log('checkUserName = ' + userNameRequest.login);
       this.subs.push(this.authService.checkUserName(userNameRequest).subscribe((resp: any) => {
         if(resp.response === 'User Not Found'){
           this.isUserNameCheckInProgress = false;
@@ -492,10 +492,8 @@ export class RegisterPageComponent {
    
     
   fetchData(): void{
-      console.log('naari-home - fetchData + ' + this.platformId);
       this.dealsService.getCategoriesByCountry('usa', this.platformId).subscribe((categories) => {
             if(isPlatformServer(this.platformId)){
-              console.log('naari-home - fetchData pCategories+ ' + this.platformId);
               this.transferState.set<CategoryListItem[]>(
                 makeStateKey('categoriesTable'), categories
               );

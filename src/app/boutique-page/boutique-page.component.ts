@@ -166,10 +166,10 @@ export class BoutiquePageComponent implements OnInit, OnDestroy {
           this.dealsService.getMerchantsByCountryAndType('usa', 'BOUTIQUE', this.platformId).subscribe((boutiques) => {
             this.boutiques = _.cloneDeep(boutiques);
             this.displayBoutiques =  [...boutiques];
-            // //console.log('Boti --- ' + this.displayBoutiques);
+            // ////consolie.log('Boti --- ' + this.displayBoutiques);
           });
         // }
-        //console.log('Botique Component: Fetch Data');
+        ////consolie.log('Botique Component: Fetch Data');
         this.dealsService.getCategoriesByCountry('usa', this.platformId).subscribe((categories) => {
           this.categories = [...categories];
 
@@ -184,7 +184,7 @@ export class BoutiquePageComponent implements OnInit, OnDestroy {
 
   public onPageChanged(event: any){
     this.page = event;
-      //console.log('Screen Height: ' + document.documentElement.clientHeight);
+      ////consolie.log('Screen Height: ' + document.documentElement.clientHeight);
       if(this.isMobile){
         window.scrollTo(0, 275);
       }else{

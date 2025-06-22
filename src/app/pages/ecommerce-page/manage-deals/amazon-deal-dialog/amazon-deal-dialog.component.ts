@@ -202,7 +202,7 @@ export class AmazonDealDialogComponent implements OnInit, OnDestroy {
   submitForm($event: any){
     $event.stopPropagation();
 
-    console.log(this.amazonDealFormGroup.value);
+    //consolie.log(this.amazonDealFormGroup.value);
     if(this.amazonDealFormGroup.valid){
 
       let amazonAPIRequest: AmazonDealDataRequestItem = new AmazonDealDataRequestItem();

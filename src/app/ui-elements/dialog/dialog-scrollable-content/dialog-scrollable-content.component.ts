@@ -19,7 +19,7 @@ export class DialogScrollableContentComponent {
     openDialog() {
         const dialogRef = this.dialog.open(DialogContentExampleDialog);
         dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
+            //consolie.log(`Dialog result: ${result}`);
         });
     }
 

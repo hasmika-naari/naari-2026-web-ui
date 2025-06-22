@@ -13,8 +13,8 @@ import { HttpRequestInterceptor } from './services/auth.interceptor';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 
 /* eslint-disable no-console */
-console.info('Angular CDK version', CDK_VERSION.full);
-console.info('Angular Material version', MAT_VERSION.full);
+//consolie.info('Angular CDK version', CDK_VERSION.full);
+//consolie.info('Angular Material version', MAT_VERSION.full);
 
 
 export class AppRouteReuseStrategy implements BaseRouteReuseStrategy {

@@ -124,7 +124,7 @@ export class TicketsStatusService {
                 const chart = new ApexCharts(document.querySelector('#hd_tickets_status_chart'), options);
                 chart.render();
             } catch (error) {
-                console.error('Error loading ApexCharts:', error);
+                //consolie.error('Error loading ApexCharts:', error);
             }
         }
     }

@@ -120,7 +120,7 @@ export class Brand{
 }
 
 export class DealDataItem {
-  id: string = '';
+  id!: any;
   title: string = "";
   description: string = "";
   imageUrl: string = "";

@@ -31,7 +31,7 @@ export class DistributedColumnChartService {
                         type: "bar",
                         events: {
                             click: function(chart:any, w:any, e:any) {
-                                // console.log(chart, w, e)
+                                // //consolie.log(chart, w, e)
                             }
                         }
                     },
@@ -133,7 +133,7 @@ export class DistributedColumnChartService {
                 const chart = new ApexCharts(document.querySelector('#distributed_column_chart'), options);
                 chart.render();
             } catch (error) {
-                console.error('Error loading ApexCharts:', error);
+                //consolie.error('Error loading ApexCharts:', error);
             }
         }
     }

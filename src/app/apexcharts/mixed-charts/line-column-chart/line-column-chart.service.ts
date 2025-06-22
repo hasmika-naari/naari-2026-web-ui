@@ -158,7 +158,7 @@ export class LineColumnChartService {
                 const chart = new ApexCharts(document.querySelector('#line_column_chart'), options);
                 chart.render();
             } catch (error) {
-                console.error('Error loading ApexCharts:', error);
+                //consolie.error('Error loading ApexCharts:', error);
             }
         }
     }

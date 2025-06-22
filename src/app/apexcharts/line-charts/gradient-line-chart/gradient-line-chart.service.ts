@@ -130,7 +130,7 @@ export class GradientLineChartService {
                 const chart = new ApexCharts(document.querySelector('#gradient_line_chart'), options);
                 chart.render();
             } catch (error) {
-                console.error('Error loading ApexCharts:', error);
+                //consolie.error('Error loading ApexCharts:', error);
             }
         }
     }

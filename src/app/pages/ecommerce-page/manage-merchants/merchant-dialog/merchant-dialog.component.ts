@@ -195,7 +195,7 @@ export class MerchantDialogComponent implements OnInit, OnDestroy {
   submitForm($event){
     $event.stopPropagation();
 
-    console.log(this.merchantFormGroup.value);
+    //consolie.log(this.merchantFormGroup.value);
     if(this.merchantFormGroup.valid){
 
       let merchant : Merchant = new Merchant();

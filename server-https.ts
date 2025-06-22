@@ -5,7 +5,8 @@ import compression from 'compression';
 import cors from 'cors';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
-import bootstrap from './src/main.server';
+import { bootstrap } from './src/main.server';
+export { bootstrap } from './src/main.server';
 const path = require('path');
 
 const { createProxyMiddleware } = require('http-proxy-middleware');
@@ -110,7 +111,7 @@ function run(): void {
   // Start HTTPS Server
   const server = https.createServer(httpsOptions, app());
   server.listen(port, () => {
-    console.log(`Node Express server listening on https://localhost:${port}`);
+    //consolie.log(`Node Express server listening on https://localhost:${port}`);
   });
 }
 

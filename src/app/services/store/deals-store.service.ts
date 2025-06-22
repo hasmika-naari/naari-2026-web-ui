@@ -1,269 +1,220 @@
-import { Injectable, Signal, computed, signal } from "@angular/core";
-import { UserState } from "./user-store";
-import { Account } from "../profile.model";
-import { DealsState } from "./deals-store.model";
-import { Brand, Category, DealDataItem, DealSorting, DealType, Merchant, PCategory } from "../deals.model";
-import _ from "lodash";
+import { Injectable, Signal, computed, signal } from '@angular/core';
+import { DealsState } from './deals-store.model';
+import {
+  Brand,
+  Category,
+  DealDataItem,
+  DealSorting,
+  DealType,
+  Merchant,
+  PCategory
+} from '../deals.model';
+import _ from 'lodash';
 
-
-
-
-@Injectable({
-    providedIn: 'root',
-  })
-  export class DealsStoreService {
-    state = signal<DealsState>({ 
-        dealTypes: new  Array<DealType>(), 
-        selectedDealType: new DealType(), 
-        selectedCategory: new Category(), 
-        categories: new  Array<Category>(), 
-        pCategories: new Array<PCategory>(),
-        brands: new Array<Brand>(),
-        merchants: new Array<Merchant>(),
-        dailyDeals: new Array<DealDataItem>(),
-        filteredDailyDeals: new Array<DealDataItem>(),
-        deals: new Array<DealDataItem>(),
-        allDeals: new Array<DealDataItem>(),
-        filteredAllDeals: new Array<DealDataItem>(),
-        selectedHomeFilter: '',
-        selectedHomeSorting: new DealSorting(),
-        selectedDeal: new DealDataItem(),
-        relatedDeals: new Array<DealDataItem>()
-       });
-
-    sortDeals(sorting: DealSorting) {
-        this.state.update((state) => {
-          let deals: Array<DealDataItem> = [];
-
-          if (sorting?.title === 'Lowest Discount First') {
-            deals = _.orderBy(state.deals, d => +d.discount, ['asc']);
-          } else if (sorting?.title === 'Highest Discount First') {
-            deals = _.orderBy(state.deals, d => +d.discount, ['desc']);
-          } else {
-            deals = [...state.deals];
-          }
-
-          return {
-            ...state,
-            deals: [...deals],
-            filteredAllDeals: [...deals]
-          };
-        });
-    }    
-
-    sortDailyDeals(sorting: DealSorting) {
-      this.state.update((state) => {
-        let dailyDeals: Array<DealDataItem> = [];
-
-        if (sorting?.title === 'Lowest Discount First') {
-          dailyDeals = _.orderBy(state.dailyDeals, d => +d.discount, ['asc']);
-        } else if (sorting?.title === 'Highest Discount First') {
-          dailyDeals = _.orderBy(state.dailyDeals, d => +d.discount, ['desc']);
-        } else {
-          dailyDeals = [...state.dailyDeals];
-        }
-
-        return {
-          ...state,
-          dailyDeals: [...dailyDeals],
-          filteredDailyDeals: [...dailyDeals]
-        };
-      });
-  } 
-
-    filterDailyDeals(deals:  Array<DealDataItem>, filter: string) {
-      /// Implement Filter code here..
-      this.state.update((state) => ({
-      ...state,
-      dailyDeals: [...deals],
-      filteredDailyDeals: [...deals, ...deals]
-      }));
-    }   
-
-    updateDailyDeals(deals:  Array<DealDataItem>) {
-      /// Implement Filter code here..
-      this.state.update((state) => ({
-      ...state,
-      dailyDeals: [...deals],
-      filteredDailyDeals: [...deals, ...deals]
-      }));
-    }   
-
-updateAllDeals(deals: Array<DealDataItem>, status: any, category: string, title: string) {
-  const filteredDeals = deals.filter(deal => {
-    const statusMatch = +status === -1 ? true : String(deal.approved) === String(status);
-    const categoryMatch = (category === 'All') ? true: (deal.category === category);
-    const titleMatch = title
-      ? deal.title.toLowerCase().includes(title.toLowerCase())
-      : true;
-
-    return statusMatch && categoryMatch && titleMatch;
+@Injectable({ providedIn: 'root' })
+export class DealsStoreService {
+  private readonly state = signal<DealsState>({
+    dealTypes: [],
+    selectedDealType: new DealType(),
+    selectedCategory: new Category(),
+    categories: [],
+    pCategories: [],
+    brands: [],
+    merchants: [],
+    dailyDeals: [],
+    filteredDailyDeals: [],
+    deals: [],
+    allDeals: [],
+    filteredAllDeals: [],
+    selectedDeal: new DealDataItem(),
+    selectedHomeFilter: '',
+    selectedHomeSorting: new DealSorting(),
+    relatedDeals: []
   });
 
-  const sortedFilteredDeals = _.orderBy(filteredDeals, d => +d.discount, ['desc']);
+  // ---------------------------------------------
+  // Getter methods (public computed signals)
+  // ---------------------------------------------
 
-  this.state.update((state) => ({
-    ...state,
-    allDeals: [...deals],
-    filteredAllDeals: [...sortedFilteredDeals]
-  }));
-}
+  getDealTypes(): Signal<Array<DealType>> {
+    return computed(() => this.state().dealTypes);
+  }
 
+  getSelectedDealType(): Signal<DealType> {
+    return computed(() => this.state().selectedDealType);
+  }
 
-filterAllDeals(status: any, category: string, title: string) {
-  const toBoolean = (value: any): boolean =>
-    value === true || value === 'true';
+  getSelectedCategory(): Signal<Category> {
+    return computed(() => this.state().selectedCategory);
+  }
 
-  this.state.update((state) => {
-    let filteredAllDeals: Array<DealDataItem> = state.allDeals.filter(deal => {
-      const statusMatch = +status === -1 ? true : deal.approved === toBoolean(status);
-      const categoryMatch = (category === 'All') ? true: (deal.category === category);
-      const titleMatch = title
-        ? deal.title.toLowerCase().includes(title.toLowerCase())
-        : true;
+  getCategories(): Signal<Array<Category>> {
+    return computed(() => this.state().categories);
+  }
 
-      return statusMatch && categoryMatch && titleMatch;
-    });
+  getPcCategories(): Signal<PCategory[]> {
+    return computed(() => this.state().pCategories);
+  }
 
-    // Sort by discount descending
-    filteredAllDeals = _.orderBy(filteredAllDeals, d => +d.discount, ['desc']);
+  getBrands(): Signal<Array<Brand>> {
+    return computed(() => this.state().brands);
+  }
 
-    return {
-      ...state,
-      filteredAllDeals: [...filteredAllDeals]
-    };
-  });
-}
+  getMerchants(): Signal<Array<Merchant>> {
+    return computed(() => this.state().merchants);
+  }
 
+  getAllDailyDeals(): Signal<Array<DealDataItem>> {
+    return computed(() => this.state().dailyDeals);
+  }
 
+  getAllFilteredDailyDeals(): Signal<Array<DealDataItem>> {
+    return computed(() => this.state().filteredDailyDeals);
+  }
 
-    updateSelectedDeal(deal:  DealDataItem) {
-      /// Implement Filter code here..
-      this.state.update((state) => ({
-      ...state,
-      selectedDeal: deal,
-      }));
-    }   
+  getSelectedDeal(): Signal<DealDataItem> {
+    return computed(() => this.state().selectedDeal);
+  }
 
-    updateSelectedDealType(dealType:  DealType) {
-      /// Implement Filter code here..
-      this.state.update((state) => ({
-      ...state,
-      selectedDealType: dealType,
-      }));
-    }
-    
-    updateSelectedCategory(ctagory:  Category) {
-      /// Implement Filter code here..
-      this.state.update((state) => ({
-      ...state,
-      selectedCategory: ctagory,
-      }));
-    }
+  getRelatedDeals(): Signal<Array<DealDataItem>> {
+    return computed(() => this.state().relatedDeals);
+  }
 
-    updateRelatedDeals(deals:  Array<DealDataItem>) {
-      /// Implement Filter code here..
-      this.state.update((state) => ({
-      ...state,
-      relatedDeals: [...deals],
-      }));
-    }   
+  getDeals(): Signal<Array<DealDataItem>> {
+    return computed(() => this.state().deals);
+  }
 
-    updateDealTypes(dealTypes:  Array<DealType>) {
-        this.state.update((state) => ({
-          ...state,
-          dealTypes: dealTypes
-        }));
+  getFilteredAllDeals(): Signal<Array<DealDataItem>> {
+    return computed(() => this.state().filteredAllDeals);
+  }
+
+  // ---------------------------------------------
+  // Update methods
+  // ---------------------------------------------
+
+  updateDealTypes(dealTypes: Array<DealType>) {
+    this._patch({ dealTypes });
+  }
+
+  updateSelectedDealType(dealType: DealType) {
+    this._patch({ selectedDealType: dealType });
+  }
+
+  updateSelectedCategory(category: Category) {
+    this._patch({ selectedCategory: category });
+  }
+
+  updateCategories(categories: Array<Category>) {
+    const sizeOptions = ['large', 'medium', 'small'];
+    const uCategories = categories.map(category => ({
+      ...category,
+      size: sizeOptions[Math.floor(Math.random() * sizeOptions.length)]
+    }));
+
+    const pCategories: PCategory[] = _.map(
+      _.groupBy(uCategories, 'parent'),
+      (catGroup, parent) => {
+        const pCat = new PCategory();
+        pCat.parent = parent;
+        pCat.categories = catGroup;
+        return pCat;
       }
+    );
 
-    updateCategories(categories: Array<Category>) {
-      console.log('Update categories');
-       const sizeOptions = ['large', 'medium', 'small'];
-       let uCategories = categories.map(category => ({
-          ...category,
-          size: sizeOptions[Math.floor(Math.random() * sizeOptions.length)]
-        }));
+    this._patch({
+      categories: uCategories,
+      pCategories
+    });
+  }
 
-      const pCategories: PCategory[] = _.map(
-        _.groupBy(uCategories, 'parent'),
-        (catGroup, parent) => {
-          const pCat = new PCategory();
-          pCat.parent = parent;
-          pCat.categories = catGroup;
-          return pCat;
-        }
-      );
+  updateBrands(brands: Array<Brand>) {
+    this._patch({ brands });
+  }
 
-      this.state.update((state) => ({
-        ...state,
-        categories: uCategories,
-        pCategories: pCategories
-      }));
-    }
+  updateMerchants(merchants: Array<Merchant>) {
+    this._patch({ merchants });
+  }
 
-    updateBrands(brands:  Array<Brand>) {
-      this.state.update((state) => ({
-        ...state,
-        brands: brands
-      }));
-    }  
+  updateDailyDeals(deals: Array<DealDataItem>) {
+    this._patch({
+      dailyDeals: [...deals],
+      filteredDailyDeals: [...deals]
+    });
+  }
 
-     updateMerchants(merchants:  Array<Merchant>) {
-      this.state.update((state) => ({
-        ...state,
-        merchants: merchants
-      }));
-    }  
+  updateSelectedDeal(deal: DealDataItem) {
+    this._patch({ selectedDeal: deal });
+  }
 
-    getDealTypes(): Signal<Array<DealType>> {
-      return computed(() => this.state().dealTypes);
-    } 
+  updateRelatedDeals(deals: Array<DealDataItem>) {
+    this._patch({ relatedDeals: [...deals] });
+  }
 
-    getCategories(): Signal<Array<Category>> {
-      return computed(() => this.state().categories);
-    } 
+  updateAllDeals(deals: Array<DealDataItem>, status: any, category: string, title: string) {
+    const filtered = this._filterDeals(deals, status, category, title);
+    this._patch({
+      allDeals: [...deals],
+      filteredAllDeals: [...filtered]
+    });
+  }
 
-      getPcCategories(): Signal<PCategory[]> {
-      return computed(() => this.state().pCategories);
-    } 
+  filterAllDeals(status: any, category: string, title: string) {
+    const filtered = this._filterDeals(this.state().allDeals, status, category, title);
+    this._patch({ filteredAllDeals: [...filtered] });
+  }
 
-    getBrands(): Signal<Array<Brand>> {
-      return computed(() => this.state().brands);
-    } 
+  sortDeals(sorting: DealSorting) {
+    const sorted = this._sortDeals(this.state().deals, sorting);
+    this._patch({
+      deals: [...sorted],
+      filteredAllDeals: [...sorted]
+    });
+  }
 
-     getMerchants(): Signal<Array<Merchant>> {
-      return computed(() => this.state().merchants);
-    } 
+  sortDailyDeals(sorting: DealSorting) {
+    const sorted = this._sortDeals(this.state().dailyDeals, sorting);
+    this._patch({
+      dailyDeals: [...sorted],
+      filteredDailyDeals: [...sorted]
+    });
+  }
 
-    getAllDailyDeals(): Signal<Array<DealDataItem>> {
-      return computed(() => this.state().dailyDeals);
-    } 
+  // ---------------------------------------------
+  // Internal helpers
+  // ---------------------------------------------
 
-    getAllFilteredDailyDeals(): Signal<Array<DealDataItem>> {
-      return computed(() => this.state().filteredDailyDeals);
-    } 
+  private _patch(patch: Partial<DealsState>) {
+    this.state.update(state => ({ ...state, ...patch }));
+  }
 
-    getSelectedDeal(): Signal<DealDataItem> {
-      return computed(() => this.state().selectedDeal);
-    } 
+  private _filterDeals(
+    deals: Array<DealDataItem>,
+    status: any,
+    category: string,
+    title: string
+  ): Array<DealDataItem> {
+    const toBoolean = (value: any): boolean =>
+      value === true || value === 'true';
 
-    getRelatedDeals(): Signal<Array<DealDataItem>> {
-      return computed(() => this.state().relatedDeals);
-    }
+    return _.orderBy(
+      deals.filter(deal => {
+        const statusMatch = +status === -1 || deal.approved === toBoolean(status);
+        const categoryMatch = category === 'All' || deal.category === category;
+        const titleMatch = !title || deal.title.toLowerCase().includes(title.toLowerCase());
+        return statusMatch && categoryMatch && titleMatch;
+      }),
+      d => +d.discount,
+      ['desc']
+    );
+  }
 
-    getSelectedCategory(): Signal<Category> {
-      return computed(() => this.state().selectedCategory);
-    }
-
-    getSelectedDealType(): Signal<DealType> {
-      return computed(() => this.state().selectedDealType);
-    }
-
-    getDeals(): Signal<Array<DealDataItem>> {
-      return computed(() => this.state().deals);
-    }
-
-    getFilteredAllDeals(): Signal<Array<DealDataItem>> {
-      return computed(() => this.state().filteredAllDeals);
+  private _sortDeals(deals: Array<DealDataItem>, sorting: DealSorting): Array<DealDataItem> {
+    if (sorting?.title === 'Lowest Discount First') {
+      return _.orderBy(deals, d => +d.discount, ['asc']);
+    } else if (sorting?.title === 'Highest Discount First') {
+      return _.orderBy(deals, d => +d.discount, ['desc']);
+    } else {
+      return [...deals];
     }
   }
+}

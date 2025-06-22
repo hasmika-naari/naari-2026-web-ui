@@ -119,7 +119,7 @@ export class BrushLineChartService {
                 const chart = new ApexCharts(document.querySelector('#brush_line_chart1'), options);
                 chart.render();
             } catch (error) {
-                console.error('Error loading ApexCharts:', error);
+                //consolie.error('Error loading ApexCharts:', error);
             }
         }
     }

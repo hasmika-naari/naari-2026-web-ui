@@ -112,11 +112,11 @@ export class RegisterPageComponent implements OnInit {
     
       onSubmit(): void {
         this.registrationSubmitted = true;
-        console.log('onSubmit - 1');
+        //consolie.log('onSubmit - 1');
         if (this.registerForm.invalid) {
           return;
         }
-        console.log('onSubmit - 2');
+        //consolie.log('onSubmit - 2');
 
         let registerRequest = new RegisterRequest();
         registerRequest.login = this.registerForm.value.username; 
@@ -131,9 +131,9 @@ export class RegisterPageComponent implements OnInit {
         }, (error) => {
 
         });
-        console.log('onSubmit - 3');
+        //consolie.log('onSubmit - 3');
     
-        console.log(JSON.stringify(this.registerForm.value.username, null, 2));
+        //consolie.log(JSON.stringify(this.registerForm.value.username, null, 2));
       }
 
       onActivationSubmit(){

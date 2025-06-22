@@ -88,11 +88,11 @@ export class BioProfilePageComponent implements OnInit {
     
       onSubmit(): void {
         this.bioProfileSubmitted = true;
-        console.log('onSubmit - 1');
+        //consolie.log('onSubmit - 1');
         if (this.bioProfileForm.invalid) {
           return;
         }
-        console.log('onSubmit - 2');
+        //consolie.log('onSubmit - 2');
 
         let bioRequest = new BioProfileAddRequest();
         bioRequest.userName =  'username'; // load from the login account 
@@ -103,7 +103,7 @@ export class BioProfilePageComponent implements OnInit {
         bioRequest.imageUrl = "assets/img/appicon.svg";
 
         this.authService.saveBioProfile(bioRequest).subscribe((resp) => {
-          console.log('Save Bio Profile' + resp);
+          //consolie.log('Save Bio Profile' + resp);
           this.router.navigate(['/']);
         });
 
@@ -111,7 +111,7 @@ export class BioProfilePageComponent implements OnInit {
         // loginProfile.phoneNumber = this.bioProfileForm.value.phonenumber;
         // this.authService.saveLoginProfile(bioRequest).subscribe((resp) => {
         // });
-        console.log(JSON.stringify(this.bioProfileForm.value, null, 2));
+        //consolie.log(JSON.stringify(this.bioProfileForm.value, null, 2));
       }
 
       onCancel(): void {

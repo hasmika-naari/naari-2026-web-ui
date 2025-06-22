@@ -94,7 +94,7 @@ export class ActivatePageComponent {
         this.activationForm.controls['userName'].disable();
      
         if(this.browser){
-          console.log('BROWSER: check for Device type');
+          //consolie.log('BROWSER: check for Device type');
           if(this.deviceService.isDesktop()){
             this.isDesktop = true;
             this.showBack = false;

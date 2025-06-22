@@ -35,13 +35,13 @@ export class UploadService {
   //       };
     
   //   bucket.upload(params).on('httpUploadProgress', function (evt: any) {
-  //     console.log(evt.loaded + ' of ' + evt.total + ' Bytes');
+  //     //consolie.log(evt.loaded + ' of ' + evt.total + ' Bytes');
   //     }).send(function (err: any, data: any) {
   //     if (err) {
-  //         console.log('There was an error uploading your file: ', err);
+  //         //consolie.log('There was an error uploading your file: ', err);
   //         return false;
   //     }
-  //     console.log('Successfully uploaded file.', data);
+  //     //consolie.log('Successfully uploaded file.', data);
   //     return true;
   // })
   }
@@ -68,7 +68,7 @@ export class UploadService {
     //     downloadLink.click();
     //   }
     //   if(err){
-    //     console.log(err);
+    //     //consolie.log(err);
     //   }
     // })
   }
@@ -81,13 +81,13 @@ export class UploadService {
     //   Key: key,
     //   };
     // bucket.deleteObject(params, function(err: any, data: any){
-    //   console.log(data);
-    //   console.log(err);
+    //   //consolie.log(data);
+    //   //consolie.log(err);
     // })
   }
 
   private handleError(error: any): Observable<never> {
-    console.log('Get Playlist API: Error');
+    //consolie.log('Get Playlist API: Error');
     return throwError(error || 'Get Playlist API: Error');
   }
 }

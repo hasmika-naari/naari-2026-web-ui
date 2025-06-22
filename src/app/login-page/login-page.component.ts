@@ -175,19 +175,19 @@ export class LoginPageComponent implements OnInit {
         loginRequest.username =  this.loginForm.value.username;
         loginRequest.password = this.loginForm.value.password;
         ;
-        console.log('signInPre Start');
+        //consolie.log('signInPre Start');
         this.authService.signInPre(loginRequest).subscribe(
            (loginResponse) =>
             {
-              console.log('loginResponse Response  == ' + loginResponse.status);
+              //consolie.log('loginResponse Response  == ' + loginResponse.status);
               if(loginResponse.status === null){
                 this.snackBarService.openSnackBar('You are not registered yet', this.constantService.snackbarType.ERROR, 2500);
               }else if(_.includes(loginResponse.status,'not-activated')){
-              console.log(' Response 1 == ' + loginResponse.status);
+              //consolie.log(' Response 1 == ' + loginResponse.status);
               this.snackBarService.openSnackBar('Your Account not Activated Please activate', this.constantService.snackbarType.ERROR, 2500);
               this.router.navigateByUrl('/login/activate');
               }else{
-                console.log(' Response 2  == ' + loginResponse.status);
+                //consolie.log(' Response 2  == ' + loginResponse.status);
                 this.authService.signIn(loginRequest).subscribe(
                    (loginResponse) =>
                     {
@@ -199,7 +199,7 @@ export class LoginPageComponent implements OnInit {
                         (account) =>
                         {
                           ;
-                          console.log('account: ' + account.id);
+                          //consolie.log('account: ' + account.id);
                           this.userStore.updateAccount(account);
                           this.authService.getBioProfile(account.login).subscribe(
                             (bioProfile: BioProfile) => {
@@ -219,7 +219,7 @@ export class LoginPageComponent implements OnInit {
                     });
               }
             });
-        // console.log(JSON.stringify(this.loginForm.value, null, 2));
+        // //consolie.log(JSON.stringify(this.loginForm.value, null, 2));
       }
 
       forgotPasswordSubmit($event: any){
@@ -238,7 +238,7 @@ export class LoginPageComponent implements OnInit {
         this.authService.initiateResetPassword(resetRqst).subscribe(
            (resetResponse) =>
             {
-              console.log('resetResponse  == ' + resetResponse);
+              //consolie.log('resetResponse  == ' + resetResponse);
               this.actionInProgress = false;
 
               this.snackBarService.openSnackBar('Please check your email for reset link!!', this.constantService.snackbarType.SUCCESS, 2500);

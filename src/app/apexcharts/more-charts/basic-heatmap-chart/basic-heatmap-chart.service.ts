@@ -166,7 +166,7 @@ export class BasicHeatmapChartService {
                 const chart = new ApexCharts(document.querySelector('#basic_heatmap_chart'), options);
                 chart.render();
             } catch (error) {
-                console.error('Error loading ApexCharts:', error);
+                //consolie.error('Error loading ApexCharts:', error);
             }
         }
     }

@@ -117,10 +117,10 @@ export class DealDetailsPageComponent implements OnInit {
             this.isDesktop = false;
           }
           debugger;
-           console.log(' deal details page - ngOnInit + isPlatformBrowser Reading Hydrated data:');
+           //consolie.log(' deal details page - ngOnInit + isPlatformBrowser Reading Hydrated data:');
           this.loadFetcheddata();
         }else{
-          console.log('deal details page - ngOnInit + isPlatformServer ' + this.platformId);
+          //consolie.log('deal details page - ngOnInit + isPlatformServer ' + this.platformId);
           this.fetchData(this.selectedDealId);
         }
     }
@@ -173,9 +173,9 @@ export class DealDetailsPageComponent implements OnInit {
 
     fetchData(dealId: string): void{
       debugger;
-      this.dealsService.getDealDetailsById(dealId, this.platformId).subscribe((deal) => {
+      this.dealsService.getDealDetailsById(dealId).subscribe((deal) => {
           this.localSelectedDeal = _.cloneDeep(deal[0]);
-          console.log('deal Details - fetchData selectedDeal+ ' + deal[0].title);
+          //consolie.log('deal Details - fetchData selectedDeal+ ' + deal[0].title);
 
           this.updateMetaTags();
 
@@ -191,7 +191,7 @@ export class DealDetailsPageComponent implements OnInit {
           // this.dealsService.getDealsByCountryAndCategory(this.localSelectedDeal.country, this.localSelectedDeal.category, this.platformId).subscribe((deals) => {
           //  this.relatedDeals = [...deals.filter((rd: DealDataItem) => +rd.id !== +this.selectedDeal.id)];
            // this.relatedDeals = [...this.relatedDeals.splice(deals.length < 10?deals.length:10)];
-          console.log('deal Details - fetchData delas  by country+ ' + deals);
+          //consolie.log('deal Details - fetchData delas  by country+ ' + deals);
             
             if(isPlatformServer(this.platformId)){
               this.transferState.set<DealDataItem[]>(
@@ -205,7 +205,7 @@ export class DealDetailsPageComponent implements OnInit {
       });
       this.dealsService.getCategoriesByCountry('usa', this.platformId).subscribe((categories) => {
           if(isPlatformServer(this.platformId)){
-          console.log('naari-home - fetchData pCategories+ ' + this.platformId);
+          //consolie.log('naari-home - fetchData pCategories+ ' + this.platformId);
           this.transferState.set<CategoryListItem[]>(
             makeStateKey('categoriesTable'), categories
           );
@@ -216,7 +216,7 @@ export class DealDetailsPageComponent implements OnInit {
     }
 
     loadFetcheddata(){
-      console.log('This is isPlatformBrowser...');
+      //consolie.log('This is isPlatformBrowser...');
     
       if(this.transferState.hasKey(makeStateKey('relatedDeals'))){
         let rdeals: Array<DealDataItem> = this.transferState.get(makeStateKey('relatedDeals'), new Array<DealDataItem>());
@@ -243,7 +243,7 @@ export class DealDetailsPageComponent implements OnInit {
 
 
     updateMetaTags(){
-          console.log('updateMetaTags+ ' + this.localSelectedDeal.title);
+          //consolie.log('updateMetaTags+ ' + this.localSelectedDeal.title);
       this.title.setTitle(this.localSelectedDeal.title);
       this.localSelectedDeal.description?this.meta.updateTag({property:"description",content:this.localSelectedDeal.description}):'';
       //  let cSymbol = this.dealService.country === 'us'?'$':'₹';
@@ -267,7 +267,7 @@ export class DealDetailsPageComponent implements OnInit {
       let discountText = this.localSelectedDeal.discountType === '%'?this.localSelectedDeal.discount + '%off': 
         this.localSelectedDeal.discountType + this.localSelectedDeal.discount + 'off';
       let selectedDealTitle =  ' 🔥 Naari Deals - Now: ' + amount.toString() + ' (' + discountText +  ') ' + " " + this.localSelectedDeal.title; 
-      // console.log('SERVER: ' + selectedDealTitle);
+      // //consolie.log('SERVER: ' + selectedDealTitle);
       this.localSelectedDeal.title?this.meta.updateTag({property:"og:title",content:selectedDealTitle}):'';
       this.localSelectedDeal.description?this.meta.updateTag({property:"og:description",content:this.localSelectedDeal.description}):'';
      

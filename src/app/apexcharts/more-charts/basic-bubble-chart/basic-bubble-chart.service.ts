@@ -140,7 +140,7 @@ export class BasicBubbleChartService {
                 const chart = new ApexCharts(document.querySelector('#basic_bubble_chart'), options);
                 chart.render();
             } catch (error) {
-                console.error('Error loading ApexCharts:', error);
+                //consolie.error('Error loading ApexCharts:', error);
             }
         }
     }

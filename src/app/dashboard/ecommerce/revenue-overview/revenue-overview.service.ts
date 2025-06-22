@@ -128,7 +128,7 @@ export class RevenueOverviewService {
                 const chart = new ApexCharts(document.querySelector('#ecommerce_revenue_overview_chart'), options);
                 chart.render();
             } catch (error) {
-                console.error('Error loading ApexCharts:', error);
+                //consolie.error('Error loading ApexCharts:', error);
             }
         }
     }

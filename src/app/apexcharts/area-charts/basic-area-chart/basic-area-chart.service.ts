@@ -111,7 +111,7 @@ export class BasicAreaChartService {
                 const chart = new ApexCharts(document.querySelector('#basic_area_chart'), options);
                 chart.render();
             } catch (error) {
-                console.error('Error loading ApexCharts:', error);
+                //consolie.error('Error loading ApexCharts:', error);
             }
         }
     }

@@ -165,7 +165,7 @@ export class LineAreaChartService {
                 const chart = new ApexCharts(document.querySelector('#line_area_chart'), options);
                 chart.render();
             } catch (error) {
-                console.error('Error loading ApexCharts:', error);
+                //consolie.error('Error loading ApexCharts:', error);
             }
         }
     }

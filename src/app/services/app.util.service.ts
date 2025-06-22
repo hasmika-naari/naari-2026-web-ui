@@ -1,6 +1,6 @@
 import { Inject, Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, of, switchMap, throwError } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { CompetationDataItem } from './bee-compete.model';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -45,7 +45,7 @@ export class AppUtilService {
           style.id = 'client-theme' + order;
           style.rel = 'stylesheet';
           style.href = `${styleName}`;
-          // console.log('Loading STyle - ' + styleName);
+          // //consolie.log('Loading STyle - ' + styleName);
           head.appendChild(style);
         }
       }
@@ -79,86 +79,145 @@ export class AppUtilService {
     }
 
 
-    loginWithCredentials(userName: string, password: string, route: string): void {
-      let loginRequest = new LoginRequest();
-      loginRequest.username =  userName;
-      loginRequest.password = password;
-      ;
-      console.log('signInPre Start');
-      this.authService.signInPre(loginRequest).subscribe(
-         (loginResponse) =>
-          {
-            console.log('loginResponse Response  == ' + loginResponse.status);
-            if(loginResponse.status === null){
-                this.localStorageService.removeItem('authenticated');
-                this.router.navigateByUrl('/');
-              this.snackBarService.openSnackBar('You are not registered yet', this.constantService.snackbarType.ERROR, 2500);
-            }else if(loginResponse.status ==='not-activated'){
-            console.log(' Response 1 == ' + loginResponse.status);
-            this.snackBarService.openSnackBar('Your Account not Activated Please activate', this.constantService.snackbarType.ERROR, 2500);
+    // loginWithCredentials(userName: string, password: string, route: string): void {
+    //   let loginRequest = new LoginRequest();
+    //   loginRequest.username =  userName;
+    //   loginRequest.password = password;
+    //   ;
+    //   //consolie.log('signInPre Start');
+    //   this.authService.signInPre(loginRequest).subscribe(
+    //      (loginResponse) =>
+    //       {
+    //         //consolie.log('loginResponse Response  == ' + loginResponse.status);
+    //         if(loginResponse.status === null){
+    //             this.localStorageService.removeItem('authenticated');
+    //             this.router.navigateByUrl('/');
+    //           this.snackBarService.openSnackBar('You are not registered yet', this.constantService.snackbarType.ERROR, 2500);
+    //         }else if(loginResponse.status ==='not-activated'){
+    //         //consolie.log(' Response 1 == ' + loginResponse.status);
+    //         this.snackBarService.openSnackBar('Your Account not Activated Please activate', this.constantService.snackbarType.ERROR, 2500);
   
-            this.router.navigateByUrl('/activate?userName=' + userName);
-            }else{
-              console.log(' Response 2  == ' + loginResponse.status);
-              this.authService.signIn(loginRequest).subscribe(
-                 (loginResponse) =>
-                  {
-                    this.localStorageService.setItem('authToken', loginResponse.id_token);
-                    this.localStorageService.setItem('authenticated', true);
+    //         this.router.navigateByUrl('/activate?userName=' + userName);
+    //         }else{
+    //           //consolie.log(' Response 2  == ' + loginResponse.status);
+    //           this.authService.signIn(loginRequest).subscribe(
+    //              (loginResponse) =>
+    //               {
+    //                 this.localStorageService.setItem('authToken', loginResponse.id_token);
+    //                 this.localStorageService.setItem('authenticated', true);
                     
-                    this.userStore.updateToken(loginResponse.id_token);
+    //                 this.userStore.updateToken(loginResponse.id_token);
   
-                    this.authService.getAccountProfile().subscribe(
-                      (account: Account) =>
-                      {
-                        console.log('account: ' + account.id);
-                        // alert('User Account: ' + account.id);
-                        this.userStore.updateAccount(account);
-                          let roles: Array<WifRole> = [];
-                          account.authorities.forEach(authr => {
-                            if(authr === 'ROLE_ADMIN'){
-                              roles.push({title:'App Admin ',role:authr, url: '/admin/dashboard' });
-                            }else if(authr === 'ROLE_USER'){
-                              roles.push({title: 'Member' ,role:authr, url: '/user/dashboard' });
-                            }
-                          });
-                          this.userStore.updateRoles(roles);
-                          this.userStore.updateActiveRole(roles[0]);
+    //                 this.authService.getAccountProfile().subscribe(
+    //                   (account: Account) =>
+    //                   {
+    //                     //consolie.log('account: ' + account.id);
+    //                     // alert('User Account: ' + account.id);
+    //                     this.userStore.updateAccount(account);
+    //                       let roles: Array<WifRole> = [];
+    //                       account.authorities.forEach(authr => {
+    //                         if(authr === 'ROLE_ADMIN'){
+    //                           roles.push({title:'App Admin ',role:authr, url: '/admin/dashboard' });
+    //                         }else if(authr === 'ROLE_USER'){
+    //                           roles.push({title: 'Member' ,role:authr, url: '/user/dashboard' });
+    //                         }
+    //                       });
+    //                       this.userStore.updateRoles(roles);
+    //                       this.userStore.updateActiveRole(roles[0]);
                           
-                        this.authService.getLoginProfile(account.login).subscribe(
-                          (profile)=>{
-                            this.userStore.updateLoginProfile(profile);
-                            this.userStore.setUserLoginStatus(true);
-                            this.authService.getBioProfile(account.login).subscribe(
+    //                     this.authService.getLoginProfile(account.login).subscribe(
+    //                       (profile)=>{
+    //                         this.userStore.updateLoginProfile(profile);
+    //                         this.userStore.setUserLoginStatus(true);
+    //                         this.authService.getBioProfile(account.login).subscribe(
   
-                              (bioProfile: BioProfile) => {
-                                  if(!bioProfile.id){
-                                    this.snackBarService.openSnackBar('Your Account not Activated Please activate', this.constantService.snackbarType.ERROR, 2500);
-                                    this.router.navigate(['/bio-profile']);
-                                  }
-                                  else{
-                                    this.userStore.updateBioProfile(bioProfile);
-                                    // this.router.navigate(['/user/dashboard']);
-                                  }
-                                  // bioProfile: 
-                                  // {...bioProfile, imageUrl: bioProfile?.imageUrl?this.constantService.BASE_AWS_S3_API_URL + bioProfile?.imageUrl:'' }}),
-                                });
-                          }, (error: any) => {
+    //                           (bioProfile: BioProfile) => {
+    //                               if(!bioProfile.id){
+    //                                 this.snackBarService.openSnackBar('Your Account not Activated Please activate', this.constantService.snackbarType.ERROR, 2500);
+    //                                 this.router.navigate(['/bio-profile']);
+    //                               }
+    //                               else{
+    //                                 this.userStore.updateBioProfile(bioProfile);
+    //                                 // this.router.navigate(['/user/dashboard']);
+    //                               }
+    //                               // bioProfile: 
+    //                               // {...bioProfile, imageUrl: bioProfile?.imageUrl?this.constantService.BASE_AWS_S3_API_URL + bioProfile?.imageUrl:'' }}),
+    //                             });
+    //                       }, (error: any) => {
 
-                          }
-                        )
-                        }, (error: any) => {
+    //                       }
+    //                     )
+    //                     }, (error: any) => {
 
-                        }
-                    );
+    //                     }
+    //                 );
   
-                  }, (error: any) => {
+    //               }, (error: any) => {
 
-                  });
-            }
-          }, (error: any) => {
+    //               });
+    //         }
+    //       }, (error: any) => {
 
-          });
-    }
+    //       });
+    // }
+
+    loginWithCredentials(userName: string, password: string, route: string): Observable<boolean> {
+  const loginRequest = new LoginRequest();
+  loginRequest.username = userName;
+  loginRequest.password = password;
+
+  return this.authService.signInPre(loginRequest).pipe(
+    switchMap((loginResponse) => {
+      if (loginResponse.status === null || loginResponse.status === 'not-activated') {
+        return throwError(() => new Error('Login invalid or not activated'));
+      }
+
+      return this.authService.signIn(loginRequest).pipe(
+        switchMap((response) => {
+          this.localStorageService.setItem('authToken', response.id_token);
+          this.localStorageService.setItem('authenticated', true);
+          this.userStore.updateToken(response.id_token);
+
+          return this.authService.getAccountProfile().pipe(
+            switchMap((account: Account) => {
+              this.userStore.updateAccount(account);
+
+              const roles: Array<WifRole> = account.authorities.map(auth => ({
+                role: auth,
+                title: auth === 'ROLE_ADMIN' ? 'App Admin' : 'Member',
+                url: auth === 'ROLE_ADMIN' ? '/admin/dashboard' : '/user/dashboard'
+              }));
+
+              this.userStore.updateRoles(roles);
+              this.userStore.updateActiveRole(roles[0]);
+
+              return this.authService.getLoginProfile(account.login).pipe(
+                switchMap((profile) => {
+                  this.userStore.updateLoginProfile(profile);
+                  this.userStore.setUserLoginStatus(true);
+
+                  return this.authService.getBioProfile(account.login).pipe(
+                    map((bioProfile: BioProfile) => {
+                      if (!bioProfile.id) {
+                        this.router.navigate(['/bio-profile']);
+                      } else {
+                        this.userStore.updateBioProfile(bioProfile);
+                      }
+                      return true;
+                    })
+                  );
+                })
+              );
+            })
+          );
+        })
+      );
+    }),
+    catchError((error) => {
+      console.error('Auto login failed:', error);
+      return of(false);
+    })
+  );
+}
 
 } 

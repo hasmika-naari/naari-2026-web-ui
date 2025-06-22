@@ -109,11 +109,11 @@ export class ContactComponent implements OnInit {
 
   onSubmit(): void {
     this.feedbackSubmitted = true;
-    console.log('onSubmit - 1');
+    //consolie.log('onSubmit - 1');
     if (this.feedbackForm.invalid) {
       return;
     }
-    console.log('onSubmit - 2');
+    //consolie.log('onSubmit - 2');
 
     // let registerRequest = new RegisterRequest();
     // registerRequest.login = this.registerForm.value.username; 
@@ -128,9 +128,9 @@ export class ContactComponent implements OnInit {
     // }, (error) => {
 
     // });
-    console.log('onSubmit - 3');
+    //consolie.log('onSubmit - 3');
 
-    console.log(JSON.stringify(this.feedbackForm.value.fullname, null, 2));
+    //consolie.log(JSON.stringify(this.feedbackForm.value.fullname, null, 2));
   }
 
 fetchData(): void{

@@ -3225,7 +3225,7 @@ ul {
 
 
   getTemplate1HTMLV1(resumeForm : Resume){
-    console.log(resumeForm);
+    //consolie.log(resumeForm);
     return `
     <!DOCTYPE html>
     <html lang="en">

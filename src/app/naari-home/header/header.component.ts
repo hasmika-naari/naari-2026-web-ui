@@ -44,7 +44,7 @@ export class HeaderStyleComponent implements OnInit, OnChanges {
     // readonly token = this.userStore.select(x => x.token);
     private userStore: UserStoreService = inject(UserStoreService);
     userAccount: Signal<Account> = this.userStore.getUserAccount();
-    isLoggedIn: Signal<boolean> = this.userStore.getUserLoggedIn();
+    isLoggedIn: Signal<boolean> = this.userStore.getUserLoginStatus();
     // public platformId: object =  inject(PLATFORM_ID);
     private deviceService: DeviceDetectorService=  inject(DeviceDetectorService);
     private router: Router=  inject(Router);
@@ -63,14 +63,14 @@ export class HeaderStyleComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
-        console.log('Header : ngOnInit = ' + this.platformId);
+        //consolie.log('Header : ngOnInit = ' + this.platformId);
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        console.log('Header: ngOnChanges = ' + this.platformId);
+        //consolie.log('Header: ngOnChanges = ' + this.platformId);
         if(isPlatformBrowser(this.platformId)){
             this.isBrowser = true;
-            console.log('Header: ngOnChanges = ' + this.isBrowser);
+            //consolie.log('Header: ngOnChanges = ' + this.isBrowser);
           if(this.deviceService.isDesktop()){
             this.isDesktop = true;
             this.isMobile = false;
@@ -85,7 +85,7 @@ export class HeaderStyleComponent implements OnInit, OnChanges {
             this.isDesktop = false;
           }
 
-          console.log('Header: ngOnChanges = ' + this.isMobile);
+          //consolie.log('Header: ngOnChanges = ' + this.isMobile);
 
         }
     }

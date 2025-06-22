@@ -141,7 +141,7 @@ export class LoginPageComponent implements OnDestroy, AfterViewInit {
       }
     );
     if(this.browser){
-      console.log('BROWSER: check for Device type');
+      //consolie.log('BROWSER: check for Device type');
       if(this.deviceService.isDesktop()){
         this.isDesktop = true;
         this.showBack = false;
@@ -198,7 +198,7 @@ export class LoginPageComponent implements OnDestroy, AfterViewInit {
     this.authService.initiateResetPassword(resetRqst).subscribe(
        (resetResponse) =>
         {
-          console.log('resetResponse  == ' + resetResponse);
+          //consolie.log('resetResponse  == ' + resetResponse);
           this.isActionInProgress = false;
 
           this.snackBarService.openMultiLineSnackBar('Reset Password ', 'Please check your email for reset link!!', this.constantService.snackbarType.SUCCESS, 3000500);
@@ -248,24 +248,24 @@ export class LoginPageComponent implements OnDestroy, AfterViewInit {
     loginRequest.password = this.loginForm.value.password;
     
     this.loginForm.disable();
-    console.log('signInPre Start');
+    //consolie.log('signInPre Start');
     this.authService.signInPre(loginRequest).subscribe(
        (loginResponse) =>
         {
       
       this.loginForm.enable();
-          console.log('loginResponse Response  == ' + loginResponse.status);
+          //consolie.log('loginResponse Response  == ' + loginResponse.status);
           if(loginResponse.status === null){
             this.snackBarService.openSnackBar('You are not registered yet', this.constantService.snackbarType.ERROR, 2500);
             this.isLoading = false;
           }else if(loginResponse.status ==='not-activated'){
-          console.log(' Response 1 == ' + loginResponse.status);
+          //consolie.log(' Response 1 == ' + loginResponse.status);
           this.snackBarService.openSnackBar('Your Account not Activated Please activate', this.constantService.snackbarType.ERROR, 2500);
           this.isLoading = false;
 
           this.router.navigateByUrl('/activate?userName=' + loginRequest.username);
           }else{
-            console.log(' Response 2  == ' + loginResponse.status);
+            //consolie.log(' Response 2  == ' + loginResponse.status);
             this.authService.signIn(loginRequest).subscribe(
                (loginResponse) =>
                 {
@@ -282,7 +282,7 @@ export class LoginPageComponent implements OnDestroy, AfterViewInit {
                     (account:Account) =>
                     {
                       ;
-                      console.log('account: ' + account.id);
+                      //consolie.log('account: ' + account.id);
                       this.userStore.updateAccount(account);
                       let roles: Array<WifRole> = [];
                       account.authorities.forEach(authr => {
@@ -356,10 +356,10 @@ export class LoginPageComponent implements OnDestroy, AfterViewInit {
 
 
   fetchData(): void{
-      console.log('naari-home - fetchData + ' + this.platformId);
+      //consolie.log('naari-home - fetchData + ' + this.platformId);
       this.dealsService.getCategoriesByCountry('usa', this.platformId).subscribe((categories) => {
             if(isPlatformServer(this.platformId)){
-              console.log('naari-home - fetchData pCategories+ ' + this.platformId);
+              //consolie.log('naari-home - fetchData pCategories+ ' + this.platformId);
               this.transferState.set<CategoryListItem[]>(
                 makeStateKey('categoriesTable'), categories
               );

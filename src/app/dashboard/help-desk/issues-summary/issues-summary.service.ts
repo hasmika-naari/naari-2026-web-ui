@@ -124,7 +124,7 @@ export class IssuesSummaryService {
                 const chart = new ApexCharts(document.querySelector('#help_desk_issues_summary_chart'), options);
                 chart.render();
             } catch (error) {
-                console.error('Error loading ApexCharts:', error);
+                //consolie.error('Error loading ApexCharts:', error);
             }
         }
     }

@@ -37,12 +37,12 @@ export class EcommerceComponent {
         if (isPlatformServer(this.platformId)) {
             // Server: Fetch and set data
             const data = { message: 'Hello from SSR!' };
-            console.log('Hydrating data at server:', data);
+            //consolie.log('Hydrating data at server:', data);
             this.transferState.set(DATA_KEY, data);
         } else {
             // Browser: Read and remove data
             const data = this.transferState.get(DATA_KEY, null);
-            console.log('Hydrated data from server:', data);
+            //consolie.log('Hydrated data from server:', data);
             this.transferState.remove(DATA_KEY); // Optional cleanup
         }
     }

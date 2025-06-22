@@ -103,11 +103,11 @@ export class DealsListComponent implements OnInit, OnDestroy {
         });
 
         if(isPlatformServer(this.platformId)){
-            ////console.log('isPlatformServer');
+            //////consolie.log('isPlatformServer');
           }
 
           if(isPlatformBrowser(this.platformId)){
-            ////console.log('isPlatformBrowser');
+            //////consolie.log('isPlatformBrowser');
           }
     }
 
@@ -125,20 +125,20 @@ export class DealsListComponent implements OnInit, OnDestroy {
       //   ;
       //   const dealType = params['type'];
       //   const category = params['category'];
-      //   // ////console.log('ngOnInit: query param: category' + category);
-      //   ////console.log('ngOnInit: query param: dealType' + dealType);
+      //   // //////consolie.log('ngOnInit: query param: category' + category);
+      //   //////consolie.log('ngOnInit: query param: dealType' + dealType);
       //   this.fetchData(dealType, category);
 
       // })); 
 
         const dealType = this.route.snapshot.queryParams['type'];
         const category = this.route.snapshot.queryParams['category'];
-        ////console.log('ngOnInit: query param: category' + category);
-        ////console.log('ngOnInit: query param: dealType' + dealType);
+        //////consolie.log('ngOnInit: query param: category' + category);
+        //////consolie.log('ngOnInit: query param: dealType' + dealType);
         this.fetchData(dealType, category);
 
         // if(isPlatformServer(this.platformId)){
-        //     ////console.log('isPlatformServer - dealId' + dealType);
+        //     //////consolie.log('isPlatformServer - dealId' + dealType);
 
         //   }
 
@@ -316,8 +316,8 @@ export class DealsListComponent implements OnInit, OnDestroy {
           }else{
               //  this.dealsStoreService.updateDeals(deals);
           }
-          ////console.log('Sel Category = ' + category);
-          ////console.log('Sel Cat length = ' + this.selectedCategory.length);
+          //////consolie.log('Sel Category = ' + category);
+          //////consolie.log('Sel Cat length = ' + this.selectedCategory.length);
           this.dealsService.getDealTypes('usa', this.platformId).subscribe((dealTypes) => {
             // this.dealTypes = [...dealTypes]
             let selectedDealTypes: Array<DealType> = [];
@@ -360,7 +360,7 @@ export class DealsListComponent implements OnInit, OnDestroy {
     }
 
     loadFetcheddata(){
-        console.log('This is isPlatformBrowser...');
+        //consolie.log('This is isPlatformBrowser...');
       
         if(this.transferState.hasKey(makeStateKey('dealsByFilter'))){
           // this.dealsStoreService.updateDeals(this.transferState.get(makeStateKey('dealsByFilter'), []));
@@ -390,8 +390,8 @@ export class DealsListComponent implements OnInit, OnDestroy {
 
     loadDealPageBreadgrumText(dealType: DealType, category: Category){
       let selType = ''; 
-      ////console.log('Selected DealType' + dealType?.title);
-      ////console.log('Selected Category' + category?.title);
+      //////consolie.log('Selected DealType' + dealType?.title);
+      //////consolie.log('Selected Category' + category?.title);
       if(dealType && dealType.code){
         selType = dealType.title;
         let selectedDealTitle =  ' 🔥 Naari Deals - ' +  selType?selType  + ' Savings Deals for You': 'All Best Deals';
@@ -421,7 +421,7 @@ export class DealsListComponent implements OnInit, OnDestroy {
     this.page = event;
     // this.getAllProducts(); 
     // if (isPlatformBrowser(this.platformId)) {
-      ////console.log('Screen Height: ' + document.documentElement.clientHeight);
+      //////consolie.log('Screen Height: ' + document.documentElement.clientHeight);
       if(this.isMobile){
         window.scrollTo(0, 275);
       }else{

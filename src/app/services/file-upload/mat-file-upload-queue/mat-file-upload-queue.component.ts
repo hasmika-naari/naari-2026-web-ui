@@ -153,7 +153,7 @@ export class MatFileUploadQueueComponent implements OnChanges, OnDestroy {
   }
 
   public removeAll() {
-    console.log('Removed All FIles from Queue');
+    //consolie.log('Removed All FIles from Queue');
     this.files.splice(0, this.files.length);
     this.changeDetectorRef.markForCheck();
   }

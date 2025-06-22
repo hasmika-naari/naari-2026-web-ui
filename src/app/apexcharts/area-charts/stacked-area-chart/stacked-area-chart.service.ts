@@ -75,7 +75,7 @@ export class StackedAreaChartService {
                         stacked: true,
                         events: {
                             selection: function(chart:any, e:any) {
-                                console.log(new Date(e.xaxis.min));
+                                //consolie.log(new Date(e.xaxis.min));
                             }
                         },
                         toolbar: {
@@ -151,7 +151,7 @@ export class StackedAreaChartService {
                 const chart = new ApexCharts(document.querySelector('#stacked_area_chart'), options);
                 chart.render();
             } catch (error) {
-                console.error('Error loading ApexCharts:', error);
+                //consolie.error('Error loading ApexCharts:', error);
             }
         }
     }

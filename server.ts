@@ -9,8 +9,7 @@ import http from 'http';
 import { fileURLToPath } from 'url';
 import { dirname, join, resolve } from 'path';
 import { createProxyMiddleware } from 'http-proxy-middleware';
-
-import bootstrap from './src/main.server'; // Angular bootstrap module
+import bootstrap from './src/main.server';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
@@ -52,10 +51,10 @@ export function app() {
   // SSR Route handler (for all non-static routes)
   server.get('*', async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log(`✅ SSR Rendering for: ${req.originalUrl}`);
+      //consolie.log(`✅ SSR Rendering for: ${req.originalUrl}`);
 
       if (!fs.existsSync(indexHtml)) {
-        console.error('❌ SSR template missing:', indexHtml);
+        //consolie.error('❌ SSR template missing:', indexHtml);
         return res.status(500).send('SSR template not found.');
       }
 
@@ -71,7 +70,7 @@ export function app() {
 
       return res.status(200).send(html);
     } catch (err) {
-      console.error('❌ SSR Rendering Error:', err);
+      //consolie.error('❌ SSR Rendering Error:', err);
       return res.status(500).send('Internal Server Error');
     }
   });
@@ -99,11 +98,11 @@ function run(): void {
 
   const server = http.createServer(appWithRedirect);
   server.listen(port, () => {
-    console.log(`🚀 Node SSR server listening at http://localhost:${port}`);
+    //consolie.log(`🚀 Node SSR server listening at http://localhost:${port}`);
   });
 }
 
 run();
 
 // Required export for SSR build
-export * from './src/main.server';
+// export * from './src/main.server';

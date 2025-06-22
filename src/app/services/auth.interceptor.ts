@@ -74,7 +74,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
     if( req.url.includes("uploadProfileImage")){
       
     }
-    if(!req.url.includes("wif-login") && !req.url.includes("authenticate") && 
+    if(!req.url.includes("naari-login") && !req.url.includes("authenticate") && 
         !req.url.includes("en.json") && token !== Object(token) ) {
           
         let tempToken = token.replace("\\", "").replace("\\", "");
@@ -85,16 +85,16 @@ export class HttpRequestInterceptor implements HttpInterceptor {
 
     authReq = req.clone({ headers });
 
-    // console.log('Request URL1: ' + req.url);
+    // //consolie.log('Request URL1: ' + req.url);
     // // Rewrite URL if it starts with '/api'
     // if (req.url.includes('/api')) {
-    // console.log('Request URL2: ' + req.url);
+    // //consolie.log('Request URL2: ' + req.url);
 
     //   const apiUrl = 'http://Workifence.com:8090/api';
     //   const newPath = req.url.substring(req.url.indexOf('/api') + 4); // Extract remaining path after '/api'
-    // console.log('Request URL3: apiUrl ' + apiUrl);
-    // console.log('Request URL4: newPath ' +  newPath);
-    // console.log('Request URL5: Final URL ' +  apiUrl + newPath);
+    // //consolie.log('Request URL3: apiUrl ' + apiUrl);
+    // //consolie.log('Request URL4: newPath ' +  newPath);
+    // //consolie.log('Request URL5: Final URL ' +  apiUrl + newPath);
 
     //    authReq = authReq.clone({ url: apiUrl + newPath });
     // }
@@ -116,16 +116,23 @@ export class HttpRequestInterceptor implements HttpInterceptor {
             }
           }
         } else if (response instanceof HttpHeaderResponse) {
-          console.log(response);
+          // //consolie.log(response);
           const token: any = response.headers.get('authorization');
           this.storageService.setItem('authToken', JSON.stringify(token));
         } else if (response instanceof HttpResponse) {
           const token: LoginResponse = response.body as LoginResponse;
+          debugger;
+        
           if (token?.id_token && this.isLoginCall) {
             this.storageService.setItem('authToken', JSON.stringify(token.id_token));
+             console.log('Auth Req URL 1: ' + authReq.url);
+            //  console.log('if (response instanceof HttpResponse)' + token.id_token);
           }else if(!token?.id_token && this.isLoginCall){
-            this.snackBarService.openSnackBar('Invalid Credentials Please check and Re try again', 
-            this.appConstantService.snackbarType.ERROR, 2500);
+            debugger;
+            console.log('Auth Req URL 2: ' + authReq.url);
+            // console.log('!token?.id_token && this.isLoginCall' + token);
+            // this.snackBarService.openSnackBar('Invalid Credentials Please check and Re try again', 
+            // this.appConstantService.snackbarType.ERROR, 2500);
           }
         }
         

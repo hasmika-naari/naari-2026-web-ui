@@ -134,7 +134,7 @@ export class SyncingLineChartService {
                 const chart = new ApexCharts(document.querySelector('#syncing_line_chart'), options);
                 chart.render();
             } catch (error) {
-                console.error('Error loading ApexCharts:', error);
+                //consolie.error('Error loading ApexCharts:', error);
             }
         }
     }

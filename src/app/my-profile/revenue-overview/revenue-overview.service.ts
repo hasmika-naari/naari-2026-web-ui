@@ -128,7 +128,7 @@ export class RevenueOverviewService {
                 const chart = new ApexCharts(document.querySelector('#mp_revenue_overvie_chart'), options);
                 chart.render();
             } catch (error) {
-                console.error('Error loading ApexCharts:', error);
+                //consolie.error('Error loading ApexCharts:', error);
             }
         }
     }

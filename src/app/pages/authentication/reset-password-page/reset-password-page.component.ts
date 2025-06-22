@@ -182,7 +182,7 @@ export class ResetPasswordPageComponent implements OnInit, OnDestroy {
         this.authService.finishResetPassword(resetRqst).subscribe(
            (resetFinishResponse) =>
             {
-              console.log('resetResponse  == ' + resetFinishResponse);
+              //consolie.log('resetResponse  == ' + resetFinishResponse);
               this.snackBarService.openSnackBar('Updated Password Successful!!', this.constantService.snackbarType.SUCCESS, 2500);
               this.router.navigateByUrl('/sign-in');
             }, (error: any) => {

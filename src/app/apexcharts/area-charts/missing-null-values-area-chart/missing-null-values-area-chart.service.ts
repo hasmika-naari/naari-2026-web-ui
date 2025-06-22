@@ -226,7 +226,7 @@ export class MissingNullValuesAreaChartService {
                 const chart = new ApexCharts(document.querySelector('#missing_null_values_area_chart'), options);
                 chart.render();
             } catch (error) {
-                console.error('Error loading ApexCharts:', error);
+                //consolie.error('Error loading ApexCharts:', error);
             }
         }
     }

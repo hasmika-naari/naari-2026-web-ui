@@ -100,7 +100,7 @@ export class GradientRadialbarChartService {
                 const chart = new ApexCharts(document.querySelector('#gradient_radialbar_chart'), options);
                 chart.render();
             } catch (error) {
-                console.error('Error loading ApexCharts:', error);
+                //consolie.error('Error loading ApexCharts:', error);
             }
         }
     }

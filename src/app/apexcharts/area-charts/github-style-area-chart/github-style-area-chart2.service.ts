@@ -106,7 +106,7 @@ export class GithubStyleAreaChart2Service {
                 const chart = new ApexCharts(document.querySelector('#github_style_area_chart2'), options);
                 chart.render();
             } catch (error) {
-                console.error('Error loading ApexCharts:', error);
+                //consolie.error('Error loading ApexCharts:', error);
             }
         }
     }

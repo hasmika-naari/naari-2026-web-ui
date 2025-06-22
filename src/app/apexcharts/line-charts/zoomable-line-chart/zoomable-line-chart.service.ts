@@ -141,7 +141,7 @@ export class ZoomableLineChartService {
                 const chart = new ApexCharts(document.querySelector('#zoomable_line_chart'), options);
                 chart.render();
             } catch (error) {
-                console.error('Error loading ApexCharts:', error);
+                //consolie.error('Error loading ApexCharts:', error);
             }
         }
     }

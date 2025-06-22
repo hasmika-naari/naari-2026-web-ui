@@ -109,7 +109,7 @@ export class MerchantDetailsComponent implements OnInit {
   submitForm($event){
     $event.stopPropagation();
 
-    console.log(this.dealFormGroup.value);
+    //consolie.log(this.dealFormGroup.value);
     if(this.dealFormGroup.valid){
 
       let newDeal: DealDataItem = new DealDataItem();

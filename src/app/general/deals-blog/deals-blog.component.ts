@@ -75,7 +75,7 @@ export class DealsBlogComponent implements OnInit {
         });
 
 		if(isPlatformBrowser(this.platformId)){
-            console.log('isPlatformBrowser');
+            //consolie.log('isPlatformBrowser');
 			this.browser = true;
           }
 

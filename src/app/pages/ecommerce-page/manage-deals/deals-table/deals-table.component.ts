@@ -155,7 +155,7 @@ export class DealsTableComponent implements OnInit {
   ngOnInit() {
     // this.dealsFacade.deals$.subscribe(e =>{
     //   debugger;
-    //   console.log(e);
+    //   //consolie.log(e);
     //   this.deals=e;
     // })
     // this.dealsFacade.actionInProgress$.subscribe(p => {
@@ -282,7 +282,7 @@ export class DealsTableComponent implements OnInit {
   onPage(event: MouseEvent) {
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
-      console.log('paged!', event);
+      //consolie.log('paged!', event);
     }, 100);
   }
 

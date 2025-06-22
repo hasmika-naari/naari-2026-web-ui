@@ -78,7 +78,7 @@ export class IfenceService {
     
   saveJobResume(jobResume:  JobResumeItem) {
     let url:string = this.appConstants.BASE_API_URL + this.appConstants.POST_JOB_RESUME_URL;
-    console.log('saveJobResume: api call');
+    //consolie.log('saveJobResume: api call');
     return this.http
       .post<any>(url, jobResume)
       .pipe(catchError(this.handleError));
@@ -86,7 +86,7 @@ export class IfenceService {
 
   updateJobResume(jobResume:  JobResumeItem) {
     let url:string = this.appConstants.BASE_API_URL + this.appConstants.POST_JOB_RESUME_URL + '/' + jobResume.id;
-    console.log('saveJobResume: api call');
+    //consolie.log('saveJobResume: api call');
     return this.http
       .put<any>(url, jobResume)
       .pipe(catchError(this.handleError));
@@ -94,7 +94,7 @@ export class IfenceService {
 
   getJobResumesByUserId(userId: string) {
     let url:string = this.appConstants.BASE_API_URL + this.appConstants.GET_JOB_RESUMES_URL + '?ownerId.equals=' + userId;
-    console.log('getJobResumesByUserId: api call');
+    //consolie.log('getJobResumesByUserId: api call');
     return this.http
       .get<any>(url)
       .pipe(catchError(this.handleError));
@@ -102,7 +102,7 @@ export class IfenceService {
 
   getJobResumeDetailsById(resumeId: string) {
     let url:string = this.appConstants.BASE_API_URL + this.appConstants.GET_JOB_RESUME_BY_ID_URL + '/' + resumeId;
-    console.log('getJobResumeDetailsById: api call');
+    //consolie.log('getJobResumeDetailsById: api call');
     return this.http
       .get<any>(url)
       .pipe(catchError(this.handleError));
@@ -110,7 +110,7 @@ export class IfenceService {
 
   deleteJobResumeById(resumeId: string) {
     let url:string = this.appConstants.BASE_API_URL + this.appConstants.DELETE_JOB_RESUME_BY_ID_URL + '/' + resumeId;
-    console.log('deleteJobResumeById: api call');
+    //consolie.log('deleteJobResumeById: api call');
     return this.http
       .delete<any>(url)
       .pipe(catchError(this.handleError));
@@ -118,7 +118,7 @@ export class IfenceService {
 
   saveAppliedJob(jobItem:  JobItem) {
     let url:string = this.appConstants.BASE_API_URL + this.appConstants.POST_APPLIED_JOB_URL;
-    console.log('saveAppliedJob: api call');
+    //consolie.log('saveAppliedJob: api call');
     return this.http
       .post<any>(url, jobItem)
       .pipe(catchError(this.handleError));
@@ -126,7 +126,7 @@ export class IfenceService {
 
   updateAppliedJob(jobItem:  JobItem) {
     let url:string = this.appConstants.BASE_API_URL + this.appConstants.UPDATE_APPLIED_JOB_URL + '/' + jobItem.id;
-    console.log('updateAppliedJob: api call');
+    //consolie.log('updateAppliedJob: api call');
     return this.http
       .put<any>(url, jobItem)
       .pipe(catchError(this.handleError));
@@ -139,12 +139,12 @@ export class IfenceService {
     }
     let queryUrl = baseUrl +  '/api/get-job-application-by-userid/' + userId;
     // 
-    ////console.log('getDeals: api call');
+    //////consolie.log('getDeals: api call');
     return this.http
       .get<any>(queryUrl)
       .pipe(catchError(this.handleError));
     // let url:string = this.appConstants.BASE_API_URL + this.appConstants.GET_APPLIED_JOBS_URL + '?ownerId.equals=' + userId;
-    // console.log('getAppliedJobsByUserId: api call');
+    // //consolie.log('getAppliedJobsByUserId: api call');
     // return this.http
     //   .get<any>(url)
     //   .pipe(catchError(this.handleError));
@@ -152,7 +152,7 @@ export class IfenceService {
 
   getAppliedJobById(jobId: string) {
     let url:string = this.appConstants.BASE_API_URL + this.appConstants.GET_APPLIED_JOB_BY_ID_URL + '/' + jobId;
-    console.log('getAppliedJobById: api call');
+    //consolie.log('getAppliedJobById: api call');
     return this.http
       .get<any>(url)
       .pipe(catchError(this.handleError));
@@ -160,7 +160,7 @@ export class IfenceService {
 
   deleteAppliedJobById(jobId: string) {
     let url:string = this.appConstants.BASE_API_URL + this.appConstants.DELETE_APPLIED_JOB_BY_ID_URL + '/' + jobId;
-    console.log('deleteJobResumeById: api call');
+    //consolie.log('deleteJobResumeById: api call');
     return this.http
       .delete<any>(url)
       .pipe(catchError(this.handleError));
@@ -168,7 +168,7 @@ export class IfenceService {
 
   getEnterpriseByCategory(category: string) {
     let url:string = this.appConstants.BASE_API_URL + this.appConstants.GET_ENTERPRISE_BY_CATEGORY;
-    console.log('getEnterpriseByCategory: api call');
+    //consolie.log('getEnterpriseByCategory: api call');
     return this.http
       .get<any>(url)
       .pipe(catchError(this.handleError));
@@ -176,7 +176,7 @@ export class IfenceService {
 
   saveQuestionComment(comment:  QuestionComment) {
     let url:string = this.appConstants.BASE_API_URL + this.appConstants.POST_JOB_RESUME_URL;
-    console.log('saveQuestionComment: api call');
+    //consolie.log('saveQuestionComment: api call');
     return this.http
       .post<any>(url, comment)
       .pipe(catchError(this.handleError));
@@ -184,7 +184,7 @@ export class IfenceService {
 
   saveServiceRequest(serviceRequest: ServiceRequestItem){
     let url:string = this.appConstants.BASE_API_URL + this.appConstants.SERVICE_REQUEST_URL;
-    console.log('saveServiceRequest: api call');
+    //consolie.log('saveServiceRequest: api call');
     return this.http
       .post<any>(url, serviceRequest)
       .pipe(catchError(this.handleError));
@@ -192,7 +192,7 @@ export class IfenceService {
 
   getServiceRequests() : Observable<Array<ServiceRequestItem>>{
     let url:string = this.appConstants.BASE_API_URL + this.appConstants.SERVICE_REQUEST_URL;
-    console.log('getServiceRequests: api call');
+    //consolie.log('getServiceRequests: api call');
     return this.http
       .get<any>(url)
       .pipe(catchError(this.handleError));

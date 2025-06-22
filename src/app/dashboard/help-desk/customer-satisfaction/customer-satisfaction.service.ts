@@ -65,7 +65,7 @@ export class CustomerSatisfactionService {
                 const chart = new ApexCharts(document.querySelector('#help_desk_customer_satisfaction_chart'), options);
                 chart.render();
             } catch (error) {
-                console.error('Error loading ApexCharts:', error);
+                //consolie.error('Error loading ApexCharts:', error);
             }
         }
     }
