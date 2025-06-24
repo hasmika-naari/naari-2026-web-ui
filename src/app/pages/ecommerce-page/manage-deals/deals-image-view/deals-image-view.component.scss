@@ -12,6 +12,30 @@
   animation: 500ms ease-in-out 0s normal none 1 running fadeInDown;
 }
 
+.amazon-deals-load-sidenav{
+  width: 500px;
+
+  .mat-card-div{
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+  }
+}
+
+.deal-status-text-active{
+  letter-spacing: 1px;
+  font-family: Poppins;
+  font-weight: 600;
+  color: var(--successColor);
+}
+
+.deal-status-text-not-active{
+  letter-spacing: 1px;
+  font-family: Poppins;
+  font-weight: 600;
+  color: var(--blackColor);
+}
+
 .filter-sidenav{
   width: 280px;
   border: 0 !important;

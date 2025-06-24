@@ -47,6 +47,11 @@
     }
  }
 
+ .stagger-field {
+  transition: all 0.3s ease-in-out;
+  margin-bottom: 1rem;
+}
+
 /* Max width 767px */
 @media only screen and (max-width : 767px) {
 

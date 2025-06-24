@@ -23,7 +23,7 @@ import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontaweso
 import { Router, RouterModule } from '@angular/router';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -47,12 +47,15 @@ import {
   Slide,
   DealType,
   DealDataItem,
-  AmazonDealDataRequestItem
+  AmazonDealDataRequestItem,
+  PostDealItem
 } from '@app/services/deals.model';
 import _ from 'lodash';
 import { response } from 'express';
 import { AmazonDealDialogComponent } from '../amazon-deal-dialog/amazon-deal-dialog.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-deals-image-view',
@@ -61,7 +64,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
     CommonModule, MatMenuModule, MatIconModule, FontAwesomeModule, RouterModule, MatChipsModule,
     MatButtonModule, FormsModule, MatSelectModule, MatCardModule, MatAutocompleteModule,
     MatProgressBarModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatDialogModule,
-    MatCheckboxModule, MatSidenavModule, FooterWorkifenceComponent, AmazonDealDialogComponent
+    MatCheckboxModule, MatSidenavModule, FooterWorkifenceComponent, AmazonDealDialogComponent,MatDatepickerModule
   ],
   templateUrl: './deals-image-view.component.html',
   styleUrls: ['./deals-image-view.component.scss'],
@@ -77,17 +80,133 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
 
   faWhatsapp = faWhatsapp;
   faHotjar = faHotjar;
-
+  public amazonDealFormGroup!: UntypedFormGroup;
   isActionInProgress = false;
   deals: DealDataItem[] = [];
   categoriesLocal: Category[] = [];
   filteredCategoriesLocal: Category[] = [];
   pCategoriesLocal: PCategory[] = [];
-  dealTypes: DealType[] = [];
-
+  dealTypesLocal: DealType[] = [];
+  title = 'Load Amazon Deals';
+  buttonTitle = 'Load Deals';
   selectedStatus = '-1';
   selectedCategory = 'All';
   selectedText = '';
+   countries = [
+    { viewValue: 'USA', value: 'usa' },
+    { viewValue: 'INDIA', value: 'india' }
+  ];
+  subs: Array<Subscription> = [];
+  postDealItems: Array<PostDealItem> = [
+    {
+      title: 'Deal URL',
+      valid: 1
+    },
+    {
+      title: 'Deal Title',
+      valid: 1
+    },
+    {
+      title: 'Description',
+      valid: 0
+    },
+    {
+      title: 'Deal Type',
+      valid: 0
+    },
+    {
+      title: 'Deal Category',
+      valid: 0
+    },
+    {
+      title: 'Image URL',
+      valid: 0
+    },
+    {
+      title: 'Country',
+      valid: 0
+    },
+    {
+      title: 'Current Price',
+      valid: 0
+    },
+    {
+      title: 'Original Price',
+      valid: 0
+    },
+    {
+      title: 'Discount',
+      valid: 0
+    },
+    {
+      title: 'Discount Type',
+      valid: 0
+    },
+    {
+      title: 'Stores',
+      valid: 0
+    },
+    
+  
+  ];
+  marketPlaces = [
+    { viewValue: 'AMAZON-USA', value: 'www.amazon.com' },
+    { viewValue: 'AMAZON-IN', value: 'www.amazon.in' }
+  ];
+  partnerTags = [
+    { viewValue: 'NaariDeals-USA', value: 'naarideals00-20' },
+    { viewValue: 'Naarideals-IN', value: 'naarideals00-21' }
+  ];
+  searchIndex = [
+    { viewValue: 'All Departments', value: 'All' },
+    { viewValue: 'Prime Video', value: 'AmazonVideo' },
+    { viewValue: 'Clothing & Accessories', value: 'Apparel' },
+    { viewValue: 'Appliances', value: 'Appliances' },
+    { viewValue: 'Arts, Crafts & Sewing', value: 'ArtsAndCrafts' },
+    { viewValue: 'Automotive Parts & Accessories', value: 'Automotive' },
+    { viewValue: 'Baby', value: 'Baby' },
+    { viewValue: 'Beauty & Personal Care', value: 'Beauty' },
+    { viewValue: 'Books', value: 'Books' },
+    { viewValue: 'Classical', value: 'Classical' },
+    { viewValue: 'Collectibles & Fine Art', value: 'Collectibles' },
+    { viewValue: 'Computers', value: 'Computers' },
+    { viewValue: 'Digital Music', value: 'DigitalMusic' },
+    { viewValue: 'Digital Educational Resources', value: 'DigitalEducationalResources' },
+    { viewValue: 'Electronics', value: 'Electronics' },
+    { viewValue: 'Everything Else', value: 'EverythingElse' },
+    { viewValue: 'Clothing, Shoes & Jewelry', value: 'Fashion' },
+    { viewValue: 'Clothing, Shoes & Jewelry Baby', value: 'FashionBaby' },
+    { viewValue: 'Clothing, Shoes & Jewelry Girls', value: 'FashionGirls' },
+    { viewValue: 'Clothing, Shoes & Jewelry Women', value: 'FashionWomen' },
+    { viewValue: 'Garden & Outdoor', value: 'GardenAndOutdoor' },
+    { viewValue: 'Gift Cards', value: 'GiftCards' },
+    { viewValue: 'Grocery & Gourmet Food', value: 'GroceryAndGourmetFood' },
+    { viewValue: 'Handmade', value: 'Handmade' },
+    { viewValue: 'Health, Household & Baby Care', value: 'HealthPersonalCare' },
+    { viewValue: 'Home & Kitchen', value: 'HomeAndKitchen' },
+    { viewValue: 'Industrial & Scientific', value: 'Industrial' },
+    { viewValue: 'Jewelry', value: 'Jewelry' },
+    { viewValue: 'Kindle Store', value: 'KindleStore' },
+    { viewValue: 'Home & Business Services', value: 'LocalServices' },
+    { viewValue: 'Luggage & Travel Gear', value: 'Luggage' },
+    { viewValue: 'Luxury Beauty', value: 'LuxuryBeauty' },
+    { viewValue: 'Magazine Subscriptions', value: 'Magazines' },
+    { viewValue: 'Cell Phones & Accessories', value: 'MobileAndAccessories' },
+    { viewValue: 'Apps & Games', value: 'MobileApps' },
+    { viewValue: 'Movies & TV', value: 'MoviesAndTV' },
+    { viewValue: 'CDs & Vinyl', value: 'Music' },
+    { viewValue: 'Musical Instruments', value: 'MusicalInstruments' },
+    { viewValue: 'Office Products', value: 'OfficeProducts' },
+    { viewValue: 'Camera & Photo', value: 'Photo' },
+    { viewValue: 'Shoes', value: 'Shoes' },
+    { viewValue: 'Software', value: 'Software' },
+    { viewValue: 'Sports & Outdoors', value: 'SportsAndOutdoors' },
+    { viewValue: 'Tools & Home Improvement', value: 'ToolsAndHomeImprovement' },
+    { viewValue: 'Toys & Games', value: 'ToysAndGames' },
+    { viewValue: 'VHS', value: 'VHS' },
+    { viewValue: 'Video Games', value: 'VideoGames' },
+    { viewValue: 'Watches', value: 'Watches' }
+  ];
 
   browser = false;
   viewCol = 20;
@@ -108,12 +227,14 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
 
   pCategories = this.dealsStoreService.getPcCategories();
   categories = this.dealsStoreService.getCategories();
+  dealTypes = this.dealsStoreService.getDealTypes();
   allFilteredDeals = this.dealsStoreService.getFilteredAllDeals();
 
   constructor(
     private cd: ChangeDetectorRef,
     iconLibrary: FaIconLibrary,
     public dialog: MatDialog,
+    public fb: UntypedFormBuilder
   ) {
     iconLibrary.addIcons(faHotjar, faWhatsapp);
 
@@ -138,6 +259,14 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
           });
         }
 
+         const dTypes = this.dealTypes();
+        if (dTypes.length) {
+          setTimeout(() => {
+            this.dealTypesLocal = dTypes;
+            // this.filteredCategoriesLocal = [...cats];
+          });
+        }
+
 
         const deals = this.allFilteredDeals();
         if (deals?.length) this.deals = [...deals];
@@ -146,9 +275,25 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+     this.amazonDealFormGroup = this.fb.group({
+          keywords: new FormControl('', Validators.required),
+          searchIndex: new FormControl('', Validators.required),
+          minSavingPercent: new FormControl(null, [Validators.required, Validators.min(0)]),
+          maxPrice: new FormControl(''),
+          partnerTag: new FormControl('', Validators.required),
+          marketplace: new FormControl('', Validators.required),
+          validDays: new FormControl('', Validators.required),
+          type: new FormControl('', [Validators.required]),
+          category: new FormControl('', Validators.required),
+          country: new FormControl('', Validators.required),
+          startDate: new FormControl('', Validators.required),
+          numPages: new FormControl('', Validators.required)
+        }); 
+
     if (isPlatformBrowser(this.platformId)) {
       this.browser = true;
 
+      
       requestAnimationFrame(() => {
         this.isActionInProgress = true;
         this.cd.detectChanges(); // <== Force re-render immediately
@@ -193,7 +338,7 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
     });
 
     this.dealsService.getDealTypes('usa', this.platformId).subscribe((dealTypes) => {
-      this.dealTypes = [...dealTypes];
+      this.dealTypesLocal = [...dealTypes];
       if (isPlatformServer(this.platformId)) {
         this.transferState.set(makeStateKey<DealType[]>('dealTypes'), dealTypes);
       }
@@ -216,7 +361,7 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
     }
 
     if (this.transferState.hasKey(dealTypesKey)) {
-      this.dealTypes = this.transferState.get(dealTypesKey, [] as DealType[]);
+      this.dealTypesLocal = this.transferState.get(dealTypesKey, [] as DealType[]);
         keysFound = true;
     }
 
@@ -248,6 +393,40 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
     this.selectedStatus = '-1';
     this.dealsStoreService.filterAllDeals(this.selectedStatus, this.selectedCategory, this.selectedText);
   }
+
+   submitForm($event: any){
+    $event.stopPropagation();
+
+    //consolie.log(this.amazonDealFormGroup.value);
+    if(this.amazonDealFormGroup.valid){
+
+      let amazonAPIRequest: AmazonDealDataRequestItem = new AmazonDealDataRequestItem();
+      amazonAPIRequest.keywords = this.amazonDealFormGroup.controls['keywords'].value;
+      amazonAPIRequest.searchIndex = this.amazonDealFormGroup.controls['searchIndex'].value;
+      amazonAPIRequest.minSavingPercent = this.amazonDealFormGroup.controls['minSavingPercent'].value;
+      amazonAPIRequest.maxPrice = this.amazonDealFormGroup.controls['maxPrice'].value;
+      amazonAPIRequest.validDays = this.amazonDealFormGroup.controls['validDays'].value;
+      amazonAPIRequest.tags = this.amazonDealFormGroup.controls['type'].value?this.amazonDealFormGroup.controls['type'].value.join(','):'';
+      amazonAPIRequest.category = this.amazonDealFormGroup.controls['category'].value;
+      amazonAPIRequest.country = this.amazonDealFormGroup.controls['country'].value;
+      amazonAPIRequest.partnerTag = this.amazonDealFormGroup.controls['partnerTag'].value;
+      amazonAPIRequest.marketplace = this.amazonDealFormGroup.controls['marketplace'].value;
+      amazonAPIRequest.numPages = this.amazonDealFormGroup.controls['numPages'].value;
+
+      let sDate = new Date(this.amazonDealFormGroup.controls['startDate'].value);
+      amazonAPIRequest.startDate = (sDate.getMonth() + 1).toString().padStart(2, "0") + "/" + sDate.getDate().toString().padStart(2, "0") + "/" + sDate.getFullYear();
+
+       this.dealsService.loadAmazonDeals(amazonAPIRequest).subscribe(response => {
+          this.dealsService.getDealsByCountry('usa', this.platformId).subscribe(deals => {
+          this.dealsStoreService.updateAllDeals(deals, this.selectedStatus, this.selectedCategory,  this.selectedText);
+        });
+      });
+    }
+  }
+
+  isInactive(deal: DealDataItem): boolean {
+  return String(deal.active) === 'false';
+}
 
   removeCategoryFilter() {
     this.selectedCategory = 'All';
@@ -293,34 +472,35 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
 
   }
 
-    loadAmazonDeals($event: any){
+    loadAmazonDeals($event: any, rightSidenav: any){
      debugger;
-    const dialogRef = this.dialog.open(AmazonDealDialogComponent, {
-      maxWidth: '60vw',
-      maxHeight: '60vh',
-      data: { },
-      panelClass: ['theme-dialog'],
-      autoFocus: false,
-      direction: 'ltr' 
-    });
-    dialogRef.afterClosed().subscribe((amazonDealsRequest: AmazonDealDataRequestItem) => {
-      debugger;
-      if(amazonDealsRequest){
-        this.isActionInProgress = true;
-        this.dealsService.loadAmazonDeals(amazonDealsRequest).subscribe(res => {
+     if(rightSidenav){rightSidenav.open()};
+    // const dialogRef = this.dialog.open(AmazonDealDialogComponent, {
+    //   maxWidth: '60vw',
+    //   maxHeight: '60vh',
+    //   data: { },
+    //   panelClass: ['theme-dialog'],
+    //   autoFocus: false,
+    //   direction: 'ltr' 
+    // });
+    // dialogRef.afterClosed().subscribe((amazonDealsRequest: AmazonDealDataRequestItem) => {
+    //   debugger;
+    //   if(amazonDealsRequest){
+    //     this.isActionInProgress = true;
+    //     this.dealsService.loadAmazonDeals(amazonDealsRequest).subscribe(res => {
 
-          setTimeout(() => {
-              this.dealsService.getDealsByCountry('usa', this.platformId).subscribe(deals => {
-                this.dealsStoreService.updateAllDeals(deals, this.selectedStatus, this.selectedCategory,  this.selectedText);
-                    this.isActionInProgress = false;
+    //       setTimeout(() => {
+    //           this.dealsService.getDealsByCountry('usa', this.platformId).subscribe(deals => {
+    //             this.dealsStoreService.updateAllDeals(deals, this.selectedStatus, this.selectedCategory,  this.selectedText);
+    //                 this.isActionInProgress = false;
 
-                });
-              }, 1000);
+    //             });
+    //           }, 1000);
 
-        })
-          // this.dealsFacade.loadAmazonDeals(amazonDealsRequest);
-      }
-    });
+    //     })
+    //       // this.dealsFacade.loadAmazonDeals(amazonDealsRequest);
+    //   }
+    // });
   }
 
   deActivateDeal(deal: DealDataItem) {

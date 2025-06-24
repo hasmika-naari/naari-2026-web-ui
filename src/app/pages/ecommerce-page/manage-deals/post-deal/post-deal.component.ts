@@ -56,6 +56,14 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
+import {
+  trigger,
+  transition,
+  query,
+  style,
+  stagger,
+  animate
+} from '@angular/animations';
 
 @Component({
   selector: 'app-post-deal',
@@ -82,7 +90,17 @@ import { MatSelectModule } from '@angular/material/select';
   ],
   providers: [Editor],
   templateUrl: './post-deal.component.html',
-  styleUrl: './post-deal.component.scss'
+  styleUrl: './post-deal.component.scss',
+   animations: [
+    trigger('formStagger', [
+      transition(':enter', [
+        query('.stagger-field', [
+          style({ opacity: 0, transform: 'translateY(20px)' }),
+          stagger(60, animate('300ms ease-out', style({ opacity: 1, transform: 'translateY(0)' })))
+        ], { optional: true })
+      ])
+    ])
+  ]
 })
 export class PostDealComponent {
   editor!: Editor;

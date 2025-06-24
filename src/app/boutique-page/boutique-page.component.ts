@@ -24,6 +24,7 @@ import { LanguageSubscribeComponent } from '@app/general/language-subscribe/lang
 
 @Component({
     selector: 'app-boutique-page',
+    standalone: true,
     imports: [CommonModule, RouterLink, RouterOutlet, RouterModule, NgxPaginationModule,
         NgOptimizedImage, HeaderStyleComponent, DealsBlogComponent, FooterComponent,
         CarouselModule, MatButtonModule, MatChipsModule, MatIconModule,
