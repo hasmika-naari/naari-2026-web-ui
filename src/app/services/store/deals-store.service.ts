@@ -26,6 +26,7 @@ export class DealsStoreService {
     deals: [],
     allDeals: [],
     filteredAllDeals: [],
+    dealListDeals: [],
     selectedDeal: new DealDataItem(),
     selectedHomeFilter: '',
     selectedHomeSorting: new DealSorting(),
@@ -86,6 +87,10 @@ export class DealsStoreService {
 
   getFilteredAllDeals(): Signal<Array<DealDataItem>> {
     return computed(() => this.state().filteredAllDeals);
+  }
+
+   getDealListDelas(): Signal<Array<DealDataItem>> {
+    return computed(() => this.state().dealListDeals);
   }
 
   // ---------------------------------------------
@@ -176,6 +181,19 @@ export class DealsStoreService {
     this._patch({
       dailyDeals: [...sorted],
       filteredDailyDeals: [...sorted]
+    });
+  }
+
+  sortDealsListDeals(sorting: DealSorting) {
+    const sorted = this._sortDeals(this.state().dealListDeals, sorting);
+    this._patch({
+      dealListDeals: [...sorted]
+    });
+  }
+
+  updateDealsListDeals(deals: Array<DealDataItem>) {
+    this._patch({
+      dealListDeals: [...deals]
     });
   }
 

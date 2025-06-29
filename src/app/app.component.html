@@ -12,7 +12,9 @@
         [ngClass]="{'active': isToggled}"
     > -->
         <!-- <app-header /> -->
-        <router-outlet />
+    <div ngSsrReady>
+    <router-outlet />
+    </div>
         <!-- <div class="flex-grow-1"></div> -->
         <!-- <app-footer /> -->
     <!-- </div>

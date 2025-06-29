@@ -28,6 +28,8 @@ async loadInitialData(): Promise<void> {
       firstValueFrom(this.dealsService.getMerchants('usa')),
     ]);
 
+    // console.log(' Load Initial Data: categories' + categories);
+
     this.transferState.set(makeStateKey('categories'), categories);
     this.transferState.set(makeStateKey('dealTypes'), dealTypes);
     this.transferState.set(makeStateKey('brands'), brands);

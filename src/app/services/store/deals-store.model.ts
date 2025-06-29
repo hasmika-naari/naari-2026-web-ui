@@ -16,6 +16,7 @@ import { Account } from "../profile.model";
     deals: Array<DealDataItem>;
     allDeals: Array<DealDataItem>;
     filteredAllDeals: Array<DealDataItem>;
+    dealListDeals: Array<DealDataItem>;
     selectedHomeFilter: string;
     selectedHomeSorting: DealSorting;
     filteredDailyDeals: Array<DealDataItem>;
@@ -35,6 +36,7 @@ import { Account } from "../profile.model";
       deals: new Array<DealDataItem>(),
       allDeals: new Array<DealDataItem>(),
       filteredAllDeals: new Array<DealDataItem>(),
+      dealListDeals: new Array<DealDataItem>(),
       selectedHomeFilter: '',
       selectedHomeSorting: new DealSorting(),
       selectedDeal: new DealDataItem(),

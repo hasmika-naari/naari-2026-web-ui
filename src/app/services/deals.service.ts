@@ -12,14 +12,14 @@ import { DealDataItem, DealDataItemRequest, EmailSubscription, Merchant } from '
 
 @Injectable({providedIn: 'root'})
 export class DealsService {
-
-  private platformId: object =  inject(PLATFORM_ID);
-  private http: HttpWrapperService =  inject(HttpWrapperService);
+  private platformId: object;
+  private http: HttpWrapperService;
   constructor(
     private httpClient: HttpClient,
     private appConstants: AppConstantsService,
   ) {
-
+    this.platformId = inject(PLATFORM_ID);
+    this.http = inject(HttpWrapperService);
   }
 
   // postDeal(deal: DealDataItem): Observable<any> {

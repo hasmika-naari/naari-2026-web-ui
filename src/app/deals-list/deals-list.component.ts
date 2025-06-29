@@ -1,5 +1,5 @@
 import { CommonModule, NgOptimizedImage, isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { Component, OnDestroy, OnInit, PLATFORM_ID, Signal, TransferState, inject, makeStateKey } from '@angular/core';
+import { Component, Injector, OnDestroy, OnInit, PLATFORM_ID, Signal, TransferState, effect, inject, makeStateKey, runInInjectionContext, Inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { ThemeCustomizerService } from '@app/services/theme-customizer/theme-customizer.service';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
@@ -25,12 +25,15 @@ import { SeoService } from '@app/services/seo/seo.service';
 import { AuthService } from '@app/services/auth.service';
 import { LocalStorageService } from '@app/services/local-storage.service';
 import { DealsStoreService } from '@app/services/store/deals-store.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
     selector: 'app-deals-list',
     imports: [CommonModule, RouterLink, RouterOutlet, RouterModule, NgxPaginationModule,
         NgOptimizedImage, HeaderStyleComponent, DealsBlogComponent, FooterComponent,
-        CarouselModule, MatButtonModule, MatChipsModule, MatIconModule,
+        CarouselModule, MatButtonModule, MatChipsModule, MatIconModule, MatFormFieldModule,
+        MatSelectModule,
         MatMenuModule, LanguageSubscribeComponent, MatCardModule, MatProgressBarModule],
     templateUrl: './deals-list.component.html',
     styleUrls: ['./deals-list.component.scss']
@@ -40,7 +43,7 @@ export class DealsListComponent implements OnInit, OnDestroy {
   public page:any = 0;
   public counts = [42, 84, 126];
   public count:any = 42;
-  public viewCol: number = 14.25;
+  public viewCol: number = 2;
   maxSize = 5;
   autoHide= false;
   country: any = 'usa';
@@ -51,42 +54,18 @@ export class DealsListComponent implements OnInit, OnDestroy {
     {title: 'Highest Discount First', isSelected: false}
     ];
 
-    private seoService:SeoService = inject(SeoService);
-    private appService: AppUtilService =  inject(AppUtilService);
-    private dealsService: DealsService= inject(DealsService);
-    private authService: AuthService= inject(AuthService);
-    private _localStorageService: LocalStorageService= inject(LocalStorageService);
-    private router: Router= inject(Router);
-    private transferState: TransferState = inject(TransferState);
-    private platformId: object =  inject(PLATFORM_ID);
-    private deviceService: DeviceDetectorService=  inject(DeviceDetectorService);
-    private dealsStoreService: DealsStoreService = inject(DealsStoreService);
-    private route: ActivatedRoute =  inject(ActivatedRoute);
-    private meta:Meta = inject(Meta);
-    private title:Title = inject(Title);
-
-
     isToggled = false;
-    // dealTypes: Array<DealType> = new Array<DealType>();
-    // selectedDealType: Array<DealType> = new Array<DealType>();
-    // selectedCategory: Array<Category> = new Array<Category>();
-    // deals: Array<DealDataItem> = new Array<DealDataItem>();
-    // sortedDeals: Array<DealDataItem> = new Array<DealDataItem>();
-
-
-    pCategories: Signal< Array<PCategory>> = this.dealsStoreService.getPcCategories();
-    categories: Signal< Array<Category>> = this.dealsStoreService.getCategories();
-
-    dealTypes: Signal<Array<DealType>> = this.dealsStoreService.getDealTypes();
-    selectedDealType: Signal<DealType> = this.dealsStoreService.getSelectedDealType();
-    selectedCategory: Signal<Category> = this.dealsStoreService.getSelectedCategory();
-    
-    selectedDeal: Signal<DealDataItem> = this.dealsStoreService.getSelectedDeal();
-    localSelectedDeal: DealDataItem = new DealDataItem();
-    deals:  Signal<Array<DealDataItem>> =this.dealsStoreService.getDeals();
-    sortedDeals:  Signal<Array<DealDataItem>> =this.dealsStoreService.getDeals();
-
-
+    pCategories: Signal< Array<PCategory>>;
+    pCategoriesLocal: Array<PCategory> = [];
+    categories: Signal< Array<Category>>;
+    categoriesLocal: Array<Category> = [];
+    filteredCategoriesLocal: Category[] = [];
+    dealTypes: Signal<Array<DealType>>;
+    dealTypesLocal: Array<DealType> = [];
+    selectedDealType: Signal<DealType>;
+    selectedCategory: Signal<Category>;
+    allFilteredDeals:  Signal<Array<DealDataItem>>;
+    dealsLocal:  Array<DealDataItem> = [];
     isMobile = false;
     isTablet = false;
     isDesktop = true;
@@ -94,21 +73,56 @@ export class DealsListComponent implements OnInit, OnDestroy {
     currentUrl = '';
     subs:Array<Subscription> = new Array<Subscription>();
 
+    private dealsStoreService = inject(DealsStoreService);
 
     constructor(
-        public themeService: ThemeCustomizerService
+        public themeService: ThemeCustomizerService,
+        private injector: Injector,
+        private seoService: SeoService,
+        private appService: AppUtilService,
+        private dealsService: DealsService,
+        private authService: AuthService,
+        private _localStorageService: LocalStorageService,
+        private router: Router,
+        private transferState: TransferState,
+        @Inject(PLATFORM_ID) private platformId: object,
+        private deviceService: DeviceDetectorService,
+        private route: ActivatedRoute,
+        private meta: Meta,
+        private title: Title
     ) {
         this.themeService.isToggled$.subscribe(isToggled => {
             this.isToggled = isToggled;
         });
-
-        if(isPlatformServer(this.platformId)){
-            //////consolie.log('isPlatformServer');
-          }
-
-          if(isPlatformBrowser(this.platformId)){
-            //////consolie.log('isPlatformBrowser');
-          }
+        let hasInitialized = false;
+        // Initialize signals after dealsStoreService is available
+        this.pCategories = this.dealsStoreService.getPcCategories();
+        this.categories = this.dealsStoreService.getCategories();
+        this.dealTypes = this.dealsStoreService.getDealTypes();
+        this.selectedDealType = this.dealsStoreService.getSelectedDealType();
+        this.selectedCategory = this.dealsStoreService.getSelectedCategory();
+        this.allFilteredDeals = this.dealsStoreService.getDealListDelas();
+     
+         runInInjectionContext(this.injector, () => {
+            effect(() => {
+                const cats = this.categories();
+                if (cats.length) {
+                    setTimeout(() => {
+                        this.categoriesLocal = cats;
+                        this.filteredCategoriesLocal = [...cats];
+                    });
+                }
+                const pcCats = this.pCategories();
+                if (pcCats?.length) {
+                    setTimeout(() => {
+                        this.pCategoriesLocal = pcCats;
+                        this.filteredCategoriesLocal = [...cats];
+                    });
+                }
+                const deals = this.allFilteredDeals();
+                if (deals?.length) this.dealsLocal = [...deals];
+            });
+        });
     }
 
     toggleTheme() {
@@ -120,273 +134,298 @@ export class DealsListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+       if (isPlatformBrowser(this.platformId)) {
+         this.browser = true;
+         this.isDesktop = this.deviceService.isDesktop();
+         this.isMobile = this.deviceService.isMobile();
+         this.isTablet = this.deviceService.isTablet();
+       }
+   
+      const dealType = this.route.snapshot.queryParams['type'] || 'All';
+      const category = this.route.snapshot.queryParams['category'] || 'All';
+      this.fetchData(dealType, category);
 
-      // this.subs.push(this.route.params.subscribe(params => { 
-      //   ;
-      //   const dealType = params['type'];
-      //   const category = params['category'];
-      //   // //////consolie.log('ngOnInit: query param: category' + category);
-      //   //////consolie.log('ngOnInit: query param: dealType' + dealType);
-      //   this.fetchData(dealType, category);
+       // Assign after dealsStoreService is ready
+       this.pCategories = this.dealsStoreService.getPcCategories();
+       this.categories = this.dealsStoreService.getCategories();
+       this.dealTypes = this.dealsStoreService.getDealTypes();
+       this.selectedDealType = this.dealsStoreService.getSelectedDealType();
+       this.selectedCategory = this.dealsStoreService.getSelectedCategory();
+       this.allFilteredDeals = this.dealsStoreService.getDealListDelas();
+   
+       this.loadFetcheddata();
+       let hasInitialized = false;
+   
+    runInInjectionContext(this.injector, () => {
+     effect(() => {
+       const pCats = this.pCategories();
+       const catList = this.categories();
+       const dlist = this.allFilteredDeals();
+   
+       if (!hasInitialized && pCats.length > 0 && catList.length > 0) {
+         this.pCategoriesLocal = [...pCats];
+         this.categoriesLocal = [...catList];
+         this.dealsLocal = [...dlist];
+         hasInitialized = true;
+       }
+     });
+   });
+     }
+   
+  loadFetcheddata(): void {
+    const getOrFetch = <T>(key: string, p0?: () => Subscription): T[] => {
+      const stateKey = makeStateKey<T[]>(key);
+      return this.transferState.get(stateKey, []);
+    };
 
-      // })); 
+    // Get query params
+    const dealType = this.route.snapshot.queryParams['type'] || 'All';
+    const category = this.route.snapshot.queryParams['category'] || 'All';
 
-        const dealType = this.route.snapshot.queryParams['type'];
-        const category = this.route.snapshot.queryParams['category'];
-        //////consolie.log('ngOnInit: query param: category' + category);
-        //////consolie.log('ngOnInit: query param: dealType' + dealType);
-        this.fetchData(dealType, category);
+    // Check for 'dealsByFilter'
+    const deals = getOrFetch<DealDataItem>('dealsByFilter');
+    if (!deals.length) {
+      // If no deals found in TransferState, fetch from API
+      this.fetchData(dealType, category);
+    } else {
+      this.dealsLocal = [...deals];
+      this.dealsStoreService.updateDealsListDeals(deals);
+    }
 
-        // if(isPlatformServer(this.platformId)){
-        //     //////consolie.log('isPlatformServer - dealId' + dealType);
+    // Categories (same logic can apply here if needed)
+    const categories = getOrFetch<Category>('categoriesTable');
+    if (categories.length) {
+      this.dealsStoreService.updateCategories(categories);
+    } else {
+      this.dealsService.getCategoriesByCountry(this.country, this.platformId)
+        .subscribe(cats => this.dealsStoreService.updateCategories(cats));
+    }
 
-        //   }
+    const dealTypes = getOrFetch<DealType>('dealTypes', () =>
+      this.dealsService.getDealTypes(this.country, this.platformId).subscribe(dts => this.dealsStoreService.updateDealTypes(dts))
+    );
+    if (dealTypes.length) {
+      this.dealTypesLocal = [...dealTypes.filter(d => d.status === 'active')];
+      this.dealsStoreService.updateDealTypes(this.dealTypesLocal);
+    }
 
-        if(isPlatformBrowser(this.platformId)){
-          this.browser = true;
-        if(this.deviceService.isDesktop()){
-          this.isDesktop = true;
-          this.isMobile = false;
-          this.isTablet = false;
-        }else if(this.deviceService.isMobile()){
-          this.isMobile = true;
-          this.isDesktop = false;
-          this.isTablet = false;
-        }else if(this.deviceService.isTablet()){
-          this.isTablet = true;
-          this.isMobile = false;
-          this.isDesktop = false;
+  }
+
+   
+    fetchData(dealType: string, category: string): void {
+      const setStateOrStore = <T>(
+        key: string,
+        data: T,
+        updateFn: (data: T) => void
+      ) => {
+        const stateKey = makeStateKey<T>(key);
+        if (isPlatformServer(this.platformId)) {
+          this.transferState.set<T>(stateKey, data);
+        } else {
+          updateFn(data);
         }
+      };
+
+      const handleDeals = (deals: DealDataItem[]) => {
+        this.dealsLocal = [...deals];
+        setStateOrStore<DealDataItem[]>('dealsByFilter', deals, d =>
+          this.dealsStoreService.updateDealsListDeals(d)
+        );
+      };
+
+      // Resolve which API to call
+      if (!dealType && !category || (dealType === 'All' && category === 'All')) {
+        this.dealsService
+          .getDealsByCountry(this.country, this.platformId)
+          .subscribe(handleDeals);
+      } else if (dealType === 'All' && category !== 'All') {
+        this.dealsService
+          .getDealsByCountryAndCategory(this.country, category, this.platformId)
+          .subscribe(handleDeals);
+      } else if (dealType !== 'All' && category === 'All') {
+        this.dealsService
+          .getDealsByCountryAndDealType(this.country, dealType, this.platformId)
+          .subscribe(handleDeals);
+      } else if (dealType !== 'All' && category !== 'All') {
+        this.dealsService
+          .getDealsByCountryCategoryAndDealType(this.country, dealType, category, this.platformId)
+          .subscribe(handleDeals);
       }
-    }
-
-    // for tab click event
-    currentTab = 'tab1';
-    switchTab(event: MouseEvent, tab: string) {
-        event.preventDefault();
-        this.currentTab = tab;
-    }
-
-    coursesSlides: OwlOptions = {
-      loop: false,
-      nav: true,
-      dots: true,
-      autoplayHoverPause: true,
-      autoplay: true,
-      margin: 30,
-      navText: [
-        "<i class='bx bx-left-arrow-alt'></i>",
-        "<i class='bx bx-right-arrow-alt'></i>"
-      ],
-      responsive: {
-        0: {
-          items: 1,
-        },
-        768: {
-          items: 2,
-        },
-        1200: {
-          items: 3,
-        }
-      }
-      }
-
-    detailsImageSlides: OwlOptions = {
-		loop: true,
-		nav: false,
-		dots: false,
-		autoplayHoverPause: true,
-		autoplay: true,
-		margin: 30,
-        items: 1,
-		navText: [
-			"<i class='bx bx-left-arrow-alt'></i>",
-			"<i class='bx bx-right-arrow-alt'></i>"
-		]
-    }
+  }
 
 
-    fetchData(dealType: string, category: string): void{
+    // fetchData(dealType: string, category: string): void{
 
-      if(!dealType && !category){
-        this.dealsService.getDealsByCountry('usa', this.platformId).subscribe((deals) => {
-          this.deals = _.cloneDeep(deals);
-          this.sortedDeals =  _.cloneDeep(deals);
-           if(isPlatformServer(this.platformId)){
-            this.transferState.set<DealDataItem[]>(
-              makeStateKey('dealsByFilter'), deals
-            );
-          }else{
-              //  this.dealsStoreService.updateDeals(deals);
-          }
-        });
-      }else if((dealType && dealType === 'All')
-         && (this.dealsService && category === 'All')){
-        this.dealsService.getDealsByCountry('usa', this.platformId).subscribe((deals) => {
-          this.deals = _.cloneDeep(deals);
-          this.sortedDeals =  _.cloneDeep(deals);
-          if(isPlatformServer(this.platformId)){
-            this.transferState.set<DealDataItem[]>(
-              makeStateKey('dealsByFilter'), deals
-            );
-          }else{
-              //  this.dealsStoreService.updateDeals(deals);
-          }
-        });
-      }else if((dealType && dealType === 'All') && 
-             (category && category !== 'All'))
-      {
-        this.dealsService.getDealsByCountryAndCategory('usa', category, this.platformId).subscribe((deals) => {
-          this.deals = _.cloneDeep(deals);
-          this.sortedDeals =  _.cloneDeep(deals);
-          if(isPlatformServer(this.platformId)){
-            this.transferState.set<DealDataItem[]>(
-              makeStateKey('dealsByFilter'), deals
-            );
-          }else{
-              //  this.dealsStoreService.updateDeals(deals);
-          }
-        });
-      }else if((dealType && dealType !== 'All') && 
-      (category && category === 'All'))
-      {
-        this.dealsService.getDealsByCountryAndDealType('usa', dealType, this.platformId).subscribe((deals) => {
-          this.deals = _.cloneDeep(deals);
-          this.sortedDeals =  _.cloneDeep(deals);
-          if(isPlatformServer(this.platformId)){
-            this.transferState.set<DealDataItem[]>(
-              makeStateKey('dealsByFilter'), deals
-            );
-          }else{
-              //  this.dealsStoreService.updateDeals(deals);
-          }
-        });
-      }else if((dealType && dealType !== 'All') && 
-              (category && category !== 'All')){
-        this.dealsService.getDealsByCountryCategoryAndDealType('usa', dealType, category, this.platformId ).subscribe((deals) => {
-          this.deals = _.cloneDeep(deals);
-          this.sortedDeals =  _.cloneDeep(deals);
-          if(isPlatformServer(this.platformId)){
-            this.transferState.set<DealDataItem[]>(
-              makeStateKey('dealsByFilter'), deals
-            );
-          }else{
-              //  this.dealsStoreService.updateDeals(deals);
-          }
+    //   if(!dealType && !category){
+    //     this.dealsService.getDealsByCountry('usa', this.platformId).subscribe((deals) => {
+    //       this.dealsLocal = _.cloneDeep(deals);
+    //       this.dealsLocal =  _.cloneDeep(deals);
+    //        if(isPlatformServer(this.platformId)){
+    //         this.transferState.set<DealDataItem[]>(
+    //           makeStateKey('dealsByFilter'), deals
+    //         );
+    //       }else{
+    //            this.dealsStoreService.updateDealsListDeals(deals);
+    //       }
+    //     });
+    //   }else if((dealType && dealType === 'All')
+    //      && (this.dealsService && category === 'All')){
+    //     this.dealsService.getDealsByCountry('usa', this.platformId).subscribe((deals) => {
+    //       this.dealsLocal = _.cloneDeep(deals);
+    //       this.dealsLocal =  _.cloneDeep(deals);
+    //       if(isPlatformServer(this.platformId)){
+    //         this.transferState.set<DealDataItem[]>(
+    //           makeStateKey('dealsByFilter'), deals
+    //         );
+    //       }else{
+    //           //  this.dealsStoreService.updateDeals(deals);
+    //       }
+    //     });
+    //   }else if((dealType && dealType === 'All') && 
+    //          (category && category !== 'All'))
+    //   {
+    //     this.dealsService.getDealsByCountryAndCategory('usa', category, this.platformId).subscribe((deals) => {
+    //       this.dealsLocal = _.cloneDeep(deals);
+    //       this.dealsLocal =  _.cloneDeep(deals);
+    //       if(isPlatformServer(this.platformId)){
+    //         this.transferState.set<DealDataItem[]>(
+    //           makeStateKey('dealsByFilter'), deals
+    //         );
+    //       }else{
+    //           //  this.dealsStoreService.updateDeals(deals);
+    //       }
+    //     });
+    //   }else if((dealType && dealType !== 'All') && 
+    //   (category && category === 'All'))
+    //   {
+    //     this.dealsService.getDealsByCountryAndDealType('usa', dealType, this.platformId).subscribe((deals) => {
+    //       this.dealsLocal = _.cloneDeep(deals);
+    //       this.dealsLocal =  _.cloneDeep(deals);
+    //       if(isPlatformServer(this.platformId)){
+    //         this.transferState.set<DealDataItem[]>(
+    //           makeStateKey('dealsByFilter'), deals
+    //         );
+    //       }else{
+    //           //  this.dealsStoreService.updateDeals(deals);
+    //       }
+    //     });
+    //   }else if((dealType && dealType !== 'All') && 
+    //           (category && category !== 'All')){
+    //     this.dealsService.getDealsByCountryCategoryAndDealType('usa', dealType, category, this.platformId ).subscribe((deals) => {
+    //       this.dealsLocal = _.cloneDeep(deals);
+    //       this.dealsLocal =  _.cloneDeep(deals);
+    //       if(isPlatformServer(this.platformId)){
+    //         this.transferState.set<DealDataItem[]>(
+    //           makeStateKey('dealsByFilter'), deals
+    //         );
+    //       }else{
+    //           //  this.dealsStoreService.updateDeals(deals);
+    //       }
 
-        });
-      }else{
-        this.dealsService.getDealsByCountry('usa', this.platformId).subscribe((deals) => {
-          this.deals = _.cloneDeep(deals);
-          this.sortedDeals =  _.cloneDeep(deals);
-          if(isPlatformServer(this.platformId)){
-            this.transferState.set<DealDataItem[]>(
-              makeStateKey('dealsByFilter'), deals
-            );
-          }else{
-              //  this.dealsStoreService.updateDeals(deals);
-          }
-        });
-      }
+    //     });
+    //   }else{
+    //     this.dealsService.getDealsByCountry('usa', this.platformId).subscribe((deals) => {
+    //       this.dealsLocal = _.cloneDeep(deals);
+    //       this.dealsLocal =  _.cloneDeep(deals);
+    //       if(isPlatformServer(this.platformId)){
+    //         this.transferState.set<DealDataItem[]>(
+    //           makeStateKey('dealsByFilter'), deals
+    //         );
+    //       }else{
+    //           //  this.dealsStoreService.updateDeals(deals);
+    //       }
+    //     });
+    //   }
 
-        this.dealsService.getCategoriesByCountry('usa', this.platformId).subscribe((categories) => {
-          // this.categories = [...categories];
-            /// divide into parentList
-          // Group categories by parent and map them to the desired format
-          let selectedCategory = [];
-          if(category === 'All'){
-            let cat: Category = new Category();
-            cat.code = "All",
-            cat.country = this.country,
-            cat.description = '';
-            cat.title = 'All Deals',
-            cat.subTitle = 'All Deals'
-            selectedCategory.push(cat);
-          }else{
-            selectedCategory = categories.filter((cat: Category) => cat.code === category);
-          }
+    //     this.dealsService.getCategoriesByCountry('usa', this.platformId).subscribe((categories) => {
+    //       // this.categories = [...categories];
+    //         /// divide into parentList
+    //       // Group categories by parent and map them to the desired format
+    //       let selectedCategory = [];
+    //       if(category === 'All'){
+    //         let cat: Category = new Category();
+    //         cat.code = "All",
+    //         cat.country = this.country,
+    //         cat.description = '';
+    //         cat.title = 'All Deals',
+    //         cat.subTitle = 'All Deals'
+    //         selectedCategory.push(cat);
+    //       }else{
+    //         selectedCategory = categories.filter((cat: Category) => cat.code === category);
+    //       }
 
-          if(isPlatformServer(this.platformId)){
-            this.transferState.set<Category>(
-              makeStateKey('selectedCategory'), selectedCategory
-            );
-             this.transferState.set<DealDataItem[]>(
-              makeStateKey('categoriesTable'), categories
-            );
-          }else{
-              //  this.dealsStoreService.updateDeals(deals);
-          }
-          //////consolie.log('Sel Category = ' + category);
-          //////consolie.log('Sel Cat length = ' + this.selectedCategory.length);
-          this.dealsService.getDealTypes('usa', this.platformId).subscribe((dealTypes) => {
-            // this.dealTypes = [...dealTypes]
-            let selectedDealTypes: Array<DealType> = [];
-            let selectedDealType: any;
+    //       if(isPlatformServer(this.platformId)){
+    //         this.transferState.set<Category>(
+    //           makeStateKey('selectedCategory'), selectedCategory
+    //         );
+    //          this.transferState.set<DealDataItem[]>(
+    //           makeStateKey('categoriesTable'), categories
+    //         );
+    //       }else{
+    //           //  this.dealsStoreService.updateDeals(deals);
+    //       }
+    //       this.dealsService.getDealTypes('usa', this.platformId).subscribe((dealTypes) => {
+    //         // this.dealTypes = [...dealTypes]
+    //         let selectedDealTypes: Array<DealType> = [];
+    //         let selectedDealType: any;
 
-            if(dealType === 'All'){
-              let dt:DealType = new DealType();
-              dt.code = "All",
-              dt.country = this.country,
-              dt.title = 'All Deals',
-              dt.subTitle = 'All Deals'
-              selectedDealTypes.push(dt);
-            }else{
-              selectedDealType = selectedDealTypes.filter((dtype) => dtype.code === dealType);
-            }
+    //         if(dealType === 'All'){
+    //           let dt:DealType = new DealType();
+    //           dt.code = "All",
+    //           dt.country = this.country,
+    //           dt.title = 'All Deals',
+    //           dt.subTitle = 'All Deals'
+    //           selectedDealTypes.push(dt);
+    //         }else{
+    //           selectedDealType = selectedDealTypes.filter((dtype) => dtype.code === dealType);
+    //         }
 
-              if(isPlatformServer(this.platformId)){
-            this.transferState.set<Array<DealType>>(
-              makeStateKey('selectedDealTypes'), selectedDealTypes
-            );
-             this.transferState.set<DealDataItem[]>(
-              makeStateKey('dealTypes'), dealTypes
-            );
-          }else{
-              //  this.dealsStoreService.updateDeals(deals);
-          }
+    //           if(isPlatformServer(this.platformId)){
+    //           this.transferState.set<Array<DealType>>(
+    //             makeStateKey('selectedDealTypes'), selectedDealTypes
+    //           );
+    //           this.transferState.set<DealDataItem[]>(
+    //             makeStateKey('dealTypes'), dealTypes
+    //           );
+    //         }else{
+    //             this.dealsStoreService.updateDealTypes(dealTypes);
+    //         }
 
-           this.loadDealPageBreadgrumText(selectedDealTypes[0], this.selectedCategory());
+    //        this.loadDealPageBreadgrumText(selectedDealTypes[0], this.selectedCategory());
 
-          });
+    //       });
         
+    //     });
+    // }
 
-          // this.pCategories = [..._.map(
-          //     _.groupBy(categories, 'parent'),
-          //     (categories, parent) => ({ parent, categories }))];
-        });
+  // loadFetcheddata(dealType: string, category: string){
+  //     //consolie.log('This is isPlatformBrowser...');
+    
+  //     if(this.transferState.hasKey(makeStateKey('dealsByFilter'))){
+  //       this.dealsStoreService.updateDealsListDeals(this.transferState.get(makeStateKey('dealsByFilter'), []));
+  //     }else{
+  //       // this.fetchData(this.selectedDealId);
+  //     }
 
-       
-     
-    }
-
-    loadFetcheddata(){
-        //consolie.log('This is isPlatformBrowser...');
+  //     if(this.transferState.hasKey(makeStateKey('selectedCategory'))){
+  //       this.dealsStoreService.updateSelectedCategory(this.transferState.get(makeStateKey('selectedCategory'), new Category()));
+  //     }else{
+  //       // this.fetchData(this.selectedDealId);
+  //     }
       
-        if(this.transferState.hasKey(makeStateKey('dealsByFilter'))){
-          // this.dealsStoreService.updateDeals(this.transferState.get(makeStateKey('dealsByFilter'), []));
-        }else{
-          // this.fetchData(this.selectedDealId);
-        }
-  
-        if(this.transferState.hasKey(makeStateKey('selectedCategory'))){
-          this.dealsStoreService.updateSelectedCategory(this.transferState.get(makeStateKey('selectedCategory'), new Category()));
-        }else{
-          // this.fetchData(this.selectedDealId);
-        }
-        
-        if(this.transferState.hasKey(makeStateKey('categoriesTable'))){
-          this.dealsStoreService.updateCategories(this.transferState.get(makeStateKey('categoriesTable'), []));
-        }else{
-          // this.fetchData(this.selectedDealId);
-        }
+  //     if(this.transferState.hasKey(makeStateKey('categoriesTable'))){
+  //       this.dealsStoreService.updateCategories(this.transferState.get(makeStateKey('categoriesTable'), []));
+  //     }else{
+  //       // this.fetchData(this.selectedDealId);
+  //     }
 
-        if(this.transferState.hasKey(makeStateKey('dealTypes'))){
-          this.dealsStoreService.updateDealTypes(this.transferState.get(makeStateKey('dealTypes'), []));
-        }else{
-          // this.fetchData(this.selectedDealId);
-        }
-  
-    }
+  //     if(this.transferState.hasKey(makeStateKey('dealTypes'))){
+  //       this.dealsStoreService.updateDealTypes(this.transferState.get(makeStateKey('dealTypes'), []));
+  //     }else{
+  //       // this.fetchData(this.selectedDealId);
+  //     }
+
+  // }
 
     loadDealPageBreadgrumText(dealType: DealType, category: Category){
       let selType = ''; 
@@ -451,6 +490,14 @@ export class DealsListComponent implements OnInit, OnDestroy {
     }else{
       window.scrollTo(0, 375);
     }
+  }
+
+  onCategoryChange(category: string){
+    
+  }
+
+  onDealTypeChange(dealType: string){
+
   }
 
   shareOnWhatsApp($event:any, selectedDeal: DealDataItem){

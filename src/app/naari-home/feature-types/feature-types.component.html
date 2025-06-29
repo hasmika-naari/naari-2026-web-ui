@@ -1,7 +1,7 @@
 <div class="gct-lovein-features-list  container" >
-    <owl-carousel-o [options]="categoryTypesSlideConfig" class="gct-lovein-slider owl-theme">
+    <owl-carousel-o  [options]="categoryTypesSlideConfig" class="gct-lovein-slider owl-theme">
         <ng-template carouselSlide *ngFor="let dealType of dealTypes; let i = index;" >
-            <div class="mb-30 wow fadeInUp"  [class.gct-lovein-list-item-box]="!isMobile"
+            <div class="wow fadeInUp"  [class.gct-lovein-list-item-box]="!isMobile"
                     [class.gct-lovein-list-item-box-mobile]="isMobile"    data-wow-duration="1s"
                     [attr.data-wow-delay]="(+i*150).toString() + 'ms'" 
                       (click)="gotoLovin($event, dealType)"

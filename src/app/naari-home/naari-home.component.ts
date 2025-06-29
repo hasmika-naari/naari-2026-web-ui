@@ -400,14 +400,15 @@ import { LocalStorageService } from '@app/services/local-storage.service';
 import { DealsStoreService } from '@app/services/store/deals-store.service';
 import { LanguageSubscribeComponent } from '@app/general/language-subscribe/language-subscribe.component';
 import { FooterWorkifenceComponent } from '@app/pages/landing/footer-wifence/footer-wifence.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-home-page-three',
   standalone: true,
   imports: [
-    CommonModule, RouterLink, RouterOutlet, NgOptimizedImage,
+    CommonModule, RouterLink, RouterOutlet, NgOptimizedImage, 
     MainBannerComponent, NgxPaginationModule, FooterEdComponent, FooterComponent,
-    MatButtonModule, MatChipsModule, MatIconModule, BecomePartnerComponent,
+    MatButtonModule, MatChipsModule, MatIconModule, BecomePartnerComponent, MatProgressSpinnerModule,
     MatMenuModule, LanguageSubscribeComponent, CategoryTypesComponent, HomeoneCoursesComponent,
     MatCardModule, HeaderStyleComponent, FeatureTypesComponent, MatProgressBarModule, FooterWorkifenceComponent
   ],

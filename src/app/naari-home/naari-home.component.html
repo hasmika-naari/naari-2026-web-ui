@@ -1,10 +1,10 @@
 <app-header [menuList]="pCatsLocal" [mobile]="isMobile" ></app-header>
 <app-main-banner [browser]="browser" [desktop]="isDesktop" [tablet]="isTablet"  [dealTypes]="dealTypes" ></app-main-banner>
- <div class="feature-div-mobile-position loaded" *ngIf="browser && isMobile">
+ <div class="feature-div-mobileposition loaded" *ngIf="browser && isMobile">
     <div  *ngIf="browser && isMobile">
         <app-feature-types ></app-feature-types>
     </div>
-    <div   class="container" *ngIf="browser && isMobile">
+    <div   class="container mb-5" style="position: relative;top:20px;margin-bottom:25px;" *ngIf="browser && isMobile">
         <app-category-types *ngIf="browser" [dealTypes]="dealTypes"></app-category-types>
     </div>
 </div>
@@ -19,14 +19,14 @@
                     data-wow-duration="1s"  data-wow-delay="90ms">   
                     <div class="row align-items-left justify-content-left flex-wrap">
                         <!-- Center Title Section -->
-                        <div class="col-12 col-sm-9 text-left" [class.mt--25]="isMobile">
+                        <div class="col-9 col-sm-9 text-left" [class.mt--25]="isMobile">
                             <div class="home-section-title">
                             <small class="sub-title">Discover Super Deals</small>
                             <h2 class="text-left">Load Savings</h2>
                             </div>
                         </div>
                         <!-- Right Sort Menu -->
-                        <div class="col-12 col-sm-3 d-flex justify-content-end align-items-center mt-2 mt-sm-0">
+                        <div class="col-3 col-sm-3 d-flex justify-content-end align-items-center mt-2 mt-sm-0">
                             <a class="option-selection-text" mat-button [matMenuTriggerFor]="sortMenu1" #sortMenu1Trigger="matMenuTrigger">
                             {{selectedSorting.title}}
                             <i class='bx bx-sort-alt-2 icon'></i>
@@ -90,7 +90,7 @@
                     *ngFor="let deal of dailyDealsLocal | paginate: { itemsPerPage: count, currentPage: page }; let i = index"
                     class="col-12 col-sm-6 col-md-2 col-lg-2 mb-4  card-item"
                 >
-             <mat-card class="deal-card-modern p-3 d-flex flex-column h-100 position-relative">
+                <mat-card class="deal-card-modern p-3 d-flex flex-column h-100 position-relative">
 
                 <!-- Top Row: Wishlist + Discount -->
                 <div class="d-flex justify-content-between align-items-start mb-2">
@@ -151,7 +151,7 @@
                 </div>
                 </mat-card>
                 </div>
-                </div>
+            </div>
 
             <div class="col-sm-12 text-center" *ngIf="((dailyDealsLocal?.length === 0)  && isShowContent)">
                 <img src="assets/images/empty-search.jpg" class="img-fluid mb-4 ">

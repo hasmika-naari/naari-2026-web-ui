@@ -45,6 +45,7 @@ import { ThemeCustomizerService } from './services/theme-customizer/theme-custom
 import { filter } from 'rxjs/operators';
 import { firstValueFrom } from 'rxjs';
 import { Console } from 'console';
+import { NgSsrReadyDirective } from './services/directives/ssr-ready.directive';
 
 const CATEGORIES_KEY = makeStateKey<any>('categories');
 const DEAL_TYPES_KEY = makeStateKey<any>('dealTypes');
@@ -54,7 +55,7 @@ const MERCHANTS_KEY = makeStateKey<any>('merchants');
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, SidebarComponent, HeaderComponent, FooterComponent],
+  imports: [RouterOutlet, CommonModule, SidebarComponent, HeaderComponent, FooterComponent, NgSsrReadyDirective],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   providers: [
@@ -196,7 +197,7 @@ export class AppComponent {
         dealTypes = await firstValueFrom(this.dealsService.getDealTypes('usa', this.platformId));
         brands = await firstValueFrom(this.dealsService.getBrands('usa'));
         merchants = await firstValueFrom(this.dealsService.getMerchants('usa'));
-
+        console.log("App Init: Categories" + categories);
         this.transferState.set(CATEGORIES_KEY, categories);
         this.transferState.set(DEAL_TYPES_KEY, dealTypes);
         this.transferState.set(BRANDS_KEY, brands);

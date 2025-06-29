@@ -1,4 +1,4 @@
-import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection, PLATFORM_ID } from '@angular/core';
 import { ActivatedRouteSnapshot, BaseRouteReuseStrategy, DetachedRouteHandle, PreloadAllModules, 
         provideRouter, RouteReuseStrategy, withComponentInputBinding, withEnabledBlockingInitialNavigation, withInMemoryScrolling,  
         withRouterConfig, withViewTransitions } from '@angular/router';
@@ -76,7 +76,8 @@ export const appConfig: ApplicationConfig = {
                 includePostRequests: false
                 })
             ),
-            provideAnimations(), provideAnimationsAsync()
+            provideAnimations(), provideAnimationsAsync(),
+            { provide: PLATFORM_ID, useValue: 'browser' },
         ]
         
 };

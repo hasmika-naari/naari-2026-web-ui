@@ -1,5 +1,5 @@
 import { provideServerRendering, withRoutes } from '@angular/ssr';
-import { mergeApplicationConfig, ApplicationConfig, importProvidersFrom, APP_INITIALIZER, inject } from '@angular/core';
+import { mergeApplicationConfig, ApplicationConfig, importProvidersFrom, APP_INITIALIZER, inject, PLATFORM_ID } from '@angular/core';
 import { appConfig } from './app.config';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 
@@ -27,7 +27,9 @@ const serverConfig: ApplicationConfig = {
          provideEnvironmentInitializer(() => async () => {
         const initService = inject(AppInitService);
         await initService.loadInitialData();
-        }), ]
+        }),
+        { provide: PLATFORM_ID, useValue: 'server' },
+    ]
 };
 
 export const config = mergeApplicationConfig(appConfig, serverConfig);
