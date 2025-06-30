@@ -1,0 +1,247 @@
+
+<section
+    class="courses-area pb-70"
+    [class.dark-courses-area]="themeService.isDark()"
+>
+
+
+    <div class="container" *ngIf="categories && categories.length">
+            <div class="naari-section-title d-flex justify-content-between align-items-center">
+                <div class="title-block text-start">
+                    <span class="sub-title">Discover Deals</span>
+                    <h2>Popular Categories</h2>
+                </div>
+            </div>
+        <ul class="nav-tabset">
+            <li class="nav-tab" [ngClass]="{'active': currentTab === 'tab2'}">
+                <span (click)="switchTab($event, 'tab2')">Clothing</span>
+            </li>
+            <li class="nav-tab" [ngClass]="{'active': currentTab === 'tab3'}">
+                <span (click)="switchTab($event, 'tab3')">Foot Wear</span>
+            </li>
+            <li class="nav-tab" [ngClass]="{'active': currentTab === 'tab4'}">
+                <span (click)="switchTab($event, 'tab4')">Jewelry</span>
+            </li>
+            <li class="nav-tab" [ngClass]="{'active': currentTab === 'tab5'}">
+                <span (click)="switchTab($event, 'tab5')">Accesories</span>
+            </li>
+            <li class="nav-tab" [ngClass]="{'active': currentTab === 'tab6'}">
+                <span (click)="switchTab($event, 'tab6')">Beauty</span>
+            </li>
+            <li class="nav-tab" [ngClass]="{'active': currentTab === 'tab7'}">
+                <span (click)="switchTab($event, 'tab7')">Home Needs</span>
+            </li>
+            <li class="nav-tab" [ngClass]="{'active': currentTab === 'tab8'}">
+                <span (click)="switchTab($event, 'tab8')">Other</span>
+            </li>
+             <li class="nav-tab" [ngClass]="{'active': currentTab === 'tab9'}">
+                <span (click)="switchTab($event, 'tab9')">All Deals</span>
+            </li>
+        </ul>
+        <div class="tabs-container">
+            <div class="pane" id="tab2" *ngIf="currentTab === 'tab2'">
+                <div class="container py-4">
+                <div class="category-grid ">
+                    <div class="category-tile"
+                        *ngFor="let item of clothing.categories"
+                        [ngClass]="{
+                        'tile-large': item.size === 'large',
+                        'tile-medium': item.size === 'medium'
+                        }"
+                        [ngStyle]="{ 'background-image': 'url(' + item.imageUrl + ')' }"
+                    >
+                    <div class="category-overlay">
+                        <div class="category-content">
+                            <div class="blur-box">
+                                <p class="category-subtitle">{{ +item.subTitle != 0 ? item.subTitle : 'No Deals' }}</p>
+                                <h5>{{ item.title }}</h5>
+                                <button (click)="gotoDeals($event, item)"
+                                    mat-raised-button 
+                                    color="tertiary"
+                                    class="shop-now-btn mt-2">
+                                Shop now 
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <div class="pane" id="tab3" *ngIf="currentTab === 'tab3'">
+               <div class="container py-4" >
+                <div class="category-grid">
+                    <div class="category-tile"
+                        *ngFor="let item of footwear.categories"
+                        [ngClass]="{
+                        'tile-large': item.size === 'large',
+                        'tile-medium': item.size === 'medium'
+                        }"
+                        [ngStyle]="{ 'background-image': 'url(' + item.imageUrl + ')' }"
+                    >
+                    <div class="category-overlay">
+                        <div class="category-content">
+                            <div class="blur-box">
+                                <p class="category-subtitle">{{ +item.subTitle != 0 ? item.subTitle : 'No Deals' }}</p>
+                                <h5>{{ item.title }}</h5>
+                               <button (click)="gotoDeals($event, item)"
+                                    mat-raised-button 
+                                    color="tertiary"
+                                    class="shop-now-btn mt-2">
+                                Shop now 
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div> </div>
+
+            <div class="pane" id="tab4" *ngIf="currentTab === 'tab4'">
+              <div class="container py-4">
+                <div class="category-grid">
+                    <div class="category-tile"
+                        *ngFor="let item of jewelry.categories"
+                        [ngClass]="{
+                        'tile-large': item.size === 'large',
+                        'tile-medium': item.size === 'medium'
+                        }"
+                        [ngStyle]="{ 'background-image': 'url(' + item.imageUrl + ')' }"
+                    >
+                    <div class="category-overlay">
+                        <div class="category-content">
+                            <div class="blur-box">
+                                <p class="category-subtitle">{{ +item.subTitle != 0 ? item.subTitle : 'No Deals' }}</p>
+                                <h5>{{ item.title }}</h5>
+                                <button (click)="gotoDeals($event, item)"
+                                    mat-raised-button 
+                                    color="tertiary"
+                                    class="shop-now-btn mt-2">
+                                Shop now 
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div> </div>
+
+            <div class="pane" id="tab5" *ngIf="currentTab === 'tab5'">
+             <div class="container py-4">
+                <div class="category-grid">
+                    <div class="category-tile"
+                        *ngFor="let item of accessories.categories"
+                        [ngClass]="{
+                        'tile-large': item.size === 'large',
+                        'tile-medium': item.size === 'medium'
+                        }"
+                        [ngStyle]="{ 'background-image': 'url(' + item.imageUrl + ')' }"
+                    >
+                    <div class="category-overlay">
+                        <div class="category-content">
+                            <div class="blur-box">
+                                <p class="category-subtitle">{{ +item.subTitle != 0 ? item.subTitle : 'No Deals' }}</p>
+                                <h5>{{ item.title }}</h5>
+                                <button (click)="gotoDeals($event, item)"
+                                    mat-raised-button 
+                                    color="tertiary"
+                                    class="shop-now-btn mt-2">
+                                Shop now 
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div> </div>
+
+          <div class="pane" id="tab6" *ngIf="currentTab === 'tab6'">
+          <div class="container py-4">
+                <div class="category-grid">
+                    <div class="category-tile"
+                        *ngFor="let item of beauty.categories"
+                        [ngClass]="{
+                        'tile-large': item.size === 'large',
+                        'tile-medium': item.size === 'medium'
+                        }"
+                        [ngStyle]="{ 'background-image': 'url(' + item.imageUrl + ')' }"
+                    >
+                    <div class="category-overlay">
+                        <div class="category-content">
+                            <div class="blur-box">
+                                <p class="category-subtitle">{{ +item.subTitle != 0 ? item.subTitle : 'No Deals' }}</p>
+                                <h5>{{ item.title }}</h5>
+                                <button (click)="gotoDeals($event, item)"
+                                    mat-raised-button 
+                                    color="tertiary"
+                                    class="shop-now-btn mt-2">
+                                Shop now 
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div> </div>
+        <div class="pane" id="tab7" *ngIf="currentTab === 'tab7'">
+         <div class="container py-4">
+                <div class="category-grid">
+                    <div class="category-tile"
+                        *ngFor="let item of home.categories"
+                        [ngClass]="{
+                        'tile-large': item.size === 'large',
+                        'tile-medium': item.size === 'medium'
+                        }"
+                        [ngStyle]="{ 'background-image': 'url(' + item.imageUrl + ')' }"
+                    >
+                    <div class="category-overlay">
+                        <div class="category-content">
+                            <div class="blur-box">
+                                <p class="category-subtitle">{{ +item.subTitle != 0 ? item.subTitle : 'No Deals' }}</p>
+                                <h5>{{ item.title }}</h5>
+                                <button (click)="gotoDeals($event, item)"
+                                    mat-raised-button 
+                                    color="tertiary"
+                                    class="shop-now-btn mt-2">
+                                Shop now 
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>   
+            </div>
+        <div class="pane" id="tab8" *ngIf="currentTab === 'tab8'">
+         <div class="container py-4">
+                <div class="category-grid">
+                    <div class="category-tile"
+                        *ngFor="let item of other.categories"
+                        [ngClass]="{
+                        'tile-large': item.size === 'large',
+                        'tile-medium': item.size === 'medium'
+                        }"
+                        [ngStyle]="{ 'background-image': 'url(' + item.imageUrl + ')' }"
+                    >
+                    <div class="category-overlay">
+                        <div class="category-content">
+                            <div class="blur-box">
+                                <p class="category-subtitle">{{ +item.subTitle != 0 ? item.subTitle : 'No Deals' }}</p>
+                                <h5>{{ item.title }}</h5>
+                                <button (click)="gotoDeals($event, item)"
+                                    mat-raised-button 
+                                    color="tertiary"
+                                    class="shop-now-btn mt-2">
+                                Shop now 
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>   
+            </div>
+        </div>
+    </div>
+</section>

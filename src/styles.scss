@@ -729,19 +729,22 @@ input {
 
 // Page Title CSS
 .page-title-area {
-    position: relative;
+   position: relative;
     z-index: 1;
-    height: 30vh;
+    height: 20vh;
+    background-color: var(--mainColor);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-top: 170px;
+    padding-bottom: 120px;
     background: {
         color: var(--mainColor);
         position: center center;
         size: cover;
         repeat: no-repeat;
     };
-    padding: {
-        top: 225px;
-        bottom: 120px;
-    };
+ 
     &.page-title-style-two {
         padding: {
             top: 280px;
@@ -825,7 +828,7 @@ input {
         color: var(--whiteColor);
         margin-bottom: 0;
         font: {
-            size: 42px;
+            size: 1.3rem;
             weight: 700;
         };
     }

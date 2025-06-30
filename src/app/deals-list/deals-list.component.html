@@ -8,324 +8,323 @@
                     <li><a href="index.html">Home</a></li>
                     <li>Deals List</li>
                 </ul>
-                <h2>{{currentUrl?currentUrl:'All Deals'}}</h2>
+                <h2  data-bs-toggle="modal" data-bs-target="#categoryModalSidebar2">
+                  <mat-icon  class="chip-icon" style="position: relative; top: 4px;" >tune</mat-icon>
+                  {{currentUrl ? currentUrl : 'All Deals'}}
+                </h2>
             </div>
-        </div>
-    </div>
-</section>
-<section>
-<div style="width: 100%; position: relative" class="container">
-  <div fxLayout="row wrap" class="products-wrapper">
-    <div [class.col-12]="isDesktop || isMobile || isTablet" style="width: 100%">
-      <div *ngIf="isDesktop && browser" class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            <mat-card
-              class="pagenation-deals p-0 text-end wow fadeInUp"
-              data-wow-offset="10"
-              data-wow-duration="1s"
-              data-wow-delay="90ms"
-            >
-              <div class="row align-items-center justify-content-between px-3 py-2">
-
-                <!-- Category Dropdown -->
-                <div class="col-lg-5 col-12 mb-2 mb-lg-0">
-                  <mat-form-field appearance="fill" class="w-100">
-                    <mat-label>Category</mat-label>
-                    <mat-select [(value)]="selectedCategory" (selectionChange)="onCategoryChange($event.value)">
-                      <mat-option *ngFor="let category of categoriesLocal" [value]="category.code">
-                        {{ category.title }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-
-                <!-- Deal Type Dropdown -->
-                <div class="col-lg-5 col-12 mb-2 mb-lg-0">
-                  <mat-form-field appearance="fill" class="w-100">
-                    <mat-label>Deal Type</mat-label>
-                    <mat-select [(value)]="selectedDealType" (selectionChange)="onDealTypeChange($event.value)">
-                      <mat-option *ngFor="let type of dealTypesLocal" [value]="type.code">
-                        {{ type.title }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-
-                <!-- Sorting Menu -->
-                <div class="col-lg-2 col-12 d-flex align-items-center justify-content-end">
-                  <a class="option-selection-text" mat-button [matMenuTriggerFor]="sortMenu1" #sortMenu1Trigger="matMenuTrigger">
-                    {{ selectedSorting.title }}
-                    <i class="bx bx-sort-alt-2 icon"></i>
-                  </a>
-                  <mat-menu #sortMenu1="matMenu" xPosition="before" class="app-dropdown" overlapTrigger="true">
-                    <span (mouseleave)="sortMenu1Trigger.closeMenu()">
-                      <button mat-menu-item *ngFor="let sort of sortings" (click)="changeSorting(sort)">
-                        <span>{{ sort.title }}</span>
-                      </button>
-                    </span>
-                  </mat-menu>
-                </div>
-
+            <div class="chip-filter-row d-flex align-items-center justify-content-between px-2">
+              <div class="d-flex align-items-center">
+                  <!-- <div class="filter-chip" role="button" (click)="openCategorySidenav()">
+                  <div class="chip-content" data-bs-toggle="modal" data-bs-target="#categoryModalSidebar2">
+                      <mat-icon class="chip-icon">tune</mat-icon>
+                      <span class="chip-text">{{ selectedCategoryLocal?.title || 'All Deals' }}</span>
+                  </div>
+                  </div> -->
               </div>
-            </mat-card>
-          </div>
+                  <div class="sort-chip text-end" mat-button [matMenuTriggerFor]="sortMenu1" #sortMenu1Trigger="matMenuTrigger">
+                  <div class="chip-content justify-content-end">
+                      <span class="chip-text">{{ selectedSorting.title }}</span>
+                      <mat-icon class="chip-icon">sort</mat-icon>
+                  </div>
+                  </div>
+
+                  <mat-menu #sortMenu1="matMenu" xPosition="before" class="app-dropdown" overlapTrigger="true">
+                  <span (mouseleave)="sortMenu1Trigger.closeMenu()">
+                      <button mat-menu-item *ngFor="let sort of sortings" (click)="changeSorting(sort)">
+                      <span>{{ sort.title }}</span>
+                      </button>
+                  </span>
+                  </mat-menu>
+
+
+            </div>
         </div>
-      </div>
-
-      <!-- Mobile View Filters -->
-      <div *ngIf="isMobile && browser" class="home-section-title px-2">
-        <div class="row justify-content-center align-items-center">
-          <div class="col-12 mb-3">
-            <mat-form-field appearance="fill" class="w-100">
-              <mat-label>Category</mat-label>
-              <mat-select [(value)]="selectedCategory" (selectionChange)="onCategoryChange($event.value)">
-                <mat-option *ngFor="let category of categoriesLocal" [value]="category.code">
-                  {{ category.title }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-
-          <div class="col-12 mb-3">
-            <mat-form-field appearance="fill" class="w-100">
-              <mat-label>Deal Type</mat-label>
-              <mat-select [(value)]="selectedDealType" (selectionChange)="onDealTypeChange($event.value)">
-                <mat-option *ngFor="let type of dealTypesLocal" [value]="type.code">
-                  {{ type.title }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-
-          <div class="col-12 text-center mt-2">
-            <a class="option-selection-text" mat-button [matMenuTriggerFor]="sortMenu2" #sortMenu2Trigger="matMenuTrigger">
-              {{ selectedSorting.title }}
-              <i class="bx bx-sort-alt-2 icon"></i>
-            </a>
-            <mat-menu #sortMenu2="matMenu" xPosition="before" class="app-dropdown" overlapTrigger="true">
-              <span (mouseleave)="sortMenu2Trigger.closeMenu()">
-                <button mat-menu-item *ngFor="let sort of sortings" (click)="changeSorting(sort)">
-                  <span>{{ sort.title }}</span>
-                </button>
-              </span>
-            </mat-menu>
-          </div>
-        </div>
-      </div>
     </div>
-
-    <!-- Rest of your grid/list view remains unchanged -->
-    <!-- Include the deals card grid, empty search state, and pagination exactly as in your original code -->
-
-  </div>
-</div>
-
-
-    <!-- <div style="width: 100%;position:relative" class="container" >
-        <div  fxLayout="row wrap"  class="products-wrapper" >
-            <div [class.col-12]="isDesktop" [class.col-12]="isMobile" [class.col-12]="isTablet" style="width: 100%;">
-                <div *ngIf="isDesktop && browser" class="container-fluid">
-                    <div class="row">
-                        <div class="col-12">
-                        <mat-card class="pagenation-deals p-0 text-end wow fadeInUp" data-wow-offset="10" data-wow-duration="1s" data-wow-delay="90ms">
-                            <div class="row align-items-center justify-content-start">
-
-                            <div class="col-lg-2 col-12 d-flex align-items-start justify-content-start">
-                            </div>
-
-                            <div class="col-lg-8 col-12 " [class.mt--25]="isMobile">
-                                <small class="sub-title">Discover Super Deals</small>
-                                <h2>Load Savings</h2>
-                            </div>
-
-                            <div class="col-lg-2 col-12 d-flex align-items-center justify-content-end mt-2 mt-lg-0">
-                                <a class="option-selection-text" mat-button [matMenuTriggerFor]="sortMenu1" #sortMenu1Trigger="matMenuTrigger">
-                                {{ selectedSorting.title }}
-                                <i class="bx bx-sort-alt-2 icon"></i>
-                                </a>
-
-                                <mat-menu #sortMenu1="matMenu" xPosition="before" class="app-dropdown" overlapTrigger="true">
-                                <span (mouseleave)="sortMenu1Trigger.closeMenu()">
-                                    <button mat-menu-item *ngFor="let sort of sortings" (click)="changeSorting(sort)">
-                                    <span>{{ sort.title }}</span>
-                                    </button>
-                                </span>
-                                </mat-menu>
-                            </div>
-
-                            </div>
-                        </mat-card>
-                        </div>
-                    </div>
-                </div>
-
-            <div class="home-section-title text-center" [class.mt--25]="isMobile" *ngIf="isMobile && browser">
-                <div class="row justify-content-center align-items-center">
-
-                    <div class="col-12 d-flex align-items-center justify-content-start mb-2">
-                    </div>
-
-                    <div class="col-12 text-center" [class.mt--25]="isMobile">
-                    <small class="sub-title">Discover Super Deals</small>
-                    <h2 class="text-center">Load Savings</h2>
-                    </div>
-
-                    <div class="col-12 d-flex align-items-center justify-content-center mt-2">
-                    <a class="option-selection-text" mat-button [matMenuTriggerFor]="sortMenu2" #sortMenu2Trigger="matMenuTrigger">
-                        {{ selectedSorting.title }}
-                        <i class='bx bx-sort-alt-2 icon'></i>
-                    </a>
-
-                    <mat-menu #sortMenu2="matMenu" xPosition="before" class="app-dropdown" overlapTrigger="true">
-                        <span (mouseleave)="sortMenu2Trigger.closeMenu()">
-                        <button mat-menu-item *ngFor="let sort of sortings" (click)="changeSorting(sort)">
-                            <span>{{ sort.title }}</span>
-                        </button>
-                        </span>
-                    </mat-menu>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="row justify-content-left align-items-left">
-                <div
-                    *ngFor="let deal of dealsLocal | paginate: { itemsPerPage: count, currentPage: page }; let i = index"
-                    class="col-6 col-sm-4 col-lg-{{viewCol}} mb-4"
-                >
-                    <mat-card class="product-item text-center deal-discount-tag">
-                    
-                    <mat-chip-listbox *ngIf="deal.discountType === '%' && (+deal.discount > 0)">
-                        <mat-chip-option color="warn" selected>{{ deal.discount }}% OFF</mat-chip-option>
-                    </mat-chip-listbox>
-
-                    <mat-chip-listbox *ngIf="deal.discountType !== '%'" class="list-view">
-                        <mat-chip-option color="warn" selected>{{ deal.discountType }} {{ deal.discount }} OFF</mat-chip-option>
-                    </mat-chip-listbox>
-
-                    <a
-                        [routerLink]="['/deal/', deal.id]"
-                        class="image-link d-flex align-items-center justify-content-center"
-                        style="height: 200px;"
-                    >
-                        <img
-                        [ngSrc]="deal.imageUrl"
-                        width="200"
-                        height="500"
-                        style="max-height: 300px; margin: auto; width: auto; height: auto; display: block;"
-                        alt=""
-                        />
-                    </a>
-
-                    <span
-                        *ngIf="deal.highlight"
-                        class="deal-highlight-caro-div"
-                        [ngStyle]="{ backgroundColor: deal.highlightColor }"
-                    >
-                        <span [ngStyle]="{ color: deal.highlightColor === '#ffd300' ? '#555' : '#fff' }">
-                        {{ deal.highlight }}
-                        </span>
-                    </span>
-
-                    <div *ngIf="showStartDate(deal.startDate)" class="deal-start-date-caro-div">
-                        <div style="font-size: x-small; letter-spacing: 1px;">
-                        Deal Starts From:
-                        <span class="start-date">{{ deal.startDate }}</span>
-                        </div>
-                    </div>
-
-                    <span class="merchant-name">{{ deal.merchant }}</span>
-
-                    <h3>
-                        <a [routerLink]="['/deal/', deal.id]" class="deal-subject-title">{{ deal.title }}</a>
-                    </h3>
-
-                    <div class="row prices">
-                        <div class="col-12 d-flex align-items-start">
-                        <i *ngIf="+deal.discount > 0" class="bx bxs-hot hotjar-app-icon"></i>
-                        <p class="new-price mt-0 mb-0 ms-2">
-                            <span class="me-1" *ngIf="country === 'usa'">$</span>
-                            <span class="me-1" *ngIf="country !== 'usa'">₹</span>
-                            {{ deal.currentPrice | number: '1.2-2' }}
-                        </p>
-                        </div>
-                        <div class="col-12 d-flex align-items-start">
-                        <p class="old-price text-muted mt-0 mb-0 ms-3" *ngIf="+deal.discount > 0">
-                            <span class="me-1" *ngIf="country === 'usa'">$</span>
-                            <span class="me-1" *ngIf="country !== 'usa'">₹</span>
-                            {{ deal.originalPrice | number: '1.2-2' }}
-                        </p>
-                        </div>
-                    </div>
-
-                    <div class="courses-box-footer">
-                        <ul>
-                        <li class="social-share" (click)="shareOnWhatsApp($event, deal)">
-                            <i class="bx bx-share-alt"></i> share
-                        </li>
-                        <li class="view-deal" [routerLink]="['/deal/', deal.id]">
-                            <i class="bx bx-show"></i> view
-                        </li>
-                        </ul>
-                    </div>
-                    </mat-card>
-                </div>
-            </div>
-
-                <div class="col-sm-12 text-center" *ngIf="((dealsLocal?.length === 0) )">
-                    <img src="assets/images/empty-search.jpg" class="img-fluid mb-4 ">
-                    <h3 class="  wow fadeInUp" data-wow-offset="50" data-wow-duration="3s"  data-wow-delay="900ms">Sorry! Couldn't find the Deals you were looking For!!!    </h3>
-                    <p class="  wow fadeInUp" data-wow-offset="50"  data-wow-duration="3s"  data-wow-delay="900ms">Please check other options.</p>
-                </div>
-            <div class="row">
-                <div class="col-12">
-                    <mat-card class="pagenation-deals p-0 text-end">
-                    <div class="row justify-content-center align-items-center">
-
-                        <div class="col-lg-4 col-12 d-flex align-items-center justify-content-start">
-                        </div>
-
-                        <div
-                        *ngIf="(isDesktop || isTablet) && browser"
-                        class="col-lg-4 col-12 d-flex align-items-center justify-content-end"
-                        >
-                        <pagination-controls
-                            class="product-pagination wow fadeInUp"
-                            [autoHide]="autoHide"
-                            [maxSize]="maxSize"
-                            data-wow-offset="50"
-                            data-wow-duration="1s"
-                            data-wow-delay="900ms"
-                            (pageChange)="onPageChanged($event)"
-                        ></pagination-controls>
-                        </div>
-
-                        <div
-                        *ngIf="isMobile && browser"
-                        class="col-12 d-flex align-items-center justify-content-center"
-                        >
-                        <pagination-controls
-                            class="product-pagination wow fadeInUp"
-                            [autoHide]="autoHide"
-                            [maxSize]="maxSize"
-                            data-wow-offset="50"
-                            data-wow-duration="1s"
-                            data-wow-delay="900ms"
-                            (pageChange)="onPageChanged($event)"
-                        ></pagination-controls>
-                        </div>
-
-                    </div>
-                    </mat-card>
-                </div>
-            </div>
-
-            </div>
-        </div>
-    </div> -->
 </section>
 <section>
-    <app-language-subscribe [isMobile]="isMobile" ></app-language-subscribe>
+  <div class="container position-relative w-100 pt-3 pb-5">
+    <!-- <div class="chip-filter-row d-flex align-items-center justify-content-between px-2">
+    <div class="d-flex align-items-center">
+        <div class="filter-chip" role="button" (click)="openMerchantSidenav()">
+            <div class="chip-content" data-bs-toggle="modal" data-bs-target="#merchantModal2">
+                <span class="chip-text">{{ selectedMerchant?.title || 'All' }}</span>
+                <mat-icon class="chip-icon">menu</mat-icon>
+            </div>
+            <div class="chip-label">Merchant</div>
+        </div>
+
+        <div class="filter-chip" role="button" (click)="openCategorySidenav()">
+        <div class="chip-content" data-bs-toggle="modal" data-bs-target="#categoryModal2">
+            <mat-icon class="chip-icon">tune</mat-icon>
+            <span class="chip-text">{{ selectedCategoryLocal?.title || 'All Deals' }}</span>
+        </div>
+        <div class="chip-label">Category</div>
+        </div>
+
+        <div class="filter-chip" role="button" (click)="openDealTypeSidenav()">
+        <div class="chip-content" data-bs-toggle="modal" data-bs-target="#categoryModal2">
+            <span class="chip-text">{{ selectedDealTypeLocal?.title || 'All' }}</span>
+            <mat-icon class="chip-icon">menu</mat-icon>
+        </div>
+        <div class="chip-label">Deal Type</div>
+        </div>
+
+    </div>
+
+        <div class="sort-chip text-end" mat-button [matMenuTriggerFor]="sortMenu1" #sortMenu1Trigger="matMenuTrigger">
+        <div class="chip-content justify-content-end">
+            <span class="chip-text">{{ selectedSorting.title }}</span>
+            <mat-icon class="chip-icon">sort</mat-icon>
+        </div>
+        <div class="chip-label text-end">Sorting</div>
+        </div>
+
+        <mat-menu #sortMenu1="matMenu" xPosition="before" class="app-dropdown" overlapTrigger="true">
+        <span (mouseleave)="sortMenu1Trigger.closeMenu()">
+            <button mat-menu-item *ngFor="let sort of sortings" (click)="changeSorting(sort)">
+            <span>{{ sort.title }}</span>
+            </button>
+        </span>
+        </mat-menu>
+
+
+    </div> -->
+    <!-- <div class="row mb-3 align-items-center flex-nowrap filter-bar" aria-label="Deal Filters">
+    <div class="col-lg-3 col-md-6 col-12 mb-2 mb-lg-0">
+        <div class="amazon-dropdown-wrapper">
+        <label class="dropdown-label">Category</label>
+        <mat-select
+            [(value)]="selectedCategoryCode"
+            (selectionChange)="onCategoryChange($event.value)"
+            disableRipple
+            panelClass="amazon-dropdown-panel"
+        >
+            <mat-option value="All">All</mat-option>
+            <mat-option *ngFor="let category of categoriesLocal; trackBy: trackByCategoryCode" [value]="category.code">
+            {{ category.title }}
+            </mat-option>
+        </mat-select>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6 col-12 mb-2 mb-lg-0">
+        <div class="amazon-dropdown-wrapper">
+        <label class="dropdown-label">Deal Type</label>
+        <mat-select
+            [(value)]="selectedDealTypeCode"
+            (selectionChange)="onDealTypeChange($event.value)"
+            disableRipple
+            panelClass="amazon-dropdown-panel"
+        >
+            <mat-option value="All">All</mat-option>
+            <mat-option *ngFor="let type of dealTypesLocal; trackBy: trackByDealTypeCode" [value]="type.code">
+            {{ type.title }}
+            </mat-option>
+        </mat-select>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-12 d-flex align-items-center justify-content-end mb-2 mb-lg-0">
+        <div class="sort-menu-wrapper">
+        <button mat-button [matMenuTriggerFor]="sortMenu1" #sortMenu1Trigger="matMenuTrigger" class="sort-menu-trigger">
+            {{ selectedSorting.title }}
+            <i class="bx bx-chevron-down ms-1"></i>
+        </button>
+        <mat-menu #sortMenu1="matMenu" xPosition="before" class="sort-menu-panel">
+            <ng-container *ngFor="let sort of sortings">
+            <button mat-menu-item (click)="changeSorting(sort)">
+                {{ sort.title }}
+            </button>
+            </ng-container>
+        </mat-menu>
+        </div>
+    </div>
+    </div> -->
+    <!-- <div fxLayout="row wrap" class="products-wrapper">
+      <div [class.col-12]="isDesktop || isMobile || isTablet" class="w-100">
+      <div class="row mb-3 align-items-center flex-nowrap filter-bar" aria-label="Deal Filters">
+        <div class="col-lg-3 col-md-6 col-12 mb-2 mb-lg-0 d-flex align-items-center">
+            <mat-form-field appearance="fill" class="custom-dropdown beautiful-dropdown" aria-label="Category Selector">
+            <mat-label>Category</mat-label>
+            <mat-select [(value)]="selectedCategoryCode" (selectionChange)="onCategoryChange($event.value)" disableRipple>
+                <mat-option value="All">All</mat-option>
+                <mat-option *ngFor="let category of categoriesLocal; trackBy: trackByCategoryCode" [value]="category.code">
+                {{ category.title }}
+                </mat-option>
+            </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="col-lg-3 col-md-6 col-12 mb-2 mb-lg-0 d-flex align-items-center">
+            <mat-form-field appearance="fill" class="custom-dropdown beautiful-dropdown" aria-label="Deal Type Selector">
+            <mat-label>Deal Type</mat-label>
+            <mat-select [(value)]="selectedDealTypeCode" (selectionChange)="onDealTypeChange($event.value)" disableRipple>
+                <mat-option value="All">All</mat-option>
+                <mat-option *ngFor="let type of dealTypesLocal; trackBy: trackByDealTypeCode" [value]="type.code">
+                {{ type.title }}
+                </mat-option>
+            </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="col-lg-6 col-12 d-flex align-items-center justify-content-end mb-2 mb-lg-0">
+            <button class="option-selection-text sort-button" mat-button [matMenuTriggerFor]="sortMenu1" #sortMenu1Trigger="matMenuTrigger" aria-label="Sort Deals">
+            {{ selectedSorting.title }}
+            <i class="bx bx-sort-alt-2 icon"></i>
+            </button>
+            <mat-menu #sortMenu1="matMenu" xPosition="before" class="app-dropdown" overlapTrigger="true">
+            <span (mouseleave)="sortMenu1Trigger.closeMenu()">
+                <button mat-menu-item *ngFor="let sort of sortings" (click)="changeSorting(sort)">
+                <span>{{ sort.title }}</span>
+                </button>
+            </span>
+            </mat-menu>
+        </div>
+        </div>
+    -->
+        <div *ngIf="!selectedCategory || !selectedDealType" class="alert alert-info mb-3" role="alert">
+          Please select a category and deal type to filter deals.
+        </div>
+        <ng-container *ngIf="dealsLocal && dealsLocal.length > 0; else noDeals">
+          <div class="row justify-content-left align-items-left">
+            <div
+              *ngFor="let deal of dealsLocal | paginate: { itemsPerPage: counts[0], currentPage: page }; let i = index; trackBy: trackByDealId"
+              class="col-6 col-sm-4 col-lg-{{viewCol}} mb-4"
+            >
+              <mat-card class="product-item text-center deal-discount-tag">
+                <mat-chip-listbox *ngIf="deal.discountType === '%' && (+deal.discount > 0)">
+                  <mat-chip-option color="warn" selected>{{ deal.discount }}% OFF</mat-chip-option>
+                </mat-chip-listbox>
+                <mat-chip-listbox *ngIf="deal.discountType !== '%'" class="list-view">
+                  <mat-chip-option color="warn" selected>{{ deal.discountType }} {{ deal.discount }} OFF</mat-chip-option>
+                </mat-chip-listbox>
+                <a
+                  [routerLink]="['/deal/', deal.id]"
+                  class="image-link d-flex align-items-center justify-content-center"
+                  style="height: 200px;"
+                  tabindex="0"
+                  attr.aria-label="View deal {{ deal.title }}"
+                >
+                  <img
+                    [ngSrc]="deal.imageUrl"
+                    width="200"
+                    height="500"
+                    style="max-height: 300px; margin: auto; width: auto; height: auto; display: block;"
+                    [alt]="deal.title + ' image'"
+                  />
+                </a>
+                <span
+                  *ngIf="deal.highlight"
+                  class="deal-highlight-caro-div"
+                  [ngStyle]="{ backgroundColor: deal.highlightColor }"
+                >
+                  <span [ngStyle]="{ color: deal.highlightColor === '#ffd300' ? '#555' : '#fff' }">
+                    {{ deal.highlight }}
+                  </span>
+                </span>
+                <div *ngIf="showStartDate(deal.startDate)" class="deal-start-date-caro-div">
+                  <div style="font-size: x-small; letter-spacing: 1px;">
+                    Deal Starts From:
+                    <span class="start-date">{{ deal.startDate }}</span>
+                  </div>
+                </div>
+                <span class="merchant-name">{{ deal.merchant }}</span>
+                <h3>
+                  <a [routerLink]="['/deal/', deal.id]" class="deal-subject-title">{{ deal.title }}</a>
+                </h3>
+                <div class="row prices">
+                  <div class="col-12 d-flex align-items-start">
+                    <i *ngIf="+deal.discount > 0" class="bx bxs-hot hotjar-app-icon"></i>
+                    <p class="new-price mt-0 mb-0 ms-2">
+                      <span class="me-1" *ngIf="country === 'usa'">$</span>
+                      <span class="me-1" *ngIf="country !== 'usa'">₹</span>
+                      {{ deal.currentPrice | number: '1.2-2' }}
+                    </p>
+                  </div>
+                  <div class="col-12 d-flex align-items-start">
+                    <p class="old-price text-muted mt-0 mb-0 ms-3" *ngIf="+deal.discount > 0">
+                      <span class="me-1" *ngIf="country === 'usa'">$</span>
+                      <span class="me-1" *ngIf="country !== 'usa'">₹</span>
+                      {{ deal.originalPrice | number: '1.2-2' }}
+                    </p>
+                  </div>
+                </div>
+                <div class="courses-box-footer">
+                  <ul>
+                    <li class="social-share">
+                      <button mat-icon-button (click)="shareOnWhatsApp($event, deal)" aria-label="Share on WhatsApp">
+                        <i class="bx bx-share-alt"></i> share
+                      </button>
+                    </li>
+                    <li class="view-deal">
+                      <a [routerLink]="['/deal/', deal.id]" aria-label="View deal details">
+                        <i class="bx bx-show"></i> view
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </mat-card>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <mat-card class="pagenation-deals p-0 text-end">
+                <div class="row justify-content-center align-items-center">
+                  <div class="col-lg-4 col-12 d-flex align-items-center justify-content-start">
+                  </div>
+                  <div
+                    *ngIf="(isDesktop || isTablet) && browser"
+                    class="col-lg-4 col-12 d-flex align-items-center justify-content-end"
+                  >
+                    <pagination-controls
+                      class="product-pagination wow fadeInUp"
+                      [autoHide]="autoHide"
+                      [maxSize]="maxSize"
+                      data-wow-offset="50"
+                      data-wow-duration="1s"
+                      data-wow-delay="900ms"
+                      (pageChange)="onPageChanged($event)"
+                    ></pagination-controls>
+                  </div>
+                  <div
+                    *ngIf="isMobile && browser"
+                    class="col-12 d-flex align-items-center justify-content-center"
+                  >
+                    <pagination-controls
+                      class="product-pagination wow fadeInUp"
+                      [autoHide]="autoHide"
+                      [maxSize]="maxSize"
+                      data-wow-offset="50"
+                      data-wow-duration="1s"
+                      data-wow-delay="900ms"
+                      (pageChange)="onPageChanged($event)"
+                    ></pagination-controls>
+                  </div>
+                </div>
+              </mat-card>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #noDeals>
+          <div class="col-sm-12 text-center">
+            <img src="assets/images/empty-search.jpg" class="img-fluid mb-4" alt="No deals found">
+            <h3 class="wow fadeInUp" data-wow-offset="50" data-wow-duration="3s" data-wow-delay="900ms">
+              Sorry! Couldn't find the Deals you were looking For!!!
+            </h3>
+            <p class="wow fadeInUp" data-wow-offset="50" data-wow-duration="3s" data-wow-delay="900ms">
+              Please check other options.
+            </p>
+          </div>
+        </ng-template>
+      </div>
+    <!-- </div> 
+  </div> -->
+</section>
+<section>
+    <app-language-subscribe [isMobile]="isMobile"></app-language-subscribe>
 </section>
 <app-footer></app-footer>
+<app-category-sidebar></app-category-sidebar>
+<app-merchant-sidebar></app-merchant-sidebar>
+<app-deal-type-sidebar></app-deal-type-sidebar>

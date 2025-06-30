@@ -1,4 +1,3 @@
-
 .products-details-image {
     img {
         width: 100%;
@@ -19,7 +18,7 @@
     // height: 38vh;
     top: 0px !important;
     z-index: 60 !important;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0,0,0,0.5);
 
     // -webkit-mask-image: url("data:image/svg+xml;utf8,%3csvg viewBox='0 0 100 100' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3e%3cpath d='M0,0 C16.6666667,66 33.3333333,98 50,98 C66.6666667,98 83.3333333,66 100,0 L100,100 L0,100 L0,0 Z' fill='%23fff'/%3e%3c/svg%3e");
     // mask-image: url("data:image/svg+xml;utf8,%3csvg viewBox='0 0 100 100' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3e%3cpath d='M0,0 C16.6666667,66 33.3333333,98 50,98 C66.6666667,98 83.3333333,66 100,0 L100,100 L0,100 L0,0 Z' fill='%23fff'/%3e%3c/svg%3e");
@@ -358,3 +357,360 @@
 
 /* Min width 1200px to Max width 1275px */
 @media only screen and (min-width: 1200px) and (max-width: 1275px) {}
+
+.custom-dropdown {
+  &.mat-form-field {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+  }
+  .mat-form-field-wrapper {
+    padding-bottom: 0;
+    padding-top: 0;
+  }
+  .mat-form-field-flex {
+    background: transparent;
+    border-radius: 1.5em;
+    min-height: 2.5em;
+    align-items: center;
+  }
+  .mat-form-field-outline,
+  .mat-form-field-outline-thick {
+    display: none !important;
+  }
+  .mat-form-field-infix {
+    padding: 0 !important;
+    border: none !important;
+  }
+  .mat-select {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #fff;
+    background: transparent;
+    min-width: 0;
+    min-height: 0;
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+  }
+  .mat-select-arrow {
+    color: #fff;
+    font-size: 1.2em;
+    margin-left: 0.25em;
+  }
+  .mat-select-value {
+    color: #fff;
+    font-weight: 600;
+  }
+  .mat-option {
+    color: #222;
+    font-weight: 400;
+    font-size: 1rem;
+  }
+}
+
+/* Modern, beautiful Material dropdown styles */
+:host ::ng-deep .beautiful-dropdown.mat-form-field {
+  background: rgba(255,255,255,0.08);
+  border-radius: 1.5em;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+:host ::ng-deep .beautiful-dropdown .mat-form-field-flex {
+  background: transparent;
+  border-radius: 1.5em;
+  min-height: 2.5em;
+  align-items: center;
+}
+:host ::ng-deep .beautiful-dropdown .mat-form-field-outline,
+:host ::ng-deep .beautiful-dropdown .mat-form-field-outline-thick {
+  border-radius: 1.5em;
+  border-width: 2px;
+  border-color: #fff;
+  opacity: 0.7;
+}
+:host ::ng-deep .beautiful-dropdown .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  border-color: var(--primary-color, #1976d2);
+  opacity: 1;
+}
+:host ::ng-deep .beautiful-dropdown .mat-select {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #fff;
+  background: transparent;
+  min-width: 0;
+  min-height: 0;
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+}
+:host ::ng-deep .beautiful-dropdown .mat-select-arrow {
+  color: #fff;
+  font-size: 1.2em;
+  margin-left: 0.25em;
+}
+:host ::ng-deep .beautiful-dropdown .mat-select-value {
+  color: #fff;
+  font-weight: 600;
+}
+:host ::ng-deep .beautiful-dropdown .mat-option {
+  color: #222;
+  font-weight: 400;
+  font-size: 1rem;
+}
+:host ::ng-deep .beautiful-dropdown .mat-option.mat-active {
+  background: var(--primary-color, #1976d2);
+  color: #fff;
+}
+.visually-hidden {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+  border: 0;
+  padding: 0;
+  margin: -1px;
+}
+.no-outline.mat-form-field-appearance-outline .mat-form-field-outline,
+.no-outline .mat-form-field-outline,
+.no-outline .mat-form-field-outline-thick {
+  display: none !important;
+}
+
+.glassy-wrapper {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.custom-dropdown.beautiful-dropdown {
+  width: 100%;
+
+  .mat-form-field-flex {
+    background-color: rgba(255, 255, 255, 0.1); // subtle background
+    backdrop-filter: blur(4px);
+    border-radius: 6px;
+    color: white;
+    font-weight: 600;
+  }
+
+  .mat-select {
+    color: red;
+  }
+
+  .mat-form-field-appearance-fill .mat-form-field-flex {
+    padding: 0.5rem 0.75rem;
+    box-shadow: none;
+    border: none;
+  }
+
+  .mat-form-field-label {
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+  }
+
+  .mat-form-field-underline,
+  .mat-form-field-ripple {
+    display: none;
+  }
+
+  .mat-select-arrow {
+    color: white;
+  }
+
+  .mat-option {
+    font-weight: 500;
+  }
+}
+
+// .filter-bar {
+//   .sort-button {
+//     color: #ec0b73;
+//     font-weight: 700;
+//     text-transform: uppercase;
+
+//     i {
+//       font-size: 1.2rem;
+//       margin-left: 0.4rem;
+//       vertical-align: middle;
+//     }
+//   }
+// }
+
+.filter-bar {
+  .amazon-dropdown-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .dropdown-label {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    ::ng-deep .mat-select-trigger {
+      padding: 8px 12px;
+    }
+
+    ::ng-deep .mat-select {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      height: 40px;
+      line-height: 40px;
+      background-color: #fff;
+      font-size: 14px;
+      box-shadow: none;
+    }
+
+    ::ng-deep .mat-select-value {
+      color: #333;
+    }
+
+    ::ng-deep .amazon-dropdown-panel .mat-option {
+      font-size: 14px;
+      padding: 10px 16px;
+    }
+  }
+
+  .sort-menu-wrapper {
+    .sort-menu-trigger {
+      border: 1px solid #ccc;
+      background: #fff;
+      padding: 8px 12px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      border-radius: 4px;
+      transition: border-color 0.2s ease;
+
+      &:hover {
+        border-color: #999;
+      }
+
+      i {
+        font-size: 18px;
+      }
+    }
+
+    ::ng-deep .sort-menu-panel .mat-menu-content {
+      padding: 0;
+    }
+
+    ::ng-deep .sort-menu-panel .mat-menu-item {
+      font-size: 14px;
+      padding: 10px 16px;
+
+      &:hover {
+        background-color: #f1f1f1;
+      }
+    }
+  }
+}
+.filter-chip {
+  min-width: 50px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 2px 6px;
+ z-index: 70 !important;
+  .chip-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: left;
+    width: 100%;
+    padding: 4px 0px;
+    border-radius: 8px;
+    transition: background 0.2s ease-in-out;
+
+    .chip-text {
+      font-weight: 500;
+      font-size: 0.75rem;
+       color: var(--mainColor5);
+      line-height: 1;
+       display: flex;
+      align-items: center;
+      letter-spacing: 1px;
+      font-family: Poppins, sans-serif;
+    }
+
+    .chip-icon {
+      font-size: 16px;
+      color: var(--mainColor5);
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      position: relative;
+      top: 4px !important;
+    }
+
+    &:hover {
+      .chip-text,
+      .chip-icon {
+        color: var(--primary-color, #d1005d);
+      }
+    }
+  }
+
+  .chip-label {
+   font-size: 0.68rem;
+    color: #999;
+    margin-top: -6px;
+    margin-left: 7px;
+    line-height: 1;
+  }
+}
+
+.sort-chip {
+  min-width: 100px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 2px 0px;
+ z-index: 70 !important;
+  .chip-content {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 0px;
+    border-radius: 8px;
+    transition: background 0.2s ease-in-out;
+    width: 100%;
+
+    .chip-text {
+      font-weight: 500;
+      font-size: 0.75rem;
+      color: var(--mainColor5);
+    }
+
+    .chip-icon {
+      font-size: 20px;
+      vertical-align: middle;
+      display: flex;
+      align-items: center;
+      color: var(--mainColor5);
+    }
+
+    &:hover {
+      .chip-text,
+      .chip-icon {
+        color: var(--primary-color, #d1005d);
+      }
+    }
+  }
+
+  .chip-label {
+    font-size: 0.68rem;
+    color: #999;
+    margin-top: -6px;
+    margin-right: 35px;
+    line-height: 1;
+    text-align: right;
+  }
+}

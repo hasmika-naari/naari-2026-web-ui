@@ -1,0 +1,26 @@
+<!-- Start Sidebar Modal -->
+<div class="sidebar-modal">
+    <div class="modal left fade" id="categoryModalSidebar2" tabindex="-1" role="dialog" aria-labelledby="categoryModalSidebar2">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" 
+                        data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            <i class="icofont-close"></i>
+                        </span>
+                    </button>
+                    <h2 class="modal-title" id="categoryModalSidebar2"><a routerLink="/">
+                        <img src="assets/img/guru-class-time-tp-bg-full-h.png" alt="logo"></a></h2>
+                </div>
+                <div class="modal-body">
+                    <div class="sidebar-modal-widget">
+                         <app-category-list [isMobile]="isMobile" (categorySelected)="onCategorySelected($event)"
+                            [categories]="catsLocal" ></app-category-list>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Sidebar Modal -->
