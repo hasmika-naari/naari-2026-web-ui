@@ -368,9 +368,10 @@
 import { CommonModule, NgOptimizedImage, isPlatformBrowser, isPlatformServer } from '@angular/common';
 import {
   Component, OnInit, PLATFORM_ID, Inject, Signal, TransferState,
-  makeStateKey, runInInjectionContext, effect, Injector
+  makeStateKey, runInInjectionContext, effect, Injector,
+  OnDestroy
 } from '@angular/core';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
@@ -401,6 +402,7 @@ import { DealsStoreService } from '@app/services/store/deals-store.service';
 import { LanguageSubscribeComponent } from '@app/general/language-subscribe/language-subscribe.component';
 import { FooterWorkifenceComponent } from '@app/pages/landing/footer-wifence/footer-wifence.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { filter, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home-page-three',
@@ -416,7 +418,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   templateUrl: './naari-home.component.html',
   styleUrls: ['./naari-home.component.scss']
 })
-export class NaariHomePageComponent implements OnInit {
+export class NaariHomePageComponent implements OnInit, OnDestroy {
   faWhatsapp = 'faWhatsapp';
   faHotjar = 'faHotjar';
   isActionInProgress = true;
@@ -453,6 +455,8 @@ export class NaariHomePageComponent implements OnInit {
   pCategories!: Signal<PCategory[]>;
   categories!: Signal<Category[]>;
   dailyDeals!: Signal<DealDataItem[]>;
+  
+  routeSub!: Subscription;
 
   constructor(
     private seoService: SeoService,
@@ -471,6 +475,23 @@ export class NaariHomePageComponent implements OnInit {
     const title = 'Naari Deals - Femine Specials';
     this.seoService.setMetaDescription(content);
     this.seoService.setMetaTitle(title);
+
+     // Detect route change to this route
+      this.routeSub = this.router.events.pipe(
+        filter(event => event instanceof NavigationEnd)
+      ).subscribe((event: NavigationEnd) => {
+        if (event.urlAfterRedirects === '/home' || event.urlAfterRedirects.startsWith('/deals')) {
+          // alert('Welcome to Naari Deals!');
+          setTimeout (() => {
+          // window.scrollTo(0, document.documentElement.clientHeight - 150);
+          this.loadFetcheddata();
+          }, 100);
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.routeSub?.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -487,7 +508,7 @@ export class NaariHomePageComponent implements OnInit {
     this.dailyDeals = this.dealsStoreService.getAllDailyDeals();
 
     this.loadFetcheddata();
-    let hasInitialized = false;
+    // let hasInitialized = false;
 
  runInInjectionContext(this.injector, () => {
   effect(() => {
@@ -495,11 +516,11 @@ export class NaariHomePageComponent implements OnInit {
     const catList = this.categories();
     const dlist = this.dailyDeals();
 
-    if (!hasInitialized && pCats.length > 0 && catList.length > 0) {
+    if (pCats.length > 0 && catList.length > 0) {
       this.pCatsLocal = [...pCats];
       this.catsLocal = [...catList];
       this.dailyDealsLocal = [...dlist];
-      hasInitialized = true;
+      // hasInitialized = true;
     }
   });
 });
@@ -559,13 +580,13 @@ export class NaariHomePageComponent implements OnInit {
 
   public onPageChanged(event: any) {
     this.page = event;
-    window.scrollTo(0, document.documentElement.clientHeight - 50);
+    window.scrollTo(0, document.documentElement.clientHeight - 150);
   }
 
   public changeSorting(sort: any) {
     this.selectedSorting = sort;
     this.dealsStoreService.sortDailyDeals(this.selectedSorting);
-    window.scrollTo(0, document.documentElement.clientHeight - 50);
+    window.scrollTo(0, document.documentElement.clientHeight - 150);
   }
 
   public openProductDialog(deal: DealDataItem) {

@@ -9,7 +9,7 @@
     </div>
 </div>
 
-<div style="width: 100%;position:relative" class="container mt-4" >
+<div  class="container mt-4" >
     <div  fxLayout="row wrap"  class="products-wrapper" >
         <div [class.col-12]="isDesktop" [class.col-12]="isMobile" [class.col-12]="isTablet" style="width: 100%;">
             <div *ngIf="isDesktop && browser" fxLayout="row wrap"  >
@@ -28,8 +28,9 @@
                         <!-- Right Sort Menu -->
                         <div class="col-3 col-sm-3 d-flex justify-content-end align-items-center mt-2 mt-sm-0">
                             <a class="option-selection-text" mat-button [matMenuTriggerFor]="sortMenu1" #sortMenu1Trigger="matMenuTrigger">
+                           <mat-icon >sort</mat-icon>
                             {{selectedSorting.title}}
-                            <i class='bx bx-sort-alt-2 icon'></i>
+
                             </a>
 
                             <mat-menu #sortMenu1="matMenu" xPosition="before" class="app-dropdown" overlapTrigger="true">
@@ -47,34 +48,26 @@
             </div>
             <div class="home-section-title text-center" 
                 [class.mt--25]="isMobile" *ngIf="isMobile && browser">
-                   <div class="row align-items-center justify-content-center flex-wrap text-center">
-
-                        <!-- Left Spacer or Control (optional content) -->
-                        <div class="col-12 col-sm-2 d-flex justify-content-start align-items-center mb-2 mb-sm-0">
-                            <!-- You can add content here if needed -->
-                        </div>
-
-                        <!-- Spacer -->
-                        <div class="d-none d-sm-block col-sm"></div>
-
-                        <!-- Title Section -->
-                        <div class="col-12 col-sm-8 text-center" [class.mt--25]="isMobile">
+                  <mat-card class="pagenation-deals p-0 text-start   wow fadeInUp" data-wow-offset="10" 
+                    data-wow-duration="1s"  data-wow-delay="90ms">   
+                    <div class="row align-items-left justify-content-left flex-wrap">
+                        <!-- Center Title Section -->
+                        <div class="col-9 col-sm-9 text-left" [class.mt--25]="isMobile">
+                            <div class="home-section-title">
                             <small class="sub-title">Discover Super Deals</small>
-                            <h2>Load Savings</h2>
+                            <h2 class="text-left">Load Savings</h2>
+                            </div>
                         </div>
-
-                        <!-- Spacer -->
-                        <div class="d-none d-sm-block col-sm"></div>
-
-                        <!-- Sort Menu Section -->
-                        <div class="col-12 col-sm-2 d-flex justify-content-center align-items-center mt-2 mt-sm-0">
-                            <a class="option-selection-text" mat-button [matMenuTriggerFor]="sortMenu2" #sortMenu2Trigger="matMenuTrigger">
+                        <!-- Right Sort Menu -->
+                        <div class="col-3 col-sm-3 d-flex justify-content-end align-items-center mt-2 mt-sm-0">
+                            <a class="option-selection-text" mat-button [matMenuTriggerFor]="sortMenu1" #sortMenu1Trigger="matMenuTrigger">
+                           <mat-icon >sort</mat-icon>
                             {{selectedSorting.title}}
-                            <i class='bx bx-sort-alt-2 icon'></i>
+
                             </a>
 
-                            <mat-menu #sortMenu2="matMenu" xPosition="before" class="app-dropdown" overlapTrigger="true">
-                            <span (mouseleave)="sortMenu2Trigger.closeMenu()">
+                            <mat-menu #sortMenu1="matMenu" xPosition="before" class="app-dropdown" overlapTrigger="true">
+                            <span (mouseleave)="sortMenu1Trigger.closeMenu()">
                                 <button mat-menu-item *ngFor="let sort of sortings" (click)="changeSorting(sort)">
                                 <span>{{sort.title}}</span>
                                 </button>
@@ -82,13 +75,14 @@
                             </mat-menu>
                         </div>
 
-                        </div>
+                    </div>
+                    </mat-card>
 
             </div>
-            <div class="row justify-content-start">
+            <div class="row justify-content-start p-2">
                 <div
                     *ngFor="let deal of dailyDealsLocal | paginate: { itemsPerPage: count, currentPage: page }; let i = index"
-                    class="col-12 col-sm-6 col-md-2 col-lg-2 mb-4  card-item"
+                    class="col-6 col-sm-6 col-md-2 col-lg-2 mb-4  card-item"
                 >
                 <mat-card class="deal-card-modern p-3 d-flex flex-column h-100 position-relative">
 
@@ -154,11 +148,11 @@
             </div>
 
             <div class="col-sm-12 text-center" *ngIf="((dailyDealsLocal?.length === 0)  && isShowContent)">
-                <img src="assets/images/empty-search.jpg" class="img-fluid mb-4 ">
+                <img src="assets/images/empty-search.png" class="img-fluid mb-4 ">
                   <h3 class="  wow fadeInUp" data-wow-offset="50" data-wow-duration="3s"  data-wow-delay="900ms">Sorry! Couldn't find the Deals you were looking For!!!    </h3>
                   <p class="  wow fadeInUp" data-wow-offset="50"  data-wow-duration="3s"  data-wow-delay="900ms">Please check other options.</p>
             </div>
-          <div class="row">
+          <div class="row p-2">
             <div class="col-12">
                 <mat-card class="pagenation-deals p-0 text-end">
                 <div class="row align-items-center justify-content-end">
@@ -171,7 +165,7 @@
                     <div *ngIf="isDesktop" class="d-none d-md-block col-md"></div>
 
                     <!-- Pagination for desktop and tablet -->
-                    <div *ngIf="(isDesktop || isTablet) && browser" class="col-md-5 col-12 d-flex align-items-center justify-content-end">
+                    <div *ngIf="(isDesktop || isTablet) && browser && dailyDealsLocal.length" class="col-md-5 col-12 d-flex align-items-center justify-content-end">
                     <pagination-controls
                         class="product-pagination wow fadeInUp"
                         [autoHide]="autoHide"
@@ -184,7 +178,7 @@
                     </div>
 
                     <!-- Pagination for mobile -->
-                    <div *ngIf="isMobile && browser" class="col-12 d-flex align-items-center justify-content-center">
+                    <div *ngIf="isMobile && browser && dailyDealsLocal.length" class="col-12 d-flex align-items-center justify-content-center">
                     <pagination-controls
                         class="product-pagination wow fadeInUp"
                         [autoHide]="autoHide"
@@ -204,7 +198,7 @@
     </div>
 </div>
 <section >
-    <ng-container *ngIf="browser">
+    <ng-container *ngIf="browser" >
        @defer (on viewport;) {
         <app-homeone-courses [isMobile]="isMobile" [categories]="catsLocal" ></app-homeone-courses>
       } @placeholder (minimum 2000ms) {

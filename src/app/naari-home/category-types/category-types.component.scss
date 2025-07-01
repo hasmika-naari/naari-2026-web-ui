@@ -134,17 +134,18 @@
 }
 
 .dealtype-deal-number-div{
-    background-color: rgba(200, 200, 200, 0.1);
-    display: flex;
+        background-color: rgb(234 243 66 / 60%);
+    display: flex
+;
     font-size: large;
-    color: rgb(241, 238, 16);
+    color: rgb(247 243 34);
     font-weight: 700;
     position: absolute;
     top: 0px;
     left: 0px;
-    // border-start-end-radius: 1px;
     border-end-end-radius: 10px;
     padding: 4px 10px 4px 10px;
+   
     .display-label{
         color: #fbf5d6 !important;
         font-size: 1.2rem !important;

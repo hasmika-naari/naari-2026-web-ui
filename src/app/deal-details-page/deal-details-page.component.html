@@ -1,5 +1,5 @@
-<app-header [color]="headerColor" [menuList]="pCategories()"></app-header>
-<section style="position: relative;top:125px;">
+<app-header  [menuList]="pCategories()"></app-header>
+<!-- <section style="position: relative;top:125px;">
     <div class="page-title-area item-bg3">
         <div id="dealmask" class="dealmask"></div> 
         <div class="container gx-0">
@@ -8,38 +8,61 @@
                     <li><span (click)="gotoHome($event)">Home</span></li>
                     <li>Deal Details</li>
                 </ul>
-                <!-- <h2>Deal Details</h2> -->
             </div>
         </div>
     </div>
+</section> -->
+<section>
+    <div class="page-title-area item-bg3">
+        <div id="dealmask" class="dealmask"></div> 
+        <div class="container">
+           
+            <div class="title-filter-bar d-flex flex-wrap align-items-center justify-content-between">
+              <!-- Left: Page Title & Breadcrumbs -->
+              <div class="page-title-content animate__animated animate__fadeInDown animate__delay-1s">
+                <ul>
+                  <li><a href="index.html">Home</a></li>
+                  <li>Deal Details</li>
+                </ul>
+              </div>
+
+              <!-- Right: Sort Chip -->
+              <!-- <div class="chip-filter-row d-flex align-items-center justify-content-end px-2 ">
+               
+              </div> -->
+            </div>
+
+        </div>
+    </div>
 </section>
-<section style="position: relative;top:50px;">
+<section style="position: relative;">
     <div
-        class="product-details-area pt-100 pb-70"
+        class="product-details-area pb-70 pt-20 px-3 px-md-5 px-lg-0 mt-20"
         [class.dark-product-details-area]="themeService.isDark()"
     >
         <div class="container details-section gx-0">
             <div class="row">
-                <div class="col-lg-5 col-md-12 left-section">
-                    <div class="products-details-image deal-discount-tag">
-                        <!-- <owl-carousel-o [options]="detailsImageSlides">
-                            <ng-template carouselSlide> -->
-                                <img *ngIf="localSelectedDeal.imageUrl" [ngSrc]="localSelectedDeal.imageUrl" 
-                                        width="200" height="400" 
-                                        style="width: auto;" 
-                                        alt="image">
-                            <!-- </ng-template>
-                        </owl-carousel-o> -->
+               <div class="col-lg-5 col-md-12 left-section scoped-deal-image">
+                <div class="products-details-image deal-discount-tag">
+                    <img
+                    *ngIf="localSelectedDeal.imageUrl"
+                    [ngSrc]="localSelectedDeal.imageUrl"
+                    alt="Deal Image"
+                     width="280"
+                     height="360"
+                    class="deal-main-image"
+                    />
 
-                        <mat-chip-listbox *ngIf="localSelectedDeal.discountType == '%' && (+localSelectedDeal.discount > 0)"  >
-                            <mat-chip-option color="warn" selected  >{{localSelectedDeal.discount}}% OFF</mat-chip-option>
-                        </mat-chip-listbox>
-                        <mat-chip-listbox *ngIf="localSelectedDeal.discountType !== '%'" class="list-view" >
-                            <mat-chip-option color="warn" selected  >{{localSelectedDeal.discountType}} {{localSelectedDeal.discount}} OFF</mat-chip-option>
-                        </mat-chip-listbox>
-                    </div>
-                
+                    <mat-chip-listbox *ngIf="localSelectedDeal.discountType == '%' && (+localSelectedDeal.discount > 0)">
+                    <mat-chip-option color="warn" selected>{{ localSelectedDeal.discount }}% OFF</mat-chip-option>
+                    </mat-chip-listbox>
+
+                    <mat-chip-listbox *ngIf="localSelectedDeal.discountType !== '%'" class="list-view">
+                    <mat-chip-option color="warn" selected>{{ localSelectedDeal.discountType }} {{ localSelectedDeal.discount }} OFF</mat-chip-option>
+                    </mat-chip-listbox>
                 </div>
+                </div>
+
                 <div class="col-lg-7 col-md-12">
                     <div class="courses-details-header">
                         <div class="courses-meta">

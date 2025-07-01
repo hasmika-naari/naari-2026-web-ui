@@ -66,13 +66,13 @@
   .product-item .prices .old-price {
   text-decoration: line-through !important;
   color: rgb(61, 60, 60) !important;
-  font-size: smaller !important;
+  font-size: x-small !important;
   font-weight: 500 !important;
   margin-left: 15px !important;
   margin-top: -10px !important;
   }
   .new-price{
-  font-size: small;
+  font-size: x-small;
   font-weight: 600 !important;
   color: var(--optionalColor);
   margin-top: -4px !important;
@@ -175,13 +175,13 @@
   
   .option-selection-text{
     font-size: small !important;
-    font-weight: 800 !important;
+    font-weight: 500 !important;
     color: var(--mainColor2) !important;
     font-family: 'Poppins' !important;
-    text-transform: uppercase;
-    padding: 4px;
-    padding-left: 15px;
-    padding-right: 15px;
+    // text-transform: uppercase;
+    padding: 6px;
+    // padding-left: 0px;
+    // padding-right: 0px;
     border-radius: 20px;
     .icon{
         color: var(--mainColorLight) !important;
@@ -197,7 +197,7 @@
     color: #322f48 !important;
     font-family: 'Poppins' !important;
     text-transform: uppercase;
-    padding: 2px;
+    padding: 6px;
     .icon{
         color: var(--mainColorLight) !important;
     }
@@ -226,7 +226,7 @@
     }
     h2 {
         margin-bottom: 0px;
-        font-size: 37px;
+        font-size: 2rem;
         font-weight: 700;
     }
     p {

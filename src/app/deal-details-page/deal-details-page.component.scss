@@ -52,7 +52,7 @@
 }
 .page-title-area{
     .details-page-title-content{
-        background-color: rgba(255, 255, 255, 0.523);
+        // background-color: rgba(255, 255, 255, 0.523);
         z-index: 70 !important;
         position: relative;
         padding: 10px;
@@ -60,15 +60,15 @@
     }
 }
 #dealmask{
-    position: relative !important;
+   position: absolute !important;
     left: 0px !important; 
     right: 0px !important;
     margin: auto !important;
     bottom: 0px !important;
+    // height: 38vh;
     top: 0px !important;
     z-index: 60 !important;
-    background-color: rgba(0,0,0,0.4);
-
+    background-color: rgba(0,0,0,0.5);
     // -webkit-mask-image: url("data:image/svg+xml;utf8,%3csvg viewBox='0 0 100 100' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3e%3cpath d='M0,0 C16.6666667,66 33.3333333,98 50,98 C66.6666667,98 83.3333333,66 100,0 L100,100 L0,100 L0,0 Z' fill='%23fff'/%3e%3c/svg%3e");
     // mask-image: url("data:image/svg+xml;utf8,%3csvg viewBox='0 0 100 100' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'%3e%3cpath d='M0,0 C16.6666667,66 33.3333333,98 50,98 C66.6666667,98 83.3333333,66 100,0 L100,100 L0,100 L0,0 Z' fill='%23fff'/%3e%3c/svg%3e");
     // -webkit-mask-size: 100% 101%;
@@ -577,7 +577,7 @@
         .left-section{
             padding: 2rem !important;
             img{
-                padding-top: 4rem !important;
+                // padding-top: 4rem !important;
             }
         }
         .right-section{
@@ -649,6 +649,38 @@
         }
     }
 }
+
+.scoped-deal-image {
+  .products-details-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center; // horizontally center content
+    justify-content: center;
+    padding: 1rem;
+
+    .deal-main-image {
+      max-width: 100%;
+      max-height: 360px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 1rem auto;
+    }
+
+    mat-chip-listbox {
+      margin-top: 0.5rem;
+      display: flex;
+      justify-content: center;
+
+      mat-chip-option {
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
 
 .dark-product-details-area {
     .product-details-desc {
@@ -748,3 +780,71 @@
 
 /* Min width 1200px to Max width 1275px */
 @media only screen and (min-width: 1200px) and (max-width: 1275px) {}
+
+
+
+.title-filter-bar {
+  padding: 1rem 0;
+  gap: 1rem;
+  flex-wrap: wrap; // so it wraps on small screens
+    z-index: 100;
+    position: relative;
+  .page-title-content {
+    flex: 1 1 auto;
+    min-width: 200px;
+    position: relative;
+    top: 0px;
+    ul {
+      margin: 0;
+      margin-bottom: 20px;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+
+      li::after {
+        // content: '/';
+        margin-left: 0.5rem;
+      }
+      li:last-child::after {
+        content: '';
+      }
+    }
+
+    h2.filter-text-icon {
+      margin: 0.25rem 0 0;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+
+  .chip-filter-row {
+    flex: 0 0 auto;
+    min-width: 150px;
+
+    .sort-chip {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      position: relative;
+      top: 3px;
+      z-index: 999 !important;
+      .chip-content {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+
+        .chip-text {
+          font-weight: 500;
+        }
+
+        .chip-icon {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+}

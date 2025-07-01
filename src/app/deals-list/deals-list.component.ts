@@ -30,6 +30,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { CategorySidebarComponent } from './category-sidebar/category-sidebar.component';
 import { MerchantSidebarComponent } from './merchant-sidebar/merchant-sidebar.component';
 import { DealTypeSidebarComponent } from './deal-type-sidebar/deal-type-sidebar.component';
+import { FooterWorkifenceComponent } from '@app/pages/landing/footer-wifence/footer-wifence.component';
 
 @Component({
     selector: 'app-deals-list',
@@ -37,6 +38,7 @@ import { DealTypeSidebarComponent } from './deal-type-sidebar/deal-type-sidebar.
         NgOptimizedImage, HeaderStyleComponent, DealsBlogComponent, FooterComponent,
         CarouselModule, MatButtonModule, MatChipsModule, MatIconModule, MatFormFieldModule,
         MatSelectModule,CategorySidebarComponent,MerchantSidebarComponent, DealTypeSidebarComponent,
+        FooterWorkifenceComponent,
         MatMenuModule, LanguageSubscribeComponent, MatCardModule, MatProgressBarModule],
     templateUrl: './deals-list.component.html',
     styleUrls: ['./deals-list.component.scss']
