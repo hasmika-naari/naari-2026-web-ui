@@ -3415,101 +3415,254 @@
 
 // Smooth dropdown menu animations - only when opened
 @keyframes dropdownSlideIn {
-    from {
+    0% {
         opacity: 0;
-        transform: translateY(-5px);
-        visibility: hidden;
+        transform: translateY(0);
     }
-    to {
+    100% {
         opacity: 1;
         transform: translateY(0);
-        visibility: visible;
     }
 }
 
 // Dropdown menus hidden by default
-.navbar-nav .nav-item .dropdown-menu {
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-5px);
-    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
-    display: block !important; // Keep in DOM but hidden
-    pointer-events: none; // Disable interaction when hidden
-    margin-top: -2px !important; // Pull up to connect with menu item
-    border-top-left-radius: 0 !important; // Seamless connection
-    border-top-right-radius: 0 !important; // Seamless connection
-    border-bottom-left-radius: 8px !important;
-    border-bottom-right-radius: 8px !important;
-    background: rgba(255, 255, 255, 0.95) !important; // Glossy transparent white
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
-    border: 1px solid rgba(255, 255, 255, 0.3) !important;
-    border-top: none !important; // No border on top for seamless connection
+.navbar-nav > .nav-item {
+    position: relative; // Establish positioning context
     
-    // Only animate and show when parent has 'show' class or is hovered
-    &.show {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-        pointer-events: auto;
-        animation: dropdownSlideIn 0.3s ease-out;
+    > .submenu-panel {
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1), 
+                    visibility 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+        display: block !important;
+        pointer-events: none;
+        margin: 0 !important;
+        padding: 0;
+        min-width: 100%; // At least as wide as the parent
+        width: max-content; // Expand to fit content
+        max-width: 300px; // But not too wide
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+        border-bottom-left-radius: 12px !important;
+        border-bottom-right-radius: 12px !important;
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        right: auto !important;
+        bottom: auto !important;
+        transform: none !important;
+        will-change: opacity;
+        overflow: hidden;
+        max-height: 70vh;
+        list-style: none;
+        box-sizing: border-box;
+        
+        // Match header glossy background
+        background: rgba(255, 255, 255, 0.85) !important;
+        backdrop-filter: blur(20px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
+        border: 1px solid rgba(255, 255, 255, 0.4) !important;
+        border-top: none !important;
+        
+        // Custom scrollbar styling to match design
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        &::-webkit-scrollbar-track {
+            background: transparent;
+            margin: 8px 0;
+        }
+        
+        &::-webkit-scrollbar-thumb {
+            background: rgba(184, 31, 137, 0.3);
+            border-radius: 10px;
+            
+            &:hover {
+                background: rgba(184, 31, 137, 0.5);
+            }
+        }
+        
+        scrollbar-width: thin;
+        scrollbar-color: rgba(184, 31, 137, 0.3) transparent;
+        
+        > li {
+            list-style: none;
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100%;
+            box-sizing: border-box;
+            
+            &.nav-item {
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            
+            > a {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                margin: 0 !important;
+                padding: 12px 20px !important;
+                border-radius: 0;
+                font-size: 14px;
+                font-weight: 500;
+                color: #2c3e50 !important;
+                transition: all 0.15s ease;
+                position: relative;
+                text-decoration: none;
+                border: none;
+                background: transparent;
+                box-sizing: border-box;
+                white-space: nowrap;
+                
+                &.nav-link {
+                    margin: 0 !important;
+                    padding: 12px 20px !important;
+                }
+                
+                span {
+                    display: inline-block;
+                    margin: 0;
+                    padding: 0;
+                    
+                    &:first-child {
+                        flex: 1;
+                        text-align: left;
+                        padding-right: 12px;
+                    }
+                    
+                    &:last-child {
+                        flex-shrink: 0;
+                        text-align: right;
+                        font-size: 12px;
+                        opacity: 0.7;
+                        font-weight: 400;
+                    }
+                }
+                
+                &:hover {
+                    background: rgba(255, 255, 255, 0.9);
+                    backdrop-filter: blur(10px);
+                    color: var(--mainColor) !important;
+                    padding-left: 24px !important;
+                    
+                    span:last-child {
+                        opacity: 1;
+                    }
+                }
+            }
+            
+            &:first-child > a {
+                padding-top: 16px !important;
+            }
+            
+            &:last-child > a {
+                padding-bottom: 16px !important;
+                border-bottom-left-radius: 12px;
+                border-bottom-right-radius: 12px;
+            }
+        }
+        
+        &.show {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+    }
+    
+    // Apply left offset only from the second menu item onwards
+    &:not(:first-child) > .submenu-panel {
+        left: 13px !important;
     }
 }
 
-// Show dropdown on hover for desktop
+// Desktop menu styling
 @media (min-width: 992px) {
-    .navbar-nav .nav-item {
-        position: relative;
+    .navbar-nav {
+        align-items: center;
+        gap: 2px; // Reduce gap between menu items
         
-        // Active menu item styling - creates connected look
-        &:hover > .nav-link,
-        &.active > .nav-link {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 8px 8px 0 0;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-bottom: none;
-            padding-left: 12px;
-            padding-right: 12px;
-            padding-top: 4px;
-            padding-bottom: 4px;
-            margin-bottom: -1px; // Overlap with dropdown
+        > .nav-item {
             position: relative;
-            z-index: 10001;
-        }
-        
-        &:hover > .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-            pointer-events: auto;
-            animation: dropdownSlideIn 0.3s ease-out;
-        }
-        
-        .dropdown-menu {
-            top: calc(100% + 1px) !important; // Position directly below menu item
-            left: 0;
+            margin: 0;
+            
+            .nav-link {
+                font-size: 15px;
+                font-weight: 600;
+                padding: 10px 18px !important;
+                border-radius: 10px 10px 0 0;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                color: var(--whiteColor);
+                position: relative;
+                white-space: nowrap;
+                display: flex;
+                align-items: center;
+                border: 1px solid transparent; // Add transparent border to prevent layout shift
+                
+                i {
+                    font-size: 18px !important; // Larger icon
+                    margin-left: 8px;
+                    transition: transform 0.3s ease;
+                    display: inline-flex;
+                    align-items: center;
+                    opacity: 0.9;
+                    line-height: 1;
+                }
+            }
+            
+            // Hover state for menu items - glossy connected style
+            &:hover > .nav-link {
+                background: rgba(255, 255, 255, 0.85);
+                backdrop-filter: blur(20px) saturate(180%);
+                -webkit-backdrop-filter: blur(20px) saturate(180%);
+                color: var(--mainColor);
+                border-radius: 10px 10px 0 0;
+                border: 1px solid rgba(255, 255, 255, 0.4);
+                border-bottom: 1px solid transparent; // Keep transparent bottom border
+                box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+                position: relative;
+                z-index: 10001;
+                
+                i {
+                    transform: rotate(180deg);
+                    opacity: 1;
+                }
+            }
+            
+            // Show dropdown on hover
+            &:hover > .submenu-panel {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+            
+            // Active state
+            &.active > .nav-link {
+                color: var(--mainColor);
+                background: rgba(255, 255, 255, 0.15);
+            }
         }
     }
-    
-    // Reduce apps icon size and improve alignment
+}
+
+// Sticky header adjustments
+.is-sticky {
     .navbar-nav .nav-item .nav-link {
-        font-size: 15px;
-        padding: 8px 12px;
+        color: var(--blackColor);
         
-        i {
-            font-size: 14px !important;
-            margin-left: 4px;
-            vertical-align: middle;
-            position: relative;
-            top: -1px;
+        &:hover {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px) saturate(180%);
+            color: var(--mainColor);
         }
     }
 }
 
 // Smooth menu item hover effects
 .navbar-nav .nav-item a {
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
