@@ -3,7 +3,7 @@
         <ng-template carouselSlide *ngFor="let dealType of dealTypes; let i = index;" >
             <div class="wow fadeInUp"  [class.gct-lovein-list-item-box]="!isMobile"
                     [class.gct-lovein-list-item-box-mobile]="isMobile"    data-wow-duration="1s"
-                    [attr.data-wow-delay]="(+i*150).toString() + 'ms'" 
+                    [attr.data-wow-delay]="(+i*100).toString() + 'ms'" 
                       (click)="gotoLovin($event, dealType)"
                 (mouseover)="hover=true" (mouseleave)="hover=false"
                 [style.background]="'url(' + dealType.bgImageUrl + ')'"

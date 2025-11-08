@@ -61,7 +61,7 @@
   <!-- Navigation Menu -->
   <div class="collapse navbar-collapse ms-auto" id="navbarSupportedContent">
     <ul class="navbar-nav ms-auto">
-      <li class="nav-item animate__animated animate__fadeInDown animate__delay-1s"
+      <li class="nav-item"
         *ngFor="let menuItem of menuList; let i = index;">
         <a href="javascript:void(0)" [class.a-no-sticky]="!isSticky" [class.a-sticky]="isSticky" class="nav-link">
           {{menuItem.parent}}<i class='bx bx-chevron-down'></i>
@@ -79,7 +79,7 @@
     </ul>
 
     <!-- Side Menu Button (Desktop) -->
-    <div class="side-menu animate__animated animate__fadeInDown animate__delay-1s ms-3 d-none d-lg-block"
+    <div class="side-menu ms-3 d-none d-lg-block"
       [class.navbar-side-menu-button]="!color"
       [class.navbar-side-menu-button-gray]="color"
       data-bs-toggle="modal" data-bs-target="#myModal2">

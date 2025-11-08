@@ -30,7 +30,8 @@ export class DealsStoreService {
     selectedDeal: new DealDataItem(),
     selectedHomeFilter: '',
     selectedHomeSorting: new DealSorting(),
-    relatedDeals: []
+    relatedDeals: [],
+    wishListDeals: []
   });
 
   // ---------------------------------------------
@@ -93,9 +94,52 @@ export class DealsStoreService {
     return computed(() => this.state().dealListDeals);
   }
 
+  getWishlistDeals(): Signal<Array<DealDataItem>> {
+    return computed(() => this.state().wishListDeals);
+  }
+
   // ---------------------------------------------
   // Update methods
   // ---------------------------------------------
+
+  toggleWishlistStatus(deal: DealDataItem) {
+  const currentState = this.state(); // get() reads the current store state
+  const updatedDeals = currentState.dailyDeals.map((d: DealDataItem) => {
+    if (d.id === deal.id) {
+      return { ...d, selected: !d.selected };
+    }
+    return d;
+  });
+
+  const updatedFilteredDeals = currentState.filteredDailyDeals.map(d => {
+    if (d.id === deal.id) {
+      return { ...d, selected: !d.selected };
+    }
+    return d;
+  });
+
+  const updatedDealsList = currentState.dealListDeals?.map(d => {
+    if (d.id === deal.id) {
+      return { ...d, selected: !d.selected };
+    }
+    return d;
+  }) || [];
+
+  const isNowSelected = !deal.selected;
+
+  const updatedWishList = isNowSelected
+    ? [...currentState.wishListDeals, { ...deal, selected: true }]
+    : currentState.wishListDeals.filter((d: { id: any; }) => d.id !== deal.id);
+
+  this._patch({
+    dailyDeals: updatedDeals,
+    filteredDailyDeals: updatedFilteredDeals,
+    dealListDeals: updatedDealsList,
+    wishListDeals: updatedWishList
+  });
+}
+
+
 
   updateDealTypes(dealTypes: Array<DealType>) {
     this._patch({ dealTypes });

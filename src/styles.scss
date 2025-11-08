@@ -152,12 +152,52 @@ body {
     padding: 0;
     letter-spacing: 0.15px;
     color: var(--darkColor);
-    background-color: #f5f7fa;
+    position: relative;
     font: {
         weight: 400;
         size: var(--fontSize);
         family: var(--fontFamily);
     };
+    &::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            radial-gradient(circle at 0% 0%, rgba(255, 182, 193, 0.4) 0%, transparent 30%),
+            radial-gradient(circle at 100% 0%, rgba(255, 215, 0, 0.35) 0%, transparent 28%),
+            radial-gradient(circle at 100% 100%, rgba(233, 30, 99, 0.38) 0%, transparent 32%),
+            radial-gradient(circle at 0% 100%, rgba(255, 200, 150, 0.35) 0%, transparent 30%),
+            linear-gradient(135deg, #FFF5E8 0%, #FFE8DC 50%, #FFF0E5 100%);
+        z-index: -2;
+        pointer-events: none;
+    }
+    &::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(1px);
+        z-index: -1;
+        pointer-events: none;
+    }
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, .display-1, .display-2, .display-3, .display-4, .display-5, .display-6 {
     color: var(--darkColor);

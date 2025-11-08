@@ -1,91 +1,102 @@
 import { APP_BASE_HREF } from '@angular/common';
-import { CommonEngine } from '@angular/ssr/node';
-
-import express, { Request, Response, NextFunction } from 'express';
+import { renderApplication } from '@angular/platform-server';
+import express from 'express';
 import compression from 'compression';
 import cors from 'cors';
-import fs from 'fs';
-import http from 'http';
-import { fileURLToPath } from 'url';
-import { dirname, join, resolve } from 'path';
-import { createProxyMiddleware } from 'http-proxy-middleware';
-import bootstrap from './src/main.server';
+import { fileURLToPath } from 'node:url';
+import { dirname, join, resolve } from 'node:path';
+import bootstrap from 'src/main.server';
+const path = require('path');
 
-const serverDistFolder = dirname(fileURLToPath(import.meta.url));
-const browserDistFolder = resolve(serverDistFolder, '../browser');
-const indexHtml = join(serverDistFolder, 'index.server.html');
+const { createProxyMiddleware } = require('http-proxy-middleware');
+const fs = require('fs');
+const https = require('https');
 
-const commonEngine = new CommonEngine();
-
-// Function to determine if compression should be applied
-function shouldCompress(req: Request, res: Response) {
+function shouldCompress(req: any, res: any) {
   if (req.headers['x-no-compression']) {
     return false;
   }
   return compression.filter(req, res);
 }
 
-// Build the main SSR app
-export function app() {
+// Exported Express app for serverless deployment
+export function app(): express.Express {
   const server = express();
+  let options: compression.CompressionOptions = {
+    filter: shouldCompress,
+    threshold: 0
+  };
 
-  // Middleware: Compression, CORS
-  server.use(compression({ filter: shouldCompress, threshold: 0 }));
+  server.use(compression(options));
   server.use(cors());
 
-  // Serve static files
-  server.get('*.*', express.static(browserDistFolder, {
-    maxAge: '1y',
-    index: false
-  }));
+  const serverDistFolder = dirname(fileURLToPath(import.meta.url));
+  const browserDistFolder = resolve(serverDistFolder, '../browser');
+  const __dirname = path.dirname(serverDistFolder);
+  const indexHtml = join(serverDistFolder, 'index.server.html');
 
-  // Proxy setup (for /api requests)
-  server.use('/api/**', createProxyMiddleware({
+  server.set('view engine', 'html');
+  server.set('views', browserDistFolder);
+
+  // Serve static files from /browser
+  server.get('*.*', express.static(browserDistFolder, { maxAge: '1y' }));
+
+  // API Proxy Configuration
+  const proxyOptions = {
     target: 'http://66.179.188.169:8090',
     changeOrigin: true,
-    secure: false,
-    pathRewrite: { '^/api': '/api' },
-    ws: true
-  }));
+    ws: true,
+    pathRewrite: { '^/api': '/api' }
+  };
+  server.use(['/api', '/api*', '/api**'], createProxyMiddleware(proxyOptions));
 
-  // SSR Route handler (for all non-static routes)
-  server.get('*', async (req: Request, res: Response, next: NextFunction) => {
+  // Angular SSR Rendering
+  server.get('*', async (req, res, next) => {
     try {
-      //consolie.log(`✅ SSR Rendering for: ${req.originalUrl}`);
-
-      if (!fs.existsSync(indexHtml)) {
-        //consolie.error('❌ SSR template missing:', indexHtml);
-        return res.status(500).send('SSR template not found.');
-      }
-
-      const html = await commonEngine.render({
-        bootstrap, // This is your AppServerModule or standalone bootstrap function
-        documentFilePath: indexHtml,
+      const html = await renderApplication(bootstrap, {
+        document: fs.readFileSync(indexHtml, 'utf8'),
         url: req.originalUrl,
-        publicPath: browserDistFolder,
-        providers: [
-          { provide: APP_BASE_HREF, useValue: req.baseUrl }
-        ]
+        platformProviders: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }],
       });
 
-      return res.status(200).send(html);
+      res.send(html);
     } catch (err) {
-      //consolie.error('❌ SSR Rendering Error:', err);
-      return res.status(500).send('Internal Server Error');
+      next(err);
     }
   });
 
   return server;
 }
 
-// Entry point
 function run(): void {
-  const port = process.env['PORT'] || 4000;
+  const port = process.env['PORT'] || 443;
 
-  const ssrApp = app(); // Create SSR app once
+  //  const serverDistFolder = dirname(fileURLToPath(import.meta.url));
+  // const __dirname = path.dirname(serverDistFolder);
 
-  // Optional: Redirect naked domain to www.
+  // const https_options = {
+  //   key: fs.readFileSync(path.resolve(__dirname, './ssl/naarideals/www.naarideals.com.key')),
+  //   cert: fs.readFileSync(path.resolve(__dirname, './ssl/naarideals/www_naarideals_com.crt')),
+  //   ca: [
+  //     fs.readFileSync(path.resolve(__dirname, './ssl/naarideals/SectigoRSADomainValidationSecureServerCA.crt')),
+  //     fs.readFileSync(path.resolve(__dirname, './ssl/naarideals/USERTrustRSAAAACA.crt'))
+  //   ]
+  // };
+
+
+  // HTTPS Certificate Configuration
+  const httpsOptions = {
+    key: fs.readFileSync('ssl/naarideals/www.naarideals.com.key'),
+    cert: fs.readFileSync('ssl/www_naarideals_com/www_naarideals_com.crt'),
+    ca: [
+      fs.readFileSync('ssl/www_naarideals_com/SectigoRSADomainValidationSecureServerCA.crt'),
+      fs.readFileSync('ssl/www_naarideals_com/USERTrustRSAAAACA.crt')
+    ]
+  };
+
+   // Express app with redirect for naarideals.com → www.naarideals.com
   const appWithRedirect = express();
+
   appWithRedirect.use((req, res, next) => {
     const host = req.headers.host;
     if (host === 'naarideals.com') {
@@ -94,15 +105,13 @@ function run(): void {
     next();
   });
 
-  appWithRedirect.use(ssrApp); // Use the SSR app
+  appWithRedirect.use(app());
 
-  const server = http.createServer(appWithRedirect);
+  // Start HTTPS Server
+  const server = https.createServer(httpsOptions, app());
   server.listen(port, () => {
-    //consolie.log(`🚀 Node SSR server listening at http://localhost:${port}`);
+    //consolie.log(`Node Express server listening on https://localhost:${port}`);
   });
 }
 
 run();
-
-// Required export for SSR build
-// export * from './src/main.server';

@@ -509,3 +509,84 @@
 
 
 
+
+/* ============================================
+   Smooth Scroll Animations for Home Page
+   ============================================ */
+
+// Stagger animation for product cards
+.card-item {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease-out forwards;
+    
+    @for $i from 1 through 12 {
+        &:nth-child(#{$i}) {
+            animation-delay: #{$i * 0.08}s;
+        }
+    }
+}
+
+// Section title animations
+.home-section-title {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+// Feature sections smooth entrance
+.feature-div-position, .feature-div-mobileposition {
+    animation: fadeInUp 1s ease-out;
+}
+
+// Deal cards smooth hover
+.deal-card-modern {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    &:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    }
+}
+
+// Pagination smooth appearance
+.pagenation-deals {
+    animation: fadeInUp 0.6s ease-out;
+    transition: all 0.3s ease;
+}
+
+// Button hover effects
+.icon-btn {
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    &:hover {
+        transform: scale(1.15);
+    }
+}
+
+// Image smooth loading
+.deal-image-wrapper img {
+    transition: transform 0.4s ease;
+    
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+
+// Price tags animation
+.text-danger, .text-muted {
+    transition: color 0.3s ease;
+}
+
+// Merchant name hover
+.merchant-name {
+    transition: color 0.3s ease, transform 0.3s ease;
+    
+    &:hover {
+        color: var(--mainColor);
+    }
+}
+
+// Section smooth transitions
+section {
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out forwards;
+    animation-delay: 0.2s;
+}

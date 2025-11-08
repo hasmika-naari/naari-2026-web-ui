@@ -3,9 +3,9 @@
     <div class="d-table info-box" [class.info-box]="desktop" [class.info-box-mobile]="!desktop">
         <div class="d-table-cell">
             <div class="container " [class.container-position]="desktop" [class.container-position-mobile]="!desktop" >
-                <div class="banner-content fade-in-down-feature" *ngIf="browser">
-                    <span class="sub-title fade-in-up-text"  >Savings Hub</span>
-                    <h1 class="fade-in-up-text sub-message"  >Chic deals for her, where style meets savings.</h1>
+                <div class="banner-content animate__animated animate__fadeInUp animate__delay-1s" *ngIf="browser">
+                    <span class="sub-title"  >Savings Hub</span>
+                    <h1 class="sub-message"  >Chic deals for her, where style meets savings.</h1>
                 </div>
                 <div class="feature-div-position-2" style="min-height: 150px;" >
                     <app-feature-types *ngIf="browser && (desktop || tablet)"></app-feature-types>
@@ -18,9 +18,16 @@
  
         </div>
     </div>
-    <svg class="bottom-wave" viewBox="0 0 1440 320" preserveAspectRatio="none">
-        <path fill="rgb(245, 247, 250)" fill-opacity="1"
-        d="M0,256L48,245.3C96,235,192,213,288,197.3C384,181,480,171,576,186.7C672,203,768,245,864,256C960,267,1056,245,1152,224C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+    <svg class="bottom-wave" viewBox="0 0 1440 320" preserveAspectRatio="none" style="display: block; margin: 0; padding: 0; border: none;">
+        <defs>
+            <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#F5E6D3;stop-opacity:0.3" />
+                <stop offset="50%" style="stop-color:#FFE8E0;stop-opacity:0.2" />
+                <stop offset="100%" style="stop-color:#F8E4DC;stop-opacity:0.3" />
+            </linearGradient>
+        </defs>
+        <path fill="url(#waveGradient)"
+        d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,213.3C672,224,768,224,864,213.3C960,203,1056,181,1152,181.3C1248,181,1344,203,1392,213.3L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
         </path>
     </svg>
 </div>

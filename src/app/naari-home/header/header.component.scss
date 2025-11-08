@@ -51,6 +51,8 @@
                         .dropdown-menu {
                             overflow-y: auto !important;
                             max-height: 60vh;
+                            z-index: 10000 !important;
+                            position: absolute !important;
                             li {
                                 a {
                                     color: #4a6f8a;
@@ -890,14 +892,34 @@
         top: 0;
         left: 0;
         width: 100%;
-        z-index: 999;
+        z-index: 9999;
         margin-top: 0;
         position: fixed;
         box-shadow: 0 2px 28px 0 rgba(0, 0, 0, 0.09);
-        background-color: var(--whiteColor) !important;
+        background: 
+            radial-gradient(circle at 0% 0%, rgba(255, 182, 193, 0.3) 0%, transparent 25%),
+            radial-gradient(circle at 100% 0%, rgba(255, 215, 0, 0.28) 0%, transparent 23%),
+            radial-gradient(circle at 50% 100%, rgba(233, 30, 99, 0.2) 0%, transparent 20%),
+            linear-gradient(180deg, rgba(255, 245, 232, 0.95) 0%, rgba(255, 240, 229, 0.92) 100%) !important;
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
         animation: 500ms ease-in-out 0s normal none 1 running fadeInDown;
 
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.4);
+            z-index: -1;
+            pointer-events: none;
+        }
+
         .navbar {
+            position: relative;
+            z-index: 10;
             padding: {
                 left: 0;
                 right: 0;
@@ -905,14 +927,14 @@
         }
     }
     .navbar {
-        background-color: var(--whiteColor) !important;
+        background-color: transparent !important;
         border-radius: 3px;
-        padding: 0 20px;
+        padding: 15px 20px;
         
         .navbar-brand {
             padding: {
-                top: 0;
-                bottom: 0;
+                top: 10px;
+                bottom: 10px;
                 left: 0;
                 right: 0;
             };
@@ -932,12 +954,27 @@
                 left: auto;
                 right: auto;
             };
+            opacity: 1 !important;
+            visibility: visible !important;
+            animation: none !important;
+            -webkit-animation: none !important;
+            animation-delay: 0s !important;
+            -webkit-animation-delay: 0s !important;
+            
             .nav-item {
                 position: relative;
                 padding: 0;
+                opacity: 1 !important;
+                visibility: visible !important;
+                animation: none !important;
+                -webkit-animation: none !important;
 
                 a {
                     color: var(--blackColor);
+                    opacity: 1 !important;
+                    visibility: visible !important;
+                    animation: none !important;
+                    -webkit-animation: none !important;
                     font: {
                         size: 16.5px;
                         weight: 500;
@@ -945,8 +982,8 @@
                     padding: {
                         left: 0;
                         right: 0;
-                        top: 30px;
-                        bottom: 30px;
+                        top: 35px;
+                        bottom: 35px;
                     };
                     margin: {
                         left: 13px;
@@ -1867,6 +1904,36 @@
         }
         .others-option {
             margin-left: 30px;
+        }
+    }
+    .navbar-collapse {
+        display: flex !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        animation: none !important;
+        -webkit-animation: none !important;
+        
+        .navbar-nav {
+            opacity: 1 !important;
+            visibility: visible !important;
+            animation: none !important;
+            -webkit-animation: none !important;
+            animation-delay: 0s !important;
+            -webkit-animation-delay: 0s !important;
+            
+            .nav-item {
+                opacity: 1 !important;
+                visibility: visible !important;
+                animation: none !important;
+                -webkit-animation: none !important;
+                
+                a {
+                    opacity: 1 !important;
+                    visibility: visible !important;
+                    animation: none !important;
+                    -webkit-animation: none !important;
+                }
+            }
         }
     }
 }
@@ -3200,6 +3267,22 @@
                 right: var(--bs-gutter-x, 0.75rem);
             };
         }
+        
+        .navbar-collapse {
+            display: flex !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            
+            .navbar-nav {
+                opacity: 1 !important;
+                visibility: visible !important;
+                
+                .nav-item {
+                    opacity: 1 !important;
+                    visibility: visible !important;
+                }
+            }
+        }
     }
 
 }
@@ -3227,6 +3310,22 @@
                 right: var(--bs-gutter-x, 0.75rem);
             };
         }
+        
+        .navbar-collapse {
+            display: flex !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            
+            .navbar-nav {
+                opacity: 1 !important;
+                visibility: visible !important;
+                
+                .nav-item {
+                    opacity: 1 !important;
+                    visibility: visible !important;
+                }
+            }
+        }
     }
 
 }
@@ -3252,6 +3351,165 @@
                 right: 125px;
             };
         }
+        
+        .navbar-collapse {
+            display: flex !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            
+            .navbar-nav {
+                opacity: 1 !important;
+                visibility: visible !important;
+                
+                .nav-item {
+                    opacity: 1 !important;
+                    visibility: visible !important;
+                }
+            }
+        }
     }
 
+}
+
+// Global override for desktop navbar visibility (min-width: 992px)
+@media only screen and (min-width: 992px) {
+    .navbar-area {
+        .navbar-collapse {
+            display: flex !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            animation: none !important;
+            -webkit-animation: none !important;
+            transition: none !important;
+            
+            &.collapse:not(.show) {
+                display: flex !important;
+            }
+            
+            .navbar-nav {
+                display: flex !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                animation: none !important;
+                -webkit-animation: none !important;
+                
+                .nav-item {
+                    display: block !important;
+                    opacity: 1 !important;
+                    visibility: visible !important;
+                    animation: none !important;
+                    -webkit-animation: none !important;
+                    
+                    a {
+                        display: block !important;
+                        opacity: 1 !important;
+                        visibility: visible !important;
+                        animation: none !important;
+                        -webkit-animation: none !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Smooth dropdown menu animations - only when opened
+@keyframes dropdownSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+        visibility: hidden;
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        visibility: visible;
+    }
+}
+
+// Dropdown menus hidden by default
+.navbar-nav .nav-item .dropdown-menu {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-5px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+    display: block !important; // Keep in DOM but hidden
+    pointer-events: none; // Disable interaction when hidden
+    margin-top: -2px !important; // Pull up to connect with menu item
+    border-top-left-radius: 0 !important; // Seamless connection
+    border-top-right-radius: 0 !important; // Seamless connection
+    border-bottom-left-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
+    background: rgba(255, 255, 255, 0.95) !important; // Glossy transparent white
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border-top: none !important; // No border on top for seamless connection
+    
+    // Only animate and show when parent has 'show' class or is hovered
+    &.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        pointer-events: auto;
+        animation: dropdownSlideIn 0.3s ease-out;
+    }
+}
+
+// Show dropdown on hover for desktop
+@media (min-width: 992px) {
+    .navbar-nav .nav-item {
+        position: relative;
+        
+        // Active menu item styling - creates connected look
+        &:hover > .nav-link,
+        &.active > .nav-link {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 8px 8px 0 0;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-bottom: none;
+            padding-left: 12px;
+            padding-right: 12px;
+            padding-top: 4px;
+            padding-bottom: 4px;
+            margin-bottom: -1px; // Overlap with dropdown
+            position: relative;
+            z-index: 10001;
+        }
+        
+        &:hover > .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+            animation: dropdownSlideIn 0.3s ease-out;
+        }
+        
+        .dropdown-menu {
+            top: calc(100% + 1px) !important; // Position directly below menu item
+            left: 0;
+        }
+    }
+    
+    // Reduce apps icon size and improve alignment
+    .navbar-nav .nav-item .nav-link {
+        font-size: 15px;
+        padding: 8px 12px;
+        
+        i {
+            font-size: 14px !important;
+            margin-left: 4px;
+            vertical-align: middle;
+            position: relative;
+            top: -1px;
+        }
+    }
+}
+
+// Smooth menu item hover effects
+.navbar-nav .nav-item a {
+    transition: all 0.3s ease;
 }

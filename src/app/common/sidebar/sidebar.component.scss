@@ -4,14 +4,52 @@
         position: fixed;
         height: 100vh;
         width: 260px;
-        z-index: 222;
+        z-index: 1000;
         left: 0;
         top: 0;
+        background: 
+            radial-gradient(circle at 0% 0%, rgba(255, 182, 193, 0.25) 0%, transparent 25%),
+            radial-gradient(circle at 0% 100%, rgba(233, 30, 99, 0.22) 0%, transparent 22%),
+            linear-gradient(180deg, 
+                rgba(255, 245, 232, 0.85) 0%, 
+                rgba(255, 240, 229, 0.82) 50%, 
+                rgba(255, 245, 232, 0.85) 100%);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-right: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
+        
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.6);
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        &::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, 
+                rgba(255, 232, 224, 0.15) 0%, 
+                transparent 60%);
+            animation: glossyPulse 8s ease-in-out infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
         
         .logo {
             padding: 25px 25px 25px 20px;
             position: absolute;
-            z-index: 2;
+            z-index: 3;
             right: 0;
             left: 0;
             top: 0;
@@ -28,7 +66,7 @@
         }
         .burger-menu {
             top: 29px;
-            z-index: 3;
+            z-index: 4;
             opacity: 0;
             right: 19px;
             visibility: hidden;
@@ -61,6 +99,8 @@
         }
         .ng-scrollbar {
             height: 100vh;
+            position: relative;
+            z-index: 2;
 
             &[visibility=hover] {
                 --_scrollbar-hover-opacity: 1;
@@ -422,6 +462,17 @@
                 }
             }
         }
+    }
+}
+
+@keyframes glossyPulse {
+    0%, 100% {
+        opacity: 0.3;
+        transform: translate(-25%, -25%) scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: translate(-25%, -25%) scale(1.1);
     }
 }
 

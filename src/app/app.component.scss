@@ -2,6 +2,8 @@
 .main-content {
     overflow: hidden;
     min-height: 100vh;
+    position: relative;
+    z-index: 10;
     // padding: {
     //     top: 105px;
     //     left: 282px;
@@ -9,6 +11,11 @@
     // };
     &.active, &.hide-sidebar {
         // padding-left: 85px;
+    }
+    
+    > * {
+        position: relative;
+        z-index: 1;
     }
 }
 

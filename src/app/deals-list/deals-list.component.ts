@@ -186,6 +186,8 @@ export class DealsListComponent implements OnInit, OnDestroy {
       const dealType = params['type'] || 'All';
       const category = params['category'] || 'All';
       this.fetchData(dealType, category);
+      this.currentUrl = category;
+      this.selectedDealTypeCode = dealType;
     });
     this.subs.push(queryParamSub); // to clean up later in ngOnDestroy
 

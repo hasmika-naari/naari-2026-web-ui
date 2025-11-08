@@ -21,6 +21,7 @@ import { AppUtilService } from '@app/services/app.util.service';
 import { DealsBlogComponent } from '@app/general/deals-blog/deals-blog.component';
 import { FooterComponent } from '@app/common/footer/footer.component';
 import { LanguageSubscribeComponent } from '@app/general/language-subscribe/language-subscribe.component';
+import { AppConstantsService } from '@app/services/app-constants.service';
 
 @Component({
     selector: 'app-boutique-page',
@@ -59,6 +60,7 @@ export class BoutiquePageComponent implements OnInit, OnDestroy {
     private appService: AppUtilService =  inject(AppUtilService);
 
     private dealsService: DealsService= inject(DealsService);
+    private appConstantService: AppConstantsService= inject(AppConstantsService);
     private platformId: object =  inject(PLATFORM_ID);
     private route: ActivatedRoute =  inject(ActivatedRoute);
     private deviceService: DeviceDetectorService=  inject(DeviceDetectorService);
@@ -112,52 +114,6 @@ export class BoutiquePageComponent implements OnInit, OnDestroy {
       }
     }
 
-    // for tab click event
-    // currentTab = 'tab1';
-    // switchTab(event: MouseEvent, tab: string) {
-    //     event.preventDefault();
-    //     this.currentTab = tab;
-    // }
-
-    // coursesSlides: OwlOptions = {
-    //   loop: false,
-    //   nav: true,
-    //   dots: true,
-    //   autoplayHoverPause: true,
-    //   autoplay: true,
-    //   margin: 30,
-    //   navText: [
-    //     "<i class='bx bx-left-arrow-alt'></i>",
-    //     "<i class='bx bx-right-arrow-alt'></i>"
-    //   ],
-    //   responsive: {
-    //     0: {
-    //       items: 1,
-    //     },
-    //     768: {
-    //       items: 2,
-    //     },
-    //     1200: {
-    //       items: 3,
-    //     }
-    //   }
-    //   }
-
-    // detailsImageSlides: OwlOptions = {
-		// loop: true,
-		// nav: false,
-		// dots: false,
-		// autoplayHoverPause: true,
-		// autoplay: true,
-		// margin: 30,
-    //     items: 1,
-		// navText: [
-		// 	"<i class='bx bx-left-arrow-alt'></i>",
-		// 	"<i class='bx bx-right-arrow-alt'></i>"
-		// ]
-    // }
-
-
     fetchData(): void{
 
         this.dealsService.getDealsByCountry('usa', this.platformId).subscribe((deals) => {
@@ -167,6 +123,12 @@ export class BoutiquePageComponent implements OnInit, OnDestroy {
           this.dealsService.getMerchantsByCountryAndType('usa', 'BOUTIQUE', this.platformId).subscribe((boutiques) => {
             this.boutiques = _.cloneDeep(boutiques);
             this.displayBoutiques =  [...boutiques];
+           this.displayBoutiques.forEach(merchant => {
+              if (merchant.imageUrl) {
+                merchant.imageUrl = `${this.appConstantService.BASE_AWS_S3_API_URL}merchant/${merchant.id}/${merchant.imageUrl}`;
+              }
+            });
+
             // ////consolie.log('Boti --- ' + this.displayBoutiques);
           });
         // }

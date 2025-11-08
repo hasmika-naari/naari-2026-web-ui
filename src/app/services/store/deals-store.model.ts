@@ -13,6 +13,7 @@ import { Account } from "../profile.model";
     selectedDeal: DealDataItem;
     relatedDeals: Array<DealDataItem>;
     dailyDeals: Array<DealDataItem>;
+    wishListDeals: Array<DealDataItem>;
     deals: Array<DealDataItem>;
     allDeals: Array<DealDataItem>;
     filteredAllDeals: Array<DealDataItem>;
@@ -32,6 +33,7 @@ import { Account } from "../profile.model";
       brands: new Array<Brand>(),
       merchants: new Array<Merchant>(),
       dailyDeals: new Array<DealDataItem>,
+      wishListDeals: new Array<DealDataItem>(),
       filteredDailyDeals: new Array<DealDataItem>,
       deals: new Array<DealDataItem>(),
       allDeals: new Array<DealDataItem>(),

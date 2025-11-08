@@ -567,7 +567,7 @@ export class NaariHomePageComponent implements OnInit, OnDestroy {
   }
 
   addToWishlist(deal: DealDataItem) {
-    this.dealsStoreService.updateDailyDeals(this.deals);
+    this.dealsStoreService.toggleWishlistStatus(deal);
   }
 
   gotToShop(dealUrl: any) {

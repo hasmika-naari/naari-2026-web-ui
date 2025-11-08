@@ -16,12 +16,11 @@
     <div class="col-12">
 
       <!-- Desktop View Header -->
-      <div *ngIf="isDesktop && browser" class="row">
+      <!-- <div *ngIf="isDesktop && browser" class="row">
         <div class="col-12">
           <mat-card class="pagenation-deals p-0 text-end wow fadeInUp" data-wow-offset="10" data-wow-duration="1s" data-wow-delay="90ms">
             <div class="row align-items-center">
               <div class="col-md-2 col-12 text-start">
-                <!-- Left spacer -->
               </div>
               <div class="col-md-8 col-12 text-center home-section-title mt-3">
                 <small class="sub-title">Wonderful Fashion's</small>
@@ -43,14 +42,14 @@
             </div>
           </mat-card>
         </div>
-      </div>
+      </div> -->
 
       <!-- Mobile View Header -->
       <div *ngIf="isMobile && browser" class="row text-center home-section-title mt-3">
         <div class="col-md-2 col-12"></div>
         <div class="col-md-8 col-12">
-          <small class="sub-title">Discover Super Deals</small>
-          <h2>Load Savings</h2>
+          <small class="sub-title">Wonderful Fashion's</small>
+          <h2>Find Botique's Around</h2>
         </div>
         <div class="col-md-2 col-12 text-center">
           <a class="option-selection-text" mat-button [matMenuTriggerFor]="sortMenu2" #sortMenu2Trigger="matMenuTrigger">
@@ -67,13 +66,55 @@
         </div>
       </div>
 
+       <div *ngIf="isDesktop && browser" fxLayout="row wrap"  >
+
+                <div fxFlex="100"> 
+                    <!-- <mat-card class="pagenation-deals p-0 text-start   wow fadeInUp" data-wow-offset="10" 
+                    data-wow-duration="1s"  data-wow-delay="90ms">   
+                    <div class="row align-items-left justify-content-left flex-wrap">
+                        <div class="col-9 col-sm-9 text-left" [class.mt--25]="isMobile">
+                            <div class="home-section-title">
+                              <small class="sub-title">Wonderful Fashion's</small>
+                              <h2>Find Botique's Around</h2>
+                            </div>
+                        </div>
+                        <div class="col-3 col-sm-3 d-flex justify-content-end align-items-center mt-2 mt-sm-0">
+                            <a class="option-selection-text" mat-button [matMenuTriggerFor]="sortMenu1" #sortMenu1Trigger="matMenuTrigger">
+                           <mat-icon >sort</mat-icon>
+                            {{selectedSorting.title}}
+
+                            </a>
+
+                            <mat-menu #sortMenu1="matMenu" xPosition="before" class="app-dropdown" overlapTrigger="true">
+                            <span (mouseleave)="sortMenu1Trigger.closeMenu()">
+                                <button mat-menu-item *ngFor="let sort of sortings" (click)="changeSorting(sort)">
+                                <span>{{sort.title}}</span>
+                                </button>
+                            </span>
+                            </mat-menu>
+                        </div>
+
+                    </div>
+                    </mat-card> -->
+                    <div class="naari-section-title d-flex justify-content-between align-items-center">
+                      <div class="title-block text-start">
+                        <span class="sub-title">Discover</span>
+                        <h2>Botique's Around</h2>
+                      </div>
+                      <button routerLink="/courses-2-columns-style-1"  matButton color="tertiary" >
+                          <span class="label">All Categories</span>
+                      </button>
+                    </div>
+                  </div>
+            </div>
+
       <!-- Boutiques Listing -->
       <div class="row pt-5" *ngIf="displayBoutiques && displayBoutiques.length">
         <div *ngFor="let boutique of displayBoutiques | paginate: { itemsPerPage: count, currentPage: page }; let i = index;"
              class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
           <div class="single-courses-box mb-30">
             <div class="courses-image">
-              <a routerLink="/single-courses" class="d-block">
+              <a  class="d-block">
                 <img [src]="boutique.imageUrl" alt="image" class="img-fluid" style="height: 200px; width: 100%;">
               </a>
               <div class="courses-tag">
@@ -82,20 +123,20 @@
             </div>
             <div class="courses-content">
               <h3 class="text-truncate" style="height: 60px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-                <a routerLink="/single-courses" class="d-inline-block">{{ boutique.subTitle }}</a>
+                <a  class="d-inline-block">{{ boutique.subTitle }}</a>
               </h3>
               <h3><small class="show-silver">phone:</small><br>{{ boutique.phone }}</h3>
             </div>
-            <div class="courses-box-footer">
-              <ul class="d-flex justify-content-between">
-                <li class="social-share" (click)="shareOnWhatsApp($event, boutique)">
-                  <i class='bx bx-share-alt'></i> share
-                </li>
-                <li class="view-deal">
-                  <i class='bx bx-phone'></i> call
-                </li>
-              </ul>
+          <div class="courses-box-footer">
+            <div class="footer-actions">
+              <div class="left-action" (click)="shareOnWhatsApp($event, boutique)">
+                <i class="bx bx-share-alt"></i> share
+              </div>
+              <div class="right-action">
+                <i class="bx bx-phone"></i> call
+              </div>
             </div>
+          </div>
           </div>
         </div>
       </div>

@@ -217,7 +217,7 @@ export class AppConstantsService {
         this.GET_DEAL_CATEGORY_TYPES_BY_COUNTRY = APP_CONTEXT ? '/' : '' + APP_CONTEXT +  '/api/naari-deal-category-types';
 
         
-        this.BASE_AWS_S3_API_URL = 'https://naarideals.s3.us-east-2.amazonaws.com/';
+        this.BASE_AWS_S3_API_URL = 'https://naarideals.s3.us-east-1.amazonaws.com/';
 
         this.MESSAGES_GET = APP_CONTEXT ? '/' : '' + APP_CONTEXT + '/api/getMessagesByUserName';
         this.MESSAGE_REMOVE = APP_CONTEXT ? '/' : '' + APP_CONTEXT + '/api/removeMessage';
