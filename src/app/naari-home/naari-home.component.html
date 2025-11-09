@@ -82,11 +82,10 @@
             <div class="row justify-content-start p-2">
                 <div
                     *ngFor="let deal of dailyDealsLocal | paginate: { itemsPerPage: count, currentPage: page }; let i = index"
-                    class="col-6 col-sm-6 col-md-2 col-lg-2 mb-4  card-item"
+                    class="col-6 col-sm-6 col-md-2 col-lg-2 mb-4 "
                 >
                 <mat-card class="deal-card-modern p-3 d-flex flex-column h-100 position-relative">
 
-                <!-- Top Row: Wishlist + Discount -->
                 <div class="d-flex justify-content-between align-items-start mb-2">
                     <button class="icon-btn wishlist" matIconButton (click)="addToWishlist(deal)" aria-label="Wishlist">
                         <i *ngIf="!deal.selected" class="bx bx-heart"></i>
@@ -97,7 +96,6 @@
                     </span>
                 </div>
 
-                <!-- Image Section -->
                 <a [routerLink]="['/deal/', deal.id]" class="deal-image-wrapper mb-2">
                     <img
                     [ngSrc]="deal.imageUrl"
@@ -108,23 +106,17 @@
                     />
                 </a>
 
-                <!-- Merchant -->
-                <!-- <div class="text-muted fw-medium small text-start mb-1 merchant-name">
-                    {{ deal.merchant }}
-                </div> -->
+             
                 <div class="merchant-name d-flex align-items-center">
-                    <!-- <i class="bx bx-store me-2 text-muted fs-5"></i> -->
                     <span class="text-truncate">{{ deal.merchant }}</span>
                 </div>
 
-                <!-- Title -->
                 <h6 class="deal-title text-start text-truncate-2 mb-2">
                     <a [routerLink]="['/deal/', deal.id]" class="text-dark text-decoration-none">
                     {{ deal.title }}
                     </a>
                 </h6>
 
-                <!-- Price Info -->
                 <div class="d-flex gap-2 align-items-baseline text-start mb-3">
                     <span class="text-danger fw-bold fs-5">
                     {{ country === 'usa' ? '$' : '₹' }}{{ deal.currentPrice | number : '1.2-2' }}
@@ -134,7 +126,6 @@
                     </span>
                 </div>
 
-                <!-- Action Buttons -->
                 <div class="d-flex justify-content-end gap-4 mt-auto">
                      <button matIconButton class="icon-btn share" (click)="shareOnWhatsApp($event, deal)">
                         <mat-icon>share</mat-icon>
@@ -202,14 +193,77 @@
        @defer (on viewport;) {
         <app-homeone-courses [isMobile]="isMobile" [categories]="catsLocal" ></app-homeone-courses>
       } @placeholder (minimum 2000ms) {
-        <h1>Loading</h1>
+        <div class="d-flex justify-content-center align-items-center py-5">
+          <div class="text-center">
+            <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="text-muted">Loading courses...</p>
+          </div>
+        </div>
       } @loading {
-        <span>Loading...</span>
+        <div class="d-flex justify-content-center align-items-center py-5">
+          <div class="text-center">
+            <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="text-muted">Loading...</p>
+          </div>
+        </div>
       } @error {
-        <span>Something went wrong :(</span>
+        <div class="d-flex justify-content-center align-items-center py-5">
+          <div class="text-center text-danger">
+            <i class="bx bx-error-circle fs-1 mb-2"></i>
+            <p>Something went wrong :(</p>
+          </div>
+        </div>
       }
     </ng-container>
 </section>
+
+<!-- Trending Brands Carousel Section -->
+<section class="trending-brands-section py-5">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h2 class="section-title mb-2">✨ Trending Brands</h2>
+                <p class="section-subtitle text-muted">Discover the hottest brands everyone's shopping from</p>
+            </div>
+        </div>
+        
+        <div class="brands-carousel-wrapper position-relative">
+            <!-- Navigation Arrows -->
+            <button class="carousel-nav carousel-nav-prev" (click)="scrollBrandsCarousel('left')" aria-label="Previous brands">
+                <i class='bx bx-chevron-left'></i>
+            </button>
+            <button class="carousel-nav carousel-nav-next" (click)="scrollBrandsCarousel('right')" aria-label="Next brands">
+                <i class='bx bx-chevron-right'></i>
+            </button>
+            
+            <!-- Carousel Container -->
+            <div class="brands-carousel" #brandsCarousel>
+                <div class="brand-card" *ngFor="let brand of trendingBrands">
+                    <div class="brand-card-inner">
+                        <div class="brand-logo-wrapper">
+                            <img [src]="brand.logo" [alt]="brand.name" class="brand-logo">
+                        </div>
+                        <div class="brand-info">
+                            <h5 class="brand-name">{{ brand.name }}</h5>
+                            <p class="brand-deals-count">{{ brand.dealsCount }} Active Deals</p>
+                            <div class="brand-discount-badge">
+                                Up to {{ brand.maxDiscount }}% OFF
+                            </div>
+                        </div>
+                        <button class="btn btn-sm brand-explore-btn" [routerLink]="['/deals', brand.slug]">
+                            Explore Deals
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section >
     <ng-container *ngIf="browser">
     @defer (on viewport;) {
@@ -217,11 +271,30 @@
             <app-become-partner></app-become-partner>
         </section>
     } @placeholder (minimum 2000ms) {
-        <h1>Loading...</h1>
+        <div class="d-flex justify-content-center align-items-center py-5">
+          <div class="text-center">
+            <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="text-muted">Loading partner information...</p>
+          </div>
+        </div>
     } @loading {
-        <span>Loading...</span>
+        <div class="d-flex justify-content-center align-items-center py-5">
+          <div class="text-center">
+            <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="text-muted">Loading...</p>
+          </div>
+        </div>
     } @error {
-        <span>Something went wrong :(</span>
+        <div class="d-flex justify-content-center align-items-center py-5">
+          <div class="text-center text-danger">
+            <i class="bx bx-error-circle fs-1 mb-2"></i>
+            <p>Something went wrong :(</p>
+          </div>
+        </div>
     }
     </ng-container>
 </section>
@@ -232,11 +305,30 @@
                 <app-language-subscribe [isMobile]="isMobile" ></app-language-subscribe>
             </section>
         } @placeholder (minimum 2000ms) {
-            <h1>Loading...</h1>
+            <div class="d-flex justify-content-center align-items-center py-5">
+              <div class="text-center">
+                <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="text-muted">Loading content...</p>
+              </div>
+            </div>
         } @loading {
-            <span>Loading...</span>
+            <div class="d-flex justify-content-center align-items-center py-5">
+              <div class="text-center">
+                <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="text-muted">Loading...</p>
+              </div>
+            </div>
         } @error {
-            <span>Something went wrong :(</span>
+            <div class="d-flex justify-content-center align-items-center py-5">
+              <div class="text-center text-danger">
+                <i class="bx bx-error-circle fs-1 mb-2"></i>
+                <p>Something went wrong :(</p>
+              </div>
+            </div>
         }  <!-- Footer -->
     </ng-container>
   <div class="content-footer">

@@ -1,5 +1,5 @@
 import { CommonModule, NgOptimizedImage, isPlatformBrowser } from '@angular/common';
-import { Component, OnInit, HostListener, Input, inject, Signal, PLATFORM_ID, OnChanges, SimpleChanges, Inject } from '@angular/core';
+import { Component, OnInit, HostListener, Input, inject, Signal, PLATFORM_ID, OnChanges, SimpleChanges, Inject, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { PCategory } from '@app/services/deals.model';
 import { SignalStore } from '@app/services/store/signal-store';
@@ -24,13 +24,25 @@ export class HeaderStyleComponent implements OnInit, OnChanges {
     @Input() menuList: Array<PCategory> = new Array<PCategory>();
     @Input() mobile: boolean =  false;
     @Input() color: boolean =  false;
-    @HostListener('window:scroll')
+    
+    @HostListener('window:scroll', [])
     checkScroll() {
-        const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-        if (scrollPosition >= 50) {
-            this.isSticky = true;
-        } else {
-            this.isSticky = false;
+        if (isPlatformBrowser(this.platformId)) {
+            const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+            console.log('Scroll position:', scrollPosition, 'isSticky:', this.isSticky);
+            if (scrollPosition >= 50) {
+                if (!this.isSticky) {
+                    this.isSticky = true;
+                    this.cdr.detectChanges();
+                    console.log('Set sticky to TRUE');
+                }
+            } else {
+                if (this.isSticky) {
+                    this.isSticky = false;
+                    this.cdr.detectChanges();
+                    console.log('Set sticky to FALSE');
+                }
+            }
         }
     }
 
@@ -48,6 +60,7 @@ export class HeaderStyleComponent implements OnInit, OnChanges {
     // public platformId: object =  inject(PLATFORM_ID);
     private deviceService: DeviceDetectorService=  inject(DeviceDetectorService);
     private router: Router=  inject(Router);
+    private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
     
     constructor(
         public themeService: ThemeCustomizerService,

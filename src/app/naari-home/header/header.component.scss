@@ -1,3 +1,26 @@
+// Header animations for smooth SSR load
+@keyframes smoothFadeIn {
+    from {
+        opacity: 0;
+        visibility: hidden;
+    }
+    to {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+@keyframes smoothSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 // Header
 .header-area {
     top: 0;
@@ -7,10 +30,53 @@
     height: auto;
     z-index: 999;
     position: absolute;
+    opacity: 0;
+    animation: smoothSlideDown 0.6s ease-out forwards;
+    
+    // Ensure header stays visible after animation completes
+    animation-fill-mode: forwards;
 
     &.p-relative {
         position: relative;
     }
+    
+    &.sticky {
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 9999;
+        margin-top: 0;
+        position: fixed !important;
+        opacity: 1 !important; // Override initial opacity for sticky state
+        visibility: visible !important;
+        animation: 500ms ease-in-out 0s normal none 1 running fadeInDown !important;
+        box-shadow: 0 2px 28px 0 rgba(0, 0, 0, 0.09);
+        background: 
+            radial-gradient(circle at 0% 0%, rgba(255, 182, 193, 0.3) 0%, transparent 25%),
+            radial-gradient(circle at 100% 0%, rgba(255, 215, 0, 0.28) 0%, transparent 23%),
+            radial-gradient(circle at 50% 100%, rgba(233, 30, 99, 0.2) 0%, transparent 20%),
+            linear-gradient(180deg, rgba(255, 245, 232, 0.95) 0%, rgba(255, 240, 229, 0.92) 100%) !important;
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.4);
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .navbar {
+            position: relative;
+            z-index: 10;
+        }
+    }
+    
     &.header-color-white {
         .top-header {
             background-color: rgba(0, 0, 0, .20);
@@ -571,6 +637,8 @@
         top: 15px;
         bottom: 25px;
     };
+    opacity: 0;
+    animation: smoothFadeIn 0.5s ease-out forwards;
     .container-fluid {
         padding: {
             left: 60px;
@@ -887,14 +955,20 @@
 // Navbar
 .navbar-area {
     margin-top: -10px;
-
+    animation: smoothSlideDown 0.6s ease-out 0.2s forwards;
+    opacity: 0;
+    
     &.sticky {
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 9999;
-        margin-top: 0;
-        position: fixed;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        z-index: 9999 !important;
+        margin-top: 0 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        animation: 500ms ease-in-out 0s normal none 1 running fadeInDown !important;
         box-shadow: 0 2px 28px 0 rgba(0, 0, 0, 0.09);
         background: 
             radial-gradient(circle at 0% 0%, rgba(255, 182, 193, 0.3) 0%, transparent 25%),
@@ -903,7 +977,6 @@
             linear-gradient(180deg, rgba(255, 245, 232, 0.95) 0%, rgba(255, 240, 229, 0.92) 100%) !important;
         backdrop-filter: blur(15px);
         -webkit-backdrop-filter: blur(15px);
-        animation: 500ms ease-in-out 0s normal none 1 running fadeInDown;
 
         &::before {
             content: '';
@@ -916,16 +989,12 @@
             z-index: -1;
             pointer-events: none;
         }
-
+        
         .navbar {
-            position: relative;
-            z-index: 10;
-            padding: {
-                left: 0;
-                right: 0;
-            };
+            background-color: transparent !important;
         }
     }
+
     .navbar {
         background-color: transparent !important;
         border-radius: 3px;
@@ -938,6 +1007,8 @@
                 left: 0;
                 right: 0;
             };
+            opacity: 0;
+            animation: smoothFadeIn 0.6s ease-out 0.3s forwards;
 
             img{
                 max-width: 30%;
@@ -954,12 +1025,12 @@
                 left: auto;
                 right: auto;
             };
-            opacity: 1 !important;
-            visibility: visible !important;
-            animation: none !important;
-            -webkit-animation: none !important;
-            animation-delay: 0s !important;
-            -webkit-animation-delay: 0s !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            animation: smoothFadeIn 0.8s ease-out 0.4s forwards !important;
+            -webkit-animation: smoothFadeIn 0.8s ease-out 0.4s forwards !important;
+            animation-delay: 0.4s !important;
+            -webkit-animation-delay: 0.4s !important;
             
             .nav-item {
                 position: relative;
@@ -1257,6 +1328,9 @@
             }
         }
         .others-option {
+            opacity: 0;
+            animation: smoothFadeIn 0.6s ease-out 0.5s forwards;
+            
             .language-switcher {
                 position: relative;
                 top: -1px;
@@ -3452,8 +3526,10 @@
         bottom: auto !important;
         transform: none !important;
         will-change: opacity;
-        overflow: hidden;
-        max-height: 70vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+        min-height: 100px;
+        max-height: 400px;
         list-style: none;
         box-sizing: border-box;
         
@@ -3548,6 +3624,8 @@
                     backdrop-filter: blur(10px);
                     color: var(--mainColor) !important;
                     padding-left: 24px !important;
+                    border-top: 1px dashed rgba(184, 31, 137, 0.3);
+                    border-bottom: 1px dashed rgba(184, 31, 137, 0.3);
                     
                     span:last-child {
                         opacity: 1;
@@ -3583,7 +3661,7 @@
 @media (min-width: 992px) {
     .navbar-nav {
         align-items: center;
-        gap: 2px; // Reduce gap between menu items
+        gap: 0; // Minimize gap between menu items for tighter spacing
         
         > .nav-item {
             position: relative;
@@ -3592,7 +3670,7 @@
             .nav-link {
                 font-size: 15px;
                 font-weight: 600;
-                padding: 10px 18px !important;
+                padding: 10px 10px !important;
                 border-radius: 10px 10px 0 0;
                 transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
                 color: var(--whiteColor);

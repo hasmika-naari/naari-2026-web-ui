@@ -392,15 +392,57 @@
 
 .deal-card-modern {
   border-radius: 0.6rem;
-  box-shadow: none;// 0 1px 2px rgba(0, 0, 0, 0.05);
-  transition: box-shadow 0.2s ease;
-  background-color: #fff;
+  box-shadow: none;
+  transition: background 0.3s ease, backdrop-filter 0.3s ease;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   min-height: 100%;
   height: auto;
   padding: 1rem;
+  position: relative;
+  overflow: hidden;
+  transform: none !important; // Lock position completely
+
+  // Gradient border on hover using pseudo-element
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 0.6rem;
+    padding: 1px;
+    background: transparent;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
 
   &:hover {
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    background: 
+      radial-gradient(circle at 100% 0%, rgba(184, 31, 137, 0.08) 0%, transparent 25%),
+      rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(15px) saturate(150%);
+    -webkit-backdrop-filter: blur(15px) saturate(150%);
+    transform: none !important; // No movement on hover
+    animation: none !important; // No animation on hover
+
+    &::before {
+      opacity: 1;
+      background: linear-gradient(
+        135deg,
+        rgba(184, 31, 137, 0.25) 0%,
+        rgba(184, 31, 137, 0.15) 25%,
+        transparent 50%,
+        rgba(184, 31, 137, 0.15) 75%,
+        rgba(184, 31, 137, 0.25) 100%
+      );
+    }
   }
 
   .deal-image-wrapper {
@@ -482,6 +524,11 @@
     transition: color 0.2s ease, background-color 0.2s ease;
     // border-radius: 8px;
 
+    // Solid heart (selected state) - theme pink color
+    .bxs-heart {
+      color: var(--mainColor, #b81f89);
+    }
+
     &.wishlist:hover {
       background-color: #ffe5ec;
       color: #d63384;
@@ -524,6 +571,18 @@
             animation-delay: #{$i * 0.08}s;
         }
     }
+    
+    // Completely lock position on hover - no movement allowed
+    &:hover {
+        animation: none !important;
+        transform: none !important;
+    }
+    
+    // Lock child card as well
+    &:hover .deal-card-modern {
+        transform: none !important;
+        animation: none !important;
+    }
 }
 
 // Section title animations
@@ -538,12 +597,8 @@
 
 // Deal cards smooth hover
 .deal-card-modern {
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    
-    &:hover {
-        transform: translateY(-8px) scale(1.02);
-        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
-    }
+    transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                backdrop-filter 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 // Pagination smooth appearance
@@ -563,16 +618,248 @@
 
 // Image smooth loading
 .deal-image-wrapper img {
-    transition: transform 0.4s ease;
+    transition: opacity 0.3s ease;
     
     &:hover {
-        transform: scale(1.05);
+        opacity: 0.95;
     }
 }
 
 // Price tags animation
 .text-danger, .text-muted {
     transition: color 0.3s ease;
+}
+
+
+/* ============================================
+   Trending Brands Carousel Section
+   ============================================ */
+
+.trending-brands-section {
+  background: linear-gradient(135deg, rgba(184, 31, 137, 0.03) 0%, rgba(255, 255, 255, 0.95) 100%);
+  position: relative;
+  overflow: hidden;
+
+  .section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--mainColor, #b81f89);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+
+  .brands-carousel-wrapper {
+    position: relative;
+    padding: 0 60px;
+
+    @media (max-width: 768px) {
+      padding: 0 40px;
+    }
+  }
+
+  .brands-carousel {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 20px 10px;
+    
+    /* Hide scrollbar but keep functionality */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      gap: 15px;
+      padding: 15px 5px;
+    }
+  }
+
+  .brand-card {
+    flex: 0 0 300px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(184, 31, 137, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+
+    @media (max-width: 768px) {
+      flex: 0 0 250px;
+      padding: 1.25rem;
+    }
+
+    @media (max-width: 480px) {
+      flex: 0 0 220px;
+      padding: 1rem;
+    }
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(184, 31, 137, 0.15);
+      border-color: rgba(184, 31, 137, 0.3);
+    }
+  }
+
+  .brand-card-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .brand-logo-wrapper {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 50%;
+    padding: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+
+    @media (max-width: 768px) {
+      width: 100px;
+      height: 100px;
+      padding: 12px;
+    }
+
+    @media (max-width: 480px) {
+      width: 80px;
+      height: 80px;
+      padding: 10px;
+    }
+  }
+
+  .brand-logo {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .brand-info {
+    flex: 1;
+  }
+
+  .brand-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+
+    @media (max-width: 768px) {
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 1rem;
+    }
+  }
+
+  .brand-deals-count {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.75rem;
+
+    @media (max-width: 480px) {
+      font-size: 0.85rem;
+    }
+  }
+
+  .brand-discount-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--mainColor, #b81f89) 0%, #d63384 100%);
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+
+    @media (max-width: 480px) {
+      padding: 0.35rem 0.85rem;
+      font-size: 0.85rem;
+    }
+  }
+
+  .brand-explore-btn {
+    background: var(--mainColor, #b81f89);
+    color: white;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    width: 100%;
+
+    &:hover {
+      background: #d63384;
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(184, 31, 137, 0.3);
+    }
+
+    @media (max-width: 480px) {
+      padding: 0.45rem 1.25rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  .carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid var(--mainColor, #b81f89);
+    color: var(--mainColor, #b81f89);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+    @media (max-width: 768px) {
+      width: 40px;
+      height: 40px;
+    }
+
+    i {
+      font-size: 1.5rem;
+
+      @media (max-width: 768px) {
+        font-size: 1.3rem;
+      }
+    }
+
+    &:hover {
+      background: var(--mainColor, #b81f89);
+      color: white;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    &.carousel-nav-prev {
+      left: 0;
+    }
+
+    &.carousel-nav-next {
+      right: 0;
+    }
+  }
 }
 
 // Merchant name hover

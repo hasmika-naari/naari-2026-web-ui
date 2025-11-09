@@ -369,7 +369,7 @@ import { CommonModule, NgOptimizedImage, isPlatformBrowser, isPlatformServer } f
 import {
   Component, OnInit, PLATFORM_ID, Inject, Signal, TransferState,
   makeStateKey, runInInjectionContext, effect, Injector,
-  OnDestroy
+  OnDestroy, ViewChild, ElementRef
 } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -601,5 +601,65 @@ export class NaariHomePageComponent implements OnInit, OnDestroy {
   shareOnWhatsApp($event: any, selectedDeal: DealDataItem) {
     $event.stopPropagation();
     this.appService.shareOnWhatsApp(selectedDeal);
+  }
+
+  // Trending Brands Data
+  trendingBrands = [
+    {
+      name: 'Amazon',
+      logo: '/images/companies/amazon.webp',
+      dealsCount: 150,
+      maxDiscount: 70,
+      slug: 'amazon'
+    },
+    {
+      name: 'Flipkart',
+      logo: '/images/companies/flipkart.webp',
+      dealsCount: 120,
+      maxDiscount: 80,
+      slug: 'flipkart'
+    },
+    {
+      name: 'Myntra',
+      logo: '/images/companies/myntra.webp',
+      dealsCount: 95,
+      maxDiscount: 60,
+      slug: 'myntra'
+    },
+    {
+      name: 'Ajio',
+      logo: '/images/companies/ajio.webp',
+      dealsCount: 85,
+      maxDiscount: 65,
+      slug: 'ajio'
+    },
+    {
+      name: 'Nykaa',
+      logo: '/images/companies/nykaa.webp',
+      dealsCount: 110,
+      maxDiscount: 50,
+      slug: 'nykaa'
+    },
+    {
+      name: 'Tata CLiQ',
+      logo: '/images/companies/tatacliq.webp',
+      dealsCount: 75,
+      maxDiscount: 55,
+      slug: 'tatacliq'
+    }
+  ];
+
+  // Carousel scroll function
+  @ViewChild('brandsCarousel') brandsCarousel!: ElementRef;
+
+  scrollBrandsCarousel(direction: 'left' | 'right') {
+    const carousel = this.brandsCarousel.nativeElement;
+    const scrollAmount = 320; // Width of one card + gap
+    
+    if (direction === 'left') {
+      carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    } else {
+      carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
   }
 }
