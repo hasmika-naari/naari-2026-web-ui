@@ -7,6 +7,9 @@
 // PrimeNG Custom Styles
 @import './styles/primeng-custom.scss';
 
+// Professional Drawer Styles
+@import './styles/drawer-professional.scss';
+
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
@@ -787,6 +790,24 @@ input {
         size: cover;
         repeat: no-repeat;
     };
+
+    // Overlay for better text readability
+    .dealmask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%);
+        z-index: 10;
+        pointer-events: none; // Allow clicks to pass through
+    }
+
+    // Ensure content is above the overlay
+    .container {
+        position: relative;
+        z-index: 100;
+    }
  
     &.page-title-style-two {
         padding: {
@@ -820,8 +841,43 @@ input {
             image: url(assets/img/page-title/page-title4.jpg);
         };
     }
+    
+    // Dynamic banner backgrounds for deal types
+    &.item-bg-default {
+        background: {
+            image: url(assets/images/deal/deal-banner.jpg);
+        };
+    }
+    &.item-bg-black-friday {
+        background: {
+            image: url(assets/images/deal/black-friday-banner.jpg);
+        };
+    }
+    &.item-bg-black-friday-1 {
+        background: {
+            image: url(assets/images/deal/black-friday-banner1.jpg);
+        };
+    }
+    &.item-bg-black-friday-2 {
+        background: {
+            image: url(assets/images/deal/black-friday-banner2.jpg);
+        };
+    }
+    &.item-bg-black-friday-3 {
+        background: {
+            image: url(assets/images/deal/black-friday-banner3.jpg);
+        };
+    }
+    &.item-bg-black-friday-4 {
+        background: {
+            image: url(assets/images/deal/black-friday-banner4.jpg);
+        };
+    }
 }
 .page-title-content {
+    position: relative;
+    z-index: 2;
+    
     ul {
         padding-left: 0;
         margin-bottom: 12px;
@@ -832,11 +888,13 @@ input {
             margin-right: 30px;
             position: relative;
             color: var(--whiteColor);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 
             a {
                 display: inline-block;
                 color: var(--whiteColor);
                 opacity: .85;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 
                 &:hover, &:focus {
                     color: var(--mainColor);
@@ -870,6 +928,7 @@ input {
     h2 {
         color: var(--whiteColor);
         margin-bottom: 0;
+        text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
         font: {
             size: 1.3rem;
             weight: 700;

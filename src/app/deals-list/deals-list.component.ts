@@ -57,6 +57,22 @@ export class DealsListComponent implements OnInit, OnDestroy {
     { title: 'High to Low', isSelected: true }
   ];
 
+  // Banner background images configuration
+  bannerBackgroundClass: string = 'item-bg-default';
+  private readonly bannerImages: { [key: string]: string } = {
+    'blackfriday': 'item-bg-black-friday',
+    'blackFriday': 'item-bg-black-friday',
+    'default': 'item-bg-default'
+  };
+  
+  // Black Friday banner variations (1-4)
+  private readonly blackFridayBanners = [
+    'item-bg-black-friday-1',
+    'item-bg-black-friday-2',
+    'item-bg-black-friday-3',
+    'item-bg-black-friday-4'
+  ];
+
   isToggled = false;
   pCategories!: Signal<Array<PCategory>>;
   private pCategoriesLocal: Array<PCategory> = [];
@@ -140,10 +156,12 @@ export class DealsListComponent implements OnInit, OnDestroy {
         if (selectedDealType && selectedDealType.code) {    
           this.selectedDealTypeLocal = selectedDealType;
           this.selectedDealTypeCode = selectedDealType.code;
+          this.updateBannerBackground(selectedDealType.code);
           this.loadDealPageBreadgrumText(selectedDealType, this.selectedCategory());
         } else {
           this.selectedDealTypeLocal = new DealType();
           this.selectedDealTypeCode = 'All';
+          this.updateBannerBackground('');
           this.loadDealPageBreadgrumText(this.selectedDealTypeLocal, this.selectedCategory());
         }   
 
@@ -188,6 +206,21 @@ export class DealsListComponent implements OnInit, OnDestroy {
       this.fetchData(dealType, category);
       this.currentUrl = category;
       this.selectedDealTypeCode = dealType;
+      
+      // Update banner background based on deal type from URL
+      this.updateBannerBackground(dealType);
+      
+      // Update store with selected deal type (wait for dealTypes to be loaded)
+      setTimeout(() => {
+        if (dealType && dealType !== 'All') {
+          const selectedDealTypeObj = this.dealTypesLocal.find(dt => dt.code === dealType);
+          if (selectedDealTypeObj) {
+            this.dealsStoreService.updateSelectedDealType(selectedDealTypeObj);
+          }
+        } else {
+          this.dealsStoreService.updateSelectedDealType(new DealType());
+        }
+      }, 100);
     });
     this.subs.push(queryParamSub); // to clean up later in ngOnDestroy
 
@@ -396,6 +429,34 @@ export class DealsListComponent implements OnInit, OnDestroy {
   shareOnWhatsApp($event: Event, selectedDeal: DealDataItem): void {
     $event.stopPropagation();
     this.appService.shareOnWhatsApp(selectedDeal);
+  }
+
+  /**
+   * Update banner background based on deal type
+   * @param dealTypeCode - The code of the deal type (e.g., 'blackFriday', 'cyberMonday')
+   */
+  private updateBannerBackground(dealTypeCode: string): void {
+    // Convert deal type code to lowercase for case-insensitive matching
+    const normalizedCode = dealTypeCode?.toLowerCase() || '';
+    
+    console.log('Deal Type Code:', dealTypeCode);
+    console.log('Normalized Code:', normalizedCode);
+    console.log('Available banners:', Object.keys(this.bannerImages));
+    
+    // Check if it's Black Friday - randomly select one of 4 banners
+    if (normalizedCode === 'blackfriday') {
+      const randomIndex = Math.floor(Math.random() * this.blackFridayBanners.length);
+      this.bannerBackgroundClass = this.blackFridayBanners[randomIndex];
+      console.log('Setting random Black Friday banner class to:', this.bannerBackgroundClass);
+    } else if (this.bannerImages[normalizedCode]) {
+      // Check if there's a specific banner for this deal type
+      this.bannerBackgroundClass = this.bannerImages[normalizedCode];
+      console.log('Setting banner class to:', this.bannerBackgroundClass);
+    } else {
+      // Use default banner if no specific one exists
+      this.bannerBackgroundClass = this.bannerImages['default'];
+      console.log('Using default banner class:', this.bannerBackgroundClass);
+    }
   }
 
   // Add a trackBy function for ngFor best practice

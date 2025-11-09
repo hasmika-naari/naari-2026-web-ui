@@ -54,7 +54,7 @@
     <div class="side-menu-mobile animate__animated animate__fadeInDown animate__delay-1_25s"
       [class.navbar-side-menu-button]="!color"
       [class.navbar-side-menu-button-black]="color"
-      data-bs-toggle="modal" data-bs-target="#myModal2">
+      (click)="toggleAppsDrawer()">
       <div class="apps-grid">
         <span class="dot"></span>
         <span class="dot"></span>
@@ -93,7 +93,7 @@
     <div class="side-menu ms-3 animate__animated animate__fadeInDown animate__delay-1s"
       [class.navbar-side-menu-button]="!color"
       [class.navbar-side-menu-button-gray]="color"
-      data-bs-toggle="modal" data-bs-target="#myModal2">
+      (click)="toggleAppsDrawer()">
       <span class="bar-1"></span>
       <span class="bar-2"></span>
       <span class="bar-3"></span>
@@ -105,6 +105,66 @@
     </div>
 
 </header>
+
+<!-- Custom Apps Drawer (Angular - No PrimeNG) -->
+<div class="apps-drawer-overlay" [class.active]="appsDrawerVisible" (click)="toggleAppsDrawer()" *ngIf="isBrowser"></div>
+<div class="apps-drawer" [class.active]="appsDrawerVisible" *ngIf="isBrowser">
+    <div class="apps-drawer-header">
+        <a routerLink="/" (click)="appsDrawerVisible = false">
+            <img src="assets/img/guru-class-time-tp-bg-full-h.png" alt="logo" class="drawer-logo">
+        </a>
+        <button class="drawer-close-btn" (click)="toggleAppsDrawer()">
+            <i class="icofont-close"></i>
+        </button>
+    </div>
+    
+    <div class="apps-drawer-content">
+        <div class="sidebar-modal-widget">
+            <h3 class="title">Additional Links</h3>
+            <ul>
+                <li><a (click)="appsDrawerVisible = false" routerLink="/sign-in">Login</a></li>
+                <li><a (click)="appsDrawerVisible = false" routerLink="/register">Register</a></li>
+                <li><a (click)="appsDrawerVisible = false" routerLink="/faq">FAQs</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-modal-widget mb-30 mt--25">
+            <h3 class="title">Support</h3>
+            <ul class="support-link">
+                <li><i class="icon-Double-arrow"></i><a (click)="appsDrawerVisible = false" routerLink="/privacy">Privacy</a></li>
+                <li><i class="icon-Double-arrow"></i><a (click)="appsDrawerVisible = false" routerLink="/terms">Terms</a></li>
+                <li><i class="icon-Double-arrow"></i><a (click)="appsDrawerVisible = false" routerLink="/contact-us">Contact Us</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-modal-widget">
+            <h3 class="title">Contact Info</h3>
+            <ul class="contact-info">
+                <li>
+                    <i class="icofont-email"></i>
+                    Email
+                    <span>admin&#64;naarideals.com</span>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-modal-widget">
+            <h3 class="title">Connect With Us</h3>
+            <ul class="social-list">
+                <li>
+                    <a href="https://www.facebook.com/people/Naari-Deals/100088113458576" target="_blank">
+                        <i class="icofont-facebook"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.instagram.com/naarideals/?igshid=YmMyMTA2M2Y%3D" target="_blank">
+                        <i class="icofont-instagram"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 
 <!-- Custom Mobile Drawer Menu - Only show on mobile -->
 <div class="mobile-drawer-overlay" 

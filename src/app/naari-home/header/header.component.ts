@@ -123,9 +123,14 @@ export class HeaderStyleComponent implements OnInit, OnChanges {
     }
 
     sidebarVisible: boolean = false;
+    appsDrawerVisible: boolean = false;
     
     toggleSidebar() {
         this.sidebarVisible = !this.sidebarVisible;
+    }
+    
+    toggleAppsDrawer() {
+        this.appsDrawerVisible = !this.appsDrawerVisible;
     }
 
     logout($event: any){
