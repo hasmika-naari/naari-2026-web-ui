@@ -36,30 +36,41 @@
     <img [src]="isSticky ? 'assets/img/logo.png' : 'assets/img/logo.png'" alt="logo">
   </a>
 
-  <!-- Right Section -->
-  <div class="d-flex align-items-center ms-auto">
-    <!-- Burger Button for Side Menu -->
-    <button class="navbar-toggler animate__animated animate__fadeInDown animate__delay-1_25s" type="button" (click)="toggleClass()">
-      <span class="burger-menu">
-        <span class="top-bar"></span>
-        <span class="middle-bar"></span>
-        <span class="bottom-bar"></span>
-      </span>
+  <!-- Mobile Right Section - Hamburger Menu + Apps Icon -->
+  <div class="d-flex align-items-center gap-1 ms-auto d-lg-none">
+    <!-- Hamburger Menu Button (Left) - Custom Icon -->
+    <button class="navbar-toggler animate__animated animate__fadeInDown animate__delay-1s" 
+            type="button" 
+            (click)="toggleSidebar()"
+            aria-label="Toggle navigation">
+      <div class="menu-grid">
+        <span class="menu-line"></span>
+        <span class="menu-line"></span>
+        <span class="menu-line"></span>
+      </div>
     </button>
-
-    <!-- Side Menu Button (Mobile) -->
-    <div class="side-menu d-block d-lg-none animate__animated animate__fadeInDown animate__delay-1s ms-2"
+    
+    <!-- Apps Icon for Mobile (Right) - 3x3 grid -->
+    <div class="side-menu-mobile animate__animated animate__fadeInDown animate__delay-1_25s"
       [class.navbar-side-menu-button]="!color"
       [class.navbar-side-menu-button-black]="color"
       data-bs-toggle="modal" data-bs-target="#myModal2">
-      <span class="bar-1"></span>
-      <span class="bar-2"></span>
-      <span class="bar-3"></span>
+      <div class="apps-grid">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
     </div>
   </div>
 
-  <!-- Navigation Menu -->
-  <div class="collapse navbar-collapse ms-auto" id="navbarSupportedContent">
+  <!-- Navigation Menu - Desktop Only -->
+  <div class="collapse navbar-collapse d-none d-lg-flex" *ngIf="isDesktop" id="navbarSupportedContent">
     <ul class="navbar-nav ms-auto">
       <li class="nav-item"
         *ngFor="let menuItem of menuList; let i = index;">
@@ -78,8 +89,8 @@
       </li>
     </ul>
 
-    <!-- Side Menu Button (Desktop) -->
-    <div class="side-menu ms-3 d-none d-lg-block"
+    <!-- Desktop Apps Icon - Inside navigation menu -->
+    <div class="side-menu ms-3 animate__animated animate__fadeInDown animate__delay-1s"
       [class.navbar-side-menu-button]="!color"
       [class.navbar-side-menu-button-gray]="color"
       data-bs-toggle="modal" data-bs-target="#myModal2">
@@ -94,6 +105,76 @@
     </div>
 
 </header>
+
+<!-- Custom Mobile Drawer Menu - Only show on mobile -->
+<div class="mobile-drawer-overlay" 
+     [class.active]="sidebarVisible" 
+     (click)="toggleSidebar()"
+     *ngIf="sidebarVisible && (isMobile || isTablet)">
+</div>
+
+<div class="mobile-drawer" 
+     [class.active]="sidebarVisible"
+     [class.dark-mobile-drawer]="themeService.isDark()"
+     *ngIf="isMobile || isTablet">
+    
+    <div class="drawer-header">
+        <img src="assets/img/logo.png" alt="Naari Deals" class="drawer-logo">
+        <button class="drawer-close-btn" (click)="toggleSidebar()" aria-label="Close menu">
+            <i class='bx bx-x'></i>
+        </button>
+    </div>
+    
+    <div class="drawer-content">
+        <div class="mobile-menu-content">
+            <!-- Menu Categories -->
+            <div class="menu-section">
+                <div *ngFor="let menuItem of menuList; let i = index;" class="category-group">
+                    <div class="category-title">
+                        <i class='bx bx-category'></i>
+                        <span>{{menuItem.parent}}</span>
+                    </div>
+                    <div class="category-items">
+                        <a *ngFor="let sMenuItem of menuItem.categories; let j = index;"
+                           [routerLink]="['/deals']"
+                           [queryParams]="{ type: 'All', category: sMenuItem.code }"
+                           class="category-item"
+                           (click)="toggleSidebar()">
+                            <span class="item-title">{{sMenuItem.title}}</span>
+                            <span class="item-subtitle">{{sMenuItem.subTitle}}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Actions -->
+            <div class="menu-actions">
+                <a *ngIf="!isLoggedIn()" [routerLink]="['/sign-in']" class="action-btn signin-btn" (click)="toggleSidebar()">
+                    <i class='bx bx-log-in'></i>
+                    <span>Sign In</span>
+                </a>
+                <a *ngIf="!isLoggedIn()" [routerLink]="['/register']" class="action-btn register-btn" (click)="toggleSidebar()">
+                    <i class='bx bx-user-plus'></i>
+                    <span>Register</span>
+                </a>
+                <a *ngIf="isLoggedIn()" (click)="logout($event); toggleSidebar()" class="action-btn logout-btn">
+                    <i class='bx bx-log-out'></i>
+                    <span>Sign Out</span>
+                </a>
+            </div>
+
+            <!-- Social Links -->
+            <div class="menu-social">
+                <span class="social-label">Follow Us</span>
+                <div class="social-icons">
+                    <a href="#" target="_blank"><i class='bx bxl-facebook'></i></a>
+                    <a href="#" target="_blank"><i class='bx bxl-instagram'></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <app-saas-sidebar></app-saas-sidebar>
 <!-- Search Overlay -->
 <div

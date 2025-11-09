@@ -3,9 +3,37 @@
     <div class="d-table info-box" [class.info-box]="desktop" [class.info-box-mobile]="!desktop">
         <div class="d-table-cell">
             <div class="container " [class.container-position]="desktop" [class.container-position-mobile]="!desktop" >
-                <div class="banner-content animate__animated animate__fadeInUp animate__delay-1s" *ngIf="browser">
-                    <span class="sub-title"  >Savings Hub</span>
-                    <h1 class="sub-message"  >Chic deals for her, where style meets savings.</h1>
+                <div class="banner-content-wrapper animate__animated animate__fadeInUp animate__delay-1s" *ngIf="browser">
+                    <div class="banner-content">
+                        <span class="sub-title"><span class="sub-title-line"></span>Savings Hub</span>
+                        <h1 class="sub-message">Chic deals for her, where style meets savings.</h1>
+                    </div>
+                    
+                    <!-- Black Friday Countdown - Right Side -->
+                    <div class="bf-countdown-small">
+                        <div class="bf-label">⚡ Black Friday</div>
+                        <div class="bf-timer">
+                            <div class="bf-time-unit">
+                                <span class="bf-value">{{ countdown.days }}</span>
+                                <span class="bf-label-text">D</span>
+                            </div>
+                            <span class="bf-sep">:</span>
+                            <div class="bf-time-unit">
+                                <span class="bf-value">{{ countdown.hours }}</span>
+                                <span class="bf-label-text">H</span>
+                            </div>
+                            <span class="bf-sep">:</span>
+                            <div class="bf-time-unit">
+                                <span class="bf-value">{{ countdown.minutes }}</span>
+                                <span class="bf-label-text">M</span>
+                            </div>
+                            <span class="bf-sep">:</span>
+                            <div class="bf-time-unit">
+                                <span class="bf-value">{{ countdown.seconds }}</span>
+                                <span class="bf-label-text">S</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="feature-div-position-2" style="min-height: 150px;" >
                     <app-feature-types *ngIf="browser && (desktop || tablet)"></app-feature-types>

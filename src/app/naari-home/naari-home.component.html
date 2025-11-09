@@ -1,7 +1,7 @@
 <app-header [menuList]="pCatsLocal" [mobile]="isMobile" ></app-header>
-<app-main-banner [browser]="browser" [desktop]="isDesktop" [tablet]="isTablet"  [dealTypes]="dealTypes" ></app-main-banner>
+<app-main-banner [browser]="browser" [desktop]="isDesktop" [tablet]="isTablet"  [dealTypes]="dealTypes" [countdown]="countdown" ></app-main-banner>
  <div class="feature-div-mobileposition loaded" *ngIf="browser && isMobile">
-    <div  *ngIf="browser && isMobile">
+    <div  *ngIf="browser && isMobile" style="margin-top: 16px;">
         <app-feature-types ></app-feature-types>
     </div>
     <div   class="container mb-5" style="position: relative;top:20px;margin-bottom:25px;" *ngIf="browser && isMobile">
@@ -219,49 +219,6 @@
         </div>
       }
     </ng-container>
-</section>
-
-<!-- Trending Brands Carousel Section -->
-<section class="trending-brands-section py-5">
-    <div class="container">
-        <div class="row mb-4">
-            <div class="col-12 text-center">
-                <h2 class="section-title mb-2">✨ Trending Brands</h2>
-                <p class="section-subtitle text-muted">Discover the hottest brands everyone's shopping from</p>
-            </div>
-        </div>
-        
-        <div class="brands-carousel-wrapper position-relative">
-            <!-- Navigation Arrows -->
-            <button class="carousel-nav carousel-nav-prev" (click)="scrollBrandsCarousel('left')" aria-label="Previous brands">
-                <i class='bx bx-chevron-left'></i>
-            </button>
-            <button class="carousel-nav carousel-nav-next" (click)="scrollBrandsCarousel('right')" aria-label="Next brands">
-                <i class='bx bx-chevron-right'></i>
-            </button>
-            
-            <!-- Carousel Container -->
-            <div class="brands-carousel" #brandsCarousel>
-                <div class="brand-card" *ngFor="let brand of trendingBrands">
-                    <div class="brand-card-inner">
-                        <div class="brand-logo-wrapper">
-                            <img [src]="brand.logo" [alt]="brand.name" class="brand-logo">
-                        </div>
-                        <div class="brand-info">
-                            <h5 class="brand-name">{{ brand.name }}</h5>
-                            <p class="brand-deals-count">{{ brand.dealsCount }} Active Deals</p>
-                            <div class="brand-discount-badge">
-                                Up to {{ brand.maxDiscount }}% OFF
-                            </div>
-                        </div>
-                        <button class="btn btn-sm brand-explore-btn" [routerLink]="['/deals', brand.slug]">
-                            Explore Deals
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </section>
 
 <section >

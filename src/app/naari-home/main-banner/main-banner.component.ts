@@ -19,6 +19,7 @@ export class MainBannerComponent implements OnInit {
   @Input() desktop: boolean = false;
   @Input() tablet: boolean = false;
   @Input() dealTypes: Array<DealType> = new Array<DealType>();
+  @Input() countdown: any = { days: 0, hours: 0, minutes: 0, seconds: 0 };
 
   private dealsService: DealsService= inject(DealsService);
   private transferState: TransferState = inject(TransferState);

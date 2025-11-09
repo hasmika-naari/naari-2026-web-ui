@@ -68,10 +68,13 @@
 
 .container-position-mobile{
     position: absolute;
-    bottom: 100px;
+    bottom: auto;
+    top: 55%;
+    transform: translateY(-10%);
     left: 0px;
     right: 0px;
-    // background-color: yellow;
+    padding: 0 15px;
+    margin-top: 120px;
 }
 
 .info-box{
@@ -80,10 +83,11 @@
 }
 
 .info-box-mobile{
-     z-index: 100;
-    position: absolute;
-    bottom: 0px;
-    top: 100px;
+    z-index: 100;
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
 #mask{
@@ -125,26 +129,26 @@
         animation: bannerFadeInUp 1.2s ease-out;
     }
     .sub-title {
-        display: block;
+        display: flex;
+        align-items: center;
+        gap: 10px;
         color: var(--whiteColor);
         margin-bottom: 20px;
         text-transform: uppercase;
         position: relative;
-        padding-left: 10px;
         animation: bannerFadeInUp 0.8s ease-out;
         font: {
             size: 14px;
             weight: 700;
         };
-        &::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 3px;
-            background-color: var(--mainColor);
-        }
+    }
+    
+    .sub-title-line {
+        display: inline-block;
+        width: 3px;
+        height: 20px;
+        background-color: var(--mainColor);
+        flex-shrink: 0;
     }
     h1 {
         color: var(--whiteColor);
@@ -377,5 +381,164 @@
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+/* ============================================
+   Black Friday Countdown - Small Right-Aligned
+   ============================================ */
+
+.banner-content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 30px;
+    flex-wrap: wrap;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        position: relative;
+        width: 100%;
+    }
+}
+
+.banner-content {
+    flex: 1;
+    max-width: 100%;
+    // position: relative;
+    z-index: 1;
+    
+    @media (max-width: 768px) {
+        order: 1;
+        text-align: left;
+        width: 100%;
+        max-height: 120px;
+        overflow: visible;
+        
+        .sub-title {
+            text-align: left;
+            margin-bottom: 10px;
+        }
+        
+        h1, .sub-message {
+            text-align: left;
+            margin-bottom: 0;
+            line-height: 1.2;
+        }
+    }
+}
+
+.bf-countdown-small {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.75) 0%, rgba(20, 20, 20, 0.8) 100%);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 215, 0, 0.4);
+    border-radius: 12px;
+    padding: 10px 14px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 215, 0, 0.2);
+    min-width: 200px;
+    position: relative;
+    margin-bottom: 0;
+    margin-right: 30px;
+    align-self: flex-end;
+    
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, transparent 50%, rgba(255, 215, 0, 0.05) 100%);
+        border-radius: 10px;
+        pointer-events: none;
+    }
+    
+    @media (max-width: 768px) {
+        min-width: auto;
+        width: 100%;
+        margin: 0;
+        margin-right: 0;
+        order: 2;
+        align-self: flex-start;
+    }
+
+    .bf-label {
+        background: linear-gradient(90deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 6px;
+        display: block;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    .bf-timer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .bf-time-unit {
+        background: linear-gradient(135deg, rgba(255, 215, 0, 0.25) 0%, rgba(255, 215, 0, 0.15) 100%);
+        border: 1px solid rgba(255, 215, 0, 0.6);
+        border-radius: 6px;
+        padding: 4px 7px;
+        min-width: 32px;
+        text-align: center;
+        position: relative;
+        
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, transparent 100%);
+            border-radius: 5px;
+            pointer-events: none;
+        }
+
+        .bf-value {
+            display: block;
+            color: #ffed4e;
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 237, 78, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        .bf-label-text {
+            display: block;
+            color: #ffd700;
+            font-size: 0.55rem;
+            text-transform: uppercase;
+            margin-top: 2px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+    }
+
+    .bf-sep {
+        color: #ffed4e;
+        font-size: 1rem;
+        font-weight: 700;
+        opacity: 0.9;
+        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
     }
 }

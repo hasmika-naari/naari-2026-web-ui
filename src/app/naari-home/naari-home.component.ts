@@ -369,7 +369,7 @@ import { CommonModule, NgOptimizedImage, isPlatformBrowser, isPlatformServer } f
 import {
   Component, OnInit, PLATFORM_ID, Inject, Signal, TransferState,
   makeStateKey, runInInjectionContext, effect, Injector,
-  OnDestroy, ViewChild, ElementRef
+  OnDestroy
 } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -492,6 +492,11 @@ export class NaariHomePageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.routeSub?.unsubscribe();
+    
+    // Clear countdown interval
+    if (this.countdownInterval) {
+      clearInterval(this.countdownInterval);
+    }
   }
 
   ngOnInit(): void {
@@ -500,6 +505,9 @@ export class NaariHomePageComponent implements OnInit, OnDestroy {
       this.isDesktop = this.deviceService.isDesktop();
       this.isMobile = this.deviceService.isMobile();
       this.isTablet = this.deviceService.isTablet();
+      
+      // Start Black Friday countdown
+      this.startCountdown();
     }
 
     // Assign after dealsStoreService is ready
@@ -603,63 +611,35 @@ export class NaariHomePageComponent implements OnInit, OnDestroy {
     this.appService.shareOnWhatsApp(selectedDeal);
   }
 
-  // Trending Brands Data
-  trendingBrands = [
-    {
-      name: 'Amazon',
-      logo: '/images/companies/amazon.webp',
-      dealsCount: 150,
-      maxDiscount: 70,
-      slug: 'amazon'
-    },
-    {
-      name: 'Flipkart',
-      logo: '/images/companies/flipkart.webp',
-      dealsCount: 120,
-      maxDiscount: 80,
-      slug: 'flipkart'
-    },
-    {
-      name: 'Myntra',
-      logo: '/images/companies/myntra.webp',
-      dealsCount: 95,
-      maxDiscount: 60,
-      slug: 'myntra'
-    },
-    {
-      name: 'Ajio',
-      logo: '/images/companies/ajio.webp',
-      dealsCount: 85,
-      maxDiscount: 65,
-      slug: 'ajio'
-    },
-    {
-      name: 'Nykaa',
-      logo: '/images/companies/nykaa.webp',
-      dealsCount: 110,
-      maxDiscount: 50,
-      slug: 'nykaa'
-    },
-    {
-      name: 'Tata CLiQ',
-      logo: '/images/companies/tatacliq.webp',
-      dealsCount: 75,
-      maxDiscount: 55,
-      slug: 'tatacliq'
-    }
-  ];
+  // Black Friday Countdown
+  countdown = {
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  };
+  private countdownInterval: any;
 
-  // Carousel scroll function
-  @ViewChild('brandsCarousel') brandsCarousel!: ElementRef;
+  startCountdown() {
+    // Set Black Friday date - November 29, 2025
+    const blackFridayDate = new Date('2025-11-29T00:00:00').getTime();
 
-  scrollBrandsCarousel(direction: 'left' | 'right') {
-    const carousel = this.brandsCarousel.nativeElement;
-    const scrollAmount = 320; // Width of one card + gap
-    
-    if (direction === 'left') {
-      carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-    } else {
-      carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
+    this.countdownInterval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = blackFridayDate - now;
+
+      if (distance < 0) {
+        clearInterval(this.countdownInterval);
+        this.countdown = { days: 0, hours: 0, minutes: 0, seconds: 0 };
+        return;
+      }
+
+      this.countdown = {
+        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((distance % (1000 * 60)) / 1000)
+      };
+    }, 1000);
   }
 }

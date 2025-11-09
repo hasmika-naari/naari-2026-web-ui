@@ -58,6 +58,7 @@
     "ngx-scrollbar": "^16.1.1",
     "ngx-scrolltop": "^20.0.0",
     "primeicons": "^7.0.0",
+    "primeng": "^20.3.0",
     "quill": "^2.0.3",
     "remixicon": "^4.6.0",
     "rxjs": "~7.8.0",

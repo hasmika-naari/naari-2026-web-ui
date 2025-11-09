@@ -1,0 +1,37 @@
+/* Hide bootstrap modal sidebar on mobile, only show custom drawer */
+/* Exception: Allow modal to show when explicitly triggered by apps icon */
+@media (max-width: 991px) {
+    /* Show modal sidebar when triggered */
+    .sidebar-modal .modal.show {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* Show modal backdrop when modal is active */
+    .modal-backdrop.show {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 0.5 !important;
+    }
+    
+    /* Hide modal by default (when not triggered) */
+    .sidebar-modal .modal:not(.show) {
+        display: none !important;
+    }
+    
+    /* Allow body scroll lock when modal is open */
+    body.modal-open {
+        overflow: hidden !important;
+    }
+}
+
+/* Ensure sidebar modal only works on desktop */
+:host ::ng-deep {
+    @media (max-width: 991px) {
+        /* Allow modal to function when triggered */
+        .modal.show {
+            display: block !important;
+        }
+    }
+}

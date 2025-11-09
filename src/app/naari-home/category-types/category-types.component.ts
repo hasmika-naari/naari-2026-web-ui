@@ -137,6 +137,12 @@ export class CategoryTypesComponent implements OnInit, OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if(changes['dealTypes']){
+			// Sort dealTypes by seqOrder field if it exists
+			this.dealTypes.sort((a: any, b: any) => {
+				const orderA = a.seqOrder !== undefined ? +a.seqOrder : 999;
+				const orderB = b.seqOrder !== undefined ? +b.seqOrder : 999;
+				return orderA - orderB;
+			});
 			// this.filteredDealTypes = [...this.dealTypes.filter(d => d.status === 'active' )]
 		}
 	}

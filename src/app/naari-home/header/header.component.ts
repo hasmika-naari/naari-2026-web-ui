@@ -77,29 +77,33 @@ export class HeaderStyleComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         //consolie.log('Header : ngOnInit = ' + this.platformId);
+        if(isPlatformBrowser(this.platformId)){
+            this.isBrowser = true;
+            this.detectDevice();
+        }
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         //consolie.log('Header: ngOnChanges = ' + this.platformId);
         if(isPlatformBrowser(this.platformId)){
             this.isBrowser = true;
-            //consolie.log('Header: ngOnChanges = ' + this.isBrowser);
-          if(this.deviceService.isDesktop()){
+            this.detectDevice();
+        }
+    }
+
+    private detectDevice(): void {
+        if(this.deviceService.isDesktop()){
             this.isDesktop = true;
             this.isMobile = false;
             this.isTablet = false;
-          }else if(this.deviceService.isMobile()){
+        }else if(this.deviceService.isMobile()){
             this.isMobile = true;
             this.isDesktop = false;
             this.isTablet = false;
-          }else if(this.deviceService.isTablet()){
+        }else if(this.deviceService.isTablet()){
             this.isTablet = true;
             this.isMobile = false;
             this.isDesktop = false;
-          }
-
-          //consolie.log('Header: ngOnChanges = ' + this.isMobile);
-
         }
     }
 
@@ -116,6 +120,12 @@ export class HeaderStyleComponent implements OnInit, OnChanges {
     classApplied3 = false;
     toggleClass3() {
         this.classApplied3 = !this.classApplied3;
+    }
+
+    sidebarVisible: boolean = false;
+    
+    toggleSidebar() {
+        this.sidebarVisible = !this.sidebarVisible;
     }
 
     logout($event: any){

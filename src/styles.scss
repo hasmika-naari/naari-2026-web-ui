@@ -4,6 +4,9 @@
 @use "./styles/_theme-colors.scss" as theme-colors;
 // Plus imports for other components in your app.
 
+// PrimeNG Custom Styles
+@import './styles/primeng-custom.scss';
+
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
@@ -874,3 +877,39 @@ input {
     }
 }
 
+/* Allow Bootstrap modal sidebar to work on mobile when triggered by apps icon */
+@media (max-width: 991px) {
+    /* Hide modal by default */
+    #myModal2:not(.show),
+    .sidebar-modal .modal:not(.show) {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+    
+    /* Show modal when explicitly opened (has .show class) */
+    #myModal2.show,
+    .sidebar-modal .modal.show {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* Show backdrop when modal is active */
+    .modal-backdrop.show {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 0.5 !important;
+    }
+    
+    /* Hide backdrop by default */
+    .modal-backdrop:not(.show) {
+        display: none !important;
+    }
+    
+    /* Allow body scroll lock when modal is open */
+    body.modal-open {
+        overflow: hidden !important;
+        padding-right: 0 !important;
+    }
+}
