@@ -1,0 +1,141 @@
+<footer class="bf-footer">
+  <!-- Main Footer Content -->
+  <div class="bf-footer-main">
+    <div class="container">
+      <div class="row">
+        <!-- Brand Column -->
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="bf-footer-brand">
+            <h3 class="bf-footer-logo">
+              <i class="bx bxs-shopping-bags"></i>
+              BLACK FRIDAY
+            </h3>
+            <p class="bf-footer-tagline">Your Ultimate Destination for the Best Black Friday Deals</p>
+            <div class="bf-footer-stats">
+              <div class="bf-stat-item">
+                <i class="bx bxs-store"></i>
+                <div>
+                  <strong>500+</strong>
+                  <span>Merchants</span>
+                </div>
+              </div>
+              <div class="bf-stat-item">
+                <i class="bx bxs-offer"></i>
+                <div>
+                  <strong>10,000+</strong>
+                  <span>Deals</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Links Column -->
+        <div class="col-lg-2 col-md-6 mb-4">
+          <div class="bf-footer-links">
+            <h4 class="bf-footer-title">Shop By Category</h4>
+            <ul>
+              <li *ngFor="let link of quickLinks">
+                <a [routerLink]="link.route">
+                  <i class="bx bx-chevron-right"></i>
+                  {{ link.label }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Help & Info Column -->
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="bf-footer-links">
+            <h4 class="bf-footer-title">Help & Information</h4>
+            <ul>
+              <li *ngFor="let link of helpLinks">
+                <a [routerLink]="link.route">
+                  <i class="bx bx-chevron-right"></i>
+                  {{ link.label }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Newsletter Column -->
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="bf-footer-newsletter">
+            <h4 class="bf-footer-title">Stay Updated</h4>
+            <p>Subscribe to get notifications about the hottest deals!</p>
+            <form class="bf-newsletter-form">
+              <div class="bf-input-group">
+                <i class="bx bx-envelope"></i>
+                <input type="email" placeholder="Enter your email" />
+              </div>
+              <button type="submit" class="bf-subscribe-btn">
+                <span>Subscribe</span>
+                <i class="bx bx-right-arrow-alt"></i>
+              </button>
+            </form>
+            <div class="bf-footer-trust">
+              <i class="bx bxs-check-shield"></i>
+              <span>We respect your privacy</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Social Media Bar -->
+  <div class="bf-footer-social">
+    <div class="container">
+      <div class="bf-social-content">
+        <div class="bf-social-text">
+          <i class="bx bxs-star"></i>
+          <span>Follow us for exclusive Black Friday updates!</span>
+        </div>
+        <div class="bf-social-links">
+          <a 
+            *ngFor="let social of socialLinks" 
+            [href]="social.url" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            [attr.aria-label]="social.name">
+            <i [class]="'bx ' + social.icon"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="bf-footer-bottom">
+    <div class="container">
+      <div class="bf-footer-bottom-content">
+        <div class="bf-copyright">
+          <p>&copy; {{ currentYear }} Naari Deals. All Rights Reserved.</p>
+        </div>
+        <div class="bf-footer-badges">
+          <span class="bf-badge">
+            <i class="bx bxs-check-circle"></i>
+            Verified Deals
+          </span>
+          <span class="bf-badge">
+            <i class="bx bxs-lock-alt"></i>
+            Secure Shopping
+          </span>
+          <span class="bf-badge">
+            <i class="bx bxs-trophy"></i>
+            Best Prices
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Decorative Elements -->
+  <div class="bf-footer-decoration">
+    <div class="bf-decoration-circle bf-circle-1"></div>
+    <div class="bf-decoration-circle bf-circle-2"></div>
+    <div class="bf-decoration-circle bf-circle-3"></div>
+  </div>
+</footer>

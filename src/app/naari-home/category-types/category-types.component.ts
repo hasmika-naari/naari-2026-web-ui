@@ -157,7 +157,13 @@ export class CategoryTypesComponent implements OnInit, OnChanges {
    
 	gotoDeals($event: any, dtype: DealType){
 		if(dtype.status === 'active'){
-			this.router.navigateByUrl('/deals?type=' + dtype.code + '&category=' + 'All');
+			// Check if it's Black Friday deal type and route to special landing page
+			if(dtype.code === 'BLACK-FRIDAY' || dtype.code === 'BLACKFRIDAY' || 
+			   dtype.title?.toLowerCase().includes('black friday')) {
+				this.router.navigateByUrl('/black-friday');
+			} else {
+				this.router.navigateByUrl('/deals?type=' + dtype.code + '&category=' + 'All');
+			}
 		}else{
 			this.snackBar.openSnackBar(
 				'Sorry This feature still not available...', 

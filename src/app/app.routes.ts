@@ -122,6 +122,12 @@ export const routes: Routes = [
                 .then(m => m.PrivacyPageComponent), data: {reuseComponent: true, breadcrumb: 'Pricacy' },
     },
     {
+        path: 'black-friday',
+        loadComponent: () => 
+            import('./black-friday-landing/black-friday-landing.component')
+                .then(m => m.BlackFridayLandingComponent), data: {reuseComponent: true, breadcrumb: 'Black Friday 2025' },
+    },
+    {
         path: 'apps',
         component: AppsComponent,
         children: [

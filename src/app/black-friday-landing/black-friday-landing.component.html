@@ -1,0 +1,186 @@
+<!-- Header -->
+<app-header [menuList]="pCatsLocal" [mobile]="isMobile"></app-header>
+
+<!-- Hero Section with Carousel Slider -->
+<section class="bf-hero-slider">
+  <owl-carousel-o [options]="heroSliderOptions" class="bf-hero-carousel owl-theme">
+    <!-- Slide 1: Countdown Timer -->
+    <ng-template carouselSlide>
+      <div class="bf-hero-slide bf-countdown-slide">
+        <div class="bf-hero-overlay"></div>
+        <div class="bf-hero-content">
+          <div class="container">
+            <h1 class="bf-hero-title animate-fade-in">
+              <span class="bf-hero-title-main">BLACK FRIDAY</span>
+              <span class="bf-hero-title-sub">2025</span>
+            </h1>
+            <p class="bf-hero-tagline">The Biggest Shopping Event of the Year</p>
+            
+            <!-- Countdown Timer -->
+            <div class="bf-countdown" *ngIf="browser">
+              <div class="bf-countdown-item">
+                <span class="bf-countdown-value">{{ countdown.days }}</span>
+                <span class="bf-countdown-label">Days</span>
+              </div>
+              <div class="bf-countdown-separator">:</div>
+              <div class="bf-countdown-item">
+                <span class="bf-countdown-value">{{ countdown.hours }}</span>
+                <span class="bf-countdown-label">Hours</span>
+              </div>
+              <div class="bf-countdown-separator">:</div>
+              <div class="bf-countdown-item">
+                <span class="bf-countdown-value">{{ countdown.minutes }}</span>
+                <span class="bf-countdown-label">Minutes</span>
+              </div>
+              <div class="bf-countdown-separator">:</div>
+              <div class="bf-countdown-item">
+                <span class="bf-countdown-value">{{ countdown.seconds }}</span>
+                <span class="bf-countdown-label">Seconds</span>
+              </div>
+            </div>
+
+            <button class="bf-cta-button" (click)="scrollToMerchants()">
+              <span>Shop Black Friday Deals</span>
+              <i class="bx bx-chevron-down"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+    <!-- Ad Slides -->
+    <ng-template carouselSlide *ngFor="let slide of heroSlides.slice(1)">
+      <div class="bf-hero-slide bf-ad-slide" [style.background-image]="'url(' + slide.image + ')'">
+        <div class="bf-ad-overlay" [style.background]="slide.gradient"></div>
+        <div class="bf-hero-content">
+          <div class="container">
+            <div class="bf-ad-content">
+              <h2 class="bf-ad-title">{{ slide.title }}</h2>
+              <h3 class="bf-ad-subtitle">{{ slide.subtitle }}</h3>
+              <p class="bf-ad-description">{{ slide.description }}</p>
+              <button class="bf-ad-button" (click)="scrollToMerchants()">
+                {{ slide.buttonText }}
+                <i class="bx bx-right-arrow-alt"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </owl-carousel-o>
+</section>
+
+<!-- Featured Deals Section -->
+<section class="bf-featured-section">
+  <div class="container">
+    <h2 class="bf-section-title">
+      <i class="bx bxs-star"></i>
+      Featured Black Friday Deals
+    </h2>
+    <div class="bf-featured-grid">
+      <div class="bf-featured-card" *ngFor="let merchant of featuredMerchants">
+        <div class="bf-featured-badge">
+          <i class="bx bx-badge-check"></i>
+          Verified
+        </div>
+        <div class="bf-featured-logo">
+          <img [src]="merchant.logo" [alt]="merchant.name + ' logo'" />
+        </div>
+        <h3 class="bf-featured-name">{{ merchant.name }}</h3>
+        <div class="bf-featured-discount">{{ merchant.discount }}</div>
+        <p class="bf-featured-deal">{{ merchant.deal }}</p>
+        <a [href]="merchant.url" target="_blank" class="bf-featured-button">
+          Shop Now
+          <i class="bx bx-right-arrow-alt"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Category Filter -->
+<section class="bf-filter-section" id="merchants-section">
+  <div class="container">
+    <div class="bf-filter-header">
+      <h2 class="bf-section-title">All Black Friday Deals</h2>
+      <div class="bf-category-filters">
+        <button 
+          class="bf-category-btn" 
+          [class.active]="selectedCategory === category"
+          *ngFor="let category of categories"
+          (click)="filterByCategory(category)">
+          {{ category }}
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- All Merchants Grid -->
+<section class="bf-merchants-section">
+  <div class="container">
+    <div class="bf-merchants-grid">
+      <div class="bf-merchant-card" *ngFor="let merchant of getFilteredMerchants()">
+        <div class="bf-merchant-header">
+          <div class="bf-merchant-logo">
+            <img [src]="merchant.logo" [alt]="merchant.name + ' logo'" />
+          </div>
+          <div class="bf-merchant-verified" *ngIf="merchant.verified">
+            <i class="bx bxs-check-circle"></i>
+          </div>
+        </div>
+        <div class="bf-merchant-content">
+          <h3 class="bf-merchant-name">{{ merchant.name }}</h3>
+          <span class="bf-merchant-category">{{ merchant.category }}</span>
+          <div class="bf-merchant-discount-badge">
+            {{ merchant.discount }}
+          </div>
+          <p class="bf-merchant-deal">{{ merchant.deal }}</p>
+        </div>
+        <div class="bf-merchant-footer">
+          <a [href]="merchant.url" target="_blank" class="bf-merchant-btn">
+            View Deals
+            <i class="bx bx-right-arrow-alt"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Info Banner -->
+<section class="bf-info-banner">
+  <div class="container">
+    <div class="bf-info-content">
+      <div class="bf-info-item">
+        <i class="bx bxs-discount"></i>
+        <div>
+          <h4>Best Deals</h4>
+          <p>Curated deals from top brands</p>
+        </div>
+      </div>
+      <div class="bf-info-item">
+        <i class="bx bxs-check-shield"></i>
+        <div>
+          <h4>Verified Merchants</h4>
+          <p>All stores are verified and trusted</p>
+        </div>
+      </div>
+      <div class="bf-info-item">
+        <i class="bx bxs-bell-ring"></i>
+        <div>
+          <h4>Updated Daily</h4>
+          <p>New deals added every day</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Back to Top Button -->
+<button class="bf-back-to-top" (click)="scrollToMerchants()" *ngIf="browser">
+  <i class="bx bx-up-arrow-alt"></i>
+</button>
+
+<!-- Black Friday Custom Footer -->
+<app-black-friday-footer></app-black-friday-footer>
