@@ -1,5 +1,5 @@
 <!-- Header -->
-<app-header [menuList]="pCatsLocal" [mobile]="isMobile"></app-header>
+<app-black-friday-header [isMobile]="isMobile"></app-black-friday-header>
 
 <!-- Hero Section with Carousel Slider -->
 <section class="bf-hero-slider">
@@ -70,12 +70,47 @@
   </owl-carousel-o>
 </section>
 
+<!-- Ad Scans Section -->
+<section class="bf-adscans-section" id="adscans-section">
+  <div class="container">
+    <h2 class="bf-section-title">
+      <i class="bx {{ adScansSection.icon }}"></i>
+      {{ adScansSection.title }}
+    </h2>
+    <p class="bf-section-subtitle">{{ adScansSection.subtitle }}</p>
+    <div class="bf-adscans-grid">
+      <div class="bf-adscan-card" *ngFor="let merchant of getMerchantsWithAdScans()" 
+           [routerLink]="['/black-friday', merchant.id, 'ad-scans']"
+           [style.background-image]="getCardBackground(merchant)">
+        <div class="bf-adscan-info">
+          <div class="bf-adscan-logo">
+            <img [src]="merchant.logo" [alt]="merchant.name + ' logo'" />
+          </div>
+          <div class="bf-adscan-details">
+            <h3 class="bf-adscan-name">{{ merchant.name }}</h3>
+            <div class="bf-adscan-meta">
+              <span class="bf-adscan-pages">
+                <i class="bx bx-images"></i>
+                {{ merchant.adScans?.length }} Pages
+              </span>
+              <span class="bf-adscan-discount">
+                <i class="bx bxs-offer"></i>
+                {{ merchant.discount }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Featured Deals Section -->
 <section class="bf-featured-section">
   <div class="container">
     <h2 class="bf-section-title">
-      <i class="bx bxs-star"></i>
-      Featured Black Friday Deals
+      <i class="bx {{ featuredSection.icon }}"></i>
+      {{ featuredSection.title }}
     </h2>
     <div class="bf-featured-grid">
       <div class="bf-featured-card" *ngFor="let merchant of featuredMerchants">
@@ -102,7 +137,7 @@
 <section class="bf-filter-section" id="merchants-section">
   <div class="container">
     <div class="bf-filter-header">
-      <h2 class="bf-section-title">All Black Friday Deals</h2>
+      <h2 class="bf-section-title">{{ allDealsSection.title }}</h2>
       <div class="bf-category-filters">
         <button 
           class="bf-category-btn" 
@@ -141,6 +176,13 @@
           <a [href]="merchant.url" target="_blank" class="bf-merchant-btn">
             View Deals
             <i class="bx bx-right-arrow-alt"></i>
+          </a>
+          <a *ngIf="merchant.adScans && merchant.adScans.length > 0" 
+             [routerLink]="['/black-friday', merchant.id, 'ad-scans']" 
+             class="bf-merchant-btn bf-merchant-btn-secondary">
+            <i class="bx bx-book-open"></i>
+            View Ad Scans
+            <i class="bx bx-images"></i>
           </a>
         </div>
       </div>

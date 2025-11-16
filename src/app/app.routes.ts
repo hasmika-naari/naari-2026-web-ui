@@ -128,6 +128,12 @@ export const routes: Routes = [
                 .then(m => m.BlackFridayLandingComponent), data: {reuseComponent: true, breadcrumb: 'Black Friday 2025' },
     },
     {
+        path: 'black-friday/:merchantId/ad-scans',
+        loadComponent: () => 
+            import('./black-friday-ad-scan/black-friday-ad-scan.component')
+                .then(m => m.BlackFridayAdScanComponent), data: {reuseComponent: true, breadcrumb: 'Black Friday Ad Scans' },
+    },
+    {
         path: 'apps',
         component: AppsComponent,
         children: [

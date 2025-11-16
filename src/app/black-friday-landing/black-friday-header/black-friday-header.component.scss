@@ -1,0 +1,362 @@
+// Import base header styles
+@import '../../../styles/_variables.scss';
+@import '../../naari-home/header/header.component.scss';
+
+// Black Friday specific overrides - MUST come after import
+.bf-header {
+  // Force all dots to be gold with highest specificity
+  .navbar-side-menu-button .dot,
+  .side-menu-mobile .dot,
+  .apps-grid .dot {
+    background: #ffd700 !important;
+  }
+  
+  .navbar-side-menu-button:hover .dot,
+  .side-menu-mobile:hover .dot,
+  .apps-grid:hover .dot {
+    background: #ffffff !important;
+  }
+  
+  // Top header Black Friday styling - matching app-header
+  .bf-top-header {
+    background-color: rgba(0, 0, 0, .20) !important;
+    border-bottom: 1px solid rgba(255, 215, 0, .20) !important;
+    padding: 0.25rem 0 !important;
+    min-height: auto !important;
+    
+    .container {
+      .row {
+        min-height: 35px !important;
+      }
+    }
+    
+    .top-header-social {
+      border-left: none !important;
+      
+      span {
+        color: #ffd700 !important;
+        font-weight: 600 !important;
+        font-size: 0.875rem !important;
+      }
+      
+      a {
+        color: rgba(255, 255, 255, 0.9) !important;
+        font-size: 0.875rem !important;
+        
+        i {
+          color: #ffd700 !important;
+          font-size: 1rem !important;
+        }
+        
+        &:hover {
+          color: #ffd700 !important;
+        }
+      }
+    }
+    
+    .top-header-login-register {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: flex-end !important;
+      gap: 1rem !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      list-style: none !important;
+      
+      li {
+        margin: 0 !important;
+        padding: 0 !important;
+        display: inline-block !important;
+        
+        a {
+          color: rgba(255, 255, 255, 0.9) !important;
+          font-size: 0.875rem !important;
+          padding: 0.3rem 0.75rem !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          gap: 0.5rem !important;
+          white-space: nowrap !important;
+          text-decoration: none !important;
+          transition: all 0.3s ease !important;
+          
+          i {
+            color: #ffd700 !important;
+            font-size: 1.1rem !important;
+            line-height: 1 !important;
+            flex-shrink: 0 !important;
+            margin-right: 10px !important;
+          }
+          
+          span {
+            margin-left: 10px !important;
+            font-size: 0.875rem !important;
+            line-height: 1 !important;
+          }
+          
+          &:hover {
+            color: #ffd700 !important;
+            transform: translateY(-1px);
+          }
+        }
+      }
+    }
+  }
+  
+  // Black Friday Logo styling
+  .bf-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    
+    i {
+      font-size: 2.5rem;
+      color: #ffd700 !important;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    .bf-logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+      
+      .bf-logo-main {
+        font-size: 1.5rem;
+        font-weight: 900;
+        color: #ffffff;
+        letter-spacing: 2px;
+      }
+      
+      .bf-logo-sub {
+        font-size: 0.875rem;
+        color: #ffd700;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+    }
+  }
+  
+  // Navigation menu colors for readability
+  .navbar-nav {
+    .nav-item {
+      .nav-link {
+        color: #ffffff !important;
+        font-weight: 500;
+        
+        i {
+          color: #ffd700 !important;
+        }
+        
+        &:hover {
+          color: #000000 !important; // Black text on white background for readability
+          background: rgba(255, 255, 255, 0.95) !important;
+        }
+      }
+      
+      // Submenu dropdown styling
+      .submenu-panel {
+        > li > a {
+          color: #000000 !important;
+          
+          &:hover {
+            color: #b81f89 !important;
+            background: rgba(184, 31, 137, 0.1) !important;
+          }
+        }
+      }
+    }
+  }
+  
+  // Apps icon color - Override base header styles with specificity
+  .side-menu,
+  .side-menu-mobile,
+  .navbar-side-menu-button-gray {
+    .bar-1,
+    .bar-2,
+    .bar-3 {
+      background: #ffd700 !important;
+      
+      &::before,
+      &::after {
+        background: #ffd700 !important;
+      }
+    }
+    
+    &:hover {
+      .bar-1,
+      .bar-2,
+      .bar-3 {
+        background: #ffffff !important;
+        
+        &::before,
+        &::after {
+          background: #ffffff !important;
+        }
+      }
+    }
+  }
+  
+  // Ensure apps grid dots are gold
+  .apps-grid .dot {
+    background: #ffd700 !important;
+  }
+  
+  .side-menu-mobile:hover .apps-grid .dot,
+  .navbar-side-menu-button:hover .dot {
+    background: #ffffff !important;
+  }
+  
+  // Sticky state logo color override
+  &.sticky {
+    background: 
+      radial-gradient(circle at 0% 0%, rgba(255, 215, 0, 0.15) 0%, transparent 25%),
+      radial-gradient(circle at 100% 0%, rgba(0, 0, 0, 0.1) 0%, transparent 23%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 250, 240, 0.95) 100%) !important;
+    border-bottom: 3px solid #ffd700 !important;
+    
+    .bf-logo {
+      i {
+        color: #b81f89 !important; // Change to brand pink for visibility
+      }
+      
+      .bf-logo-text {
+        .bf-logo-main {
+          color: #000000 !important;
+        }
+        .bf-logo-sub {
+          color: #b81f89 !important; // Change to brand pink for visibility
+        }
+      }
+    }
+    
+    // Navigation menu colors in sticky state
+    .navbar-nav {
+      .nav-item {
+        .nav-link {
+          color: #000000 !important;
+          
+          i {
+            color: #b81f89 !important; // Brand pink for visibility
+          }
+          
+          &:hover {
+            color: #b81f89 !important;
+          }
+        }
+        
+        // Submenu dropdown in sticky state
+        .submenu-panel {
+          > li > a {
+            color: #000000 !important;
+            
+            &:hover {
+              color: #b81f89 !important;
+              background: rgba(184, 31, 137, 0.1) !important;
+            }
+          }
+        }
+      }
+    }
+    
+    // Apps icon colors in sticky state
+    .side-menu,
+    .side-menu-mobile,
+    .navbar-side-menu-button-gray {
+      .bar-1,
+      .bar-2,
+      .bar-3 {
+        background: #b81f89 !important; // Brand pink for visibility
+        
+        &::before,
+        &::after {
+          background: #b81f89 !important;
+        }
+      }
+      
+      &:hover {
+        .bar-1,
+        .bar-2,
+        .bar-3 {
+          background: #000000 !important;
+          
+          &::before,
+          &::after {
+            background: #000000 !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Black Friday drawer logo
+.bf-drawer-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  
+  i {
+    font-size: 2rem;
+    color: #ffd700;
+  }
+  
+  span {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: #000000;
+    letter-spacing: 1.5px;
+  }
+}
+
+// Apps drawer Black Friday styling
+.apps-drawer {
+  background: #ffffff !important;
+  
+  .bf-drawer-logo {
+    i {
+      color: #b81f89 !important; // Brand pink for visibility on white background
+    }
+    
+    span {
+      color: #000000 !important;
+      font-weight: 900 !important;
+      letter-spacing: 1.5px !important;
+    }
+  }
+  
+  .apps-drawer-header {
+    border-bottom: 2px solid #ffd700 !important;
+  }
+}
+
+// Mobile drawer Black Friday styling
+.mobile-drawer {
+  background: #ffffff !important;
+  
+  .bf-drawer-logo {
+    i {
+      color: #b81f89 !important; // Brand pink for visibility on white background
+    }
+    
+    span {
+      font-size: 1.1rem !important;
+      color: #000000 !important;
+      font-weight: 900 !important;
+      letter-spacing: 1.5px !important;
+    }
+  }
+  
+  .drawer-header {
+    border-bottom: 2px solid #ffd700 !important;
+  }
+}
+
+// Pulse animation for logo icon
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+

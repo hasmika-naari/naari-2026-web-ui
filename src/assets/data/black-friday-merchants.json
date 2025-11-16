@@ -8,7 +8,13 @@
     "deal": "Massive discounts on electronics, home goods, and more",
     "verified": true,
     "featured": true,
-    "url": "https://amazon.com"
+    "url": "https://amazon.com",
+    "adScans": [
+      "https://placehold.co/800x1000/FF9900/000000?text=Amazon+Black+Friday\nPage+1\nUp+to+70%+OFF\nElectronics+%26+More",
+      "https://placehold.co/800x1000/FF9900/000000?text=Amazon+Black+Friday\nPage+2\nTVs+%26+Laptops\nDeals+Start+Now",
+      "https://placehold.co/800x1000/FF9900/000000?text=Amazon+Black+Friday\nPage+3\nHome+Essentials\nMassive+Savings",
+      "https://placehold.co/800x1000/FF9900/000000?text=Amazon+Black+Friday\nPage+4\nGaming+%26+Tech\nLimited+Time"
+    ]
   },
   {
     "id": 2,
@@ -19,7 +25,14 @@
     "deal": "Black Friday deals on everything you need",
     "verified": true,
     "featured": true,
-    "url": "https://walmart.com"
+    "url": "https://walmart.com",
+    "adScans": [
+      "https://placehold.co/800x1000/0071CE/FFFFFF?text=Walmart+Black+Friday\nPage+1\nRollback+Prices\nSave+Big",
+      "https://placehold.co/800x1000/0071CE/FFFFFF?text=Walmart+Black+Friday\nPage+2\nElectronics+Deals\nDoorbusters",
+      "https://placehold.co/800x1000/0071CE/FFFFFF?text=Walmart+Black+Friday\nPage+3\nHome+%26+Garden\nSpecial+Offers",
+      "https://placehold.co/800x1000/0071CE/FFFFFF?text=Walmart+Black+Friday\nPage+4\nToys+%26+Games\nHoliday+Savings",
+      "https://placehold.co/800x1000/0071CE/FFFFFF?text=Walmart+Black+Friday\nPage+5\nFashion+Deals\nUp+to+60%+OFF"
+    ]
   },
   {
     "id": 3,
@@ -30,7 +43,13 @@
     "deal": "Doorbuster deals on toys, electronics, and home",
     "verified": true,
     "featured": true,
-    "url": "https://target.com"
+    "url": "https://target.com",
+    "adScans": [
+      "https://placehold.co/800x1000/CC0000/FFFFFF?text=Target+Black+Friday\nPage+1\nDoorbusters\nStart+Early",
+      "https://placehold.co/800x1000/CC0000/FFFFFF?text=Target+Black+Friday\nPage+2\nToys+%26+Electronics\nBig+Savings",
+      "https://placehold.co/800x1000/CC0000/FFFFFF?text=Target+Black+Friday\nPage+3\nHome+Decor\nHoliday+Deals",
+      "https://placehold.co/800x1000/CC0000/FFFFFF?text=Target+Black+Friday\nPage+4\nFashion+%26+Beauty\nUp+to+50%+OFF"
+    ]
   },
   {
     "id": 4,
@@ -41,7 +60,15 @@
     "deal": "Incredible savings on TVs, laptops, and appliances",
     "verified": true,
     "featured": true,
-    "url": "https://bestbuy.com"
+    "url": "https://bestbuy.com",
+    "adScans": [
+      "https://placehold.co/800x1000/0046BE/FFD700?text=Best+Buy+Black+Friday\nPage+1\nTVs+%26+Appliances\nDoorbuster+Deals",
+      "https://placehold.co/800x1000/0046BE/FFD700?text=Best+Buy+Black+Friday\nPage+2\nLaptops+%26+Tablets\nIncredible+Savings",
+      "https://placehold.co/800x1000/0046BE/FFD700?text=Best+Buy+Black+Friday\nPage+3\nGaming+Consoles\nLimited+Stock",
+      "https://placehold.co/800x1000/0046BE/FFD700?text=Best+Buy+Black+Friday\nPage+4\nSmart+Home\nUp+to+65%+OFF",
+      "https://placehold.co/800x1000/0046BE/FFD700?text=Best+Buy+Black+Friday\nPage+5\nHeadphones+%26+Audio\nSpecial+Offers",
+      "https://placehold.co/800x1000/0046BE/FFD700?text=Best+Buy+Black+Friday\nPage+6\nCameras+%26+Drones\nMassive+Deals"
+    ]
   },
   {
     "id": 5,
@@ -52,7 +79,12 @@
     "deal": "Get gift cards with Mac, iPhone, and iPad purchases",
     "verified": true,
     "featured": true,
-    "url": "https://apple.com"
+    "url": "https://apple.com",
+    "adScans": [
+      "https://placehold.co/800x1000/000000/FFFFFF?text=Apple+Black+Friday\nPage+1\nGift+Cards\nwith+Purchase",
+      "https://placehold.co/800x1000/000000/FFFFFF?text=Apple+Black+Friday\nPage+2\niPhone+%26+iPad\nSpecial+Offers",
+      "https://placehold.co/800x1000/000000/FFFFFF?text=Apple+Black+Friday\nPage+3\nMac+%26+Accessories\nHoliday+Deals"
+    ]
   },
   {
     "id": 6,
@@ -63,7 +95,13 @@
     "deal": "Black Friday sale on shoes and athletic wear",
     "verified": true,
     "featured": false,
-    "url": "https://nike.com"
+    "url": "https://nike.com",
+    "adScans": [
+      "https://placehold.co/800x1000/000000/FFFFFF?text=Nike+Black+Friday\nPage+1\nShoes+%26+Apparel\nUp+to+40%+OFF",
+      "https://placehold.co/800x1000/000000/FFFFFF?text=Nike+Black+Friday\nPage+2\nRunning+Gear\nAthletic+Deals",
+      "https://placehold.co/800x1000/000000/FFFFFF?text=Nike+Black+Friday\nPage+3\nSportswear\nBlack+Friday+Sale",
+      "https://placehold.co/800x1000/000000/FFFFFF?text=Nike+Black+Friday\nPage+4\nAccessories\nLimited+Time"
+    ]
   },
   {
     "id": 7,
@@ -74,7 +112,12 @@
     "deal": "Huge discounts on sneakers and sportswear",
     "verified": true,
     "featured": false,
-    "url": "https://adidas.com"
+    "url": "https://adidas.com",
+    "adScans": [
+      "https://placehold.co/800x1000/000000/FFFFFF?text=Adidas+Black+Friday\nPage+1\nSneakers\nUp+to+50%+OFF",
+      "https://placehold.co/800x1000/000000/FFFFFF?text=Adidas+Black+Friday\nPage+2\nSportswear\nHuge+Discounts",
+      "https://placehold.co/800x1000/000000/FFFFFF?text=Adidas+Black+Friday\nPage+3\nTraining+Gear\nSpecial+Offers"
+    ]
   },
   {
     "id": 8,
@@ -85,7 +128,13 @@
     "deal": "Black Friday deals on phones, TVs, and appliances",
     "verified": true,
     "featured": true,
-    "url": "https://samsung.com"
+    "url": "https://samsung.com",
+    "adScans": [
+      "https://placehold.co/800x1000/1428A0/FFFFFF?text=Samsung+Black+Friday\nPage+1\nPhones+%26+TVs\nUp+to+55%+OFF",
+      "https://placehold.co/800x1000/1428A0/FFFFFF?text=Samsung+Black+Friday\nPage+2\nAppliances\nMassive+Savings",
+      "https://placehold.co/800x1000/1428A0/FFFFFF?text=Samsung+Black+Friday\nPage+3\nTablets+%26+Watches\nDoorbuster+Deals",
+      "https://placehold.co/800x1000/1428A0/FFFFFF?text=Samsung+Black+Friday\nPage+4\nHome+Electronics\nLimited+Time"
+    ]
   },
   {
     "id": 9,
@@ -96,7 +145,14 @@
     "deal": "Massive savings on tools and home improvement",
     "verified": true,
     "featured": false,
-    "url": "https://homedepot.com"
+    "url": "https://homedepot.com",
+    "adScans": [
+      "https://placehold.co/800x1000/F96302/FFFFFF?text=Home+Depot+Black+Friday\nPage+1\nTools+%26+Hardware\nUp+to+50%+OFF",
+      "https://placehold.co/800x1000/F96302/FFFFFF?text=Home+Depot+Black+Friday\nPage+2\nAppliances\nHoliday+Savings",
+      "https://placehold.co/800x1000/F96302/FFFFFF?text=Home+Depot+Black+Friday\nPage+3\nGarden+%26+Outdoor\nMassive+Deals",
+      "https://placehold.co/800x1000/F96302/FFFFFF?text=Home+Depot+Black+Friday\nPage+4\nLighting\nSpecial+Offers",
+      "https://placehold.co/800x1000/F96302/FFFFFF?text=Home+Depot+Black+Friday\nPage+5\nHome+Improvement\nDoorbuster+Prices"
+    ]
   },
   {
     "id": 10,
@@ -107,7 +163,12 @@
     "deal": "Black Friday deals on appliances and tools",
     "verified": true,
     "featured": false,
-    "url": "https://lowes.com"
+    "url": "https://lowes.com",
+    "adScans": [
+      "https://placehold.co/800x1000/004990/FFFFFF?text=Lowes+Black+Friday\nPage+1\nAppliances\nUp+to+45%+OFF",
+      "https://placehold.co/800x1000/004990/FFFFFF?text=Lowes+Black+Friday\nPage+2\nTools+%26+Hardware\nHoliday+Deals",
+      "https://placehold.co/800x1000/004990/FFFFFF?text=Lowes+Black+Friday\nPage+3\nHome+Solutions\nSpecial+Savings"
+    ]
   },
   {
     "id": 11,
@@ -118,7 +179,13 @@
     "deal": "Doorbusters on clothing, jewelry, and home goods",
     "verified": true,
     "featured": false,
-    "url": "https://macys.com"
+    "url": "https://macys.com",
+    "adScans": [
+      "https://placehold.co/800x1000/E21836/FFFFFF?text=Macys+Black+Friday\nPage+1\nDoorbusters\nUp+to+60%+OFF",
+      "https://placehold.co/800x1000/E21836/FFFFFF?text=Macys+Black+Friday\nPage+2\nFashion+Deals\nClothing+%26+Jewelry",
+      "https://placehold.co/800x1000/E21836/FFFFFF?text=Macys+Black+Friday\nPage+3\nHome+Goods\nHoliday+Savings",
+      "https://placehold.co/800x1000/E21836/FFFFFF?text=Macys+Black+Friday\nPage+4\nAccessories\nSpecial+Offers"
+    ]
   },
   {
     "id": 12,
@@ -129,7 +196,12 @@
     "deal": "Designer brands at incredible Black Friday prices",
     "verified": true,
     "featured": false,
-    "url": "https://nordstrom.com"
+    "url": "https://nordstrom.com",
+    "adScans": [
+      "https://placehold.co/800x1000/000000/FFFFFF?text=Nordstrom+Black+Friday\nPage+1\nDesigner+Brands\nUp+to+50%+OFF",
+      "https://placehold.co/800x1000/000000/FFFFFF?text=Nordstrom+Black+Friday\nPage+2\nLuxury+Fashion\nIncredible+Prices",
+      "https://placehold.co/800x1000/000000/FFFFFF?text=Nordstrom+Black+Friday\nPage+3\nShoes+%26+Bags\nHoliday+Sale"
+    ]
   },
   {
     "id": 13,
@@ -140,7 +212,13 @@
     "deal": "Black Friday laptop and desktop deals",
     "verified": true,
     "featured": false,
-    "url": "https://dell.com"
+    "url": "https://dell.com",
+    "adScans": [
+      "https://placehold.co/800x1000/007DB8/FFFFFF?text=Dell+Black+Friday\nPage+1\nLaptops+%26+Desktops\nUp+to+55%+OFF",
+      "https://placehold.co/800x1000/007DB8/FFFFFF?text=Dell+Black+Friday\nPage+2\nGaming+PCs\nDoorbuster+Deals",
+      "https://placehold.co/800x1000/007DB8/FFFFFF?text=Dell+Black+Friday\nPage+3\nMonitors\nSpecial+Savings",
+      "https://placehold.co/800x1000/007DB8/FFFFFF?text=Dell+Black+Friday\nPage+4\nAccessories\nLimited+Time"
+    ]
   },
   {
     "id": 14,
@@ -151,7 +229,12 @@
     "deal": "Huge savings on laptops, printers, and more",
     "verified": true,
     "featured": false,
-    "url": "https://hp.com"
+    "url": "https://hp.com",
+    "adScans": [
+      "https://placehold.co/800x1000/0096D6/FFFFFF?text=HP+Black+Friday\nPage+1\nLaptops+%26+Printers\nUp+to+60%+OFF",
+      "https://placehold.co/800x1000/0096D6/FFFFFF?text=HP+Black+Friday\nPage+2\nAll-in-One+PCs\nHuge+Savings",
+      "https://placehold.co/800x1000/0096D6/FFFFFF?text=HP+Black+Friday\nPage+3\nGaming+%26+Tech\nHoliday+Deals"
+    ]
   },
   {
     "id": 15,
@@ -162,7 +245,13 @@
     "deal": "Black Friday deals on Surface devices and Xbox",
     "verified": true,
     "featured": false,
-    "url": "https://microsoft.com"
+    "url": "https://microsoft.com",
+    "adScans": [
+      "https://placehold.co/800x1000/00A4EF/FFFFFF?text=Microsoft+Black+Friday\nPage+1\nSurface+Devices\nUp+to+45%+OFF",
+      "https://placehold.co/800x1000/00A4EF/FFFFFF?text=Microsoft+Black+Friday\nPage+2\nXbox+Consoles\nGaming+Deals",
+      "https://placehold.co/800x1000/00A4EF/FFFFFF?text=Microsoft+Black+Friday\nPage+3\nAccessories\nHoliday+Savings",
+      "https://placehold.co/800x1000/00A4EF/FFFFFF?text=Microsoft+Black+Friday\nPage+4\nSoftware+%26+Games\nSpecial+Offers"
+    ]
   },
   {
     "id": 16,
@@ -173,7 +262,13 @@
     "deal": "PlayStation 5 bundles and TV deals",
     "verified": true,
     "featured": false,
-    "url": "https://sony.com"
+    "url": "https://sony.com",
+    "adScans": [
+      "https://placehold.co/800x1000/000000/FFFFFF?text=Sony+Black+Friday\nPage+1\nPlayStation+5\nUp+to+50%+OFF",
+      "https://placehold.co/800x1000/000000/FFFFFF?text=Sony+Black+Friday\nPage+2\nTVs+%26+Audio\nBundle+Deals",
+      "https://placehold.co/800x1000/000000/FFFFFF?text=Sony+Black+Friday\nPage+3\nCameras\nHoliday+Savings",
+      "https://placehold.co/800x1000/000000/FFFFFF?text=Sony+Black+Friday\nPage+4\nGaming+Accessories\nLimited+Stock"
+    ]
   },
   {
     "id": 17,
@@ -184,7 +279,14 @@
     "deal": "Earn Kohl's Cash with Black Friday purchases",
     "verified": true,
     "featured": false,
-    "url": "https://kohls.com"
+    "url": "https://kohls.com",
+    "adScans": [
+      "https://placehold.co/800x1000/6C1D45/FFFFFF?text=Kohls+Black+Friday\nPage+1\nEarn+Kohls+Cash\nUp+to+70%+OFF",
+      "https://placehold.co/800x1000/6C1D45/FFFFFF?text=Kohls+Black+Friday\nPage+2\nHome+%26+Kitchen\nDoorbusters",
+      "https://placehold.co/800x1000/6C1D45/FFFFFF?text=Kohls+Black+Friday\nPage+3\nClothing+Deals\nFamily+Savings",
+      "https://placehold.co/800x1000/6C1D45/FFFFFF?text=Kohls+Black+Friday\nPage+4\nToys+%26+Games\nHoliday+Deals",
+      "https://placehold.co/800x1000/6C1D45/FFFFFF?text=Kohls+Black+Friday\nPage+5\nElectronics\nSpecial+Offers"
+    ]
   },
   {
     "id": 18,
@@ -195,7 +297,12 @@
     "deal": "Black Friday doorbusters on everything",
     "verified": true,
     "featured": false,
-    "url": "https://jcpenney.com"
+    "url": "https://jcpenney.com",
+    "adScans": [
+      "https://placehold.co/800x1000/E74C3C/FFFFFF?text=JCPenney+Black+Friday\nPage+1\nDoorbusters\nUp+to+65%+OFF",
+      "https://placehold.co/800x1000/E74C3C/FFFFFF?text=JCPenney+Black+Friday\nPage+2\nHome+Essentials\nHoliday+Sale",
+      "https://placehold.co/800x1000/E74C3C/FFFFFF?text=JCPenney+Black+Friday\nPage+3\nFashion+Deals\nEverything+On+Sale"
+    ]
   },
   {
     "id": 19,
@@ -206,7 +313,13 @@
     "deal": "Black Friday sale on everything online and in-store",
     "verified": true,
     "featured": false,
-    "url": "https://gap.com"
+    "url": "https://gap.com",
+    "adScans": [
+      "https://placehold.co/800x1000/003087/FFFFFF?text=Gap+Black+Friday\nPage+1\n50%+OFF+Everything\nOnline+%26+In-Store",
+      "https://placehold.co/800x1000/003087/FFFFFF?text=Gap+Black+Friday\nPage+2\nFamily+Apparel\nHoliday+Sale",
+      "https://placehold.co/800x1000/003087/FFFFFF?text=Gap+Black+Friday\nPage+3\nDenim+Deals\nLimited+Time",
+      "https://placehold.co/800x1000/003087/FFFFFF?text=Gap+Black+Friday\nPage+4\nAccessories\nSpecial+Offers"
+    ]
   },
   {
     "id": 20,
@@ -217,7 +330,12 @@
     "deal": "Black Friday deals for the whole family",
     "verified": true,
     "featured": false,
-    "url": "https://oldnavy.com"
+    "url": "https://oldnavy.com",
+    "adScans": [
+      "https://placehold.co/800x1000/00205B/FFFFFF?text=Old+Navy+Black+Friday\nPage+1\nFamily+Deals\nUp+to+60%+OFF",
+      "https://placehold.co/800x1000/00205B/FFFFFF?text=Old+Navy+Black+Friday\nPage+2\nKids+Apparel\nHoliday+Savings",
+      "https://placehold.co/800x1000/00205B/FFFFFF?text=Old+Navy+Black+Friday\nPage+3\nMens+%26+Womens\nBlack+Friday+Sale"
+    ]
   },
   {
     "id": 21,
@@ -228,7 +346,13 @@
     "deal": "Black Friday savings on home essentials",
     "verified": true,
     "featured": false,
-    "url": "https://bedbathandbeyond.com"
+    "url": "https://bedbathandbeyond.com",
+    "adScans": [
+      "https://placehold.co/800x1000/003DA5/FFFFFF?text=Bed+Bath+Beyond\nPage+1\nHome+Essentials\nUp+to+50%+OFF",
+      "https://placehold.co/800x1000/003DA5/FFFFFF?text=Bed+Bath+Beyond\nPage+2\nBedding+%26+Bath\nBlack+Friday",
+      "https://placehold.co/800x1000/003DA5/FFFFFF?text=Bed+Bath+Beyond\nPage+3\nKitchen+Deals\nHoliday+Savings",
+      "https://placehold.co/800x1000/003DA5/FFFFFF?text=Bed+Bath+Beyond\nPage+4\nHome+Decor\nSpecial+Offers"
+    ]
   },
   {
     "id": 22,
@@ -239,7 +363,14 @@
     "deal": "Massive Black Friday sale on furniture and decor",
     "verified": true,
     "featured": false,
-    "url": "https://wayfair.com"
+    "url": "https://wayfair.com",
+    "adScans": [
+      "https://placehold.co/800x1000/7B2E8D/FFFFFF?text=Wayfair+Black+Friday\nPage+1\nFurniture+Sale\nUp+to+70%+OFF",
+      "https://placehold.co/800x1000/7B2E8D/FFFFFF?text=Wayfair+Black+Friday\nPage+2\nHome+Decor\nMassive+Deals",
+      "https://placehold.co/800x1000/7B2E8D/FFFFFF?text=Wayfair+Black+Friday\nPage+3\nRugs+%26+Lighting\nHoliday+Sale",
+      "https://placehold.co/800x1000/7B2E8D/FFFFFF?text=Wayfair+Black+Friday\nPage+4\nOutdoor+Furniture\nSpecial+Savings",
+      "https://placehold.co/800x1000/7B2E8D/FFFFFF?text=Wayfair+Black+Friday\nPage+5\nKitchen+%26+Dining\nDoorbuster+Prices"
+    ]
   },
   {
     "id": 23,
@@ -250,7 +381,12 @@
     "deal": "Black Friday deals on furniture and home solutions",
     "verified": true,
     "featured": false,
-    "url": "https://ikea.com"
+    "url": "https://ikea.com",
+    "adScans": [
+      "https://placehold.co/800x1000/0058A3/FFD700?text=IKEA+Black+Friday\nPage+1\nFurniture+Deals\nUp+to+40%+OFF",
+      "https://placehold.co/800x1000/0058A3/FFD700?text=IKEA+Black+Friday\nPage+2\nHome+Solutions\nHoliday+Savings",
+      "https://placehold.co/800x1000/0058A3/FFD700?text=IKEA+Black+Friday\nPage+3\nStorage+%26+Organization\nSpecial+Offers"
+    ]
   },
   {
     "id": 24,
@@ -261,7 +397,13 @@
     "deal": "Black Friday gaming deals on consoles and games",
     "verified": true,
     "featured": false,
-    "url": "https://gamestop.com"
+    "url": "https://gamestop.com",
+    "adScans": [
+      "https://placehold.co/800x1000/CC0000/FFFFFF?text=GameStop+Black+Friday\nPage+1\nConsoles+%26+Games\nUp+to+50%+OFF",
+      "https://placehold.co/800x1000/CC0000/FFFFFF?text=GameStop+Black+Friday\nPage+2\nGaming+Accessories\nDoorbuster+Deals",
+      "https://placehold.co/800x1000/CC0000/FFFFFF?text=GameStop+Black+Friday\nPage+3\nCollectibles\nHoliday+Savings",
+      "https://placehold.co/800x1000/CC0000/FFFFFF?text=GameStop+Black+Friday\nPage+4\nPre-Orders\nLimited+Time"
+    ]
   },
   {
     "id": 25,
@@ -272,7 +414,12 @@
     "deal": "Black Friday beauty deals and exclusive sets",
     "verified": true,
     "featured": false,
-    "url": "https://sephora.com"
+    "url": "https://sephora.com",
+    "adScans": [
+      "https://placehold.co/800x1000/000000/FFFFFF?text=Sephora+Black+Friday\nPage+1\nBeauty+Deals\nUp+to+30%+OFF",
+      "https://placehold.co/800x1000/000000/FFFFFF?text=Sephora+Black+Friday\nPage+2\nMakeup+Sets\nExclusive+Offers",
+      "https://placehold.co/800x1000/000000/FFFFFF?text=Sephora+Black+Friday\nPage+3\nSkincare+Sale\nHoliday+Savings"
+    ]
   },
   {
     "id": 26,
@@ -283,7 +430,13 @@
     "deal": "Black Friday beauty steals on makeup and skincare",
     "verified": true,
     "featured": false,
-    "url": "https://ulta.com"
+    "url": "https://ulta.com",
+    "adScans": [
+      "https://placehold.co/800x1000/FF6BCD/FFFFFF?text=Ulta+Beauty+Black+Friday\nPage+1\nBeauty+Steals\nUp+to+40%+OFF",
+      "https://placehold.co/800x1000/FF6BCD/FFFFFF?text=Ulta+Beauty+Black+Friday\nPage+2\nMakeup+Deals\nHoliday+Sale",
+      "https://placehold.co/800x1000/FF6BCD/FFFFFF?text=Ulta+Beauty+Black+Friday\nPage+3\nSkincare+Sets\nSpecial+Offers",
+      "https://placehold.co/800x1000/FF6BCD/FFFFFF?text=Ulta+Beauty+Black+Friday\nPage+4\nHaircare+Deals\nLimited+Time"
+    ]
   },
   {
     "id": 27,
@@ -294,7 +447,12 @@
     "deal": "Black Friday luxury handbag and accessory sale",
     "verified": true,
     "featured": false,
-    "url": "https://coach.com"
+    "url": "https://coach.com",
+    "adScans": [
+      "https://placehold.co/800x1000/000000/FFFFFF?text=Coach+Black+Friday\nPage+1\nLuxury+Handbags\nUp+to+50%+OFF",
+      "https://placehold.co/800x1000/000000/FFFFFF?text=Coach+Black+Friday\nPage+2\nAccessories+Sale\nHoliday+Deals",
+      "https://placehold.co/800x1000/000000/FFFFFF?text=Coach+Black+Friday\nPage+3\nWallets+%26+More\nSpecial+Offers"
+    ]
   },
   {
     "id": 28,
@@ -305,7 +463,13 @@
     "deal": "Black Friday lingerie and beauty deals",
     "verified": true,
     "featured": false,
-    "url": "https://victoriassecret.com"
+    "url": "https://victoriassecret.com",
+    "adScans": [
+      "https://placehold.co/800x1000/FFB6C1/000000?text=Victorias+Secret\nPage+1\nLingerie+Deals\nUp+to+50%+OFF",
+      "https://placehold.co/800x1000/FFB6C1/000000?text=Victorias+Secret\nPage+2\nBeauty+Sale\nBlack+Friday",
+      "https://placehold.co/800x1000/FFB6C1/000000?text=Victorias+Secret\nPage+3\nSleepwear\nHoliday+Savings",
+      "https://placehold.co/800x1000/FFB6C1/000000?text=Victorias+Secret\nPage+4\nAccessories\nSpecial+Offers"
+    ]
   },
   {
     "id": 29,
@@ -316,7 +480,15 @@
     "deal": "Black Friday warehouse and online deals",
     "verified": true,
     "featured": false,
-    "url": "https://costco.com"
+    "url": "https://costco.com",
+    "adScans": [
+      "https://placehold.co/800x1000/005DAA/FFFFFF?text=Costco+Black+Friday\nPage+1\nInstant+Savings\nWarehouse+Deals",
+      "https://placehold.co/800x1000/005DAA/FFFFFF?text=Costco+Black+Friday\nPage+2\nElectronics\nMember+Exclusive",
+      "https://placehold.co/800x1000/005DAA/FFFFFF?text=Costco+Black+Friday\nPage+3\nAppliances\nHoliday+Savings",
+      "https://placehold.co/800x1000/005DAA/FFFFFF?text=Costco+Black+Friday\nPage+4\nHome+%26+Kitchen\nSpecial+Offers",
+      "https://placehold.co/800x1000/005DAA/FFFFFF?text=Costco+Black+Friday\nPage+5\nGrocery+Deals\nBulk+Savings",
+      "https://placehold.co/800x1000/005DAA/FFFFFF?text=Costco+Black+Friday\nPage+6\nSeasonal+Items\nLimited+Time"
+    ]
   },
   {
     "id": 30,
@@ -327,6 +499,14 @@
     "deal": "Black Friday laptop and tablet doorbusters",
     "verified": true,
     "featured": false,
-    "url": "https://lenovo.com"
+    "url": "https://lenovo.com",
+    "adScans": [
+      "https://placehold.co/800x1000/E2231A/FFFFFF?text=Lenovo+Black+Friday\nPage+1\nLaptops\nUp+to+65%+OFF",
+      "https://placehold.co/800x1000/E2231A/FFFFFF?text=Lenovo+Black+Friday\nPage+2\nTablets+%26+2-in-1s\nDoorbuster+Deals",
+      "https://placehold.co/800x1000/E2231A/FFFFFF?text=Lenovo+Black+Friday\nPage+3\nDesktops\nHoliday+Savings",
+      "https://placehold.co/800x1000/E2231A/FFFFFF?text=Lenovo+Black+Friday\nPage+4\nAccessories\nLimited+Time"
+    ]
   }
 ]
+
+

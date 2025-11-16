@@ -35,6 +35,7 @@
         "typeCheckHostBindings": true,
         "strictTemplates": true
     },
+    "composite": true,
      "references": [
     {
       "path": "./tsconfig.app.json"

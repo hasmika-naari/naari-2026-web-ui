@@ -1,0 +1,94 @@
+<!-- Header -->
+<app-header [menuList]="pCatsLocal" [mobile]="isMobile"></app-header>
+
+<!-- Hero Banner Section -->
+<section class="bf-ad-hero-banner" *ngIf="merchant">
+  <div class="bf-ad-hero-overlay"></div>
+  <div class="bf-ad-hero-content">
+    <div class="container">
+      <div class="bf-ad-hero-header">
+        <div class="bf-ad-hero-logo">
+          <img [src]="merchant.logo" [alt]="merchant.name + ' logo'" />
+        </div>
+        <div class="bf-ad-hero-info">
+          <h1 class="bf-ad-hero-title">{{ merchant.name }}</h1>
+          <p class="bf-ad-hero-subtitle">Black Friday 2025 Official Ad</p>
+          <div class="bf-ad-hero-discount">{{ merchant.discount }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Ad Scans Carousel Section -->
+<section class="bf-ad-carousel-section" *ngIf="merchant && merchant.adScans && merchant.adScans.length > 0">
+  <div class="container">
+    <div class="bf-ad-carousel-header">
+      <h2 class="bf-ad-carousel-title">
+        <i class="bx bxs-book-content"></i>
+        Browse All {{ merchant.adScans.length }} Pages
+      </h2>
+      <p class="bf-ad-carousel-subtitle">Use arrows to navigate through the ad pages</p>
+    </div>
+    
+    <owl-carousel-o [options]="adScanSliderOptions" class="bf-ad-carousel owl-theme">
+      <ng-template carouselSlide *ngFor="let adPage of merchant.adScans; let i = index">
+        <div class="bf-ad-slide-container">
+          <div class="bf-ad-page-number">Page {{ i + 1 }} of {{ merchant.adScans?.length }}</div>
+          <div class="bf-ad-page-image">
+            <img [src]="adPage" [alt]="merchant.name + ' Black Friday Ad Page ' + (i + 1)" />
+          </div>
+        </div>
+      </ng-template>
+    </owl-carousel-o>
+  </div>
+</section>
+
+<!-- Merchant Info Section -->
+<section class="bf-ad-info-section" *ngIf="merchant">
+  <div class="container">
+    <div class="bf-ad-info-content">
+      <div class="bf-ad-info-card">
+        <i class="bx bxs-discount"></i>
+        <h3>Special Discount</h3>
+        <p>{{ merchant.discount }}</p>
+      </div>
+      <div class="bf-ad-info-card">
+        <i class="bx bxs-shopping-bags"></i>
+        <h3>Category</h3>
+        <p>{{ merchant.category }}</p>
+      </div>
+      <div class="bf-ad-info-card">
+        <i class="bx bxs-star"></i>
+        <h3>Deal Description</h3>
+        <p>{{ merchant.deal }}</p>
+      </div>
+      <div class="bf-ad-info-card">
+        <i class="bx bxs-store"></i>
+        <h3>Shop Now</h3>
+        <a [href]="merchant.url" target="_blank" class="bf-ad-shop-btn">
+          Visit Store
+          <i class="bx bx-right-arrow-alt"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Back to Black Friday Landing -->
+<section class="bf-ad-back-section">
+  <div class="container">
+    <a routerLink="/black-friday" class="bf-ad-back-btn">
+      <i class="bx bx-left-arrow-alt"></i>
+      Back to All Black Friday Deals
+    </a>
+  </div>
+</section>
+
+<!-- Back to Top Button -->
+<button class="bf-back-to-top" (click)="scrollToTop()" *ngIf="browser">
+  <i class="bx bx-up-arrow-alt"></i>
+</button>
+
+<!-- Black Friday Custom Footer -->
+<app-black-friday-footer></app-black-friday-footer>

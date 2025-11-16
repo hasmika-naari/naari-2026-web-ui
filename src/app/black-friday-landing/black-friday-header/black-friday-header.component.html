@@ -1,0 +1,224 @@
+<header class="header-area bf-header" [class.sticky]="isSticky">
+    <!-- Top Header Bar -->
+    <div class="top-header bf-top-header animate__animated animate__fadeInDown">
+        <div class="container">
+            <div class="row wrap align-items-center">
+                <div class="col-5 col-lg-6 col-md-6 col-xs-4 col-sm-6 animate__animated animate__fadeInDown animate__delay-0_75s">
+                    <div class="top-header-social">
+                        <span>Black Friday 2025:</span>
+                        <a routerLink="/home"><i class='bx bx-home ml--40'></i> Home</a>
+                        <a href="javascript:void(0)" (click)="scrollToSection('adscans-section')"><i class='bx bx-book-content ml--40'></i> Ad Scans</a>
+                        <a href="javascript:void(0)" (click)="scrollToSection('merchants-section')"><i class='bx bx-shopping-bag ml--40'></i> Deals</a>
+                    </div>
+                </div>
+                <div class="col-7 col-lg-6 col-md-6 col-xs-8 col-sm-6 animate__animated animate__fadeInDown animate__delay-0_75s">
+                    <ul class="top-header-login-register">
+                        <li><a routerLink="/sign-in" style="cursor: pointer;"><i class='bx bx-log-in'></i><span>SignIn</span></a></li>
+                        <li><a routerLink="/register" style="cursor: pointer;"><i class='bx bx-log-in-circle'></i><span>Register</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <div class="navbar-area navbar-style-three" [ngClass]="{'sticky': isSticky}">
+        <div class="sticky-nav-bar-mask"></div>
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
+                <!-- Logo -->
+                <a class="navbar-brand animate__animated animate__fadeInDown animate__delay-1s me-auto" routerLink="/black-friday">
+                    <div class="bf-logo">
+                        <i class="bx bxs-shopping-bags"></i>
+                        <div class="bf-logo-text">
+                            <span class="bf-logo-main">BLACK FRIDAY</span>
+                            <span class="bf-logo-sub">2025</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Mobile Right Section - Hamburger Menu + Apps Icon -->
+                <div class="d-flex align-items-center gap-1 ms-auto d-lg-none">
+                    <!-- Hamburger Menu Button -->
+                    <button class="navbar-toggler animate__animated animate__fadeInDown animate__delay-1s" 
+                            type="button" 
+                            (click)="toggleSidebar()"
+                            aria-label="Toggle navigation">
+                        <div class="menu-grid">
+                            <span class="menu-line"></span>
+                            <span class="menu-line"></span>
+                            <span class="menu-line"></span>
+                        </div>
+                    </button>
+                    
+                    <!-- Apps Icon for Mobile -->
+                    <div class="side-menu-mobile animate__animated animate__fadeInDown animate__delay-1_25s navbar-side-menu-button"
+                         (click)="toggleAppsDrawer()">
+                        <div class="apps-grid">
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Menu - Desktop Only -->
+                <div class="collapse navbar-collapse d-none d-lg-flex" *ngIf="isDesktop" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a href="javascript:void(0)" [class.a-no-sticky]="!isSticky" [class.a-sticky]="isSticky" class="nav-link">
+                                Shop by Category<i class='bx bx-chevron-down'></i>
+                            </a>
+                            <ul class="submenu-panel">
+                                <li class="nav-item" *ngFor="let category of categories">
+                                    <a [routerLink]="['/deals']"
+                                       [queryParams]="{ type: 'All', category: category.code }"
+                                       class="nav-link" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                                        <span>{{category.title}}</span><span style="float: right;">{{category.subTitle}}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <!-- Desktop Apps Icon -->
+                    <div class="side-menu ms-3 animate__animated animate__fadeInDown animate__delay-1s navbar-side-menu-button-gray"
+                         (click)="toggleAppsDrawer()">
+                        <span class="bar-1"></span>
+                        <span class="bar-2"></span>
+                        <span class="bar-3"></span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<!-- Apps Drawer -->
+<div class="apps-drawer-overlay" [class.active]="appsDrawerVisible" (click)="toggleAppsDrawer()" *ngIf="isBrowser"></div>
+<div class="apps-drawer" [class.active]="appsDrawerVisible" *ngIf="isBrowser">
+    <div class="apps-drawer-header">
+        <a routerLink="/black-friday" (click)="appsDrawerVisible = false">
+            <div class="bf-drawer-logo">
+                <i class="bx bxs-shopping-bags"></i>
+                <span>BLACK FRIDAY 2025</span>
+            </div>
+        </a>
+        <button class="drawer-close-btn" (click)="toggleAppsDrawer()">
+            <i class="icofont-close"></i>
+        </button>
+    </div>
+    
+    <div class="apps-drawer-content">
+        <div class="sidebar-modal-widget">
+            <h3 class="title">Quick Links</h3>
+            <ul>
+                <li><a (click)="appsDrawerVisible = false; scrollToSection('adscans-section')">Ad Scans</a></li>
+                <li><a (click)="appsDrawerVisible = false; scrollToSection('merchants-section')">All Deals</a></li>
+                <li><a (click)="appsDrawerVisible = false" routerLink="/faq">FAQs</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-modal-widget mb-30 mt--25">
+            <h3 class="title">Support</h3>
+            <ul class="support-link">
+                <li><i class="icon-Double-arrow"></i><a (click)="appsDrawerVisible = false" routerLink="/privacy">Privacy</a></li>
+                <li><i class="icon-Double-arrow"></i><a (click)="appsDrawerVisible = false" routerLink="/terms">Terms</a></li>
+                <li><i class="icon-Double-arrow"></i><a (click)="appsDrawerVisible = false" routerLink="/contact-us">Contact Us</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-modal-widget">
+            <h3 class="title">Contact Info</h3>
+            <ul class="contact-info">
+                <li>
+                    <i class="icofont-email"></i>
+                    Email
+                    <span>admin&#64;naarideals.com</span>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-modal-widget">
+            <h3 class="title">Connect With Us</h3>
+            <ul class="social-list">
+                <li><a href="https://www.facebook.com/people/Naari-Deals/100088113458576" target="_blank"><i class="icofont-facebook"></i></a></li>
+                <li><a href="https://www.instagram.com/naarideals/?igshid=YmMyMTA2M2Y%3D" target="_blank"><i class="icofont-instagram"></i></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Mobile Drawer Menu -->
+<div class="mobile-drawer-overlay" 
+     [class.active]="sidebarVisible" 
+     (click)="toggleSidebar()"
+     *ngIf="sidebarVisible && (isMobile || isTablet)">
+</div>
+
+<div class="mobile-drawer" 
+     [class.active]="sidebarVisible"
+     *ngIf="isMobile || isTablet">
+    
+    <div class="drawer-header">
+        <div class="bf-drawer-logo">
+            <i class="bx bxs-shopping-bags"></i>
+            <span>BLACK FRIDAY 2025</span>
+        </div>
+        <button class="drawer-close-btn" (click)="toggleSidebar()" aria-label="Close menu">
+            <i class='bx bx-x'></i>
+        </button>
+    </div>
+    
+    <div class="drawer-content">
+        <div class="mobile-menu-content">
+            <!-- Menu Categories -->
+            <div class="menu-section">
+                <div class="category-group">
+                    <div class="category-title">
+                        <i class='bx bx-category'></i>
+                        <span>Shop by Category</span>
+                    </div>
+                    <div class="category-items">
+                        <a *ngFor="let category of categories"
+                           [routerLink]="['/deals']"
+                           [queryParams]="{ type: 'All', category: category.code }"
+                           class="category-item"
+                           (click)="toggleSidebar()">
+                            <span class="item-title">{{category.title}}</span>
+                            <span class="item-subtitle">{{category.subTitle}}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Actions -->
+            <div class="menu-actions">
+                <a [routerLink]="['/sign-in']" class="action-btn signin-btn" (click)="toggleSidebar()">
+                    <i class='bx bx-log-in'></i>
+                    <span>Sign In</span>
+                </a>
+                <a [routerLink]="['/register']" class="action-btn register-btn" (click)="toggleSidebar()">
+                    <i class='bx bx-user-plus'></i>
+                    <span>Register</span>
+                </a>
+            </div>
+
+            <!-- Social Links -->
+            <div class="menu-social">
+                <span class="social-label">Follow Us</span>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/people/Naari-Deals/100088113458576" target="_blank"><i class='bx bxl-facebook'></i></a>
+                    <a href="https://www.instagram.com/naarideals/?igshid=YmMyMTA2M2Y%3D" target="_blank"><i class='bx bxl-instagram'></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

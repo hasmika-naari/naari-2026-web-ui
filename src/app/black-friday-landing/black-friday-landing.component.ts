@@ -2,10 +2,11 @@ import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
-import { HeaderStyleComponent } from '../naari-home/header/header.component';
+import { BlackFridayHeaderComponent } from './black-friday-header/black-friday-header.component';
 import { BlackFridayFooterComponent } from './black-friday-footer/black-friday-footer.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import merchantsData from '../../assets/data/black-friday-merchants.json';
+import configData from '../../assets/data/black-friday-config.json';
 
 interface Merchant {
   id: number;
@@ -17,6 +18,8 @@ interface Merchant {
   verified: boolean;
   featured: boolean;
   url?: string;
+  adScans?: string[];
+  assignedBackground?: string;
 }
 
 interface HeroSlide {
@@ -29,10 +32,23 @@ interface HeroSlide {
   gradient?: string;
 }
 
+interface BlackFridayConfig {
+  countdownDate: string;
+  pageTitle: string;
+  pageSubtitle: string;
+  sections: {
+    adScans: { title: string; subtitle: string; icon: string };
+    featured: { title: string; icon: string };
+    allDeals: { title: string; icon: string };
+  };
+  heroSlides: HeroSlide[];
+  backgroundImages: string[];
+}
+
 @Component({
   selector: 'app-black-friday-landing',
   standalone: true,
-  imports: [CommonModule, RouterModule, CarouselModule, HeaderStyleComponent, BlackFridayFooterComponent],
+  imports: [CommonModule, RouterModule, CarouselModule, BlackFridayHeaderComponent, BlackFridayFooterComponent],
   templateUrl: './black-friday-landing.component.html',
   styleUrls: ['./black-friday-landing.component.scss']
 })
@@ -44,51 +60,15 @@ export class BlackFridayLandingComponent implements OnInit {
   browser: boolean = false;
   isMobile: boolean = false;
   pCatsLocal: any[] = [];
+  config: BlackFridayConfig = configData as BlackFridayConfig;
 
-  // Hero slider configuration
-  heroSlides: HeroSlide[] = [
-    {
-      type: 'countdown',
-      title: 'BLACK FRIDAY 2025',
-      subtitle: 'The Biggest Shopping Event of the Year'
-    },
-    {
-      type: 'ad',
-      title: 'Electronics Blowout',
-      subtitle: 'Save Up to 70% on TVs, Laptops & More',
-      description: 'Unbeatable deals on the latest tech from top brands',
-      image: 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1200&h=600&fit=crop',
-      buttonText: 'Shop Electronics',
-      gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-    },
-    {
-      type: 'ad',
-      title: 'Fashion Frenzy',
-      subtitle: 'Designer Brands at 50% OFF',
-      description: 'Upgrade your wardrobe with premium fashion deals',
-      image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1200&h=600&fit=crop',
-      buttonText: 'Shop Fashion',
-      gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
-    },
-    {
-      type: 'ad',
-      title: 'Home & Living Sale',
-      subtitle: 'Transform Your Space for Less',
-      description: 'Furniture, decor, and appliances at incredible prices',
-      image: 'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=1200&h=600&fit=crop',
-      buttonText: 'Shop Home Goods',
-      gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
-    },
-    {
-      type: 'ad',
-      title: 'Beauty Bonanza',
-      subtitle: 'Luxe Beauty Up to 40% OFF',
-      description: 'Treat yourself to premium skincare and makeup',
-      image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=1200&h=600&fit=crop',
-      buttonText: 'Shop Beauty',
-      gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
-    }
-  ];
+  // Hero slider configuration (loaded from JSON)
+  heroSlides: HeroSlide[] = [];
+
+  // Section titles (loaded from JSON)
+  adScansSection = { title: '', subtitle: '', icon: '' };
+  featuredSection = { title: '', icon: '' };
+  allDealsSection = { title: '', icon: '' };
 
   heroSliderOptions: OwlOptions = {
     loop: true,
@@ -137,12 +117,31 @@ export class BlackFridayLandingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadConfig();
     this.loadMerchants();
     this.startCountdown();
   }
 
+  loadConfig(): void {
+    // Load hero slides from config
+    this.heroSlides = this.config.heroSlides;
+    
+    // Load section configurations
+    this.adScansSection = this.config.sections.adScans;
+    this.featuredSection = this.config.sections.featured;
+    this.allDealsSection = this.config.sections.allDeals;
+  }
+
   loadMerchants(): void {
     this.merchants = merchantsData as Merchant[];
+    
+    // Assign backgrounds from config
+    const defaultImages = this.config.backgroundImages;
+    
+    this.merchants.forEach((merchant, index) => {
+      merchant.assignedBackground = defaultImages[index % defaultImages.length];
+    });
+    
     this.featuredMerchants = this.merchants.filter(m => m.featured);
     
     // Extract unique categories
@@ -153,8 +152,8 @@ export class BlackFridayLandingComponent implements OnInit {
   startCountdown(): void {
     if (!this.browser) return;
 
-    // Set Black Friday date (last Friday of November 2025)
-    const blackFriday = new Date('2025-11-28T00:00:00');
+    // Use countdown date from config
+    const blackFriday = new Date(this.config.countdownDate);
 
     setInterval(() => {
       const now = new Date().getTime();
@@ -178,6 +177,15 @@ export class BlackFridayLandingComponent implements OnInit {
       return this.merchants;
     }
     return this.merchants.filter(m => m.category === this.selectedCategory);
+  }
+
+  getMerchantsWithAdScans(): Merchant[] {
+    return this.merchants.filter(m => m.adScans && m.adScans.length > 0);
+  }
+
+  getCardBackground(merchant: Merchant): string {
+    // Use the assigned background image
+    return `url('${merchant.assignedBackground}')`;
   }
 
   scrollToMerchants(): void {
