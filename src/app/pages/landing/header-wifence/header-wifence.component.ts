@@ -31,6 +31,9 @@ export class HeaderWorkIfenceComponent implements OnInit, AfterViewInit, AfterVi
 
 
     isSticky: boolean = false;
+    private lastScrollPosition: number = 0;
+    private ticking: boolean = false;
+    
     private storageService: LocalStorageService = inject(LocalStorageService);
     private userStore: UserStoreService = inject(UserStoreService);
 
@@ -47,11 +50,23 @@ export class HeaderWorkIfenceComponent implements OnInit, AfterViewInit, AfterVi
 
     @HostListener('window:scroll')
     checkScroll() {
-        const scrollPosition = this.window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-        if (scrollPosition >= 50) {
-            this.isSticky = true;
-        } else {
-            this.isSticky = false;
+        this.lastScrollPosition = this.window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        
+        if (!this.ticking) {
+            this.window.requestAnimationFrame(() => {
+                this.updateStickyState();
+                this.ticking = false;
+            });
+            this.ticking = true;
+        }
+    }
+
+    private updateStickyState() {
+        const scrollPosition = this.lastScrollPosition;
+        const shouldBeSticky = scrollPosition >= 50;
+        
+        if (this.isSticky !== shouldBeSticky) {
+            this.isSticky = shouldBeSticky;
         }
     }
 

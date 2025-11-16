@@ -29,7 +29,7 @@
     width: 100%;
     height: auto;
     z-index: 999;
-    position: absolute;
+    position: fixed !important;
     opacity: 0;
     animation: smoothSlideDown 0.6s ease-out forwards;
     
@@ -1015,6 +1015,97 @@
                 height: auto;
             }
         }
+        
+        // Black Friday Link Styling
+        .black-friday-link {
+            padding: 10px 16px;
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--mainColor);
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex !important;
+            white-space: nowrap;
+            margin: 0 10px;
+            opacity: 0;
+            animation: smoothFadeIn 0.6s ease-out 0.35s forwards;
+            text-shadow: 0 0 12px rgba(184, 31, 137, 0.4), 0 0 25px rgba(255, 215, 0, 0.3);
+            
+            i {
+                color: var(--mainColor);
+                transition: all 0.3s ease;
+                animation: pulse-star 2s ease-in-out infinite;
+            }
+            
+            span {
+                color: var(--mainColor);
+            }
+            
+            &:hover, &:focus {
+                background: transparent;
+                box-shadow: none;
+                text-shadow: 0 0 16px rgba(0, 0, 0, 0.5), 0 0 35px rgba(0, 0, 0, 0.4), 0 0 50px rgba(0, 0, 0, 0.2);
+                transform: translateY(-2px);
+                
+                i {
+                    transform: scale(1.15) rotate(15deg);
+                }
+            }
+            
+            &.black-friday-link-sticky {
+                color: var(--mainColor) !important;
+                background: transparent !important;
+                text-shadow: 0 0 12px rgba(184, 31, 137, 0.5), 0 0 25px rgba(184, 31, 137, 0.3) !important;
+                border: none !important;
+                
+                i, span {
+                    color: var(--mainColor) !important;
+                }
+                
+                &:hover, &:focus {
+                    background: transparent !important;
+                    box-shadow: none !important;
+                    text-shadow: 0 0 16px rgba(184, 31, 137, 0.6), 0 0 35px rgba(184, 31, 137, 0.5), 0 0 50px rgba(184, 31, 137, 0.3) !important;
+                    border: none !important;
+                    
+                    i, span {
+                        color: var(--mainColor) !important;
+                    }
+                }
+            }
+            
+            &.black-friday-link-light {
+                color: #FFD700;
+                text-shadow: 0 0 12px rgba(0, 0, 0, 0.4), 0 0 25px rgba(0, 0, 0, 0.3);
+                
+                i, span {
+                    color: #FFD700;
+                }
+                
+                &:hover, &:focus {
+                    background: transparent !important;
+                    box-shadow: none !important;
+                    text-shadow: 0 0 16px rgba(0, 0, 0, 0.5), 0 0 35px rgba(0, 0, 0, 0.4), 0 0 50px rgba(0, 0, 0, 0.2) !important;
+                    
+                    i, span {
+                        color: #FFD700;
+                    }
+                }
+            }
+        }
+        
+        @keyframes pulse-star {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        
         ul {
             padding-left: 0;
             list-style-type: none;

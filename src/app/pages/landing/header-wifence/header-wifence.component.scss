@@ -10,17 +10,15 @@
   
   
 .header-area {
-    top: 0;
-    left: 0;
-    right: 0;
     width: 100%;
     height: auto;
     z-index: 999;
-    position: absolute;
+    position: fixed !important;
+    opacity: 1 !important;
     background-color: var(--whiteColor);
-    font-family:"Poppins", sans-serif !important; ;
+    font-family:"Poppins", sans-serif !important;
     &.p-relative {
-        position: relative;
+        position: static !important;
     }
     &.header-color-white {
         .top-header {
@@ -399,17 +397,22 @@
 .navbar-area {
     // padding-top: 10px;
     // padding-bottom: 10px;
+    background-color: var(--whiteColor);
+    transition: all 0.3s ease-in-out;
 
     &.sticky {
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 999;
-        margin-top: 0;
-        position: fixed;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        z-index: 9999 !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        padding: 0 !important;
         box-shadow: 0 2px 28px 0 rgba(0, 0, 0, 0.09);
         background-color: var(--whiteColor) !important;
-        animation: 500ms ease-in-out 0s normal none 1 running fadeInDown;
+        animation: fadeInDown 500ms ease-in-out forwards;
 
         .navbar {
             padding: {
@@ -1757,4 +1760,16 @@
         }
     }
 
+}
+
+/* Keyframe Animations */
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, -30px, 0);
+    }
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
 }

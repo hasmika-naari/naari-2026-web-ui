@@ -1,7 +1,7 @@
 ::ng-deep {
     .header-area {
         padding: 17px 20px;
-        position: fixed;
+        position: fixed !important;
         left: 282px;
         z-index: 105;
         right: 0;
@@ -500,6 +500,7 @@
         .header-area {
             left: 0;
             right: 0;
+            position: fixed !important;
             padding: {
                 top: 15px;
                 bottom: 15px;
@@ -764,7 +765,7 @@
         .header-area {
             padding: 15px 25px;
             left: 0;
-            
+            position: fixed !important;
             .header-left-side {
                 .search-box {
                     width: 270px;
@@ -861,6 +862,7 @@
     ::ng-deep {
         .header-area {
             left: 0;
+            position: fixed !important;
             padding: {
                 left: 25px;
                 right: 25px;
@@ -883,6 +885,7 @@
 
     ::ng-deep {
         .header-area {
+            position: fixed !important;
             .header-left-side {
                 .search-box {
                     width: 300px;

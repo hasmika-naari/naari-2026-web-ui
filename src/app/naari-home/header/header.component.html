@@ -36,6 +36,16 @@
     <img [src]="isSticky ? 'assets/img/logo.png' : 'assets/img/logo.png'" alt="logo">
   </a>
 
+  <!-- Black Friday Link -->
+  <a routerLink="/black-friday" 
+     class="black-friday-link d-none d-lg-inline-flex align-items-center gap-2 animate__animated animate__fadeInDown animate__delay-1_25s"
+     [class.black-friday-link-sticky]="isSticky"
+     [class.black-friday-link-light]="!color">
+    <i class='bx bxs-star' style="font-size: 18px;"></i>
+    <span>Black Friday</span>
+    <i class='bx bx-gift' style="font-size: 16px;"></i>
+  </a>
+
   <!-- Mobile Right Section - Hamburger Menu + Apps Icon -->
   <div class="d-flex align-items-center gap-1 ms-auto d-lg-none">
     <!-- Hamburger Menu Button (Left) - Custom Icon -->
