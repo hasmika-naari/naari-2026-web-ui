@@ -35,7 +35,8 @@
 
 .footer-bottom { margin-top: 15px; padding-top: 20px; border-top: 1px solid rgba(184,31,137,0.1); text-align: center; }
 .footer-bottom .copyright-text { color: #999; font-size: 13px; margin: 0; }
-.footer-bottom .copyright-text a { color: #1a1a1a; font-weight: 600; text-decoration: none; }
+.footer-bottom .copyright-text a { color: #1a1a1a; font-weight: 600; text-decoration: none; transition: all 0.3s ease; padding: 2px 6px; border-radius: 4px; }
+.footer-bottom .copyright-text a:hover { color: var(--mainColor, #b81f89); background-color: rgba(184,31,137,0.1); text-decoration: underline; }
 .footer-bottom .copyright-text .separator { margin: 0 8px; opacity: 0.6; }
 
 @media (max-width: 1200px) {
