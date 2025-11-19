@@ -1,4 +1,4 @@
-import { Component, Input, HostListener, OnInit, PLATFORM_ID, Inject, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, HostListener, OnInit, PLATFORM_ID, Inject, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -10,7 +10,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
   templateUrl: './black-friday-header.component.html',
   styleUrls: ['./black-friday-header.component.scss']
 })
-export class BlackFridayHeaderComponent implements OnInit {
+export class BlackFridayHeaderComponent implements OnInit, OnDestroy {
   @Input() isMobile: boolean = false;
   @Input() menuList: any[] = [];
   
@@ -19,7 +19,21 @@ export class BlackFridayHeaderComponent implements OnInit {
   isTablet: boolean = false;
   isBrowser: boolean = false;
   sidebarVisible: boolean = false;
-  appsDrawerVisible: boolean = false;
+  private _appsDrawerVisible: boolean = false;
+  private originalBodyOverflow: string | null = null;
+
+  get appsDrawerVisible(): boolean {
+    return this._appsDrawerVisible;
+  }
+
+  set appsDrawerVisible(value: boolean) {
+    if (this._appsDrawerVisible === value) {
+      return;
+    }
+
+    this._appsDrawerVisible = value;
+    this.updateBodyScrollLock();
+  }
   
   @HostListener('window:scroll', [])
   checkScroll() {
@@ -59,6 +73,10 @@ export class BlackFridayHeaderComponent implements OnInit {
       this.detectDevice();
     }
   }
+
+  ngOnDestroy(): void {
+    this.releaseBodyScrollLock();
+  }
   
   private detectDevice(): void {
     if (this.deviceService.isDesktop()) {
@@ -89,6 +107,34 @@ export class BlackFridayHeaderComponent implements OnInit {
       const element = document.getElementById(sectionId);
       element?.scrollIntoView({ behavior: 'smooth' });
       this.sidebarVisible = false;
+    }
+  }
+
+  private updateBodyScrollLock(): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
+    if (this._appsDrawerVisible) {
+      if (this.originalBodyOverflow === null) {
+        this.originalBodyOverflow = document.body.style.overflow || '';
+      }
+      document.body.style.overflow = 'hidden';
+    } else {
+      this.releaseBodyScrollLock();
+    }
+  }
+
+  private releaseBodyScrollLock(): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
+    if (this.originalBodyOverflow !== null) {
+      document.body.style.overflow = this.originalBodyOverflow;
+      this.originalBodyOverflow = null;
+    } else {
+      document.body.style.removeProperty('overflow');
     }
   }
 }

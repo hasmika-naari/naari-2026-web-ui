@@ -116,21 +116,87 @@
     </div>
     
     <div class="apps-drawer-content">
+        <div class="drawer-intro">
+            <p class="drawer-tagline">Curated drops for women-first shoppers. These highlights refresh every hour during sale week.</p>
+            <div class="bf-stat-grid">
+                <article>
+                    <span class="stat-value">Hourly</span>
+                    <span class="stat-label">Refresh cadence<br>Always on during sale</span>
+                </article>
+                <article>
+                    <span class="stat-value">Collective</span>
+                    <span class="stat-label">Curated by women</span>
+                </article>
+                <article>
+                    <span class="stat-value">Early Signals</span>
+                    <span class="stat-label">Black Friday trend radar</span>
+                </article>
+                <article>
+                    <span class="stat-value">Expert eyes</span>
+                    <span class="stat-label">Human-verified picks</span>
+                </article>
+            </div>
+        </div>
         <div class="sidebar-modal-widget">
             <h3 class="title">Quick Links</h3>
             <ul>
-                <li><a (click)="appsDrawerVisible = false; scrollToSection('adscans-section')">Ad Scans</a></li>
-                <li><a (click)="appsDrawerVisible = false; scrollToSection('merchants-section')">All Deals</a></li>
-                <li><a (click)="appsDrawerVisible = false" routerLink="/faq">FAQs</a></li>
+                <li>
+                    <a (click)="appsDrawerVisible = false; scrollToSection('adscans-section')">
+                        <div class="link-row">
+                            <span class="link-title"><i class='bx bx-detail'></i>Ad Scans</span>
+                            <span class="link-pill pill-live">Live</span>
+                        </div>
+                        <small>Preview every flyer drop before it trends.</small>
+                    </a>
+                </li>
+                <li>
+                    <a (click)="appsDrawerVisible = false; scrollToSection('merchants-section')">
+                        <div class="link-row">
+                            <span class="link-title"><i class='bx bx-grid-alt'></i>All Deals</span>
+                            <span class="link-pill pill-heat">Hot</span>
+                        </div>
+                        <small>Filter by store, tag or country instantly.</small>
+                    </a>
+                </li>
+                <li>
+                    <a (click)="appsDrawerVisible = false" routerLink="/faq">
+                        <div class="link-row">
+                            <span class="link-title"><i class='bx bx-question-mark'></i>FAQs</span>
+                            <span class="link-pill pill-help">Help</span>
+                        </div>
+                        <small>Tips for first-time Naari deal hunters.</small>
+                    </a>
+                </li>
             </ul>
         </div>
         
         <div class="sidebar-modal-widget mb-30 mt--25">
             <h3 class="title">Support</h3>
             <ul class="support-link">
-                <li><a (click)="appsDrawerVisible = false" routerLink="/privacy">Privacy</a></li>
-                <li><a (click)="appsDrawerVisible = false" routerLink="/terms">Terms</a></li>
-                <li><a (click)="appsDrawerVisible = false" routerLink="/contact-us">Contact Us</a></li>
+                <li>
+                    <a (click)="appsDrawerVisible = false" routerLink="/privacy">
+                        <div class="link-row">
+                            <span class="link-title"><i class='bx bx-lock'></i>Privacy</span>
+                            <span class="link-caption">Your identity stays yours.</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a (click)="appsDrawerVisible = false" routerLink="/terms">
+                        <div class="link-row">
+                            <span class="link-title"><i class='bx bx-file'></i>Terms</span>
+                            <span class="link-caption">Transparent policies & usage.</span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a (click)="appsDrawerVisible = false" routerLink="/contact-us">
+                        <div class="link-row">
+                            <span class="link-title"><i class='bx bx-chat'></i>Contact Us</span>
+                            <span class="link-caption">Chat with the Naari team.</span>
+                        </div>
+                    </a>
+                </li>
             </ul>
         </div>
         
@@ -138,9 +204,18 @@
             <h3 class="title">Contact Info</h3>
             <ul class="contact-info">
                 <li>
-                    <i class="icofont-email"></i>
-                    Email
-                    <span>admin&#64;naarideals.com</span>
+                    <div class="contact-primary">
+                        <i class='bx bx-envelope'></i>
+                        <a href="mailto:admin&#64;naarideals.com">admin&#64;naarideals.com</a>
+                    </div>
+                    <small>We reply within 12 hours during sale week.</small>
+                </li>
+                <li>
+                    <div class="contact-primary">
+                        <i class='bx bxl-whatsapp'></i>
+                        <a href="https://chat.whatsapp.com/C3OZtNNrgOg5p2uIoRVhVs" target="_blank">Community Squad</a>
+                    </div>
+                    <small>Drop a note for instant crowd-sourced tips.</small>
                 </li>
             </ul>
         </div>
@@ -150,6 +225,7 @@
             <ul class="social-list">
                 <li><a href="https://www.facebook.com/people/Naari-Deals/100088113458576" target="_blank"><i class="icofont-facebook"></i></a></li>
                 <li><a href="https://www.instagram.com/naarideals/?igshid=YmMyMTA2M2Y%3D" target="_blank"><i class="icofont-instagram"></i></a></li>
+                <li><a href="https://www.linkedin.com/company/naari-deals" target="_blank"><i class='bx bxl-linkedin'></i></a></li>
             </ul>
         </div>
     </div>
