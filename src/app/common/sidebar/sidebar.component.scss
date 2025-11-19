@@ -1,6 +1,6 @@
 ::ng-deep {
     .sidebar-area {
-        overflow: hidden;
+        overflow: visible;
         position: fixed;
         height: 100vh;
         width: 260px;
@@ -64,37 +64,57 @@
                 }
             }
         }
-        .burger-menu {
-            top: 29px;
-            z-index: 4;
-            opacity: 0;
-            right: 19px;
-            visibility: hidden;
+        .sidebar-handle {
             position: absolute;
-    
-            span {
-                height: 1px;
-                width: 25px;
-                margin: 6px 0;
+            top: 32px;
+            right: -36px;
+            width: 46px;
+            height: 46px;
+            z-index: 4;
+            border: 1px solid rgba(22, 30, 84, 0.12);
+            border-radius: 14px;
+            background: #ffffff;
+            box-shadow: 0 8px 24px rgba(31, 38, 135, 0.15);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primaryColor);
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+
+            i-feather {
+                width: 20px;
+                height: 20px;
+                color: currentColor;
+                display: block;
             }
-            &.active {
-                opacity: 1;
-                visibility: visible;
-                
-                span {
-                    &.top-bar {
-                        transform: rotate(45deg);
-                        transform-origin: 10% 10%;
-                    }
-                    &.middle-bar {
-                        opacity: 0;
-                    }
-                    &.bottom-bar {
-                        transform: rotate(-45deg);
-                        transform-origin: 10% 90%;
-                        margin-top: 5px;
-                    }
-                }
+            &::before {
+                content: '';
+                position: absolute;
+                width: 16px;
+                height: 30px;
+                right: calc(100% - 2px);
+                top: 50%;
+                transform: translateY(-50%);
+                border-radius: 12px 0 0 12px;
+                background: inherit;
+                border: inherit;
+                border-right: none;
+                box-shadow: inherit;
+                pointer-events: none;
+                z-index: -1;
+            }
+            &:hover,
+            &:focus-visible {
+                outline: none;
+                color: var(--whiteColor);
+                background: var(--primaryColor);
+                border-color: transparent;
+                box-shadow: 0 12px 32px rgba(117, 68, 218, 0.35);
+            }
+            &.collapsed {
+                color: var(--darkColor);
             }
         }
         .ng-scrollbar {
@@ -487,9 +507,11 @@
             .logo {
                 padding: 20px 20px 20px 15px;
             }
-            .burger-menu {
-                top: 23px;
-                right: 14px;
+            .sidebar-handle {
+                top: 22px;
+                right: -28px;
+                width: 46px;
+                height: 46px;
             }
             .sidebar-inner {
                 padding: {
@@ -602,9 +624,10 @@
                         }
                     }
                 }
-                .burger-menu {
-                    opacity: 0;
-                    visibility: hidden;
+                .sidebar-handle {
+                    right: -30px;
+                    width: 46px;
+                    height: 46px;
                 }
                 .sidebar-inner {
                     padding: {
@@ -654,7 +677,6 @@
                             width: 36px;
                             height: 36px;
                             margin-bottom: 5px;
-    
                             i-feather {
                                 left: 0;
                                 right: 0;
@@ -666,87 +688,6 @@
                             }
                             .title {
                                 display: none;
-                            }
-                        }
-                    }
-                }
-                &:hover {
-                    width: 260px;
-    
-                    .logo {
-                        padding: {
-                            left: 25px;
-                            right: 25px;
-                        };
-                        a {
-                            span {
-                                display: inline-block;
-                            }
-                        }
-                    }
-                    .burger-menu {
-                        opacity: 1;
-                        visibility: visible;
-                    }
-                    .sidebar-inner {
-                        padding: {
-                            top: 90px;
-                            left: 25px;
-                            right: 25px;
-                        };
-                        .sidebar-menu {
-                            .sub-title {
-                                display: block;
-                            }
-                        }
-                        .mat-accordion {
-                            .mat-expansion-panel {
-                                margin-bottom: 25px;
-                    
-                                .mat-expansion-panel-header {
-                                    width: auto;
-                                    height: auto;
-                                    padding: {
-                                        right: 35px;
-                                        left: 24px;
-                                    };
-                                    i-feather {
-                                        right: auto;
-                                        margin: {
-                                            left: 0;
-                                            right: 0;
-                                        };
-                                    }
-                                    .title {
-                                        display: block;
-                                    }
-                                    .mat-expansion-indicator {
-                                        display: inline-block;
-                                    }
-                                    .naari-badge {
-                                        display: inline-block;
-                                    }
-                                }
-                                .mat-expansion-panel-content {
-                                    display: block;
-                                }
-                            }
-                            .sidebar-menu-link {
-                                width: auto;
-                                height: auto;
-                                padding-left: 24px;
-                                margin-bottom: 25px;
-
-                                i-feather {
-                                    right: auto;
-                                    margin: {
-                                        left: 0;
-                                        right: 0;
-                                    };
-                                }
-                                .title {
-                                    display: block;
-                                }
                             }
                         }
                     }

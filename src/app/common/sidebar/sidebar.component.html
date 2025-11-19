@@ -10,15 +10,16 @@
             </span>
         </a>
     </div>
-    <div
-        class="burger-menu transition cursor-pointer"
-        [ngClass]="{'active': isToggled}"
+    <button
+        type="button"
+        class="sidebar-handle transition"
+        [class.collapsed]="isToggled"
         (click)="toggle()"
+        [attr.aria-label]="isToggled ? 'Expand sidebar' : 'Collapse sidebar'"
+        [attr.title]="isToggled ? 'Expand sidebar' : 'Collapse sidebar'"
     >
-        <span class="top-bar transition bg-dark d-block"></span>
-        <span class="middle-bar transition bg-dark d-block"></span>
-        <span class="bottom-bar transition bg-dark d-block"></span>
-    </div>
+        <i-feather [name]="isToggled ? 'chevron-right' : 'chevron-left'"></i-feather>
+    </button>
     <ng-scrollbar visibility="hover">
         <div class="sidebar-inner">
             <div class="sidebar-menu">
