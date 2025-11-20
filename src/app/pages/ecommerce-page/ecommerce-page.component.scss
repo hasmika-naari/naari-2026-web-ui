@@ -3,12 +3,20 @@
     overflow: hidden;
     min-height: 100vh;
     padding: {
-        top: 105px;
+        top: 0;
         left: 282px;
         right: 25px;
     };
     &.active, &.hide-sidebar {
         padding-left: 85px;
+    }
+
+    .main-content-body {
+        padding-top: 105px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
     }
 }
 
@@ -19,6 +27,10 @@
     }
     .main-content {
         padding: 0 !important;
+
+        .main-content-body {
+            padding-top: 0 !important;
+        }
     }
 }
 
@@ -28,12 +40,16 @@
     // Main Content
     .main-content {
         padding: {
-            top: 150px;
+            top: 0;
             left: 15px;
             right: 15px;
         };
         &.active, &.hide-sidebar {
             padding-left: 15px;
+        }
+
+        .main-content-body {
+            padding-top: 150px;
         }
     }
     
@@ -48,12 +64,16 @@
     // Main Content
     .main-content {
         padding: {
-            top: 101px;
+            top: 0;
             left: 25px;
             right: 25px;
         };
         &.active, &.hide-sidebar {
             padding-left: 25px;
+        }
+
+        .main-content-body {
+            padding-top: 110px;
         }
     }
 
@@ -65,11 +85,16 @@
     // Main Content
     .main-content {
         padding: {
+            top: 0;
             left: 25px;
             right: 25px;
         };
         &.active, &.hide-sidebar {
             padding-left: 25px;
+        }
+
+        .main-content-body {
+            padding-top: 110px;
         }
     }
 

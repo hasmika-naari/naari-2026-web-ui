@@ -2,6 +2,7 @@
 // For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
 @use "./styles/_theme-colors.scss" as theme-colors;
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&display=swap');
 // Plus imports for other components in your app.
 
 // PrimeNG Custom Styles
@@ -648,9 +649,9 @@ input {
     // border-radius: 6px !important;        /* Rounded scrollbar thumb */
   }
   
-  ::-webkit-scrollbar-thumb:hover {
-    // background-color: #0056b3 !important; /* Hover effect on thumb */
-  }
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #bfc2c5 !important; /* Hover effect on thumb */
+    }
   
   ::-webkit-scrollbar-track {
     background-color: #ffffff !important; /* Scrollbar track background */

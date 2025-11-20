@@ -12,8 +12,10 @@
         [ngClass]="{'active': isToggled}"
     >
         <app-header />
-        <router-outlet />
-        <div class="flex-grow-1"></div>
+        <div class="main-content-body d-flex flex-column flex-grow-1">
+            <router-outlet />
+            <div class="flex-grow-1"></div>
+        </div>
         <!-- <app-work-ifence-footer></app-work-ifence-footer> -->
     </div>
 

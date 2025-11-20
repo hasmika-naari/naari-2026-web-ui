@@ -2,182 +2,68 @@
     class="sidebar-area bg-white transition"
     [ngClass]="{'active': isToggled}"
 >
-    <div class="logo bg-white">
-        <a routerLink="/" class="d-flex align-items-center">
-            <img style="max-width: 40px;" src="assets/img/logo.png" alt="logo-icon">
-            <span class="fw-extrabold">
-                Naari Deals
-            </span>
-        </a>
-    </div>
-    <button
-        type="button"
-        class="sidebar-handle transition"
-        [class.collapsed]="isToggled"
-        (click)="toggle()"
-        [attr.aria-label]="isToggled ? 'Expand sidebar' : 'Collapse sidebar'"
-        [attr.title]="isToggled ? 'Expand sidebar' : 'Collapse sidebar'"
-    >
-        <i-feather [name]="isToggled ? 'chevron-right' : 'chevron-left'"></i-feather>
-    </button>
-    <ng-scrollbar visibility="hover">
-        <div class="sidebar-inner">
-            <div class="sidebar-menu">
-                <mat-accordion>
-                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <i-feather name="shopping-cart"></i-feather>
-                                <span class="title">
-                                    E-Commerce
-                                </span>
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <ul class="sidebar-sub-menu">
-                             <li class="sidemenu-item">
-                                <a routerLink="/admin/deals-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Manage Deals
-                                </a>
-                            </li>
-                            <!-- <li class="sidemenu-item">
-                                <a routerLink="/admin/deals-grid" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Deals Grid
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/admin/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Products Grid
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/admin/products-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Products List
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/admin/product-details" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Product Details
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/admin/create-product" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Create Product
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/admin/cart" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Cart
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/admin/checkout" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Checkout
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/admin/orders-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Orders
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/admin/order-details" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Order Details
-                                </a>
-                            </li> -->
-                            <li class="sidemenu-item">
-                                <a routerLink="/admin/customers-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Customers
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/admin/sellers" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Sellers
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/admin/seller-details" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Seller Details
-                                </a>
-                            </li>
-                        </ul>
-                    </mat-expansion-panel>
-                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <i-feather name="users"></i-feather>
-                                <span class="title">
-                                    Users
-                                </span>
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <ul class="sidebar-sub-menu">
-                            <!-- <li class="sidemenu-item">
-                                <a routerLink="/users" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Team Members
-                                </a>
-                            </li> -->
-                            <li class="sidemenu-item">
-                                <a routerLink="/users/users-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Users List
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/users/add-user" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Add User
-                                </a>
-                            </li>
-                        </ul>
-                    </mat-expansion-panel>
-                    <a routerLink="/notifications" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <i-feather name="bell"></i-feather>
-                        <span class="title">
-                            Notifications
-                        </span>
-                    </a>
-                    <a routerLink="/my-profile" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <i-feather name="user"></i-feather>
-                        <span class="title">
-                            My Profile
-                        </span>
-                    </a>
-                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <i-feather name="settings"></i-feather>
-                                <span class="title">
-                                    Settings
-                                </span>
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <ul class="sidebar-sub-menu">
-                            <li class="sidemenu-item">
-                                <a routerLink="/settings" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Account Settings
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/settings/change-password" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Change Password
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/settings/privacy-policy" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Privacy Policy
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/settings/terms-conditions" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Terms & Conditions
-                                </a>
-                            </li>
-                        </ul>
-                    </mat-expansion-panel>
-                    <a routerLink="/authentication/logout" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <i-feather name="home"></i-feather>
-                        <span class="title">Logout</span>
-                    </a>
-                </mat-accordion>
+    <div class="logo" [class.collapsed]="isToggled">
+        <a routerLink="/" class="logo-link" aria-label="Naari Deals home">
+            <div class="logo-mark">
+                <img src="assets/img/logo.png" alt="Naari Deals logo">
             </div>
+            <div class="brand-text" aria-hidden="false">
+                <span class="brand-line primary">Naari</span>
+                <span class="brand-line accent">Deals</span>
+            </div>
+        </a>
+        <button
+            *ngIf="isToggled"
+            type="button"
+            class="sidebar-handle expand transition"
+            (click)="toggle()"
+            aria-label="Expand sidebar"
+            title="Expand sidebar"
+        >
+            <svg class="split-pill mirrored" viewBox="0 0 12 16" role="presentation" aria-hidden="true">
+                <rect class="pill-fill" x="3.9" y="1.4" width="7.4" height="13.2" rx="1" ry="1"></rect>
+                <rect x="0.75" y="0.75" width="10.5" height="14.5" rx="1.6" ry="1.6" fill="none" stroke="currentColor" stroke-width="1"></rect>
+                <line x1="4" y1="1.8" x2="4" y2="14.2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-dasharray="1 1.4"></line>
+            </svg>
+        </button>
+        <button
+            *ngIf="!isToggled"
+            type="button"
+            class="sidebar-handle collapse transition"
+            (click)="toggle()"
+            aria-label="Collapse sidebar"
+            title="Collapse sidebar"
+        >
+            <svg class="split-pill" viewBox="0 0 12 16" role="presentation" aria-hidden="true">
+                <rect class="pill-fill" x="1.2" y="1.4" width="3.2" height="13.2" rx="1" ry="1"></rect>
+                <rect x="0.75" y="0.75" width="10.5" height="14.5" rx="1.6" ry="1.6" fill="none" stroke="currentColor" stroke-width="1"></rect>
+                <line x1="4" y1="1.8" x2="4" y2="14.2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-dasharray="1 1.4"></line>
+            </svg>
+        </button>
+    </div>
+    <div class="sidebar-inner">
+        <div class="sidebar-menu">
+            <ul class="sidebar-flat-menu">
+                <li *ngFor="let item of menuItems">
+                    <a
+                        class="sidebar-menu-link flat"
+                        [routerLink]="item.route"
+                        routerLinkActive="active"
+                        [routerLinkActiveOptions]="{exact: true}"
+                    >
+                        <span
+                            class="menu-icon"
+                            [attr.title]="isToggled ? item.label : null"
+                            [attr.aria-label]="isToggled ? item.label : null"
+                        >
+                            <i-feather [name]="item.icon"></i-feather>
+                        </span>
+                        <div class="menu-text">
+                            <span class="title">{{ item.label }}</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
         </div>
-    </ng-scrollbar>
+    </div>
 </div>

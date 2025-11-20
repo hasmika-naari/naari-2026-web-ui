@@ -1,23 +1,8 @@
 <div
-    class="header-area bg-transparent transition"
-    [ngClass]="{'active': isToggled}"
+    class="header-area transition"
+    [ngClass]="{'active': isToggled, 'scrolled': hasScrolled}"
 >
-    <div class="d-md-flex align-items-center justify-content-between">
-        <div class="header-left-side d-flex align-items-center">
-            <div
-                class="burger-menu position-relative transition lh-1"
-                [ngClass]="{'active': isToggled}"
-                (click)="toggle()"
-            >
-                <i-feather name="align-left"></i-feather>
-            </div>
-            <form class="search-box position-relative">
-                <input type="text" class="input-search w-100 d-block border-none" placeholder="Search here..">
-                <button type="submit" class="bg-transparent p-0 border-none transition">
-                    <i-feather name="search"></i-feather>
-                </button>
-            </form>
-        </div>
+    <div class="header-inner d-flex align-items-center justify-content-end w-100">
         <ul class="header-right-side d-flex align-items-center m-0 p-0 list-unstyled">
             <li>
                 <button
@@ -161,100 +146,63 @@
                 </mat-menu>
             </li>
             <li>
-                <div class="date-btn position-relative">
-                    <i-feather name="calendar"></i-feather> {{ formattedDate }}
-                </div>
-            </li>
-            <li>
-                <button mat-button [matMenuTriggerFor]="languageMenu" class="language-menu-btn">
-                    <img src="images/flags/eng.svg" alt="flag"> ENG
-                </button>
-                <mat-menu class="language-menu-dropdown" #languageMenu="matMenu" xPosition="before">
-                    <span class="title fw-medium fs-16 d-block">
-                        Choose Language
-                    </span>
-                        <ul class="menu-body pl-0 mb-0 mt-0 list-unstyled">
-                            <li>
-                                <button mat-button>
-                                    <img src="images/flags/eng.svg" alt="flag">
-                                    ENG
-                                </button>
-                            </li>
-                            <li>
-                                <button mat-button>
-                                    <img src="images/flags/chn.svg" alt="flag">
-                                    CHN
-                                </button>
-                            </li>
-                            <li>
-                                <button mat-button>
-                                    <img src="images/flags/spn.svg" alt="flag">
-                                    SPN
-                                </button>
-                            </li>
-                            <li>
-                                <button mat-button>
-                                    <img src="images/flags/por.svg" alt="flag">
-                                    POR
-                                </button>
-                            </li>
-                            <li>
-                                <button mat-button>
-                                    <img src="images/flags/rus.svg" alt="flag">
-                                    RUS
-                                </button>
-                            </li>
-                        </ul>
-                </mat-menu>
-            </li>
-            <li>
-                <button mat-button [matMenuTriggerFor]="profileMenu" class="profile-menu-btn">
+                <button mat-button class="profile-menu-btn" (click)="openProfileDrawer()">
                     <img src="images/admin.jpg" class="rounded-circle" alt="admin-image">
                 </button>
-                <mat-menu class="profile-menu-dropdown" #profileMenu="matMenu" xPosition="before">
-                    <div class="menu-header d-flex align-items-center">
-                        <img src="images/admin.jpg" class="rounded-circle" alt="admin-image">
-                        <div class="title">
-                            <a routerLink="/my-profile" class="d-inline-block fw-medium">
-                                Marcus Davis
-                            </a>
-                            <span class="designation d-block text-body">
-                                Admin
-                            </span>
-                        </div>
-                    </div>
-                    <ul class="menu-body pl-0 mb-0 mt-0 list-unstyled">
-                        <li class="position-relative transition fw-medium">
-                            <i class="material-symbols-outlined">
-                                person
-                            </i>
-                            My Profile
-                            <a routerLink="/my-profile" class="link-btn d-block position-absolute left-0 right-0 top-0 bottom-0 z-1"></a>
-                        </li>
-                        <li class="position-relative transition fw-medium">
-                            <i class="material-symbols-outlined">
-                                settings
-                            </i>
-                            Settings
-                            <a routerLink="/settings" class="link-btn d-block position-absolute left-0 right-0 top-0 bottom-0 z-1"></a>
-                        </li>
-                        <li class="position-relative transition fw-medium">
-                            <i class="material-symbols-outlined">
-                                info
-                            </i>
-                            Support
-                            <a routerLink="/settings/connections" class="link-btn d-block position-absolute left-0 right-0 top-0 bottom-0 z-1"></a>
-                        </li>
-                        <li class="position-relative transition fw-medium">
-                            <i class="material-symbols-outlined">
-                                logout
-                            </i>
-                            Logout
-                            <a routerLink="/authentication/logout" class="link-btn d-block position-absolute left-0 right-0 top-0 bottom-0 z-1"></a>
-                        </li>
-                    </ul>
-                </mat-menu>
             </li>
         </ul>
     </div>
 </div>
+
+<p-drawer
+    [(visible)]="profileDrawerVisible"
+    position="right"
+    [modal]="true"
+    [dismissible]="true"
+    [blockScroll]="true"
+    styleClass="profile-drawer"
+>
+    <div class="profile-drawer-header d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+            <img src="images/admin.jpg" class="rounded-circle" alt="admin-image">
+            <div class="title">
+                <a routerLink="/my-profile" class="d-inline-block fw-medium">
+                    Marcus Davis
+                </a>
+                <span class="designation d-block text-body">
+                    Admin
+                </span>
+            </div>
+        </div>
+    </div>
+    <ul class="profile-drawer-body pl-0 mb-0 mt-0 list-unstyled">
+        <li class="position-relative transition fw-medium">
+            <i class="material-symbols-outlined">
+                person
+            </i>
+            My Profile
+            <a routerLink="/my-profile" class="link-btn d-block position-absolute left-0 right-0 top-0 bottom-0 z-1"></a>
+        </li>
+        <li class="position-relative transition fw-medium">
+            <i class="material-symbols-outlined">
+                settings
+            </i>
+            Settings
+            <a routerLink="/settings" class="link-btn d-block position-absolute left-0 right-0 top-0 bottom-0 z-1"></a>
+        </li>
+        <li class="position-relative transition fw-medium">
+            <i class="material-symbols-outlined">
+                info
+            </i>
+            Support
+            <a routerLink="/settings/connections" class="link-btn d-block position-absolute left-0 right-0 top-0 bottom-0 z-1"></a>
+        </li>
+        <li class="position-relative transition fw-medium">
+            <i class="material-symbols-outlined">
+                logout
+            </i>
+            Logout
+            <a routerLink="/authentication/logout" class="link-btn d-block position-absolute left-0 right-0 top-0 bottom-0 z-1"></a>
+        </li>
+    </ul>
+</p-drawer>
