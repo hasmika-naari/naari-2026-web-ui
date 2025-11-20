@@ -28,12 +28,15 @@ interface SidebarMenuItem {
 export class SidebarComponent {
 
     menuItems: SidebarMenuItem[] = [
-        // Deal & merchant operations
-    { label: 'Deals', icon: 'shopping-cart', route: '/admin/deals-list', color: '#5D87FF' },
-    { label: 'Sellers', icon: 'users', route: '/admin/sellers', color: '#F97316' },
+        // Dashboard overview
+        { label: 'Dashboard', icon: 'bar-chart-2', route: '/pages/ecommerce-page', color: '#5D87FF' },
 
-    // User management
-    { label: 'Users', icon: 'users', route: '/users/users-list', color: '#8B5CF6' },
+        // Deal & merchant operations
+        { label: 'Deals', icon: 'shopping-cart', route: '/admin/deals-list', color: '#5D87FF' },
+        { label: 'Sellers', icon: 'users', route: '/admin/sellers', color: '#F97316' },
+
+        // User management
+        { label: 'Users', icon: 'users', route: '/users/users-list', color: '#8B5CF6' },
 
         // Communication & alerts
         { label: 'Notifications', icon: 'bell', route: '/notifications', color: '#F59E0B' },
