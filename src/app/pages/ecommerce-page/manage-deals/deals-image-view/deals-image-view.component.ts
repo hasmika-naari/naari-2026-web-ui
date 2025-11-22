@@ -31,7 +31,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { faWhatsapp, faHotjar } from '@fortawesome/free-brands-svg-icons';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -64,7 +65,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     CommonModule, MatMenuModule, MatIconModule, FontAwesomeModule, RouterModule, MatChipsModule,
     MatButtonModule, FormsModule, MatSelectModule, MatCardModule, MatAutocompleteModule,
     MatProgressBarModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatDialogModule,
-    MatCheckboxModule, MatSidenavModule, FooterWorkifenceComponent, AmazonDealDialogComponent,MatDatepickerModule
+    MatCheckboxModule, MatSidenavModule, MatPaginatorModule,
+    FooterWorkifenceComponent, AmazonDealDialogComponent, MatDatepickerModule
   ],
   templateUrl: './deals-image-view.component.html',
   styleUrls: ['./deals-image-view.component.scss'],
@@ -214,6 +216,15 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
   isMobile = false;
   isTablet = false;
   dealsLoaded = false;
+  currentPageDeals: DealDataItem[] = [];
+  filteredDeals: DealDataItem[] = [];
+  pageIndex = 0;
+  pageSize = 12;
+  readonly desktopPageSize = 24;
+  readonly tabletPageSize = 18;
+  readonly mobilePageSize = 12;
+  totalDeals = 0;
+  @ViewChild('sidenav') sidenav?: MatSidenav;
 
   private platformId = inject(PLATFORM_ID);
   private transferState = inject(TransferState);
@@ -266,10 +277,9 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
             // this.filteredCategoriesLocal = [...cats];
           });
         }
-
-
-        const deals = this.allFilteredDeals();
-        if (deals?.length) this.deals = [...deals];
+        const deals = this.allFilteredDeals() ?? [];
+        this.deals = [...deals];
+        this.syncFilteredDeals(deals);
       });
     });
   }
@@ -307,12 +317,15 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
         else if (this.deviceService.isMobile()) this.isMobile = true;
         else if (this.deviceService.isTablet()) this.isTablet = true;
 
+  this.applyResponsivePageSize();
+
         if (window.innerWidth < 1280) this.viewCol = 25;
 
         this.loadFetcheddata();
       });
     } else {
       this.fetchData();
+      this.applyResponsivePageSize();
     }
   }
 
@@ -391,7 +404,7 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
 
   removeStausFilter() {
     this.selectedStatus = '-1';
-    this.dealsStoreService.filterAllDeals(this.selectedStatus, this.selectedCategory, this.selectedText);
+    this.applyFilters(false);
   }
 
    submitForm($event: any){
@@ -430,7 +443,7 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
 
   removeCategoryFilter() {
     this.selectedCategory = 'All';
-    this.dealsStoreService.filterAllDeals(this.selectedStatus, this.selectedCategory, this.selectedText);
+    this.applyFilters(false);
   }
 
   editDeal(deal: DealDataItem) {
@@ -438,7 +451,7 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
   }
 
   deleteDeal(deal: DealDataItem) {
-     this.dealsService.deleteDeal(deal.id).subscribe(res => {
+     this.dealsService.deleteDeals(deal.id).subscribe(res => {
       this.dealsService.getDealsByCountry('usa', this.platformId).subscribe(deals => {
         this.dealsStoreService.updateAllDeals(deals, this.selectedStatus, this.selectedCategory,  this.selectedText);
       });
@@ -536,11 +549,9 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
 
   inputChangeHandler(event: any) {
     this.selectedText = event.target.value;
-    this.dealsStoreService.filterAllDeals(this.selectedStatus, this.selectedCategory, this.selectedText);
   }
 
   selectionChangeHandler(event: any) {
-    this.dealsStoreService.filterAllDeals(this.selectedStatus, this.selectedCategory, this.selectedText);
   }
 
   get statusLabel(): string {
@@ -555,12 +566,41 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
 
   selectionStatusChangeHandler(event: any) {
     this.selectedStatus = event.value;
-    this.dealsStoreService.filterAllDeals(this.selectedStatus, this.selectedCategory, this.selectedText);
   }
 
   selectionCategoryChangeHandler(event: any) {
     this.selectedCategory = event.value;
+  }
+
+  applyFilters(closeSidenav = true): void {
     this.dealsStoreService.filterAllDeals(this.selectedStatus, this.selectedCategory, this.selectedText);
+    this.resetPaginator();
+    if (closeSidenav) {
+      this.sidenav?.close();
+    }
+  }
+
+  getDiscountPercent(deal: DealDataItem): number | null {
+    if (!deal) return null;
+    const original = this.extractPriceValue(deal.originalPrice);
+    const current = this.extractPriceValue(deal.currentPrice);
+    if (original === null || current === null) return null;
+    if (original <= 0 || current <= 0) return null;
+    if (current >= original) return null;
+
+    const percent = ((original - current) / original) * 100;
+    return Math.round(percent);
+  }
+
+  private extractPriceValue(value: string | number | null | undefined): number | null {
+    if (value === null || value === undefined) return null;
+    if (typeof value === 'number') return Number.isFinite(value) ? value : null;
+
+    const cleaned = value.replace(/,/g, '').replace(/[^0-9.-]/g, '');
+    if (!cleaned || cleaned === '.' || cleaned === '-' || cleaned === '-.') return null;
+
+    const parsed = Number(cleaned);
+    return Number.isFinite(parsed) ? parsed : null;
   }
 
   checkDeal(deal: DealDataItem) {
@@ -573,4 +613,58 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {}
+  
+  onPageChange(event: PageEvent): void {
+    this.pageIndex = event.pageIndex;
+    this.updatePaginationSlice();
+  }
+
+  get currentRangeStart(): number {
+    if (!this.totalDeals) return 0;
+    return this.pageIndex * this.pageSize + 1;
+  }
+
+  get currentRangeEnd(): number {
+    if (!this.totalDeals) return 0;
+    return Math.min((this.pageIndex + 1) * this.pageSize, this.totalDeals);
+  }
+
+  private applyResponsivePageSize(): void {
+    if (this.isDesktop) this.pageSize = this.desktopPageSize;
+    else if (this.isTablet) this.pageSize = this.tabletPageSize;
+    else this.pageSize = this.mobilePageSize;
+    this.updatePaginationSlice(true);
+  }
+
+  private syncFilteredDeals(deals: DealDataItem[]): void {
+    this.filteredDeals = Array.isArray(deals) ? [...deals] : [];
+    this.totalDeals = this.filteredDeals.length;
+    this.updatePaginationSlice();
+  }
+
+  private updatePaginationSlice(resetIndex = false): void {
+    if (resetIndex) this.pageIndex = 0;
+
+    const length = this.filteredDeals.length;
+    this.totalDeals = length;
+
+    if (!length) {
+      this.currentPageDeals = [];
+      return;
+    }
+
+    const maxPageIndex = Math.max(Math.ceil(length / this.pageSize) - 1, 0);
+    if (this.pageIndex > maxPageIndex) {
+      this.pageIndex = maxPageIndex;
+    }
+
+    const start = this.pageIndex * this.pageSize;
+    const end = start + this.pageSize;
+    this.currentPageDeals = this.filteredDeals.slice(start, end);
+  }
+
+  private resetPaginator(): void {
+    this.pageIndex = 0;
+    this.updatePaginationSlice();
+  }
 }

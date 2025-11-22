@@ -226,7 +226,7 @@ initiateResetPassword(reset : PasswordResetRqst){
   // if(isPlatformBrowser(this.platformId)){
   //   baseUrl = '';
   // }
-  const url = this.appConstants.BASE_API_URL + '/api/wif-reset-password/init';
+  const url = this.appConstants.BASE_API_URL + '/api/naari-reset-password/init';
   return this.http.post<any>(url,reset).pipe(catchError(this.handleError))
 }
 
@@ -235,7 +235,7 @@ finishResetPassword(reset : PasswordResetFinishRqst){
   // if(isPlatformBrowser(this.platformId)){
   //   baseUrl = '';
   // }
-  const url = this.appConstants.BASE_API_URL + '/api/wif-reset-password/finish';
+  const url = this.appConstants.BASE_API_URL + '/api/naari-reset-password/finish';
   return this.http.post<any>(url,reset).pipe(catchError(this.handleError))
 }
 

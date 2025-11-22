@@ -38,11 +38,13 @@ import {
   Brand,
   Category,
   DealDataItem,
+  DealDataItemRequest,
   DealType,
   PCategory,
   PostDealItem
 } from '@app/services/deals.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 import _ from 'lodash';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -139,8 +141,8 @@ export class PostDealComponent {
   dealFormGroup: UntypedFormGroup = new UntypedFormGroup({});
   selectedDealId = '';
   isActionInProgress = signal(true);
-  title = 'Edit Deal';
-  buttonTitle = 'UPDATE DEAL';
+  title = 'Add Deal';
+  buttonTitle = 'ADD DEAL';
   selectedDealLocal: DealDataItem = new DealDataItem();
   categoriesLocal: Category[] = [];
   filteredCategoriesLocal: Category[] = [];
@@ -157,6 +159,7 @@ export class PostDealComponent {
   platformId = inject(PLATFORM_ID);
   transferState = inject(TransferState);
   route = inject(ActivatedRoute);
+  location = inject(Location);
   fb = inject(UntypedFormBuilder);
   dealsService = inject(DealsService);
   dealsStoreService = inject(DealsStoreService);
@@ -176,6 +179,9 @@ export class PostDealComponent {
     }
 
     this.buildForm();
+
+    // Load data from store or API
+    this.loadDropdownData();
 
     if (isPlatformServer(this.platformId)) {
       this.dealsStoreService.updateCategories(this.transferState.get(makeStateKey('categoriesTable'), []));
@@ -258,7 +264,10 @@ export class PostDealComponent {
     if (!d) return;
     if (d.id) {
       this.title = 'Edit Deal';
-      this.buttonTitle = 'Update Deal';
+      this.buttonTitle = 'UPDATE DEAL';
+    } else {
+      this.title = 'Add Deal';
+      this.buttonTitle = 'ADD DEAL';
     }
     this.dealFormGroup.patchValue({
       title: d.title,
@@ -291,36 +300,123 @@ export class PostDealComponent {
     if (this.dealFormGroup.invalid) return;
     this.isActionInProgress.set(true);
     const form = this.dealFormGroup.value;
-    const deal = new DealDataItem();
-    Object.assign(deal, form);
-    deal.tags = (form.type || []).join(',');
-    deal.id = this.selectedDealLocal.id;
-    deal.postedDate = new Date().toDateString();
-    deal.postedBy = 'Admin';
-    const sDate = new Date(form.startDate);
-    deal.startDate = `${sDate.getMonth() + 1}`.padStart(2, '0') + '/' + `${sDate.getDate()}`.padStart(2, '0') + '/' + sDate.getFullYear();
-    const eDate = new Date(form.endDate);
-    deal.endDate = `${eDate.getMonth() + 1}`.padStart(2, '0') + '/' + `${eDate.getDate()}`.padStart(2, '0') + '/' + eDate.getFullYear();
+
+    // Create the deal object in the correct format for the API
+    const dealData: DealDataItemRequest = {
+      title: form.title,
+      description: form.description,
+      imageUrl: form.imageUrl,
+      dealUrl: form.dealUrl,
+      startDate: form.startDate,
+      endDate: form.endDate,
+      highlight: form.highlight,
+      highlightColor: form.highlightColor,
+      originalPrice: form.originalPrice?.toString() || '',
+      currentPrice: form.currentPrice?.toString() || '',
+      discount: form.discount?.toString() || '',
+      discountType: form.discountType,
+      active: form.active?.toString() || '',
+      approved: form.approved,
+      country: form.country,
+      city: form.city || '',
+      pinCode: form.pinCode || '',
+      merchant: form.merchant,
+      tags: (form.type || []).join(','),
+      category: form.category,
+      brand: form.brand,
+      expired: form.expired,
+      postedDate: new Date().toDateString(),
+      postedBy: 'Admin'
+    };
+
+    // Format dates properly
+    if (form.startDate) {
+      const sDate = new Date(form.startDate);
+      dealData.startDate = `${sDate.getMonth() + 1}`.padStart(2, '0') + '/' + `${sDate.getDate()}`.padStart(2, '0') + '/' + sDate.getFullYear();
+    }
+
+    if (form.endDate) {
+      const eDate = new Date(form.endDate);
+      dealData.endDate = `${eDate.getMonth() + 1}`.padStart(2, '0') + '/' + `${eDate.getDate()}`.padStart(2, '0') + '/' + eDate.getFullYear();
+    }
+
     this.dealFormGroup.disable();
-    const action$ = deal.id ? this.dealsService.updateDeal(deal) : this.dealsService.postDeal(deal);
-    action$.subscribe({
-      next: () => {
-        this.router.navigateByUrl('/admin/deals-list');
-      },
-      error: () => {
-        this.dealFormGroup.enable();
-        this.isActionInProgress.set(false);
-      },
-      complete: () => {
-        this.isActionInProgress.set(false);
-      }
-    });
+
+    if (this.selectedDealId) {
+      // For updates, convert to DealDataItem format
+      const updateDeal = new DealDataItem();
+      Object.assign(updateDeal, dealData);
+      updateDeal.id = this.selectedDealId;
+      updateDeal.tags = dealData.tags;
+
+      this.dealsService.updateDeal(updateDeal).subscribe({
+        next: () => {
+          this.router.navigateByUrl('/admin/deals-list');
+        },
+        error: (error) => {
+          console.error('Error updating deal:', error);
+          this.dealFormGroup.enable();
+          this.isActionInProgress.set(false);
+        },
+        complete: () => {
+          this.isActionInProgress.set(false);
+        }
+      });
+    } else {
+      // For new deals, use postDeal
+      this.dealsService.postDeal(dealData).subscribe({
+        next: () => {
+          this.router.navigateByUrl('/admin/deals-list');
+        },
+        error: (error) => {
+          console.error('Error creating deal:', error);
+          this.dealFormGroup.enable();
+          this.isActionInProgress.set(false);
+        },
+        complete: () => {
+          this.isActionInProgress.set(false);
+        }
+      });
+    }
   }
 
-  inputChangeHandler($event: any) {}
+  inputChangeHandler(event: any) {}
+
+  onCategoryInputChange(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    if (!value) {
+      this.filteredCategoriesLocal = [...this.categoriesLocal];
+    } else {
+      this.filteredCategoriesLocal = this.categoriesLocal.filter(cat =>
+        cat.title.toLowerCase().includes(value.toLowerCase())
+      );
+    }
+  }
+
+  onBrandInputChange(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    if (!value) {
+      this.filteredBrands = [...this.brandsLocal];
+    } else {
+      this.filteredBrands = this.brandsLocal.filter(brand =>
+        brand.title.toLowerCase().includes(value.toLowerCase())
+      );
+    }
+  }
+
+  onMerchantInputChange(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    if (!value) {
+      this.filteredMerchants = [...this.merchantsLocal];
+    } else {
+      this.filteredMerchants = this.merchantsLocal.filter(merchant =>
+        merchant.title.toLowerCase().includes(value.toLowerCase())
+      );
+    }
+  }
 
   closePostDeal($event: any) {
-    this.router.navigateByUrl('/admin/deals-list');
+    this.location.back();
   }
 
   merchantFilter(value: string): Merchant[] {
@@ -335,9 +431,75 @@ export class PostDealComponent {
     return this.categoriesLocal.filter(c => c.title.toLowerCase().includes(value.toLowerCase()));
   }
 
-  compareFunction(o1: any, o2: any) {
-    return o1?.name === o2?.name && o1?.code === o2?.code;
+  loadDropdownData() {
+    // Check if data is already in store
+    const currentCategories = this.categories();
+    const currentDealTypes = this.dealTypes();
+    const currentBrands = this.brands();
+    const currentMerchants = this.merchants();
+
+    // Load data from API if not available in store
+    if (!currentCategories.length) {
+      this.dealsService.getCategoriesByCountry('usa', this.platformId).subscribe({
+        next: (categories) => {
+          this.dealsStoreService.updateCategories(categories);
+        },
+        error: (error) => console.error('Error loading categories:', error)
+      });
+    }
+
+    if (!currentDealTypes.length) {
+      this.dealsService.getDealTypes('usa', this.platformId).subscribe({
+        next: (dealTypes) => {
+          this.dealsStoreService.updateDealTypes(dealTypes);
+        },
+        error: (error) => console.error('Error loading deal types:', error)
+      });
+    }
+
+    if (!currentBrands.length) {
+      this.dealsService.getBrands('usa').subscribe({
+        next: (brands) => {
+          this.dealsStoreService.updateBrands(brands);
+        },
+        error: (error) => console.error('Error loading brands:', error)
+      });
+    }
+
+    if (!currentMerchants.length) {
+      this.dealsService.getMerchants('usa').subscribe({
+        next: (merchants) => {
+          this.dealsStoreService.updateMerchants(merchants);
+        },
+        error: (error) => console.error('Error loading merchants:', error)
+      });
+    }
   }
 
-  // ... rest unchanged
+  // Helper methods for modern UI
+  getDealTypeIcon(typeCode: string): string {
+    const iconMap: { [key: string]: string } = {
+      'black-friday': 'local_offer',
+      'cyber-monday': 'shopping_cart',
+      'flash-sale': 'flash_on',
+      'clearance': 'clear_all',
+      'seasonal': 'event',
+      'limited-time': 'timer',
+      'bundle': 'inventory_2',
+      'free-shipping': 'local_shipping',
+      'default': 'label'
+    };
+    return iconMap[typeCode] || iconMap['default'];
+  }
+
+  getCountryFlag(country: string): string {
+    const flagMap: { [key: string]: string } = {
+      'usa': '🇺🇸',
+      'india': '🇮🇳',
+      'uk': '🇬🇧',
+      'canada': '🇨🇦',
+      'australia': '🇦🇺'
+    };
+    return flagMap[country] || '🏳️';
+  }
 }

@@ -108,16 +108,29 @@
                 </div>
                 <div class="section-content">
                     <div class="feedback-list">
-                        <article class="feedback-item" *ngFor="let feedback of feedbackItems" [ngClass]="feedback.category">
-                            <div>
+                        <article class="feedback-item" *ngFor="let feedback of feedbackItems; let i = index" [ngClass]="feedback.category">
+                            <div class="item-content">
                                 <h4>{{ feedback.user }}</h4>
                                 <p>{{ feedback.comment }}</p>
                                 <div class="rating">
                                     <span *ngFor="let star of [1,2,3,4,5]" [class.filled]="star <= feedback.rating">★</span>
                                 </div>
                             </div>
-                            <div class="feedback-meta">
-                                <span class="time">{{ feedback.time }}</span>
+                            <div class="item-actions">
+                                <div class="feedback-meta">
+                                    <span class="time">{{ feedback.time }}</span>
+                                </div>
+                                <div class="action-buttons">
+                                    <button class="action-btn view-btn" (click)="onFeedbackAction('view', feedback, i)" mat-icon-button>
+                                        <i class="ri-eye-line"></i>
+                                    </button>
+                                    <button class="action-btn read-btn" (click)="onFeedbackAction('mark-read', feedback, i)" mat-icon-button [class.active]="feedback.read">
+                                        <i class="ri-mail-open-line"></i>
+                                    </button>
+                                    <button class="action-btn delete-btn" (click)="onFeedbackAction('delete', feedback, i)" mat-icon-button>
+                                        <i class="ri-delete-bin-line"></i>
+                                    </button>
+                                </div>
                             </div>
                         </article>
                     </div>
@@ -135,14 +148,27 @@
                 </div>
                 <div class="section-content">
                     <div class="requests-list">
-                        <article class="request-item" *ngFor="let request of newRequests" [ngClass]="request.priority">
-                            <div>
+                        <article class="request-item" *ngFor="let request of newRequests; let i = index" [ngClass]="request.priority">
+                            <div class="item-content">
                                 <h4>{{ request.type }}</h4>
                                 <p>{{ request.merchant }}</p>
                             </div>
-                            <div class="request-meta">
-                                <span class="pill" [ngClass]="request.status">{{ request.status }}</span>
-                                <small>{{ request.submitted }}</small>
+                            <div class="item-actions">
+                                <div class="request-meta">
+                                    <span class="pill" [ngClass]="request.status">{{ request.status }}</span>
+                                    <small>{{ request.submitted }}</small>
+                                </div>
+                                <div class="action-buttons">
+                                    <button class="action-btn view-btn" (click)="onRequestAction('view', request, i)" mat-icon-button>
+                                        <i class="ri-eye-line"></i>
+                                    </button>
+                                    <button class="action-btn status-btn" (click)="onRequestAction('change-status', request, i)" mat-icon-button>
+                                        <i class="ri-edit-line"></i>
+                                    </button>
+                                    <button class="action-btn delete-btn" (click)="onRequestAction('delete', request, i)" mat-icon-button>
+                                        <i class="ri-delete-bin-line"></i>
+                                    </button>
+                                </div>
                             </div>
                         </article>
                     </div>

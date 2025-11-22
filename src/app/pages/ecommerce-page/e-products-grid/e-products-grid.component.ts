@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit, PLATFORM_ID, inject } from '@angular/core
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { Router } from '@angular/router';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -13,6 +14,7 @@ import { RouterLink } from '@angular/router';
 })
 export class EProductsGridComponent implements OnInit, OnDestroy {
     private readonly platformId = inject(PLATFORM_ID);
+    private readonly router = inject(Router);
     private clockIntervalId?: ReturnType<typeof setInterval>;
 
     greeting = '';
@@ -114,10 +116,10 @@ export class EProductsGridComponent implements OnInit, OnDestroy {
     ];
 
     readonly feedbackItems = [
-        { user: 'Priya S.', rating: 5, comment: 'Amazing deals on sarees! Found exactly what I needed.', time: '2h ago', category: 'positive' },
-        { user: 'Anjali M.', rating: 4, comment: 'Good selection but delivery took longer than expected.', time: '4h ago', category: 'neutral' },
-        { user: 'Kavita R.', rating: 5, comment: 'Love the boutique partnerships. Quality is excellent!', time: '6h ago', category: 'positive' },
-        { user: 'Meera K.', rating: 3, comment: 'More size options needed for plus-size customers.', time: '8h ago', category: 'suggestion' }
+        { user: 'Priya S.', rating: 5, comment: 'Amazing deals on sarees! Found exactly what I needed.', time: '2h ago', category: 'positive', read: false },
+        { user: 'Anjali M.', rating: 4, comment: 'Good selection but delivery took longer than expected.', time: '4h ago', category: 'neutral', read: false },
+        { user: 'Kavita R.', rating: 5, comment: 'Love the boutique partnerships. Quality is excellent!', time: '6h ago', category: 'positive', read: false },
+        { user: 'Meera K.', rating: 3, comment: 'More size options needed for plus-size customers.', time: '8h ago', category: 'suggestion', read: false }
     ];
 
     readonly newRequests = [
@@ -175,7 +177,7 @@ export class EProductsGridComponent implements OnInit, OnDestroy {
     // Action handlers
     onPostDeal(): void {
         console.log('Navigate to post deal page');
-        // Add navigation logic here
+        this.router.navigate(['/admin/post-deal']);
     }
 
     onWebsiteMessage(): void {
@@ -232,6 +234,47 @@ export class EProductsGridComponent implements OnInit, OnDestroy {
                 break;
             case 'send-notification':
                 this.onSendNotification();
+                break;
+        }
+    }
+
+    // Feedback and Request action handlers
+    onFeedbackAction(action: string, feedback: any, index: number): void {
+        switch (action) {
+            case 'view':
+                console.log('View feedback details:', feedback);
+                // Add navigation to feedback details modal/page
+                break;
+            case 'mark-read':
+                console.log('Mark feedback as read:', feedback);
+                // Toggle read status
+                feedback.read = !feedback.read;
+                break;
+            case 'delete':
+                console.log('Delete feedback:', feedback);
+                // Remove feedback from array
+                this.feedbackItems.splice(index, 1);
+                break;
+        }
+    }
+
+    onRequestAction(action: string, request: any, index: number): void {
+        switch (action) {
+            case 'view':
+                console.log('View request details:', request);
+                // Add navigation to request details modal/page
+                break;
+            case 'change-status':
+                console.log('Change request status:', request);
+                // Cycle through status options
+                const statuses = ['pending', 'under_review', 'approved', 'rejected'];
+                const currentIndex = statuses.indexOf(request.status);
+                request.status = statuses[(currentIndex + 1) % statuses.length];
+                break;
+            case 'delete':
+                console.log('Delete request:', request);
+                // Remove request from array
+                this.newRequests.splice(index, 1);
                 break;
         }
     }

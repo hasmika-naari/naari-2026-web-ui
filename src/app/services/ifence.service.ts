@@ -60,7 +60,7 @@ export class IfenceService {
 
   getNotifications(userId : any) : Observable<any>{
     
-    let queryUrl = this.appConstants.BASE_API_URL +  '/api/wif-get-notifications/'+userId;
+    let queryUrl = this.appConstants.BASE_API_URL +  '/api/naari-get-notifications/'+userId;
 
     return this.http.get<any>(queryUrl);
   }

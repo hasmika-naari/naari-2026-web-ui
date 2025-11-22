@@ -11,6 +11,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { serverRoutes } from './app.routes.server';
 import { AppInitService } from './services/app-init.service';
 import { provideEnvironmentInitializer } from '@angular/core';
+import { FeathericonsModule } from './icons/feathericons/feathericons.module';
 
 //consolie.info('Server: Angular CDK version', CDK_VERSION.full);
 //consolie.info('Server: Angular Material version', MAT_VERSION.full);
@@ -21,7 +22,7 @@ const serverConfig: ApplicationConfig = {
         provideServerRendering(withRoutes(serverRoutes)),
         provideClientHydration(),
         provideHttpClient(withFetch(), withInterceptorsFromDi()),
-        importProvidersFrom([BrowserModule, BrowserAnimationsModule, CarouselModule]),
+        importProvidersFrom([BrowserModule, BrowserAnimationsModule, CarouselModule, FeathericonsModule]),
          provideAnimations(),
          AppInitService,
          provideEnvironmentInitializer(() => async () => {

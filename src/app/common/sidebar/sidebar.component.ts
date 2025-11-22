@@ -29,7 +29,7 @@ export class SidebarComponent {
 
     menuItems: SidebarMenuItem[] = [
         // Dashboard overview
-        { label: 'Dashboard', icon: 'bar-chart-2', route: '/pages/ecommerce-page', color: '#5D87FF' },
+        { label: 'Dashboard', icon: 'bar-chart-2', route: '/admin/dashboard', color: '#5D87FF' },
 
         // Deal & merchant operations
         { label: 'Deals', icon: 'shopping-cart', route: '/admin/deals-list', color: '#5D87FF' },
