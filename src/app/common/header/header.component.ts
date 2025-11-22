@@ -1,15 +1,16 @@
 import { Component, HostListener, Inject, PLATFORM_ID } from '@angular/core';
-import { NgClass, isPlatformBrowser } from '@angular/common';
+import { NgClass, NgIf, isPlatformBrowser } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { FeathericonsModule } from '../../icons/feathericons/feathericons.module';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ToggleService } from './toggle.service';
 import { DrawerModule } from 'primeng/drawer';
+import { UserStoreService } from '@app/services/store/user-store.service';
 
 @Component({
     selector: 'app-header',
-    imports: [FeathericonsModule, MatButtonModule, MatMenuModule, DrawerModule, RouterLink, NgClass],
+    imports: [FeathericonsModule, MatButtonModule, MatMenuModule, DrawerModule, RouterLink, NgClass, NgIf],
     templateUrl: './header.component.html',
     styleUrl: './header.component.scss'
 })
@@ -17,6 +18,8 @@ export class HeaderComponent {
 
     constructor(
         public toggleService: ToggleService,
+        private router: Router,
+        private userStore: UserStoreService,
         @Inject(PLATFORM_ID) private platformId: object
     ) {
         this.toggleService.isToggled$.subscribe(isToggled => {
@@ -35,7 +38,7 @@ export class HeaderComponent {
     }
 
     hasScrolled = false;
-    private isBrowser = false;
+    isBrowser = false;
 
     @HostListener('window:scroll')
     onWindowScroll() {
@@ -55,6 +58,13 @@ export class HeaderComponent {
 
     openProfileDrawer() {
         this.profileDrawerVisible = true;
+    }
+
+    logout(event?: Event) {
+        event?.preventDefault();
+        this.userStore.logout();
+        this.profileDrawerVisible = false;
+        this.router.navigateByUrl('/');
     }
 
 }

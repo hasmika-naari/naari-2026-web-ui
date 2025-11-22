@@ -36,6 +36,9 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { faWhatsapp, faHotjar } from '@fortawesome/free-brands-svg-icons';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+
 
 import { SeoService } from '@app/services/seo/seo.service';
 import { AppUtilService } from '@app/services/app.util.service';
@@ -55,21 +58,24 @@ import _ from 'lodash';
 import { response } from 'express';
 import { AmazonDealDialogComponent } from '../amazon-deal-dialog/amazon-deal-dialog.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+type ToastPosition = 'top-right' | 'bottom-center';
 
 @Component({
   selector: 'app-deals-image-view',
   standalone: true,
   imports: [
     CommonModule, MatMenuModule, MatIconModule, FontAwesomeModule, RouterModule, MatChipsModule,
-    MatButtonModule, FormsModule, MatSelectModule, MatCardModule, MatAutocompleteModule,
-    MatProgressBarModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatDialogModule,
-    MatCheckboxModule, MatSidenavModule, MatPaginatorModule,
+  MatButtonModule, FormsModule, MatSelectModule, MatCardModule, MatAutocompleteModule,
+  MatProgressBarModule, MatFormFieldModule, ReactiveFormsModule, MatInputModule, MatDialogModule,
+  MatCheckboxModule, MatSidenavModule, MatPaginatorModule, ToastModule,
     FooterWorkifenceComponent, AmazonDealDialogComponent, MatDatepickerModule
   ],
   templateUrl: './deals-image-view.component.html',
   styleUrls: ['./deals-image-view.component.scss'],
+  providers: [MessageService],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
@@ -224,7 +230,9 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
   readonly tabletPageSize = 18;
   readonly mobilePageSize = 12;
   totalDeals = 0;
+  private dealActionLoading: Record<string, boolean> = {};
   @ViewChild('sidenav') sidenav?: MatSidenav;
+  toastPosition: ToastPosition = 'top-right';
 
   private platformId = inject(PLATFORM_ID);
   private transferState = inject(TransferState);
@@ -235,6 +243,7 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
   private dealsStoreService = inject(DealsStoreService);
   private router = inject(Router);
   private deviceService = inject(DeviceDetectorService);
+  private messageService = inject(MessageService);
 
   pCategories = this.dealsStoreService.getPcCategories();
   categories = this.dealsStoreService.getCategories();
@@ -313,9 +322,21 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
         this.seoService.setMetaDescription(content);
         this.seoService.setMetaTitle(title);
 
-        if (this.deviceService.isDesktop()) this.isDesktop = true;
-        else if (this.deviceService.isMobile()) this.isMobile = true;
-        else if (this.deviceService.isTablet()) this.isTablet = true;
+        if (this.deviceService.isDesktop()) {
+          this.isDesktop = true;
+          this.isMobile = false;
+          this.isTablet = false;
+        } else if (this.deviceService.isMobile()) {
+          this.isMobile = true;
+          this.isDesktop = false;
+          this.isTablet = false;
+        } else if (this.deviceService.isTablet()) {
+          this.isTablet = true;
+          this.isDesktop = false;
+          this.isMobile = false;
+        }
+
+        this.updateToastPosition();
 
   this.applyResponsivePageSize();
 
@@ -326,6 +347,7 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
     } else {
       this.fetchData();
       this.applyResponsivePageSize();
+      this.updateToastPosition();
     }
   }
 
@@ -451,11 +473,8 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
   }
 
   deleteDeal(deal: DealDataItem) {
-     this.dealsService.deleteDeals(deal.id).subscribe(res => {
-      this.dealsService.getDealsByCountry('usa', this.platformId).subscribe(deals => {
-        this.dealsStoreService.updateAllDeals(deals, this.selectedStatus, this.selectedCategory,  this.selectedText);
-      });
-    });
+    const request$ = this.dealsService.deleteDeals(deal.id);
+    this.runDealAction(deal, request$, 'Deal deleted successfully', 'Unable to delete deal');
   }
 
    deleteSelectedDeals($event: any){
@@ -517,24 +536,23 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
   }
 
   deActivateDeal(deal: DealDataItem) {
-    let uDeal: DealDataItem = _.cloneDeep(deal);
+    const uDeal: DealDataItem = _.cloneDeep(deal);
     uDeal.active = 'false';
-    this.dealsService.updateDeal(uDeal).subscribe(res => {
-      this.dealsService.getDealsByCountry('usa', this.platformId).subscribe(deals => {
-        this.dealsStoreService.updateAllDeals(deals, this.selectedStatus, this.selectedCategory,  this.selectedText);
-      });
-    });
+    const request$ = this.dealsService.updateDeal(uDeal);
+    this.runDealAction(deal, request$, 'Deal paused', 'Unable to pause deal');
   }
   activateDeal(deal: DealDataItem) {
-      let uDeal: DealDataItem = _.cloneDeep(deal);
+    const uDeal: DealDataItem = _.cloneDeep(deal);
     uDeal.active = 'true';
-    this.dealsService.updateDeal(uDeal).subscribe(res => {
-      this.dealsService.getDealsByCountry('usa', this.platformId).subscribe(deals => {
-        this.dealsStoreService.updateAllDeals(deals, this.selectedStatus, this.selectedCategory,  this.selectedText);
-      });
-    });
+    const request$ = this.dealsService.updateDeal(uDeal);
+    this.runDealAction(deal, request$, 'Deal activated', 'Unable to activate deal');
   }
-  approveDeal(deal: DealDataItem) {}
+  approveDeal(deal: DealDataItem) {
+    const uDeal: DealDataItem = _.cloneDeep(deal);
+    uDeal.approved = true;
+    const request$ = this.dealsService.updateDeal(uDeal);
+    this.runDealAction(deal, request$, 'Deal approved', 'Unable to approve deal');
+  }
   menuClickHandler(event: MouseEvent, deal: DealDataItem) { event.stopPropagation(); }
 
   showStartDate(startDate: string) {
@@ -612,7 +630,9 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('admin/post-deal');
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this.subs.forEach(sub => sub.unsubscribe());
+  }
   
   onPageChange(event: PageEvent): void {
     this.pageIndex = event.pageIndex;
@@ -661,6 +681,60 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
     const start = this.pageIndex * this.pageSize;
     const end = start + this.pageSize;
     this.currentPageDeals = this.filteredDeals.slice(start, end);
+  }
+
+  isDealActionInProgress(dealId: string | number | null | undefined): boolean {
+    if (dealId === null || dealId === undefined) return false;
+    return !!this.dealActionLoading[String(dealId)];
+  }
+
+  private setDealActionState(dealId: string | number | null | undefined, loading: boolean): void {
+    if (dealId === null || dealId === undefined) return;
+    this.dealActionLoading[String(dealId)] = loading;
+    this.cd.markForCheck();
+  }
+
+  private runDealAction(deal: DealDataItem, action$: Observable<any>, successMessage: string, errorMessage = 'Action failed'): void {
+    const dealId = deal?.id;
+    this.setDealActionState(dealId, true);
+
+    const sub = action$
+      .pipe(finalize(() => this.setDealActionState(dealId, false)))
+      .subscribe({
+        next: () => {
+          this.refreshDealsSilently();
+          this.showToast(successMessage, 'success');
+        },
+        error: (error) => {
+          console.error('Deal action failed', error);
+          this.showToast(errorMessage, 'error');
+        }
+      });
+
+    this.subs.push(sub);
+  }
+
+  private refreshDealsSilently(): void {
+    const sub = this.dealsService.getDealsByCountry('usa', this.platformId).subscribe(deals => {
+      this.dealsStoreService.updateAllDeals(deals, this.selectedStatus, this.selectedCategory, this.selectedText);
+    });
+    this.subs.push(sub);
+  }
+
+  private updateToastPosition(): void {
+    this.toastPosition = this.isMobile ? 'bottom-center' : 'top-right';
+  }
+
+  private showToast(message: string, type: 'success' | 'error'): void {
+    const severity = type === 'success' ? 'success' : 'error';
+    const summary = type === 'success' ? 'Success' : 'Error';
+    this.messageService.add({
+      severity,
+      summary,
+      detail: message,
+      life: 3500,
+      closable: true
+    });
   }
 
   private resetPaginator(): void {

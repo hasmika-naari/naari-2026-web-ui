@@ -1,3 +1,4 @@
+<p-toast *ngIf="browser" [position]="toastPosition"></p-toast>
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #sidenav mode="over" class="sidenav bg-white naari-card filter-sidenav">
     <!-- Filters -->
@@ -315,6 +316,12 @@
           <div *ngFor="let deal of currentPageDeals" class="col-12 col-sm-6 col-md-2 col-lg-{{ viewCol }}" 
               style="padding-left: 8px;padding-right: 8px;">
             <mat-card class="deal-card" [class.deal-card-selected]="deal.selected">
+              <mat-progress-bar
+                *ngIf="isDealActionInProgress(deal.id)"
+                mode="indeterminate"
+                color="accent"
+                class="deal-action-progress">
+              </mat-progress-bar>
               <div class="checkbox-wrapper">
                 <mat-checkbox [ngModel]="deal.selected" color="primary" (ngModelChange)="setDealSelected($event, deal)">
                 </mat-checkbox>

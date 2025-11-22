@@ -590,6 +590,43 @@
  
 }
 
+:host ::ng-deep .p-toast {
+  .p-toast-message {
+    border-radius: 14px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.2);
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 0.3px;
+    padding: 18px 22px;
+    min-width: 320px;
+    max-width: 420px;
+  }
+
+  .p-toast-summary {
+    font-weight: 700;
+  }
+
+  .p-toast-message-success {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.95), rgba(22, 163, 74, 0.95));
+    color: #ffffff;
+  }
+
+  .p-toast-message-error {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.95), rgba(220, 38, 38, 0.95));
+    color: #ffffff;
+  }
+}
+
+@media (max-width: 600px) {
+  :host ::ng-deep .p-toast {
+    .p-toast-message {
+      min-width: unset;
+      width: calc(100vw - 32px);
+      margin: 0 16px;
+    }
+  }
+}
+
 .products-filter-card{
   box-shadow: unset !important;
   border-radius: 16px;
@@ -688,6 +725,16 @@
     position: absolute;
     top: 10px;
     left: 10px;
+  }
+
+  .deal-action-progress {
+    position: absolute;
+    top: -12px;
+    left: -12px;
+    right: -12px;
+    height: 4px;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 6px 16px rgba(191, 36, 147, 0.2);
   }
 
   .deal-badge-stack {
