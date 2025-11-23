@@ -625,6 +625,13 @@ export class DealsImageViewComponent implements OnInit, OnDestroy {
     window.open(deal.dealUrl, '_blank');
   }
 
+  navigateToDeal(deal: DealDataItem) {
+    if (!deal?.id) {
+      return;
+    }
+    this.router.navigate(['/deals/deal', deal.id]);
+  }
+
   postaDeal(event: any) {
     this.dealsStoreService.updateSelectedDeal(new DealDataItem());
     this.router.navigateByUrl('admin/post-deal');

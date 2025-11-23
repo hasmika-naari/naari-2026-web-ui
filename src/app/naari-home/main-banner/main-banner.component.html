@@ -5,7 +5,14 @@
             <div class="container " [class.container-position]="desktop" [class.container-position-mobile]="!desktop" >
                 <div class="banner-content-wrapper animate__animated animate__fadeInUp animate__delay-1s" *ngIf="browser">
                     <div class="banner-content">
-                        <span class="sub-title"><span class="sub-title-line"></span>Savings Hub</span>
+                        <div class="banner-subtitle-row">
+                            <span class="sub-title"><span class="sub-title-line"></span>Savings Hub</span>
+                            <a *ngIf="!desktop" routerLink="/black-friday" class="mobile-bf-chip" aria-label="Go to Black Friday deals">
+                                <span class="chip-prefix">⚡</span>
+                                <span class="chip-text">Black Friday</span>
+                                <span class="chip-suffix">🎁</span>
+                            </a>
+                        </div>
                         <h1 class="sub-message">Chic deals for her, where style meets savings.</h1>
                     </div>
                     

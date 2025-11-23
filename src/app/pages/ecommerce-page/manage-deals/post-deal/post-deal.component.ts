@@ -5,6 +5,7 @@ import {
   inject,
   Inject,
   makeStateKey,
+  OnDestroy,
   PLATFORM_ID,
   signal,
   Signal,
@@ -58,6 +59,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
+import { Subscription } from 'rxjs';
 import {
   trigger,
   transition,
@@ -104,7 +106,7 @@ import {
     ])
   ]
 })
-export class PostDealComponent {
+export class PostDealComponent implements OnDestroy {
   editor!: Editor;
   toolbar: Toolbar = [
     ['bold', 'italic'],
@@ -154,6 +156,7 @@ export class PostDealComponent {
   filteredDealTypesLocal: DealType[] = [];
   getDealActionInProgress: boolean = false;
   isBrowser = false;
+  private subscriptions: Subscription[] = [];
 
   router: Router = inject(Router);
   platformId = inject(PLATFORM_ID);
@@ -178,7 +181,8 @@ export class PostDealComponent {
       this.editor = new Editor();
     }
 
-    this.buildForm();
+  this.buildForm();
+  this.setupCategoryAutocomplete();
 
     // Load data from store or API
     this.loadDropdownData();
@@ -228,6 +232,9 @@ export class PostDealComponent {
 
         this.merchantsLocal = allMerchants;
         this.filteredMerchants = [...allMerchants];
+
+        const currentCategoryValue = this.dealFormGroup.get('category')?.value ?? '';
+        this.applyCategoryFilter(currentCategoryValue);
       }
     });
   }
@@ -431,6 +438,32 @@ export class PostDealComponent {
     return this.categoriesLocal.filter(c => c.title.toLowerCase().includes(value.toLowerCase()));
   }
 
+  private setupCategoryAutocomplete(): void {
+    const categoryControl = this.dealFormGroup.get('category');
+    if (!categoryControl) {
+      return;
+    }
+
+    const sub = categoryControl.valueChanges.subscribe(value => {
+      this.applyCategoryFilter((value ?? '').toString());
+    });
+
+    this.subscriptions.push(sub);
+    this.applyCategoryFilter(categoryControl.value ?? '');
+  }
+
+  private applyCategoryFilter(value: string): void {
+    const search = (value || '').toLowerCase();
+    if (!search) {
+      this.filteredCategoriesLocal = [...this.categoriesLocal];
+      return;
+    }
+
+    this.filteredCategoriesLocal = this.categoriesLocal.filter(cat =>
+      cat.title?.toLowerCase().includes(search) || cat.code?.toLowerCase().includes(search)
+    );
+  }
+
   loadDropdownData() {
     // Check if data is already in store
     const currentCategories = this.categories();
@@ -501,5 +534,12 @@ export class PostDealComponent {
       'australia': '🇦🇺'
     };
     return flagMap[country] || '🏳️';
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+    if (this.editor) {
+      this.editor.destroy();
+    }
   }
 }

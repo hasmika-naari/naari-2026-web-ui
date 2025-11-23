@@ -315,7 +315,7 @@
         <div class="row products-wrapper">
           <div *ngFor="let deal of currentPageDeals" class="col-12 col-sm-6 col-md-2 col-lg-{{ viewCol }}" 
               style="padding-left: 8px;padding-right: 8px;">
-            <mat-card class="deal-card" [class.deal-card-selected]="deal.selected">
+            <mat-card class="deal-card" [class.deal-card-selected]="deal.selected" (click)="navigateToDeal(deal)" tabindex="0" role="button">
               <mat-progress-bar
                 *ngIf="isDealActionInProgress(deal.id)"
                 mode="indeterminate"
@@ -323,7 +323,7 @@
                 class="deal-action-progress">
               </mat-progress-bar>
               <div class="checkbox-wrapper">
-                <mat-checkbox [ngModel]="deal.selected" color="primary" (ngModelChange)="setDealSelected($event, deal)">
+                <mat-checkbox [ngModel]="deal.selected" color="primary" (ngModelChange)="setDealSelected($event, deal)" (click)="$event.stopPropagation()">
                 </mat-checkbox>
               </div>
 
@@ -333,8 +333,12 @@
                 </div>
               </div>
 
-              <a [routerLink]="['/deals/deal/', deal.id]" class="image-wrapper">
+              <a [routerLink]="['/deal', deal.id]" class="image-wrapper">
                 <img [src]="deal.imageUrl" alt="deal image">
+
+                <div class="discount-overlay" *ngIf="getDiscountPercent(deal) as discount">
+                  <span class="discount-overlay__label">{{ discount }}% OFF</span>
+                </div>
               </a>
 
               <div class="deal-badge-stack" *ngIf="deal.highlight">
@@ -348,7 +352,7 @@
 
               <span class="merchant-name">{{ deal.merchant }}</span>
 
-              <a [routerLink]="['/deals/deal/', deal.id]" class="deal-title">
+              <a [routerLink]="['/deal', deal.id]" class="deal-title">
                 {{ deal.title }}
               </a>
 
@@ -370,11 +374,7 @@
 
               <div class="divider mt-2"></div>
 
-              <div class="discount-ribbon" *ngIf="getDiscountPercent(deal) as discount">
-                <span class="discount-badge">
-                  {{ discount }}% OFF
-                </span>
-              </div>
+              
 
               <div class="deal-actions d-flex justify-content-between align-items-center">
                 <span class="approval-status">

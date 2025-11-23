@@ -196,6 +196,13 @@ body {
     }
 }
 
+html.drawer-scroll-lock,
+body.drawer-scroll-lock {
+    overflow: hidden !important;
+    touch-action: none;
+    overscroll-behavior: none;
+}
+
 @keyframes gradientShift {
     0% {
         background-position: 0% 50%;

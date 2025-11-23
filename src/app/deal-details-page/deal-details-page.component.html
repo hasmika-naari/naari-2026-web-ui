@@ -19,12 +19,17 @@
            
             <div class="title-filter-bar d-flex flex-wrap align-items-center justify-content-between">
               <!-- Left: Page Title & Breadcrumbs -->
-              <div class="page-title-content animate__animated animate__fadeInDown animate__delay-1s">
-                <ul>
-                  <li><a href="index.html">Home</a></li>
-                  <li>Deal Details</li>
-                </ul>
-              </div>
+                            <div class="page-title-content animate__animated animate__fadeInDown animate__delay-1s">
+                                <ul>
+                                    <li>
+                                        <button type="button" class="breadcrumb-back" (click)="navigateBack($event)">
+                                            <mat-icon>arrow_back</mat-icon>
+                                            <span>Back</span>
+                                        </button>
+                                    </li>
+                                    <li>Deal Details</li>
+                                </ul>
+                            </div>
 
               <!-- Right: Sort Chip -->
               <!-- <div class="chip-filter-row d-flex align-items-center justify-content-end px-2 ">

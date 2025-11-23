@@ -38,9 +38,10 @@
 
   <!-- Black Friday Link -->
   <a routerLink="/black-friday" 
-     class="black-friday-link d-none d-lg-inline-flex align-items-center gap-2 animate__animated animate__fadeInDown animate__delay-1_25s"
-     [class.black-friday-link-sticky]="isSticky"
-     [class.black-friday-link-light]="!color">
+      class="black-friday-link d-none d-lg-inline-flex align-items-center gap-2 animate__animated animate__fadeInDown animate__delay-1_25s"
+      [class.black-friday-link-sticky]="isSticky"
+      [class.black-friday-link-light]="!color"
+      *ngIf="isDesktop">
     <i class='bx bxs-star' style="font-size: 18px;"></i>
     <span>Black Friday</span>
     <i class='bx bx-gift' style="font-size: 16px;"></i>
@@ -78,6 +79,8 @@
       </div>
     </div>
   </div>
+
+    <!-- Mobile Black Friday Link now rendered in hero banner -->
 
   <!-- Navigation Menu - Desktop Only -->
   <div class="collapse navbar-collapse d-none d-lg-flex" *ngIf="isDesktop" id="navbarSupportedContent">
@@ -117,13 +120,13 @@
 </header>
 
 <!-- Custom Apps Drawer (Angular - No PrimeNG) -->
-<div class="apps-drawer-overlay" [class.active]="appsDrawerVisible" (click)="toggleAppsDrawer()" *ngIf="isBrowser"></div>
+<div class="apps-drawer-overlay" [class.active]="appsDrawerVisible" (click)="closeAppsDrawer()" *ngIf="isBrowser"></div>
 <div class="apps-drawer" [class.active]="appsDrawerVisible" *ngIf="isBrowser">
     <div class="apps-drawer-header">
-        <a routerLink="/" (click)="appsDrawerVisible = false">
+        <a routerLink="/" (click)="closeAppsDrawer()">
             <img src="assets/img/guru-class-time-tp-bg-full-h.png" alt="logo" class="drawer-logo">
         </a>
-        <button class="drawer-close-btn" (click)="toggleAppsDrawer()">
+        <button class="drawer-close-btn" (click)="closeAppsDrawer()">
             <i class="icofont-close"></i>
         </button>
     </div>
@@ -132,18 +135,18 @@
         <div class="sidebar-modal-widget">
             <h3 class="title">Additional Links</h3>
             <ul>
-                <li><a (click)="appsDrawerVisible = false" routerLink="/sign-in">Login</a></li>
-                <li><a (click)="appsDrawerVisible = false" routerLink="/register">Register</a></li>
-                <li><a (click)="appsDrawerVisible = false" routerLink="/faq">FAQs</a></li>
+                <li><a (click)="closeAppsDrawer()" routerLink="/sign-in">Login</a></li>
+                <li><a (click)="closeAppsDrawer()" routerLink="/register">Register</a></li>
+                <li><a (click)="closeAppsDrawer()" routerLink="/faq">FAQs</a></li>
             </ul>
         </div>
         
         <div class="sidebar-modal-widget mb-30 mt--25">
             <h3 class="title">Support</h3>
             <ul class="support-link">
-                <li><i class="icon-Double-arrow"></i><a (click)="appsDrawerVisible = false" routerLink="/privacy">Privacy</a></li>
-                <li><i class="icon-Double-arrow"></i><a (click)="appsDrawerVisible = false" routerLink="/terms">Terms</a></li>
-                <li><i class="icon-Double-arrow"></i><a (click)="appsDrawerVisible = false" routerLink="/contact-us">Contact Us</a></li>
+                <li><i class="icon-Double-arrow"></i><a (click)="closeAppsDrawer()" routerLink="/privacy">Privacy</a></li>
+                <li><i class="icon-Double-arrow"></i><a (click)="closeAppsDrawer()" routerLink="/terms">Terms</a></li>
+                <li><i class="icon-Double-arrow"></i><a (click)="closeAppsDrawer()" routerLink="/contact-us">Contact Us</a></li>
             </ul>
         </div>
         

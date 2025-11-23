@@ -115,6 +115,41 @@
       transform: scale(1.05);
       transition-delay: 0.5s;
     }
+
+    .deal-image-container {
+      position: relative;
+
+      .image-link {
+        display: block;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .deal-tags {
+        position: absolute;
+        left: 50%;
+        bottom: 8px;
+        transform: translateX(-50%);
+        width: calc(100% - 24px);
+        display: flex;
+        justify-content: center;
+        pointer-events: none;
+
+        mat-chip-listbox {
+          width: auto;
+          min-width: fit-content;
+          background: rgba(0, 0, 0, 0.55);
+          border-radius: 999px;
+          padding: 0 12px;
+          pointer-events: auto;
+
+          .mat-mdc-chip-selected {
+            background: transparent !important;
+            color: #fff !important;
+          }
+        }
+      }
+    }
     
     .merchant-name {
       font-family: 'Poppins', Tahoma, Geneva, Verdana, sans-serif, Arial, Helvetica,
@@ -133,6 +168,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
+      line-clamp: 1;
       -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
     }
@@ -146,6 +182,7 @@
       overflow: hidden;
       text-overflow: ellipsis !important;
       display: -webkit-box;
+  line-clamp: 2 !important;
       -webkit-line-clamp: 2 !important;
       -webkit-box-orient: vertical !important;
       text-align: left;
@@ -768,6 +805,7 @@
   .text-ellipsis-2 {
     overflow: hidden;
     display: -webkit-box;
+    line-clamp: 2;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;

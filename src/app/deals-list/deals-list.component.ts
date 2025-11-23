@@ -431,6 +431,13 @@ export class DealsListComponent implements OnInit, OnDestroy {
     this.appService.shareOnWhatsApp(selectedDeal);
   }
 
+  navigateToDeal(deal: DealDataItem): void {
+    if (!deal?.id) {
+      return;
+    }
+    this.router.navigate(['/deals/deal', deal.id]);
+  }
+
   /**
    * Update banner background based on deal type
    * @param dealTypeCode - The code of the deal type (e.g., 'blackFriday', 'cyberMonday')

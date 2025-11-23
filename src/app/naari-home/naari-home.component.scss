@@ -390,13 +390,13 @@
 //   }
 // }
 
+
 .deal-card-modern {
-  border-radius: 0.6rem;
-  box-shadow: none;
-  transition: background 0.3s ease, backdrop-filter 0.3s ease;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+  background: #ffffff;
   min-height: 100%;
   height: auto;
   padding: 1rem;
@@ -404,45 +404,10 @@
   overflow: hidden;
   transform: none !important; // Lock position completely
 
-  // Gradient border on hover using pseudo-element
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 0.6rem;
-    padding: 1px;
-    background: transparent;
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-  }
-
   &:hover {
-    background: 
-      radial-gradient(circle at 100% 0%, rgba(184, 31, 137, 0.08) 0%, transparent 25%),
-      rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(15px) saturate(150%);
-    -webkit-backdrop-filter: blur(15px) saturate(150%);
-    transform: none !important; // No movement on hover
-    animation: none !important; // No animation on hover
-
-    &::before {
-      opacity: 1;
-      background: linear-gradient(
-        135deg,
-        rgba(184, 31, 137, 0.25) 0%,
-        rgba(184, 31, 137, 0.15) 25%,
-        transparent 50%,
-        rgba(184, 31, 137, 0.15) 75%,
-        rgba(184, 31, 137, 0.25) 100%
-      );
-    }
+    transform: translateY(-2px);
+    border-color: rgba(184, 31, 137, 0.35);
+    box-shadow: 0 12px 34px rgba(15, 23, 42, 0.18);
   }
 
   .deal-image-wrapper {
@@ -463,6 +428,7 @@
   .text-truncate-2 {
     overflow: hidden;
     display: -webkit-box;
+    line-clamp: 2;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     font-size: 0.95rem;
@@ -494,23 +460,96 @@
     }
   }
 
+  .deal-card-header {
+    gap: 0.75rem;
+  }
+
+  .price-block {
+    justify-content: flex-start;
+    gap: 0.65rem;
+  }
+
+  .action-row {
+    width: 100%;
+  }
+
  .discount-tag {
-  display: inline-block;
-  background-color: #ff3d00; // vibrant red for urgency
-  color: #fff;
-  font-size: 0.75rem; // readable but compact
-  font-weight: 600;
-  padding: 6px 10px;
-  border-radius: 20px; // pill shape
-  letter-spacing: 0.5px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #fff4e3 0%, #ffe4c5 100%);
+    color: #f52121;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 999px;
+  letter-spacing: 0.4px;
+    border: 1px solid rgba(255, 163, 83, 0.55);
   white-space: nowrap;
   line-height: 1;
+  text-transform: uppercase;
   user-select: none;
-  // transition: transform 0.15s ease;
+  backdrop-filter: blur(2px);
+    text-shadow: none;
 
   &:hover {
-    // transform: scale(1.05);
+      box-shadow: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .discount-tag {
+    font-size: 0.9rem;
+    padding: 5px 12px;
+    letter-spacing: 0.25px;
+  }
+}
+
+.load-savings-grid {
+  row-gap: 1.5rem;
+}
+
+@media (max-width: 767px) {
+  .deal-card-modern {
+    padding: 0.85rem;
+    border-radius: 0.9rem;
+  }
+
+  .deal-card-modern .deal-image-wrapper {
+    height: 180px;
+  }
+
+  .deal-card-modern .price-block {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15rem;
+  }
+
+  .deal-card-modern .action-row {
+    gap: 0.75rem;
+    justify-content: space-between;
+    button {
+      flex: 1 1 auto;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .deal-card-modern .icon-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 575px) {
+  .deal-card-modern .deal-image-wrapper {
+    height: 160px;
+  }
+
+  .load-savings-grid {
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 
@@ -572,17 +611,10 @@
         }
     }
     
-    // Completely lock position on hover - no movement allowed
-    &:hover {
-        animation: none !important;
-        transform: none !important;
-    }
-    
-    // Lock child card as well
-    &:hover .deal-card-modern {
-        transform: none !important;
-        animation: none !important;
-    }
+  // Keep hover interactions subtle without affecting animation end-state
+  &:hover {
+    transform: none !important;
+  }
 }
 
 // Section title animations

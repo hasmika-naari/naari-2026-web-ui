@@ -59,6 +59,44 @@
         
     }
 }
+.page-title-content {
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .breadcrumb-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border: none;
+        background: transparent;
+        color: var(--whiteColor);
+        font-weight: 600;
+        padding: 0;
+        cursor: pointer;
+        font-size: 16px;
+
+        mat-icon {
+            font-size: 20px;
+            line-height: 20px;
+        }
+
+        &:hover {
+            color: var(--mainColor);
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--mainColor);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+    }
+}
 #dealmask{
    position: absolute !important;
     left: 0px !important; 

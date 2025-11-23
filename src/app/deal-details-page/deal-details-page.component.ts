@@ -1,4 +1,4 @@
-import { CommonModule, NgOptimizedImage, isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { CommonModule, Location, NgOptimizedImage, isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Component, OnInit, PLATFORM_ID, Signal, TransferState, effect, inject, makeStateKey } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { ThemeCustomizerService } from '@app/services/theme-customizer/theme-customizer.service';
@@ -52,6 +52,7 @@ export class DealDetailsPageComponent implements OnInit {
     private route: ActivatedRoute =  inject(ActivatedRoute);
     private meta:Meta = inject(Meta);
     private title:Title = inject(Title);
+  private location: Location = inject(Location);
 
     pCategories: Signal< Array<PCategory>> = this.dealsStoreService.getPcCategories();
     categories: Signal< Array<Category>> = this.dealsStoreService.getCategories();
@@ -279,16 +280,28 @@ export class DealDetailsPageComponent implements OnInit {
      
       this.localSelectedDeal.imageUrl?this.meta.updateTag({property:"og:image",content: baseUrl + this.localSelectedDeal.imageUrl}):'';
      
-      this.localSelectedDeal.id?this.meta.updateTag({property:"og:url",content: "https://naarideals.com/deals/deal/" + this.localSelectedDeal.id}):'';
+      this.localSelectedDeal.id?this.meta.updateTag({property:"og:url",content: "https://naarideals.com/deal/" + this.localSelectedDeal.id}):'';
   
       this.localSelectedDeal.title?this.meta.updateTag({name:"twitter:title",content:selectedDealTitle}):'';
       this.localSelectedDeal.description?this.meta.updateTag({name:"twitter:description",content:this.localSelectedDeal.description}):'';
       this.localSelectedDeal.imageUrl?this.meta.updateTag({name:"twitter:image",content: baseUrl + this.localSelectedDeal.imageUrl}):'';
-      this.localSelectedDeal.id?this.meta.updateTag({name:"twitter:url",content: "https://naarideals.com/deals/deal/" + this.localSelectedDeal.id}):'';
+      this.localSelectedDeal.id?this.meta.updateTag({name:"twitter:url",content: "https://naarideals.com/deal/" + this.localSelectedDeal.id}):'';
     }
     
     gotoHome($event: any){
       this.router.navigateByUrl('/home')
+    }
+
+    navigateBack(event: Event): void {
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (isPlatformBrowser(this.platformId) && window.history.length > 1) {
+        this.location.back();
+        return;
+      }
+
+      this.router.navigateByUrl('/deals');
     }
     
   gotToShop(dealUrl: any){

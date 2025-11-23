@@ -79,14 +79,14 @@
                     </mat-card>
 
             </div>
-            <div class="row justify-content-start p-2">
-                <div
-                    *ngFor="let deal of dailyDealsLocal | paginate: { itemsPerPage: count, currentPage: page }; let i = index"
-                    class="col-6 col-sm-6 col-md-2 col-lg-2 mb-4 "
-                >
+            <div class="row justify-content-start p-2 load-savings-grid">
+        <div
+          *ngFor="let deal of dailyDealsLocal | paginate: { itemsPerPage: count, currentPage: page }; let i = index"
+          class="col-12 col-sm-6 col-md-3 col-lg-2 mb-4 card-item"
+        >
                 <mat-card class="deal-card-modern p-3 d-flex flex-column h-100 position-relative">
 
-                <div class="d-flex justify-content-between align-items-start mb-2">
+        <div class="deal-card-header d-flex justify-content-between align-items-start mb-2">
                     <button class="icon-btn wishlist" matIconButton (click)="addToWishlist(deal)" aria-label="Wishlist">
                         <i *ngIf="!deal.selected" class="bx bx-heart"></i>
                         <i *ngIf="deal.selected" class="bx bxs-heart"></i>
@@ -96,7 +96,7 @@
                     </span>
                 </div>
 
-                <a [routerLink]="['/deal/', deal.id]" class="deal-image-wrapper mb-2">
+                <a [routerLink]="['/deal', deal.id]" class="deal-image-wrapper mb-2">
                     <img
                     [ngSrc]="deal.imageUrl"
                     width="280"
@@ -112,12 +112,12 @@
                 </div>
 
                 <h6 class="deal-title text-start text-truncate-2 mb-2">
-                    <a [routerLink]="['/deal/', deal.id]" class="text-dark text-decoration-none">
+                    <a [routerLink]="['/deal', deal.id]" class="text-dark text-decoration-none">
                     {{ deal.title }}
                     </a>
                 </h6>
 
-                <div class="d-flex gap-2 align-items-baseline text-start mb-3">
+        <div class="price-block d-flex gap-2 align-items-baseline text-start mb-3">
                     <span class="text-danger fw-bold fs-5">
                     {{ country === 'usa' ? '$' : '₹' }}{{ deal.currentPrice | number : '1.2-2' }}
                     </span>
@@ -126,11 +126,11 @@
                     </span>
                 </div>
 
-                <div class="d-flex justify-content-end gap-4 mt-auto">
+        <div class="action-row d-flex justify-content-end gap-4 mt-auto">
                      <button matIconButton class="icon-btn share" (click)="shareOnWhatsApp($event, deal)">
                         <mat-icon>share</mat-icon>
                     </button>
-                    <button matIconButton [routerLink]="['/deal/', deal.id]" class="icon-btn view">
+                    <button matIconButton [routerLink]="['/deal', deal.id]" class="icon-btn view">
                         <mat-icon>visibility</mat-icon>
                     </button>
                 </div>

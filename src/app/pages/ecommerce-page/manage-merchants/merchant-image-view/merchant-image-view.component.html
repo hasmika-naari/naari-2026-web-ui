@@ -49,13 +49,13 @@
                     <mat-chip-list *ngIf="deal.discount">
                         <mat-chip color="warn" selected="true">{{deal.discount}}% OFF</mat-chip>
                     </mat-chip-list>
-                    <a [routerLink]="['/deals/deal/', deal.id]" style="height: 250px ;display: flex;" class="image-link">
+                    <a [routerLink]="['/deal', deal.id]" style="height: 250px ;display: flex;" class="image-link">
                         <img [src]="deal.imageUrl"  style="max-height: 100% ;
                         margin: auto;
                         display: block;" alt="">
                     </a>
                     <span class="merchant-name">{{deal.merchant}}</span>
-                    <a [routerLink]="['/deals/deal/', deal.id]" class="title text-truncate">
+                    <a [routerLink]="['/deal', deal.id]" class="title text-truncate">
                         {{deal.title}}
                     </a>
                     <div fxLayout="row" fxLayoutAlign="start center" class="prices">

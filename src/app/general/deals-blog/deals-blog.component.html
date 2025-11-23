@@ -6,7 +6,7 @@
         <ng-template carouselSlide *ngFor="let deal of deals;">
             <div class="single-blog-post mb-30">
                 <div class="post-image">
-                    <a  [routerLink]="['/deal/', deal.id]" style="height: 200px ;display: flex;" class="image-link "
+                    <a  [routerLink]="['/deal', deal.id]" style="height: 200px ;display: flex;" class="image-link "
                         >
                             <img  [src]="deal.imageUrl" width="200" height="500"  style="max-height:500px;
                             margin: auto; width:auto;height:auto;
@@ -37,8 +37,8 @@
                         </li>
                     </ul>
                     <div class="deal-box-footer">
-                        <h3><a [routerLink]="['/deal/', deal.id]" class="d-inline-block related-deal-title">{{deal.title}}</a></h3>
-                        <a [routerLink]="['/deal/', deal.id]" class="read-more-btn ">Grab <i class='bx bx-right-arrow-alt'></i></a>
+                        <h3><a [routerLink]="['/deal', deal.id]" class="d-inline-block related-deal-title">{{deal.title}}</a></h3>
+                        <a [routerLink]="['/deal', deal.id]" class="read-more-btn ">Grab <i class='bx bx-right-arrow-alt'></i></a>
                         <a href="" (click)="shareOnWhatsApp($event, deal)" class="read-more-btn ml--30">Share <i class='bx bx-share-alt'></i></a>
                     </div>
                   

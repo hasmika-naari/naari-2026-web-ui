@@ -1,5 +1,5 @@
 import { CommonModule, NgOptimizedImage, isPlatformBrowser } from '@angular/common';
-import { Component, OnInit, HostListener, Input, inject, Signal, PLATFORM_ID, OnChanges, SimpleChanges, Inject, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, HostListener, Input, inject, Signal, PLATFORM_ID, OnChanges, SimpleChanges, Inject, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { PCategory } from '@app/services/deals.model';
 import { SignalStore } from '@app/services/store/signal-store';
@@ -18,7 +18,7 @@ import { ThemeCustomizerService } from '@app/services/theme-customizer/theme-cus
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss']
 })
-export class HeaderStyleComponent implements OnInit, OnChanges {
+export class HeaderStyleComponent implements OnInit, OnChanges, OnDestroy {
 
     isSticky: boolean = false;
     @Input() menuList: Array<PCategory> = new Array<PCategory>();
@@ -127,16 +127,53 @@ export class HeaderStyleComponent implements OnInit, OnChanges {
     
     toggleSidebar() {
         this.sidebarVisible = !this.sidebarVisible;
+        this.syncBodyScrollLock();
     }
     
     toggleAppsDrawer() {
         this.appsDrawerVisible = !this.appsDrawerVisible;
+        this.syncBodyScrollLock();
+    }
+
+    closeAppsDrawer() {
+        if (this.appsDrawerVisible) {
+            this.appsDrawerVisible = false;
+            this.syncBodyScrollLock();
+        }
     }
 
     logout($event: any){
         this.userStore.logout();
         this.router.navigateByUrl('/');
 
+    }
+
+    ngOnDestroy(): void {
+        this.unlockBodyScroll();
+    }
+
+    private syncBodyScrollLock(): void {
+        const shouldLock = this.sidebarVisible || this.appsDrawerVisible;
+        this.setBodyScrollLock(shouldLock);
+    }
+
+    private setBodyScrollLock(lock: boolean): void {
+        if (!isPlatformBrowser(this.platformId)) {
+            return;
+        }
+        const className = 'drawer-scroll-lock';
+        const htmlElement = document.documentElement;
+        if (lock) {
+            document.body.classList.add(className);
+            htmlElement.classList.add(className);
+        } else {
+            document.body.classList.remove(className);
+            htmlElement.classList.remove(className);
+        }
+    }
+
+    private unlockBodyScroll(): void {
+        this.setBodyScrollLock(false);
     }
 
 }

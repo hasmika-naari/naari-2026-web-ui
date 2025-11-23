@@ -49,6 +49,12 @@ export const routes: Routes = [
             import('./deal-details-page/deal-details-page.component')
                 .then(m => m.DealDetailsPageComponent), data: {reuseComponent: true, breadcrumb: 'Deal Details'}
     },
+     {
+        path: 'deals/deal/:id',
+        loadComponent: () => 
+            import('./deal-details-page/deal-details-page.component')
+                .then(m => m.DealDetailsPageComponent), data: {reuseComponent: true, breadcrumb: 'Deal Details'}
+    },
     {
             path: 'deals',
             loadComponent: () => 

@@ -214,31 +214,34 @@
                   *ngFor="let deal of dealsLocal | paginate: { itemsPerPage: counts[0], currentPage: page }; let i = index; trackBy: trackByDealId"
                   class="col-6 col-sm-6 col-md-3 col-lg-2 mb-4"
                 >
-                <mat-card class="product-item text-center deal-discount-tag white-card">
-                  <div class="deal-tags">
-                    <mat-chip-listbox *ngIf="deal.discountType === '%' && (+deal.discount > 0)">
-                      <mat-chip-option color="warn" selected>{{ deal.discount }}% OFF</mat-chip-option>
-                    </mat-chip-listbox>
-                    <mat-chip-listbox *ngIf="deal.discountType !== '%'">
-                      <mat-chip-option color="warn" selected>{{ deal.discountType }} {{ deal.discount }} OFF</mat-chip-option>
-                    </mat-chip-listbox>
-                  </div>
+                <mat-card class="product-item text-center deal-discount-tag white-card" (click)="navigateToDeal(deal)" role="button" tabindex="0">
+                  <div class="deal-image-container">
+                    <a
+                      [routerLink]="['/deal', deal.id]"
+                      class="image-link d-flex align-items-center justify-content-center"
+                      style="height: 200px;"
+                      tabindex="0"
+                      attr.aria-label="View deal {{ deal.title }}"
+                      (click)="$event.stopPropagation()"
+                    >
+                      <img
+                        [ngSrc]="deal.imageUrl"
+                        width="200"
+                        height="500"
+                        class="deal-image"
+                        [alt]="deal.title + ' image'"
+                      />
+                    </a>
 
-                  <a
-                    [routerLink]="['/deal/', deal.id]"
-                    class="image-link d-flex align-items-center justify-content-center"
-                    style="height: 200px;"
-                    tabindex="0"
-                    attr.aria-label="View deal {{ deal.title }}"
-                  >
-                    <img
-                      [ngSrc]="deal.imageUrl"
-                      width="200"
-                      height="500"
-                      class="deal-image"
-                      [alt]="deal.title + ' image'"
-                    />
-                  </a>
+                    <div class="deal-tags">
+                      <mat-chip-listbox *ngIf="deal.discountType === '%' && (+deal.discount > 0)">
+                        <mat-chip-option color="warn" selected>{{ deal.discount }}% OFF</mat-chip-option>
+                      </mat-chip-listbox>
+                      <mat-chip-listbox *ngIf="deal.discountType !== '%'">
+                        <mat-chip-option color="warn" selected>{{ deal.discountType }} {{ deal.discount }} OFF</mat-chip-option>
+                      </mat-chip-listbox>
+                    </div>
+                  </div>
 
                   <span
                     *ngIf="deal.highlight"
@@ -259,7 +262,7 @@
                   <span class="merchant-name text-ellipsis-2">{{ deal.merchant }}</span>
 
                   <h3 class="deal-title text-ellipsis-2">
-                    <a [routerLink]="['/deal/', deal.id]" class="deal-subject-title">{{ deal.title }}</a>
+                    <a [routerLink]="['/deal', deal.id]" class="deal-subject-title" (click)="$event.stopPropagation()">{{ deal.title }}</a>
                   </h3>
 
                <!-- Prices -->
@@ -284,7 +287,7 @@
                     <button mat-icon-button (click)="shareOnWhatsApp($event, deal)" aria-label="Share on WhatsApp" class="footer-btn">
                       <i class="bx bx-share-alt"></i><span class="footer-text">share</span>
                     </button>
-                    <a [routerLink]="['/deal/', deal.id]" class="footer-btn" aria-label="View deal details">
+                    <a [routerLink]="['/deal', deal.id]" class="footer-btn" aria-label="View deal details" (click)="$event.stopPropagation()">
                       <i class="bx bx-show"></i><span class="footer-text">view</span>
                     </a>
                   </div>
@@ -307,7 +310,7 @@
                   <mat-chip-option color="warn" selected>{{ deal.discountType }} {{ deal.discount }} OFF</mat-chip-option>
                 </mat-chip-listbox>
                 <a
-                  [routerLink]="['/deal/', deal.id]"
+                  [routerLink]="['/deal', deal.id]"
                   class="image-link d-flex align-items-center justify-content-center"
                   style="height: 200px;"
                   tabindex="0"
@@ -338,7 +341,7 @@
                 </div>
                 <span class="merchant-name">{{ deal.merchant }}</span>
                 <h3>
-                  <a [routerLink]="['/deal/', deal.id]" class="deal-subject-title">{{ deal.title }}</a>
+                  <a [routerLink]="['/deal', deal.id]" class="deal-subject-title">{{ deal.title }}</a>
                 </h3>
                 <div class="row prices">
                   <div class="col-12 d-flex align-items-start">
@@ -365,7 +368,7 @@
                       </button>
                     </li>
                     <li class="view-deal">
-                      <a [routerLink]="['/deal/', deal.id]" aria-label="View deal details">
+                      <a [routerLink]="['/deal', deal.id]" aria-label="View deal details">
                         <i class="bx bx-show"></i> view
                       </a>
                     </li>
