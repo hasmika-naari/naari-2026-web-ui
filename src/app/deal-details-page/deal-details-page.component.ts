@@ -1,5 +1,5 @@
 import { CommonModule, Location, NgOptimizedImage, isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { Component, OnInit, PLATFORM_ID, Signal, TransferState, effect, inject, makeStateKey } from '@angular/core';
+import { Component, OnDestroy, OnInit, PLATFORM_ID, Signal, TransferState, effect, inject, makeStateKey } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { ThemeCustomizerService } from '@app/services/theme-customizer/theme-customizer.service';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
@@ -35,7 +35,7 @@ import { filter } from 'rxjs';
     templateUrl: './deal-details-page.component.html',
     styleUrls: ['./deal-details-page.component.scss']
 })
-export class DealDetailsPageComponent implements OnInit {
+export class DealDetailsPageComponent implements OnInit, OnDestroy {
 
     isToggled = false;
 
@@ -52,7 +52,11 @@ export class DealDetailsPageComponent implements OnInit {
     private route: ActivatedRoute =  inject(ActivatedRoute);
     private meta:Meta = inject(Meta);
     private title:Title = inject(Title);
-  private location: Location = inject(Location);
+    private location: Location = inject(Location);
+    private readonly siteBaseUrl = 'https://naarideals.com';
+    private readonly defaultShareImage = `${this.siteBaseUrl}/assets/img/og/naarideals-share.png`;
+    private readonly twitterHandle = '@NaariDeals';
+    private readonly siteName = 'Naari Deals';
 
     pCategories: Signal< Array<PCategory>> = this.dealsStoreService.getPcCategories();
     categories: Signal< Array<Category>> = this.dealsStoreService.getCategories();
@@ -70,8 +74,9 @@ export class DealDetailsPageComponent implements OnInit {
 
     updateLocalDealEffect = effect(() => {
       const deal = this.selectedDeal();
-      if (deal) {
+      if (deal && deal.id) {
         this.localSelectedDeal = { ...deal };
+        this.updateMetaTags(this.localSelectedDeal);
       }
       const deals = this.relatedDeals();
       if(deals){
@@ -117,7 +122,6 @@ export class DealDetailsPageComponent implements OnInit {
             this.isMobile = false;
             this.isDesktop = false;
           }
-          debugger;
            //consolie.log(' deal details page - ngOnInit + isPlatformBrowser Reading Hydrated data:');
           this.loadFetcheddata();
         }else{
@@ -173,12 +177,11 @@ export class DealDetailsPageComponent implements OnInit {
 
 
     fetchData(dealId: string): void{
-      debugger;
       this.dealsService.getDealDetailsById(dealId).subscribe((deal) => {
           this.localSelectedDeal = _.cloneDeep(deal[0]);
           //consolie.log('deal Details - fetchData selectedDeal+ ' + deal[0].title);
 
-          this.updateMetaTags();
+      this.updateMetaTags(this.localSelectedDeal);
 
           if(isPlatformServer(this.platformId)){
             this.transferState.set<DealDataItem>(
@@ -216,6 +219,10 @@ export class DealDetailsPageComponent implements OnInit {
       });
     }
 
+    ngOnDestroy(): void {
+      this.meta.removeTag("property='og:updated_time'");
+    }
+
     loadFetcheddata(){
       //consolie.log('This is isPlatformBrowser...');
     
@@ -243,49 +250,51 @@ export class DealDetailsPageComponent implements OnInit {
     }
 
 
-    updateMetaTags(){
-          //consolie.log('updateMetaTags+ ' + this.localSelectedDeal.title);
-      this.title.setTitle(this.localSelectedDeal.title);
-      this.localSelectedDeal.description?this.meta.updateTag({property:"description",content:this.localSelectedDeal.description}):'';
-      //  let cSymbol = this.dealService.country === 'us'?'$':'₹';
-        let amount:any = '';
-        // NOTE - Patch - need to change in future.
-        if(this.localSelectedDeal.country == null || this.localSelectedDeal.country == ''){
-          this.localSelectedDeal.country = this.localSelectedDeal.city;
-        }
-        
-      if(this.localSelectedDeal.country && this.localSelectedDeal.country.toLocaleLowerCase() === 'usa'){
-
-        amount =  new Intl.NumberFormat('en-US',
-                { style: 'currency', currency: 'USD' }
-              ).format(+this.localSelectedDeal.currentPrice); // '$100.00'
-      }else{
-        amount =  new Intl.NumberFormat('en-IN',
-                      { style: 'currency', currency: 'INR' }
-                    ).format(+this.localSelectedDeal.currentPrice); // '$100.00';
+    updateMetaTags(deal: DealDataItem | null = this.localSelectedDeal){
+      if(!deal || !deal.id){
+        return;
       }
-      
-      let discountText = this.localSelectedDeal.discountType === '%'?this.localSelectedDeal.discount + '%off': 
-        this.localSelectedDeal.discountType + this.localSelectedDeal.discount + 'off';
-      let selectedDealTitle =  ' 🔥 Naari Deals - Now: ' + amount.toString() + ' (' + discountText +  ') ' + " " + this.localSelectedDeal.title; 
-      // //consolie.log('SERVER: ' + selectedDealTitle);
-      this.localSelectedDeal.title?this.meta.updateTag({property:"og:title",content:selectedDealTitle}):'';
-      this.localSelectedDeal.description?this.meta.updateTag({property:"og:description",content:this.localSelectedDeal.description}):'';
-     
-      let baseUrl: string = '';
 
-      if(this.localSelectedDeal.merchant === 'Amazon' && !this.localSelectedDeal.imageUrl?.includes('https')){
-        baseUrl = 'https:';
-      }
-     
-      this.localSelectedDeal.imageUrl?this.meta.updateTag({property:"og:image",content: baseUrl + this.localSelectedDeal.imageUrl}):'';
-     
-      this.localSelectedDeal.id?this.meta.updateTag({property:"og:url",content: "https://naarideals.com/deal/" + this.localSelectedDeal.id}):'';
-  
-      this.localSelectedDeal.title?this.meta.updateTag({name:"twitter:title",content:selectedDealTitle}):'';
-      this.localSelectedDeal.description?this.meta.updateTag({name:"twitter:description",content:this.localSelectedDeal.description}):'';
-      this.localSelectedDeal.imageUrl?this.meta.updateTag({name:"twitter:image",content: baseUrl + this.localSelectedDeal.imageUrl}):'';
-      this.localSelectedDeal.id?this.meta.updateTag({name:"twitter:url",content: "https://naarideals.com/deal/" + this.localSelectedDeal.id}):'';
+      const country = this.resolveCountry(deal);
+      this.localSelectedDeal.country = country;
+
+      const formattedPrice = this.formatPrice(deal, country);
+      const discountText = this.buildDiscountText(deal);
+      const shareTitle = this.buildShareTitle(deal.title, formattedPrice, discountText);
+      const shareDescription = this.buildShareDescription(deal.description, discountText);
+      const canonicalUrl = `${this.siteBaseUrl}/deal/${deal.id}`;
+      const imageUrl = this.buildImageUrl(deal.imageUrl, deal.merchant);
+      const locale = this.resolveLocale(country);
+      const updatedTime = new Date().toISOString();
+
+      const pageTitle = deal.title ? `${deal.title} | ${this.siteName}` : this.siteName;
+      this.title.setTitle(pageTitle);
+      this.meta.updateTag({name:'description', content: shareDescription});
+
+      const openGraphTags = [
+        { property: 'og:title', content: shareTitle },
+        { property: 'og:description', content: shareDescription },
+        { property: 'og:url', content: canonicalUrl },
+        { property: 'og:type', content: 'product' },
+        { property: 'og:site_name', content: this.siteName },
+        { property: 'og:locale', content: locale },
+        { property: 'og:image', content: imageUrl },
+        { property: 'og:image:alt', content: shareTitle },
+        { property: 'og:updated_time', content: updatedTime }
+      ];
+      openGraphTags.forEach(tag => this.meta.updateTag(tag));
+
+      const twitterTags = [
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:title', content: shareTitle },
+        { name: 'twitter:description', content: shareDescription },
+        { name: 'twitter:image', content: imageUrl },
+        { name: 'twitter:image:alt', content: shareTitle },
+        { name: 'twitter:site', content: this.twitterHandle },
+        { name: 'twitter:creator', content: this.twitterHandle },
+        { name: 'twitter:url', content: canonicalUrl }
+      ];
+      twitterTags.forEach(tag => this.meta.updateTag(tag));
     }
     
     gotoHome($event: any){
@@ -311,6 +320,79 @@ export class DealDetailsPageComponent implements OnInit {
   shareOnWhatsApp($event:any, selectedDeal: DealDataItem){
     $event.stopPropagation();
     this.appService.shareOnWhatsApp(selectedDeal);
+  }
+ 
+  private resolveCountry(deal: DealDataItem): string {
+    if(deal.country && deal.country.trim().length){
+      return deal.country;
+    }
+    if(deal.city && deal.city.trim().length){
+      return deal.city;
+    }
+    return 'USA';
+  }
+
+  private formatPrice(deal: DealDataItem, country: string): string {
+    const priceValue = Number(deal.currentPrice ?? 0);
+    if(!priceValue){
+      return '';
+    }
+    const isUsa = country?.toLocaleLowerCase() === 'usa';
+    const currency = isUsa ? 'USD' : 'INR';
+    const locale = isUsa ? 'en-US' : 'en-IN';
+    try{
+      return new Intl.NumberFormat(locale, { style: 'currency', currency }).format(priceValue);
+    }catch{
+      return priceValue.toString();
+    }
+  }
+
+  private buildDiscountText(deal: DealDataItem): string {
+    if(!deal.discount){
+      return '';
+    }
+    if(deal.discountType === '%'){
+      return `${deal.discount}% off`;
+    }
+    return `${deal.discountType ?? ''}${deal.discount} off`.trim();
+  }
+
+  private buildShareTitle(title: string, formattedPrice: string, discountText: string): string {
+    const priceSection = formattedPrice ? `Now ${formattedPrice}` : '';
+    const discountSection = discountText ? ` • ${discountText}` : '';
+    return [`${this.siteName}`, priceSection, discountSection, title].filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
+  }
+
+  private buildShareDescription(description?: string, discountText?: string): string {
+    if(description && description.trim().length){
+      return description.trim();
+    }
+    return `Discover limited-time savings ${discountText ? '(' + discountText + ')' : ''} on Naari Deals.`.trim();
+  }
+
+  private buildImageUrl(imageUrl?: string | null, merchant?: string | null): string {
+    if(!imageUrl){
+      return this.defaultShareImage;
+    }
+    let resolved = imageUrl.trim();
+    const isProtocolRelative = resolved.startsWith('//');
+    const hasProtocol = resolved.startsWith('http');
+    if(isProtocolRelative){
+      resolved = `https:${resolved}`;
+    }else if(!hasProtocol){
+      if(resolved.startsWith('/')){
+        resolved = `${this.siteBaseUrl}${resolved}`;
+      }else if(merchant === 'Amazon'){
+        resolved = `https:${resolved}`;
+      }else{
+        resolved = `${this.siteBaseUrl}/${resolved}`;
+      }
+    }
+    return resolved;
+  }
+
+  private resolveLocale(country: string): string {
+    return country?.toLocaleLowerCase() === 'usa' ? 'en_US' : 'en_IN';
   }
 
 }
