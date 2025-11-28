@@ -9,216 +9,222 @@
     </div>
 </div>
 
-<div  class="container mt-4" >
-    <div  fxLayout="row wrap"  class="products-wrapper" >
-        <div [class.col-12]="isDesktop" [class.col-12]="isMobile" [class.col-12]="isTablet" style="width: 100%;">
-            <div *ngIf="isDesktop && browser" fxLayout="row wrap"  >
-
-                <div fxFlex="100"> 
-                    <mat-card class="pagenation-deals p-0 text-start   wow fadeInUp" data-wow-offset="10" 
-                    data-wow-duration="1s"  data-wow-delay="90ms">   
-                    <div class="row align-items-left justify-content-left flex-wrap">
-                        <!-- Center Title Section -->
-                        <div class="col-9 col-sm-9 text-left" [class.mt--25]="isMobile">
-                            <div class="home-section-title">
-                            <small class="sub-title">Discover Super Deals</small>
-                            <h2 class="text-left">Load Savings</h2>
-                            </div>
-                        </div>
-                        <!-- Right Sort Menu -->
-                        <div class="col-3 col-sm-3 d-flex justify-content-end align-items-center mt-2 mt-sm-0">
-                            <a class="option-selection-text" mat-button [matMenuTriggerFor]="sortMenu1" #sortMenu1Trigger="matMenuTrigger">
-                           <mat-icon >sort</mat-icon>
-                            {{selectedSorting.title}}
-
-                            </a>
-
-                            <mat-menu #sortMenu1="matMenu" xPosition="before" class="app-dropdown" overlapTrigger="true">
-                            <span (mouseleave)="sortMenu1Trigger.closeMenu()">
-                                <button mat-menu-item *ngFor="let sort of sortings" (click)="changeSorting(sort)">
-                                <span>{{sort.title}}</span>
-                                </button>
-                            </span>
-                            </mat-menu>
-                        </div>
-
-                    </div>
-                    </mat-card>
-                </div>
+<section class="home-tabs-wrapper" [class.sticky-tabs]="isTabsSticky" aria-label="Deals navigation">
+  <!-- Spacer to prevent content jump when tabs become sticky -->
+  <div *ngIf="isTabsSticky" class="tabs-sticky-spacer"></div>
+  
+  <div class="container">
+    <!-- Tabs Only -->
+    <div class="mb-2">
+      <mat-tab-group [(selectedIndex)]="selectedTabIndex" class="home-tabs-primeng">
+        <mat-tab *ngFor="let tab of dealsTabMeta; let i = index">
+          <ng-template mat-tab-label>
+            <div class="tab-header">
+              <span class="tab-icon">
+                <i [class]="tab.icon"></i>
+              </span>
+              <div class="text-group">
+                <span class="tab-eyebrow">{{ tab.eyebrow }}</span>
+                <span class="tab-heading">{{ tab.heading }}</span>
+              </div>
             </div>
-            <div class="home-section-title text-center" 
-                [class.mt--25]="isMobile" *ngIf="isMobile && browser">
-                  <mat-card class="pagenation-deals p-0 text-start   wow fadeInUp" data-wow-offset="10" 
-                    data-wow-duration="1s"  data-wow-delay="90ms">   
-                    <div class="row align-items-left justify-content-left flex-wrap">
-                        <!-- Center Title Section -->
-                        <div class="col-9 col-sm-9 text-left" [class.mt--25]="isMobile">
-                            <div class="home-section-title">
-                            <small class="sub-title">Discover Super Deals</small>
-                            <h2 class="text-left">Load Savings</h2>
-                            </div>
-                        </div>
-                        <!-- Right Sort Menu -->
-                        <div class="col-3 col-sm-3 d-flex justify-content-end align-items-center mt-2 mt-sm-0">
-                            <a class="option-selection-text" mat-button [matMenuTriggerFor]="sortMenu1" #sortMenu1Trigger="matMenuTrigger">
-                           <mat-icon >sort</mat-icon>
-                            {{selectedSorting.title}}
-
-                            </a>
-
-                            <mat-menu #sortMenu1="matMenu" xPosition="before" class="app-dropdown" overlapTrigger="true">
-                            <span (mouseleave)="sortMenu1Trigger.closeMenu()">
-                                <button mat-menu-item *ngFor="let sort of sortings" (click)="changeSorting(sort)">
-                                <span>{{sort.title}}</span>
-                                </button>
-                            </span>
-                            </mat-menu>
-                        </div>
-
-                    </div>
-                    </mat-card>
-
-            </div>
-            <div class="row justify-content-start p-2 load-savings-grid">
-        <div
-          *ngFor="let deal of dailyDealsLocal | paginate: { itemsPerPage: count, currentPage: page }; let i = index"
-          class="col-12 col-sm-6 col-md-3 col-lg-2 mb-4 card-item"
-        >
-                <mat-card class="deal-card-modern p-3 d-flex flex-column h-100 position-relative">
-
-        <div class="deal-card-header d-flex justify-content-between align-items-start mb-2">
-                    <button class="icon-btn wishlist" matIconButton (click)="addToWishlist(deal)" aria-label="Wishlist">
-                        <i *ngIf="!deal.selected" class="bx bx-heart"></i>
-                        <i *ngIf="deal.selected" class="bx bxs-heart"></i>
-                    </button>
-                    <span *ngIf="deal.discount" class="discount-tag">
-                    {{ deal.discount }}% OFF
-                    </span>
-                </div>
-
-                <a [routerLink]="['/deal', deal.id]" class="deal-image-wrapper mb-2">
-                    <img
-                    [ngSrc]="deal.imageUrl"
-                    width="280"
-                    height="280"
-                    class="img-fluid"
-                    alt="Product"
-                    />
-                </a>
-
-             
-                <div class="merchant-name d-flex align-items-center">
-                    <span class="text-truncate">{{ deal.merchant }}</span>
-                </div>
-
-                <h6 class="deal-title text-start text-truncate-2 mb-2">
-                    <a [routerLink]="['/deal', deal.id]" class="text-dark text-decoration-none">
-                    {{ deal.title }}
-                    </a>
-                </h6>
-
-        <div class="price-block d-flex gap-2 align-items-baseline text-start mb-3">
-                    <span class="text-danger fw-bold fs-5">
-                    {{ country === 'usa' ? '$' : '₹' }}{{ deal.currentPrice | number : '1.2-2' }}
-                    </span>
-                    <span *ngIf="deal.originalPrice" class="text-muted text-decoration-line-through fs-6 fw-semibold">
-                    {{ country === 'usa' ? '$' : '₹' }}{{ deal.originalPrice | number : '1.2-2' }}
-                    </span>
-                </div>
-
-        <div class="action-row d-flex justify-content-end gap-4 mt-auto">
-                     <button matIconButton class="icon-btn share" (click)="shareOnWhatsApp($event, deal)">
-                        <mat-icon>share</mat-icon>
-                    </button>
-                    <button matIconButton [routerLink]="['/deal', deal.id]" class="icon-btn view">
-                        <mat-icon>visibility</mat-icon>
-                    </button>
-                </div>
-                </mat-card>
-                </div>
-            </div>
-
-            <div class="col-sm-12 text-center" *ngIf="((dailyDealsLocal?.length === 0)  && isShowContent)">
-                <img src="assets/images/empty-search.png" class="img-fluid mb-4 ">
-                  <h3 class="  wow fadeInUp" data-wow-offset="50" data-wow-duration="3s"  data-wow-delay="900ms">Sorry! Couldn't find the Deals you were looking For!!!    </h3>
-                  <p class="  wow fadeInUp" data-wow-offset="50"  data-wow-duration="3s"  data-wow-delay="900ms">Please check other options.</p>
-            </div>
-          <div class="row p-2">
-            <div class="col-12">
-                <mat-card class="pagenation-deals p-0 text-end">
-                <div class="row align-items-center justify-content-end">
-                    <!-- Empty Left Section (visible on desktop & tablet only) -->
-                    <div class="col-md-5 col-12 d-flex align-items-center justify-content-start">
-                    <!-- You can add content here if needed -->
-                    </div>
-
-                    <!-- Spacer for desktop -->
-                    <div *ngIf="isDesktop" class="d-none d-md-block col-md"></div>
-
-                    <!-- Pagination for desktop and tablet -->
-                    <div *ngIf="(isDesktop || isTablet) && browser && dailyDealsLocal.length" class="col-md-5 col-12 d-flex align-items-center justify-content-end">
-                    <pagination-controls
-                        class="product-pagination wow fadeInUp"
-                        [autoHide]="autoHide"
-                        [maxSize]="maxSize"
-                        data-wow-offset="50"
-                        data-wow-duration="1s"
-                        data-wow-delay="900ms"
-                        (pageChange)="onPageChanged($event)">
-                    </pagination-controls>
-                    </div>
-
-                    <!-- Pagination for mobile -->
-                    <div *ngIf="isMobile && browser && dailyDealsLocal.length" class="col-12 d-flex align-items-center justify-content-center">
-                    <pagination-controls
-                        class="product-pagination wow fadeInUp"
-                        [autoHide]="autoHide"
-                        [maxSize]="maxSize"
-                        data-wow-offset="50"
-                        data-wow-duration="1s"
-                        data-wow-delay="900ms"
-                        (pageChange)="onPageChanged($event)">
-                    </pagination-controls>
-                    </div>
-                </div>
-                </mat-card>
-            </div>
-            </div>
-
-        </div>
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
     </div>
-</div>
-<section >
-    <ng-container *ngIf="browser" >
-       @defer (on viewport;) {
-        <app-homeone-courses [isMobile]="isMobile" [categories]="catsLocal" ></app-homeone-courses>
-      } @placeholder (minimum 2000ms) {
-        <div class="d-flex justify-content-center align-items-center py-5">
-          <div class="text-center">
-            <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
-              <span class="visually-hidden">Loading...</span>
+
+    <!-- Tab Content -->
+    <div class="tab-content-wrapper">
+      <ng-container [ngSwitch]="selectedTabIndex">
+        <ng-container *ngSwitchCase="0">
+          <!-- Featured Deals Carousel -->
+          <div class="featured-carousel-container mb-4" *ngIf="browser">
+            <app-featured-deals-carousel 
+              [country]="country"
+              [isMobile]="isMobile"
+              [isTablet]="isTablet"
+              [isDesktop]="isDesktop"
+              [allDeals]="dailyDealsLocal">
+            </app-featured-deals-carousel>
+          </div>
+          
+          <!-- Sort Option Above Deals List (Right Aligned) -->
+          <div class="deals-list-header mb-3">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+              <div class="title-group">
+                <i class="bx bxs-shopping-bags deals-list-icon"></i>
+                <h2 class="deals-list-title">All Super Deals</h2>
+              </div>
+              <div class="sort-option-wrapper">
+                <a class="option-selection-text" mat-button [matMenuTriggerFor]="sortMenu1" #sortMenu1Trigger="matMenuTrigger">
+                  <span>{{ selectedSorting.title }}</span>
+                  <mat-icon>sort</mat-icon>
+                </a>
+                <mat-menu #sortMenu1="matMenu" xPosition="before" class="app-dropdown" overlapTrigger="true">
+                  <span (mouseleave)="sortMenu1Trigger.closeMenu()">
+                    <button mat-menu-item *ngFor="let sort of sortings" (click)="changeSorting(sort)">
+                      <span>{{ sort.title }}</span>
+                    </button>
+                  </span>
+                </mat-menu>
+              </div>
             </div>
-            <p class="text-muted">Loading courses...</p>
           </div>
-        </div>
-      } @loading {
-        <div class="d-flex justify-content-center align-items-center py-5">
-          <div class="text-center">
-            <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-            <p class="text-muted">Loading...</p>
+          
+          <div class="container mt-2">
+            <div fxLayout="row wrap" class="products-wrapper">
+              <div [class.col-12]="isDesktop" [class.col-12]="isMobile" [class.col-12]="isTablet" style="width: 100%;">
+                <div class="row justify-content-start p-2 load-savings-grid">
+                  <div
+                    *ngFor="let deal of dailyDealsLocal | paginate: { itemsPerPage: count, currentPage: page }; let i = index"
+                    class="col-12 col-sm-6 col-md-3 col-lg-2 mb-4 card-item"
+                  >
+                          <mat-card class="deal-card-modern p-3 d-flex flex-column h-100 position-relative">
+
+                  <div class="deal-card-header d-flex justify-content-between align-items-start mb-2">
+                              <button class="icon-btn wishlist" matIconButton (click)="addToWishlist(deal)" aria-label="Wishlist">
+                                  <i *ngIf="!deal.selected" class="bx bx-heart"></i>
+                                  <i *ngIf="deal.selected" class="bx bxs-heart"></i>
+                              </button>
+                              <span *ngIf="deal.discount" class="discount-tag">
+                              {{ deal.discount }}% OFF
+                              </span>
+                          </div>
+
+                          <a [routerLink]="['/deal', deal.id]" class="deal-image-wrapper mb-2">
+                              <img
+                              [ngSrc]="deal.imageUrl"
+                              width="280"
+                              height="280"
+                              class="img-fluid"
+                              alt="Product"
+                              />
+                          </a>
+
+                      
+                          <div class="merchant-name d-flex align-items-center">
+                              <span class="text-truncate">{{ deal.merchant }}</span>
+                          </div>
+
+                          <h6 class="deal-title text-start text-truncate-2 mb-2">
+                              <a [routerLink]="['/deal', deal.id]" class="text-dark text-decoration-none">
+                              {{ deal.title }}
+                              </a>
+                          </h6>
+
+                  <div class="price-block d-flex gap-2 align-items-start text-start mb-3">
+                              <i class="bx bxs-hot fire-icon"></i>
+                              <div class="price-stack">
+                                <span class="current-price fw-bold fs-5 d-block">
+                                {{ country === 'usa' ? '$' : '₹' }}{{ deal.currentPrice | number : '1.2-2' }}
+                                </span>
+                                <span *ngIf="deal.originalPrice" class="text-muted text-decoration-line-through fs-6 fw-semibold d-block">
+                                {{ country === 'usa' ? '$' : '₹' }}{{ deal.originalPrice | number : '1.2-2' }}
+                                </span>
+                              </div>
+                          </div>
+
+                  <div class="action-row d-flex justify-content-end gap-4 mt-auto">
+                              <button matIconButton class="icon-btn share" (click)="shareOnWhatsApp($event, deal)">
+                                  <mat-icon>share</mat-icon>
+                              </button>
+                              <button matIconButton [routerLink]="['/deal', deal.id]" class="icon-btn view">
+                                  <mat-icon>visibility</mat-icon>
+                              </button>
+                          </div>
+                          </mat-card>
+                          </div>
+                      </div>
+
+                      <div class="col-sm-12 text-center" *ngIf="((dailyDealsLocal?.length === 0)  && isShowContent)">
+                          <img src="assets/images/empty-search.png" class="img-fluid mb-4 ">
+                            <h3 class="  wow fadeInUp" data-wow-offset="50" data-wow-duration="3s"  data-wow-delay="900ms">Sorry! Couldn't find the Deals you were looking For!!!    </h3>
+                            <p class="  wow fadeInUp" data-wow-offset="50"  data-wow-duration="3s"  data-wow-delay="900ms">Please check other options.</p>
+                      </div>
+                    <div class="row p-2">
+                      <div class="col-12">
+                          <mat-card class="pagenation-deals p-0 text-end">
+                          <div class="row align-items-center justify-content-end">
+                              <!-- Empty Left Section (visible on desktop & tablet only) -->
+                              <div class="col-md-5 col-12 d-flex align-items-center justify-content-start">
+                              <!-- You can add content here if needed -->
+                              </div>
+
+                              <!-- Spacer for desktop -->
+                              <div *ngIf="isDesktop" class="d-none d-md-block col-md"></div>
+
+                              <!-- Pagination for desktop and tablet -->
+                              <div *ngIf="(isDesktop || isTablet) && browser && dailyDealsLocal.length" class="col-md-5 col-12 d-flex align-items-center justify-content-end">
+                              <pagination-controls
+                                  class="product-pagination wow fadeInUp"
+                                  [autoHide]="autoHide"
+                                  [maxSize]="maxSize"
+                                  data-wow-offset="50"
+                                  data-wow-duration="1s"
+                                  data-wow-delay="900ms"
+                                  (pageChange)="onPageChanged($event)">
+                              </pagination-controls>
+                              </div>
+
+                              <!-- Pagination for mobile -->
+                              <div *ngIf="isMobile && browser && dailyDealsLocal.length" class="col-12 d-flex align-items-center justify-content-center">
+                              <pagination-controls
+                                  class="product-pagination wow fadeInUp"
+                                  [autoHide]="autoHide"
+                                  [maxSize]="maxSize"
+                                  data-wow-offset="50"
+                                  data-wow-duration="1s"
+                                  data-wow-delay="900ms"
+                                  (pageChange)="onPageChanged($event)">
+                              </pagination-controls>
+                              </div>
+                          </div>
+                          </mat-card>
+                      </div>
+                      </div>
+
+                  </div>
+              </div>
           </div>
-        </div>
-      } @error {
-        <div class="d-flex justify-content-center align-items-center py-5">
-          <div class="text-center text-danger">
-            <i class="bx bx-error-circle fs-1 mb-2"></i>
-            <p>Something went wrong :(</p>
-          </div>
-        </div>
-      }
-    </ng-container>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="1">
+          <section class="category-tab-panel">
+            <ng-container *ngIf="browser" >
+               @defer (on viewport;) {
+                <app-homeone-courses [isMobile]="isMobile" [categories]="catsLocal" ></app-homeone-courses>
+              } @placeholder (minimum 2000ms) {
+                <div class="d-flex justify-content-center align-items-center py-5">
+                  <div class="text-center">
+                    <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="text-muted">Loading categories...</p>
+                  </div>
+                </div>
+              } @loading {
+                <div class="d-flex justify-content-center align-items-center py-5">
+                  <div class="text-center">
+                    <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="text-muted">Loading...</p>
+                  </div>
+                </div>
+              } @error {
+                <div class="d-flex justify-content-center align-items-center py-5">
+                  <div class="text-center text-danger">
+                    <i class="bx bx-error-circle fs-1 mb-2"></i>
+                    <p>Something went wrong :(</p>
+                  </div>
+                </div>
+              }
+            </ng-container>
+          </section>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
 </section>
 
 <section >

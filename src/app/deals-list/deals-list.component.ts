@@ -30,7 +30,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { CategorySidebarComponent } from './category-sidebar/category-sidebar.component';
 import { MerchantSidebarComponent } from './merchant-sidebar/merchant-sidebar.component';
 import { DealTypeSidebarComponent } from './deal-type-sidebar/deal-type-sidebar.component';
+import { CategoryListComponent } from './category-sidebar/category-list/category-list.component';
 import { FooterWorkifenceComponent } from '@app/pages/landing/footer-wifence/footer-wifence.component';
+import { DrawerModule } from 'primeng/drawer';
 
 @Component({
     selector: 'app-deals-list',
@@ -38,7 +40,8 @@ import { FooterWorkifenceComponent } from '@app/pages/landing/footer-wifence/foo
         NgOptimizedImage, HeaderStyleComponent, DealsBlogComponent, FooterComponent,
         CarouselModule, MatButtonModule, MatChipsModule, MatIconModule, MatFormFieldModule,
         MatSelectModule,CategorySidebarComponent,MerchantSidebarComponent, DealTypeSidebarComponent,
-        FooterWorkifenceComponent,
+        CategoryListComponent,
+        FooterWorkifenceComponent, DrawerModule,
         MatMenuModule, LanguageSubscribeComponent, MatCardModule, MatProgressBarModule],
     templateUrl: './deals-list.component.html',
     styleUrls: ['./deals-list.component.scss']
@@ -50,11 +53,11 @@ export class DealsListComponent implements OnInit, OnDestroy {
   readonly maxSize = 5;
   readonly autoHide = false;
   readonly country: string = 'usa';
-  selectedSorting: DealSorting = { title: 'High to Low', isSelected: true };
+  selectedSorting: DealSorting = { title: 'Default', isSelected: true };
   readonly sortings = [
     { title: 'Default', isSelected: true },
-    { title: 'Low to High', isSelected: false },
-    { title: 'High to Low', isSelected: true }
+    { title: 'Lowest Discount First', isSelected: false },
+    { title: 'Highest Discount First', isSelected: false }
   ];
 
   // Banner background images configuration
@@ -100,6 +103,8 @@ export class DealsListComponent implements OnInit, OnDestroy {
   public selectedDealTypeCode: string = 'All';
 
   selectedMerchant: any = {title: 'All'};
+  
+  filterDrawerVisible: boolean = false;
 
   constructor(
     public readonly themeService: ThemeCustomizerService,
@@ -190,19 +195,23 @@ export class DealsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    // Ensure drawer starts closed
+    this.filterDrawerVisible = false;
+    
     if (isPlatformBrowser(this.platformId)) {
       this.browser = true;
       this.isDesktop = this.deviceService.isDesktop();
       this.isMobile = this.deviceService.isMobile();
       this.isTablet = this.deviceService.isTablet();
     }
-    // const dealType = this.route.snapshot.queryParams['type'] || 'All';
-    // const category = this.route.snapshot.queryParams['category'] || 'All';
-    // this.fetchData(dealType, category);
-     // 👇 Reactively handle route query param changes
+    
+    // Handle both route params (/deals/:category) and query params (/deals?category=X)
     const queryParamSub = this.route.queryParams.subscribe(params => {
+      // Check route params first, then fall back to query params
+      const categoryFromRoute = this.route.snapshot.params['category'];
       const dealType = params['type'] || 'All';
-      const category = params['category'] || 'All';
+      const category = categoryFromRoute || params['category'] || 'All';
+      
       this.fetchData(dealType, category);
       this.currentUrl = category;
       this.selectedDealTypeCode = dealType;
@@ -370,7 +379,7 @@ export class DealsListComponent implements OnInit, OnDestroy {
 
   public changeSorting(sort: DealSorting): void {
     this.selectedSorting = sort;
-    this.dealsStoreService.sortDeals(sort);
+    this.dealsStoreService.sortDealsListDeals(sort);
     if (this.isMobile) {
       window.scrollTo(0, 275);
     } else {
@@ -424,6 +433,24 @@ export class DealsListComponent implements OnInit, OnDestroy {
 
   openDealTypeSidenav(){
 
+  }
+
+  openFilterDrawer(): void {
+    this.filterDrawerVisible = true;
+  }
+
+  closeFilterDrawer(): void {
+    this.filterDrawerVisible = false;
+  }
+
+  onCategorySelected(category: Category): void {
+    this.closeFilterDrawer();
+    this.onCategoryChange(category.code);
+  }
+
+  onDealTypeSelected(dealType: DealType): void {
+    this.closeFilterDrawer();
+    this.onDealTypeChange(dealType.code);
   }
 
   shareOnWhatsApp($event: Event, selectedDeal: DealDataItem): void {

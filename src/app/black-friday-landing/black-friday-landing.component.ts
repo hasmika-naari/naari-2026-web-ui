@@ -1,4 +1,4 @@
-import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, PLATFORM_ID, Inject } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
@@ -52,15 +52,17 @@ interface BlackFridayConfig {
   templateUrl: './black-friday-landing.component.html',
   styleUrls: ['./black-friday-landing.component.scss']
 })
-export class BlackFridayLandingComponent implements OnInit {
+export class BlackFridayLandingComponent implements OnInit, OnDestroy {
   merchants: Merchant[] = [];
   featuredMerchants: Merchant[] = [];
   categories: string[] = [];
   selectedCategory: string = 'All';
   browser: boolean = false;
   isMobile: boolean = false;
+  isMobileNavSticky: boolean = false;
   pCatsLocal: any[] = [];
   config: BlackFridayConfig = configData as BlackFridayConfig;
+  private scrollListener?: () => void;
 
   // Hero slider configuration (loaded from JSON)
   heroSlides: HeroSlide[] = [];
@@ -120,6 +122,10 @@ export class BlackFridayLandingComponent implements OnInit {
     this.loadConfig();
     this.loadMerchants();
     this.startCountdown();
+    
+    if (this.browser && this.isMobile) {
+      this.setupMobileNavScroll();
+    }
   }
 
   loadConfig(): void {
@@ -192,6 +198,36 @@ export class BlackFridayLandingComponent implements OnInit {
     if (this.browser) {
       const element = document.getElementById('merchants-section');
       element?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  scrollToSection(sectionId: string): void {
+    if (this.browser) {
+      const element = document.getElementById(sectionId);
+      element?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  setupMobileNavScroll(): void {
+    if (!this.browser) return;
+    
+    this.scrollListener = () => {
+      const heroSection = document.querySelector('.bf-hero-slider') as HTMLElement;
+      if (heroSection) {
+        const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+        const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Make mobile nav sticky when user scrolls past the hero section
+        this.isMobileNavSticky = scrollPosition > heroBottom - 100;
+      }
+    };
+    
+    window.addEventListener('scroll', this.scrollListener);
+  }
+
+  ngOnDestroy(): void {
+    if (this.browser && this.scrollListener) {
+      window.removeEventListener('scroll', this.scrollListener);
     }
   }
 }

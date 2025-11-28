@@ -147,6 +147,7 @@ export class DealDataItem {
   expired?: boolean;
   loader?: boolean;
   selected?:boolean;
+  isPremium?: boolean;
 }
 
 export class DealDataItemRequest {

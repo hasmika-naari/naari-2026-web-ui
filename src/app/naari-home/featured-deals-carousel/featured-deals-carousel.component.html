@@ -1,0 +1,99 @@
+<div class="featured-deals-section">
+  <div class="section-header">
+    <div class="header-content">
+      <div class="title-group">
+        <i class="bx bxs-hot fire-icon-large"></i>
+        <h2 class="section-title">Featured Super Deals</h2>
+      </div>
+      <a routerLink="/deals" class="see-all-link">
+        See All
+        <i class="bx bx-chevron-right"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="carousel-wrapper" *ngIf="featuredDeals.length > 0">
+    <owl-carousel-o [options]="customOptions" class="featured-carousel">
+      <ng-container *ngFor="let deal of featuredDeals">
+        <ng-template carouselSlide [id]="deal.id">
+          <mat-card class="featured-deal-card">
+            <!-- Premium Indicator -->
+            <span *ngIf="deal.isPremium" class="premium-indicator">
+              <i class="bx bxs-crown"></i>
+            </span>
+
+            <div class="card-header-compact">
+              <button 
+                class="icon-btn-compact wishlist" 
+                mat-icon-button 
+                (click)="addToWishlist(deal)"
+                aria-label="Add to wishlist">
+                <i *ngIf="!deal.selected" class="bx bx-heart"></i>
+                <i *ngIf="deal.selected" class="bx bxs-heart"></i>
+              </button>
+              <span *ngIf="deal.discount" class="discount-badge-compact">
+                {{ deal.discount }}%
+              </span>
+            </div>
+
+            <a [routerLink]="['/deal', deal.id]" class="deal-image-compact">
+              <img
+                [src]="deal.imageUrl"
+                width="180"
+                height="180"
+                class="img-fluid"
+                alt="{{ deal.title }}"
+                loading="lazy"
+              />
+            </a>
+
+            <div class="card-content-compact">
+              <div class="merchant-badge">{{ deal.merchant }}</div>
+
+              <h6 class="deal-title-compact">
+                <a [routerLink]="['/deal', deal.id]" [title]="deal.title">
+                  {{ deal.title }}
+                </a>
+              </h6>
+
+              <div class="price-section-compact">
+                <div class="price-row">
+                  <i class="bx bxs-hot fire-icon-sm"></i>
+                  <div class="price-group">
+                    <span class="current-price-compact">
+                      {{ country === 'usa' ? '$' : '₹' }}{{ deal.currentPrice | number : '1.2-2' }}
+                    </span>
+                    <span *ngIf="deal.originalPrice" class="original-price-compact">
+                      {{ country === 'usa' ? '$' : '₹' }}{{ deal.originalPrice | number : '1.2-2' }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="action-buttons-compact">
+                <button 
+                  mat-icon-button 
+                  class="icon-btn-compact share" 
+                  (click)="shareOnWhatsApp($event, deal)"
+                  aria-label="Share">
+                  <mat-icon>share</mat-icon>
+                </button>
+                <button 
+                  mat-icon-button 
+                  [routerLink]="['/deal', deal.id]" 
+                  class="icon-btn-compact view"
+                  aria-label="View details">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+              </div>
+            </div>
+          </mat-card>
+        </ng-template>
+      </ng-container>
+    </owl-carousel-o>
+  </div>
+
+  <div *ngIf="featuredDeals.length === 0" class="no-deals-message">
+    <p>Loading featured deals...</p>
+  </div>
+</div>

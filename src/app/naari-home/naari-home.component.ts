@@ -2,25 +2,28 @@ import { CommonModule, NgOptimizedImage, isPlatformBrowser, isPlatformServer } f
 import {
   Component, OnInit, PLATFORM_ID, Inject, Signal, TransferState,
   makeStateKey, runInInjectionContext, effect, Injector,
-  OnDestroy
+  OnDestroy, inject, ViewEncapsulation
 } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { OwlOptions } from 'ngx-owl-carousel-o';
+import { OwlOptions, CarouselModule } from 'ngx-owl-carousel-o';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import * as _ from 'lodash';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { FeatureTypesComponent } from './feature-types/feature-types.component';
 import { HeaderStyleComponent } from './header/header.component';
 import { MainBannerComponent } from './main-banner/main-banner.component';
 import { CategoryTypesComponent } from './category-types/category-types.component';
 import { HomeoneCoursesComponent } from './homeone-courses/homeone-courses.component';
+import { FeaturedDealsCarouselComponent } from './featured-deals-carousel/featured-deals-carousel.component';
 
 import { AuthService } from '@app/services/auth.service';
 import { FooterEdComponent } from '@app/general/footer-ed/footer-ed.component';
@@ -45,11 +48,13 @@ import { filter, Subscription } from 'rxjs';
     MainBannerComponent, NgxPaginationModule, FooterEdComponent, FooterComponent,
     MatButtonModule, MatChipsModule, MatIconModule, BecomePartnerComponent, MatProgressSpinnerModule,
     MatMenuModule, LanguageSubscribeComponent, CategoryTypesComponent, HomeoneCoursesComponent,
-    MatCardModule, HeaderStyleComponent, FeatureTypesComponent, MatProgressBarModule, FooterWorkifenceComponent
+    MatCardModule, HeaderStyleComponent, FeatureTypesComponent, MatProgressBarModule, FooterWorkifenceComponent,
+    MatTabsModule, CarouselModule, FeaturedDealsCarouselComponent
   ],
   host: { ngSkipHydration: 'true' },
   templateUrl: './naari-home.component.html',
-  styleUrls: ['./naari-home.component.scss']
+  styleUrls: ['./naari-home.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class NaariHomePageComponent implements OnInit, OnDestroy {
   faWhatsapp = 'faWhatsapp';
@@ -80,30 +85,86 @@ export class NaariHomePageComponent implements OnInit, OnDestroy {
   isMobile = false;
   isTablet = false;
   isDesktop = true;
+  activeDealsTab: 'current' | 'category' = 'current';
+  selectedTabIndex = 0;
+  isTabsSticky = false; // Track if tabs should be sticky
+  dealsTabMeta = [
+    {
+      value: 'current' as const,
+      icon: 'pi pi-bolt',
+      eyebrow: 'Discover Super Deals',
+      heading: 'Load Savings',
+      subtitle: 'Fresh savings & hottest drops'
+    },
+    {
+      value: 'category' as const,
+      icon: 'pi pi-th-large',
+      eyebrow: 'Discover Deals',
+      heading: 'By Categories',
+      subtitle: 'Shop the most-loved genres'
+    }
+  ];
 
   pCatsLocal: PCategory[] = [];
   catsLocal: Category[] = [];
   dailyDealsLocal: DealDataItem[] = [];
+  premiumDeals: DealDataItem[] = [];
   // Will be initialized in ngOnInit to avoid early access error
   pCategories!: Signal<PCategory[]>;
   categories!: Signal<Category[]>;
   dailyDeals!: Signal<DealDataItem[]>;
   
+  // Premium deals carousel options
+  premiumDealsCarouselOptions: OwlOptions = {
+    loop: false,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    dots: false,
+    nav: true,
+    navSpeed: 700,
+    navText: ['<i class="bx bx-chevron-left"></i>', '<i class="bx bx-chevron-right"></i>'],
+    responsive: {
+      0: {
+        items: 2.5,
+        margin: 10
+      },
+      576: {
+        items: 4,
+        margin: 12
+      },
+      768: {
+        items: 6,
+        margin: 15
+      },
+      992: {
+        items: 8,
+        margin: 15
+      },
+      1200: {
+        items: 10,
+        margin: 15
+      }
+    }
+  };
+  
   routeSub!: Subscription;
 
-  constructor(
-    private seoService: SeoService,
-    private appService: AppUtilService,
-    private dealsService: DealsService,
-    private authService: AuthService,
-    private _localStorageService: LocalStorageService,
-    private router: Router,
-    private transferState: TransferState,
-    private deviceService: DeviceDetectorService,
-    private dealsStoreService: DealsStoreService,
-    @Inject(PLATFORM_ID) private platformId: object,
-    private injector: Injector
-  ) {
+  // Injected services using inject() pattern
+  private seoService: SeoService = inject(SeoService);
+  private appService: AppUtilService = inject(AppUtilService);
+  private dealsService: DealsService = inject(DealsService);
+  private authService: AuthService = inject(AuthService);
+  private _localStorageService: LocalStorageService = inject(LocalStorageService);
+  private router: Router = inject(Router);
+  private transferState: TransferState = inject(TransferState);
+  private deviceService: DeviceDetectorService = inject(DeviceDetectorService);
+  private dealsStoreService: DealsStoreService = inject(DealsStoreService);
+  private platformId: object = inject(PLATFORM_ID);
+  private injector: Injector = inject(Injector);
+  private http: HttpClient = inject(HttpClient);
+
+  constructor() {
     const content = 'Naari Deals - Femine Specials';
     const title = 'Naari Deals - Femine Specials';
     this.seoService.setMetaDescription(content);
@@ -130,6 +191,11 @@ export class NaariHomePageComponent implements OnInit, OnDestroy {
     if (this.countdownInterval) {
       clearInterval(this.countdownInterval);
     }
+    
+    // Remove scroll listener
+    if (isPlatformBrowser(this.platformId)) {
+      window.removeEventListener('scroll', this.handleTabsScroll);
+    }
   }
 
   ngOnInit(): void {
@@ -141,6 +207,12 @@ export class NaariHomePageComponent implements OnInit, OnDestroy {
       
       // Start Black Friday countdown
       this.startCountdown();
+      
+      // Add scroll listener for sticky tabs
+      window.addEventListener('scroll', this.handleTabsScroll);
+      
+      // Load premium deals
+      this.loadPremiumDeals();
     }
 
     // Assign after dealsStoreService is ready
@@ -230,6 +302,15 @@ export class NaariHomePageComponent implements OnInit, OnDestroy {
     window.scrollTo(0, document.documentElement.clientHeight - 150);
   }
 
+  onDealsTabChange(value: string | number | undefined) {
+    if (value === 'current' || value === 'category') {
+      this.activeDealsTab = value;
+      if (value === 'current' && this.browser) {
+        setTimeout(() => window.scrollTo({ top: document.documentElement.clientHeight - 150, behavior: 'smooth' }), 50);
+      }
+    }
+  }
+
   public openProductDialog(deal: DealDataItem) {
     this._localStorageService.setItem('selectedDealKey', deal);
     this.router.navigate(['/deal', deal.id]);
@@ -243,6 +324,49 @@ export class NaariHomePageComponent implements OnInit, OnDestroy {
     $event.stopPropagation();
     this.appService.shareOnWhatsApp(selectedDeal);
   }
+
+  // Load premium deals from API
+  loadPremiumDeals() {
+    // Load featured/premium deals sorted by discount (highest first) and limit to 15 items
+    this.dealsService.getDealsByCountry(this.country, {}).subscribe({
+      next: (response: any) => {
+        if (response && response.length > 0) {
+          // Filter for high discount deals (over 20%) and limit to 15
+          this.premiumDeals = response
+            .filter((deal: DealDataItem) => {
+              const discountValue = typeof deal.discount === 'string' ? parseFloat(deal.discount) : deal.discount;
+              return discountValue && discountValue >= 20;
+            })
+            .sort((a: DealDataItem, b: DealDataItem) => {
+              const aDiscount = typeof a.discount === 'string' ? parseFloat(a.discount) : (a.discount || 0);
+              const bDiscount = typeof b.discount === 'string' ? parseFloat(b.discount) : (b.discount || 0);
+              return bDiscount - aDiscount;
+            })
+            .slice(0, 15);
+        }
+      },
+      error: (error) => {
+        console.error('Error loading premium deals:', error);
+        // Fallback to empty array
+        this.premiumDeals = [];
+      }
+    });
+  }
+
+  // Sticky tabs scroll handler
+  handleTabsScroll = () => {
+    if (!isPlatformBrowser(this.platformId)) return;
+    
+    const tabsSection = document.querySelector('.home-tabs-wrapper') as HTMLElement;
+    if (!tabsSection) return;
+    
+    const tabsOffsetTop = tabsSection.offsetTop;
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+    const headerHeight = 60; // Adjust based on your sticky header height
+    
+    // Make tabs sticky when scroll position reaches tabs minus header height
+    this.isTabsSticky = scrollPosition >= (tabsOffsetTop - headerHeight);
+  };
 
   // Black Friday Countdown
   countdown = {

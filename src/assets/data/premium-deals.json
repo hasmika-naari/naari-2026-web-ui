@@ -1,0 +1,122 @@
+[
+  {
+    "id": "pd1",
+    "title": "Apple AirPods Pro (2nd Gen)",
+    "merchant": "Amazon",
+    "currentPrice": 189.99,
+    "originalPrice": 249.99,
+    "discount": 24,
+    "imageUrl": "https://images.unsplash.com/photo-1606841837239-c5a1a4a07af7?w=280&h=280&fit=crop",
+    "category": "electronics"
+  },
+  {
+    "id": "pd2",
+    "title": "Nike Air Max 270 React",
+    "merchant": "Nike",
+    "currentPrice": 99.99,
+    "originalPrice": 150.00,
+    "discount": 33,
+    "imageUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=280&h=280&fit=crop",
+    "category": "fashion"
+  },
+  {
+    "id": "pd3",
+    "title": "Samsung 55\" 4K Smart TV",
+    "merchant": "Best Buy",
+    "currentPrice": 449.99,
+    "originalPrice": 699.99,
+    "discount": 36,
+    "imageUrl": "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=280&h=280&fit=crop",
+    "category": "electronics"
+  },
+  {
+    "id": "pd4",
+    "title": "Dyson V15 Vacuum Cleaner",
+    "merchant": "Target",
+    "currentPrice": 499.99,
+    "originalPrice": 649.99,
+    "discount": 23,
+    "imageUrl": "https://images.unsplash.com/photo-1558317374-067fb5f30001?w=280&h=280&fit=crop",
+    "category": "home"
+  },
+  {
+    "id": "pd5",
+    "title": "Sony WH-1000XM5 Headphones",
+    "merchant": "Amazon",
+    "currentPrice": 329.99,
+    "originalPrice": 399.99,
+    "discount": 18,
+    "imageUrl": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=280&h=280&fit=crop",
+    "category": "electronics"
+  },
+  {
+    "id": "pd6",
+    "title": "Fitbit Charge 6 Tracker",
+    "merchant": "Walmart",
+    "currentPrice": 129.99,
+    "originalPrice": 179.99,
+    "discount": 28,
+    "imageUrl": "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=280&h=280&fit=crop",
+    "category": "electronics"
+  },
+  {
+    "id": "pd7",
+    "title": "KitchenAid Stand Mixer",
+    "merchant": "Target",
+    "currentPrice": 279.99,
+    "originalPrice": 379.99,
+    "discount": 26,
+    "imageUrl": "https://images.unsplash.com/photo-1570222094114-d054a817e56b?w=280&h=280&fit=crop",
+    "category": "home"
+  },
+  {
+    "id": "pd8",
+    "title": "Adidas Ultraboost 22",
+    "merchant": "Adidas",
+    "currentPrice": 119.99,
+    "originalPrice": 190.00,
+    "discount": 37,
+    "imageUrl": "https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=280&h=280&fit=crop",
+    "category": "fashion"
+  },
+  {
+    "id": "pd9",
+    "title": "L'Oreal Makeup Set",
+    "merchant": "Sephora",
+    "currentPrice": 49.99,
+    "originalPrice": 89.99,
+    "discount": 44,
+    "imageUrl": "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=280&h=280&fit=crop",
+    "category": "beauty"
+  },
+  {
+    "id": "pd10",
+    "title": "iPad Air 5th Gen",
+    "merchant": "Apple",
+    "currentPrice": 549.99,
+    "originalPrice": 599.99,
+    "discount": 8,
+    "imageUrl": "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=280&h=280&fit=crop",
+    "category": "electronics"
+  },
+  {
+    "id": "pd11",
+    "title": "Instant Pot Duo 7-in-1",
+    "merchant": "Amazon",
+    "currentPrice": 79.99,
+    "originalPrice": 119.99,
+    "discount": 33,
+    "imageUrl": "https://images.unsplash.com/photo-1585515320310-259814833e62?w=280&h=280&fit=crop",
+    "category": "home"
+  },
+  {
+    "id": "pd12",
+    "title": "Ray-Ban Aviator Sunglasses",
+    "merchant": "Ray-Ban",
+    "currentPrice": 129.99,
+    "originalPrice": 169.99,
+    "discount": 24,
+    "imageUrl": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=280&h=280&fit=crop",
+    "category": "fashion"
+  }
+]

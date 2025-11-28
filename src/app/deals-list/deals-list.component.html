@@ -35,28 +35,38 @@
                   <li><a href="index.html">Home</a></li>
                   <li>Deals List</li>
                 </ul>
-                <h2 class="filter-text-icon" data-bs-toggle="modal" data-bs-target="#categoryModalSidebar2">
-                  <mat-icon class="chip-icon" style="position: relative; top: 0px;">tune</mat-icon>
-                  {{ currentUrl ? currentUrl : 'All Deals' }}
-                </h2>
+                <!-- <h2>{{ currentUrl ? currentUrl : 'All Deals' }}</h2> -->
               </div>
+            </div>
 
-              <!-- Right: Sort Chip -->
-              <div class="chip-filter-row d-flex align-items-center justify-content-end px-2 ">
-                <div class="sort-chip text-end" mat-button [matMenuTriggerFor]="sortMenu1" #sortMenu1Trigger="matMenuTrigger">
-                  <div class="chip-content justify-content-end ">
-                    <span class="chip-text">{{ selectedSorting.title }}</span>
-                    <mat-icon class="chip-icon">sort</mat-icon>
+            <!-- Filter & Sort Options Row - Bottom -->
+            <div class="filter-sort-wrapper animate__animated animate__fadeInDown animate__delay-1s">
+              <div class="d-flex align-items-center justify-content-between w-100 px-2">
+                <!-- Left: Filter Button -->
+                <div class="sort-chip" mat-button (click)="openFilterDrawer()">
+                  <div class="chip-content">
+                    <mat-icon class="chip-icon">tune</mat-icon>
+                    <span class="chip-text">{{ currentUrl ? currentUrl : 'All Deals' }}</span>
                   </div>
                 </div>
 
-                <mat-menu #sortMenu1="matMenu" xPosition="before" class="app-dropdown" overlapTrigger="true">
-                  <span (mouseleave)="sortMenu1Trigger.closeMenu()">
-                    <button mat-menu-item *ngFor="let sort of sortings" (click)="changeSorting(sort)">
-                      <span>{{ sort.title }}</span>
-                    </button>
-                  </span>
-                </mat-menu>
+                <!-- Right: Sort Options -->
+                <div class="chip-filter-row d-flex align-items-center justify-content-end">
+                  <div class="sort-chip text-end" mat-button [matMenuTriggerFor]="sortMenu1" #sortMenu1Trigger="matMenuTrigger">
+                    <div class="chip-content justify-content-end">
+                      <span class="chip-text">{{ selectedSorting.title }}</span>
+                      <mat-icon class="chip-icon">sort</mat-icon>
+                    </div>
+                  </div>
+
+                  <mat-menu #sortMenu1="matMenu" xPosition="before" class="app-dropdown" overlapTrigger="true">
+                    <span (mouseleave)="sortMenu1Trigger.closeMenu()">
+                      <button mat-menu-item *ngFor="let sort of sortings" (click)="changeSorting(sort)">
+                        <span>{{ sort.title }}</span>
+                      </button>
+                    </span>
+                  </mat-menu>
+                </div>
               </div>
             </div>
 
@@ -232,15 +242,6 @@
                         [alt]="deal.title + ' image'"
                       />
                     </a>
-
-                    <div class="deal-tags">
-                      <mat-chip-listbox *ngIf="deal.discountType === '%' && (+deal.discount > 0)">
-                        <mat-chip-option color="warn" selected>{{ deal.discount }}% OFF</mat-chip-option>
-                      </mat-chip-listbox>
-                      <mat-chip-listbox *ngIf="deal.discountType !== '%'">
-                        <mat-chip-option color="warn" selected>{{ deal.discountType }} {{ deal.discount }} OFF</mat-chip-option>
-                      </mat-chip-listbox>
-                    </div>
                   </div>
 
                   <span
@@ -266,19 +267,29 @@
                   </h3>
 
                <!-- Prices -->
-             <div class="deal-pricing">
-              <i *ngIf="+deal.discount > 0" class="bx bxs-hot hot-icon"></i>
-              <div class="price-values">
-                <div class="new-price">
-                  <span *ngIf="country === 'usa'">$</span>
-                  <span *ngIf="country !== 'usa'">₹</span>
-                  {{ deal.currentPrice | number: '1.2-2' }}
+             <div class="deal-pricing-wrapper">
+              <div class="deal-pricing">
+                <i *ngIf="+deal.discount > 0" class="bx bxs-hot hot-icon"></i>
+                <div class="price-values">
+                  <div class="new-price">
+                    <span *ngIf="country === 'usa'">$</span>
+                    <span *ngIf="country !== 'usa'">₹</span>
+                    {{ deal.currentPrice | number: '1.2-2' }}
+                  </div>
+                  <div class="old-price" *ngIf="+deal.discount > 0">
+                    <span *ngIf="country === 'usa'">$</span>
+                    <span *ngIf="country !== 'usa'">₹</span>
+                    {{ deal.originalPrice | number: '1.2-2' }}
+                  </div>
                 </div>
-                <div class="old-price" *ngIf="+deal.discount > 0">
-                  <span *ngIf="country === 'usa'">$</span>
-                  <span *ngIf="country !== 'usa'">₹</span>
-                  {{ deal.originalPrice | number: '1.2-2' }}
-                </div>
+              </div>
+              
+              <!-- Discount Ribbon -->
+              <div class="discount-ribbon" *ngIf="deal.discountType === '%' && (+deal.discount > 0)">
+                <span>{{ deal.discount }}% OFF</span>
+              </div>
+              <div class="discount-ribbon" *ngIf="deal.discountType !== '%' && +deal.discount > 0">
+                <span>{{ deal.discountType }} {{ deal.discount }} OFF</span>
               </div>
             </div>
 
@@ -435,6 +446,33 @@
     <app-language-subscribe [isMobile]="isMobile"></app-language-subscribe>
 </section>
 <app-work-ifence-footer></app-work-ifence-footer>
-<app-category-sidebar></app-category-sidebar>
-<app-merchant-sidebar></app-merchant-sidebar>
-<app-deal-type-sidebar></app-deal-type-sidebar>
+
+<!-- Filter Drawer -->
+<p-drawer 
+  *ngIf="browser"
+  [(visible)]="filterDrawerVisible" 
+  position="left" 
+  [showCloseIcon]="true" 
+  [modal]="true"
+  [baseZIndex]="10000"
+  [dismissible]="true"
+  [closeOnEscape]="true"
+  styleClass="filter-drawer">
+  <ng-template pTemplate="header">
+    <div class="drawer-header-content">
+      <img src="assets/img/guru-class-time-tp-bg-full-h.png" alt="logo" style="height: 40px;">
+    </div>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <div class="drawer-body-content">
+      <div class="filter-section">
+        <h4 class="filter-section-title">Categories</h4>
+        <app-category-list 
+          [isMobile]="isMobile" 
+          (categorySelected)="onCategorySelected($event)"
+          [categories]="categoriesLocal">
+        </app-category-list>
+      </div>
+    </div>
+  </ng-template>
+</p-drawer>

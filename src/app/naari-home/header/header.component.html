@@ -84,7 +84,7 @@
 
   <!-- Navigation Menu - Desktop Only -->
   <div class="collapse navbar-collapse d-none d-lg-flex" *ngIf="isDesktop" id="navbarSupportedContent">
-    <ul class="navbar-nav ms-auto">
+    <ul class="navbar-nav ms-auto" *ngIf="isDesktop">
       <li class="nav-item"
         *ngFor="let menuItem of menuList; let i = index;">
         <a href="javascript:void(0)" [class.a-no-sticky]="!isSticky" [class.a-sticky]="isSticky" class="nav-link">
@@ -183,13 +183,13 @@
 <div class="mobile-drawer-overlay" 
      [class.active]="sidebarVisible" 
      (click)="toggleSidebar()"
-     *ngIf="sidebarVisible && (isMobile || isTablet)">
+     *ngIf="isBrowser && sidebarVisible && (isMobile || isTablet)">
 </div>
 
 <div class="mobile-drawer" 
      [class.active]="sidebarVisible"
      [class.dark-mobile-drawer]="themeService.isDark()"
-     *ngIf="isMobile || isTablet">
+     *ngIf="isBrowser && (isMobile || isTablet)">
     
     <div class="drawer-header">
         <img src="assets/img/logo.png" alt="Naari Deals" class="drawer-logo">

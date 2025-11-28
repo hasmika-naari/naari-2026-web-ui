@@ -6,17 +6,6 @@
 
 
     <div class="container" *ngIf="categories && categories.length">
-            <div class="naari-section-title d-flex justify-content-between align-items-center">
-                <div class="title-block text-start">
-                    <span class="sub-title">Discover Deals</span>
-                    <h2>Popular Categories</h2>
-                </div>
-                <button routerLink="/courses-2-columns-style-1"  matButton color="tertiary" >
-                    <!-- <i class='bx bx-show-alt icon-arrow before'></i> -->
-                    <span class="label">All Categories</span>
-                    <!-- <i class="bx bx-show-alt icon-arrow after"></i> -->
-                </button>
-            </div>
         <ul class="nav-tabset">
             <li class="nav-tab" [ngClass]="{'active': currentTab === 'tab2'}">
                 <span (click)="switchTab($event, 'tab2')">Clothing</span>

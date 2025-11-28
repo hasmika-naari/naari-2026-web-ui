@@ -361,6 +361,134 @@
 /* Max width 767px */
 @media only screen and (max-width: 767px) {
     
+    .page-title-area {
+        .container {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        
+        .title-filter-bar {
+            padding: 0.75rem 0;
+            flex-direction: column;
+            align-items: flex-start !important;
+            gap: 0.75rem;
+            
+            .page-title-content {
+                width: 100%;
+                
+                ul {
+                    margin-bottom: 0.5rem;
+                    font-size: 0.85rem;
+                }
+                
+                h2.filter-text-icon {
+                    font-size: 1.1rem;
+                }
+            }
+            
+            .chip-filter-row {
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+                padding: 0 !important;
+                
+                .sort-chip {
+                    .chip-content {
+                        .chip-text {
+                            font-size: 0.9rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    .container.position-relative {
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+    }
+    
+    .scoped-deals-card {
+        .row {
+            margin-left: 0;
+            margin-right: 0;
+            
+            > div {
+                padding-left: 0.25rem;
+                padding-right: 0.25rem;
+            }
+        }
+        
+        .product-item {
+            padding: 0.5rem !important;
+            
+            .deal-image-container {
+                .image-link {
+                    height: 150px !important;
+                }
+            }
+            
+            .merchant-name {
+                font-size: 0.75rem;
+                margin-top: 0.5rem;
+            }
+            
+            .deal-title {
+                h3 {
+                    font-size: 0.75rem;
+                }
+            }
+            
+            .deal-pricing {
+                flex-direction: row;
+                align-items: center;
+                gap: 0.25rem;
+                margin: 0.5rem 0;
+                
+                .hot-icon {
+                    font-size: 1rem;
+                }
+                
+                .price-values {
+                    .new-price {
+                        font-size: 0.9rem;
+                    }
+                    
+                    .old-price {
+                        font-size: 0.75rem;
+                    }
+                }
+            }
+            
+            .deal-footer {
+                margin-top: 0.5rem !important;
+                padding: 0 !important;
+                
+                .footer-btn {
+                    padding: 0.25rem;
+                    
+                    i {
+                        font-size: 1rem;
+                    }
+                    
+                    .footer-text {
+                        font-size: 0.7rem;
+                    }
+                }
+            }
+        }
+    }
+    
+    .pagenation-deals {
+        padding: 0.5rem !important;
+        
+        .row {
+            > div {
+                padding: 0.25rem;
+            }
+        }
+    }
+    
     .product-details-desc {
         margin-top: 30px;
 
@@ -812,15 +940,26 @@
     line-height: 1.3rem;
     max-height: 2.6rem;
   }
+
+.deal-pricing-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    padding-left: 0.5rem;
+    margin: 0.75rem 0;
+    margin-right: -8px;
+    position: relative;
+}
+
 .deal-pricing {
     display: flex;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 0.3rem;
     flex-wrap: nowrap;
-    padding: 0 0.5rem;
-    top: 10px;
-    position: relative;
+    flex: 1;
+    
     .hot-icon {
       flex-shrink: 0;
       color: #f44336;
@@ -830,28 +969,56 @@
 
     .price-values {
       display: flex;
-      flex-direction: column; // Old price can go below
+      flex-direction: column;
       white-space: nowrap;
-      max-width: 100%; // Responsive container
-      overflow: hidden;
+      text-align: left;
     }
 
     .new-price {
       font-weight: 600;
-      color: #000;
+      color: #10b981;
       font-size: 1rem;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
     .old-price {
       font-size: 0.85rem;
       text-decoration: line-through;
       color: #888;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
   }
+
+.discount-ribbon {
+    position: relative;
+    background: rgba(238, 90, 36, 0.15);
+    color: #f44336;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 0;
+    box-shadow: none;
+    margin-right: 0;
+    
+    &::before {
+        content: '';
+        position: absolute;
+        left: -8px;
+        top: 0;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 14px 8px 14px 0;
+        border-color: transparent rgba(238, 90, 36, 0.15) transparent transparent;
+    }
+    
+    span {
+        position: relative;
+        z-index: 1;
+        display: block;
+        white-space: nowrap;
+    }
+}
 .deal-footer {
     border-top: 1px solid #eee;
     padding-top: 0.5rem;
@@ -896,7 +1063,7 @@
       display: flex;
       gap: 0.5rem;
       font-size: 0.9rem;
-
+       padding-left: 10px;
       li::after {
         // content: '/';
         margin-left: 0.5rem;
@@ -940,5 +1107,90 @@
         }
       }
     }
+  }
+}
+
+.sort-options-wrapper {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 101;
+}
+
+.filter-sort-wrapper {
+  position: absolute;
+  bottom: 1rem;
+  top: 30px;
+  left: 0;
+  right: 0;
+  padding: 0 1rem;
+  z-index: 101;
+}
+
+// Filter Drawer Styles
+::ng-deep .filter-drawer {
+  .p-drawer {
+    width: 320px !important;
+    background: #ffffff !important;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+    
+    .p-drawer-header {
+      background: #f8f9fa !important;
+      border-bottom: 1px solid #dee2e6;
+      padding: 1rem 1.5rem;
+      
+      .drawer-header-content {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        
+        img {
+          max-height: 40px;
+          width: auto;
+        }
+      }
+    }
+    
+    .p-drawer-content {
+      background: #ffffff !important;
+      padding: 0 !important;
+      overflow-y: auto;
+      
+      .drawer-body-content {
+        padding: 1rem;
+        background: #ffffff;
+        min-height: 100%;
+        
+        .filter-section {
+          margin-bottom: 2rem;
+          background: #ffffff;
+          
+          .filter-section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f0f0f0;
+          }
+          
+          app-category-list {
+            display: block;
+            background: #ffffff;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Ensure PrimeNG drawer mask is visible
+::ng-deep .p-drawer-mask {
+  background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+@media (max-width: 768px) {
+  ::ng-deep .filter-drawer .p-drawer {
+    width: 280px !important;
   }
 }

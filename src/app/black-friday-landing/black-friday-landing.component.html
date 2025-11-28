@@ -68,6 +68,24 @@
       </div>
     </ng-template>
   </owl-carousel-o>
+  
+  <!-- Mobile Navigation Overlay (Bottom of Banner) -->
+  <div class="bf-mobile-nav-overlay" [class.sticky]="isMobileNavSticky" *ngIf="isMobile">
+    <div class="bf-mobile-nav-container">
+      <a routerLink="/home" class="bf-mobile-nav-link">
+        <i class='bx bx-home'></i>
+        <span>Home</span>
+      </a>
+      <a href="javascript:void(0)" (click)="scrollToSection('adscans-section')" class="bf-mobile-nav-link">
+        <i class='bx bx-book-content'></i>
+        <span>Ad Scans</span>
+      </a>
+      <a href="javascript:void(0)" (click)="scrollToSection('merchants-section')" class="bf-mobile-nav-link">
+        <i class='bx bx-shopping-bag'></i>
+        <span>Deals</span>
+      </a>
+    </div>
+  </div>
 </section>
 
 <!-- Ad Scans Section -->

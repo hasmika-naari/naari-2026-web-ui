@@ -49,7 +49,7 @@ export class HeaderStyleComponent implements OnInit, OnChanges, OnDestroy {
     isToggled = false;
     isMobile = false;
     isTablet = false;
-    isDesktop = true;
+    isDesktop = false;
     isBrowser: boolean = false;
     // private readonly userStore = inject(SignalStore<UserState>);
     // readonly account = this.userStore.select(x => x.account);

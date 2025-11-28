@@ -790,18 +790,100 @@
 /* Max width 767px */
 @media only screen and (max-width: 767px) {
     
+    .product-details-area {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+        
+        .details-section {
+            padding: 1rem !important;
+            
+            .left-section {
+                padding: 1rem !important;
+                margin-bottom: 1.5rem;
+            }
+        }
+    }
+    
+    .courses-details-header {
+        .courses-meta {
+            ul {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.75rem;
+                
+                li {
+                    margin-right: 0 !important;
+                    padding-right: 0 !important;
+                    padding-left: 37px !important;
+                    border-right: none !important;
+                    flex: 0 0 calc(50% - 0.375rem);
+                    min-width: calc(50% - 0.375rem);
+                    
+                    &:nth-child(3) {
+                        flex: 0 0 100%;
+                        min-width: 100%;
+                    }
+                }
+            }
+        }
+    }
+    
+    .products-details-tab {
+        .nav-tabset {
+            .nav-tab {
+                display: block;
+                margin-right: 0;
+                margin-bottom: 0.5rem;
+                
+                span {
+                    display: block;
+                    width: 100%;
+                    text-align: center;
+                    padding: 0.75rem 1rem !important;
+                }
+            }
+        }
+        
+        .tabs-container {
+            padding: 1rem !important;
+        }
+    }
+    
     .product-details-desc {
         margin-top: 30px;
 
         h3 {
             font-size: 19px;
         }
+        
         .product-add-to-cart {
-            .default-btn {
+            button {
+                width: 100%;
+                
                 .icon-arrow {
                     top: 14px;
                 }
             }
+        }
+    }
+    
+    .title-filter-bar {
+        padding: 0.5rem 0 !important;
+        
+        .page-title-content {
+            width: 100%;
+            
+            ul {
+                margin-bottom: 0.5rem;
+                flex-wrap: wrap;
+            }
+        }
+    }
+    
+    .page-title-area {
+        .container {
+            padding-left: 1rem;
+            padding-right: 1rem;
         }
     }
 

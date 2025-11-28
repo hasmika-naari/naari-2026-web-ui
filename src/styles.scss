@@ -34,6 +34,7 @@ $naari-theme: mat.define-theme((
 // that you are using.
 :root {
     @include mat.all-component-themes($naari-theme);
+    @include mat.tabs-theme($naari-theme); // Explicit tabs theme for MDC-based tabs
 }
 
 // Comment out the line below if you want to use the pre-defined typography utility classes.
@@ -980,4 +981,304 @@ input {
         overflow: hidden !important;
         padding-right: 0 !important;
     }
+}
+
+/* (PrimeNG tab styling intentionally left as default) */
+
+/* Angular Material Tabs - Light integration styling */
+.home-tabs-primeng.mat-mdc-tab-group {
+  width: 100% !important;
+  
+  .mat-mdc-tab-header {
+    background: transparent;
+    border-bottom: none;
+    width: 100%;
+    margin-bottom: 0 !important;
+  }
+
+  .mat-mdc-tab-labels {
+    gap: 1rem;
+
+    /* Desktop: align tabs to left, no stretch */
+    @media (min-width: 768px) {
+      justify-content: flex-start !important;
+      display: flex !important;
+      width: 100% !important;
+    }
+
+    /* Mobile: stretch tabs to share full width */
+    @media (max-width: 767px) {
+      justify-content: space-evenly;
+      gap: 0.25rem;
+    }
+  }
+
+  .mat-mdc-tab {
+    min-height: 0;
+    padding: 0;
+    
+    /* Desktop: natural width, no flex grow */
+    @media (min-width: 768px) {
+      flex-grow: 0 !important;
+      flex-shrink: 0 !important;
+      flex-basis: auto !important;
+      width: auto !important;
+    }
+
+    /* Mobile: flex-grow to share width equally */
+    @media (max-width: 767px) {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+  }
+
+  .mat-mdc-tab-label {
+    min-height: 0;
+    padding: 0.5rem 0.8rem;
+    opacity: 1;
+
+    /* Desktop: comfortable padding, natural width */
+    @media (min-width: 768px) {
+      padding: 0.75rem 1.5rem !important;
+      width: auto !important;
+      min-width: auto !important;
+    }
+
+    /* Mobile: compact padding, full width */
+    @media (max-width: 767px) {
+      padding: 0.6rem 0.5rem !important;
+      width: 100%;
+    }
+  }
+
+  .mdc-tab__text-label {
+    color: inherit;
+  }
+
+  .mdc-tab-indicator__content--underline {
+    border-color: var(--mainColor);
+    border-width: 2px;
+
+    /* Desktop: thicker underline */
+    @media (min-width: 768px) {
+      border-width: 3px;
+    }
+  }
+
+  /* Active tab styling */
+  .mat-mdc-tab.mdc-tab--active {
+    .tab-icon {
+      background: transparent !important;
+      box-shadow: none !important;
+      transform: scale(1.05);
+      color: var(--mainColor) !important;
+    }
+
+    .tab-heading {
+      color: var(--mainColor) !important;
+      font-weight: 700 !important;
+    }
+
+    .tab-eyebrow {
+      color: var(--mainColor) !important;
+    }
+  }
+}
+
+/* Tab header custom layout - Desktop & Mobile responsive */
+.home-tabs-wrapper {
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+
+  /* Flexbox row for tabs and sort */
+  > .container > div:first-child {
+    width: 100%;
+  }
+
+  .sort-option-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .option-selection-text {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: var(--mainColor) !important;
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 0.5rem 0.75rem !important;
+    display: inline-flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    width: auto;
+    
+    span {
+      order: 1;
+    }
+    
+    mat-icon {
+      order: 2;
+      font-size: 1.25rem;
+      width: 1.25rem;
+      height: 1.25rem;
+      color: var(--mainColor) !important;
+    }
+
+    &:hover {
+      background: rgba(184, 31, 137, 0.05) !important;
+      border-radius: 8px;
+    }
+  }
+
+  /* Desktop: Large icon left, text labels aligned left */
+  @media (min-width: 768px) {
+    .tab-header {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      width: 100%;
+      justify-content: flex-start;
+      text-align: left;
+
+      .tab-icon {
+        width: 52px;
+        height: 52px;
+        min-width: 52px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        color: #999;
+        transition: all 0.3s ease;
+
+        i {
+          font-size: 1.75rem;
+        }
+      }
+
+      .text-group {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.2rem;
+        flex: 1;
+        min-width: 0;
+        text-align: left;
+      }
+
+      .tab-eyebrow {
+        text-transform: uppercase;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 1.2px;
+        color: #999;
+        margin: 0;
+        line-height: 1;
+      }
+
+      .tab-heading {
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: #7f8c8d;
+        line-height: 1.3;
+        margin: 0;
+      }
+
+      .tab-subtitle {
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: #7f8c8d;
+        line-height: 1.2;
+        margin: 0;
+      }
+    }
+  }
+
+  /* Mobile: Icon left, compact labels right, full-width stretch */
+  @media (max-width: 767px) {
+    .tab-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 0.6rem;
+      width: 100%;
+      text-align: left;
+
+      .tab-icon {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        color: #999;
+
+        i {
+          font-size: 1.4rem;
+        }
+      }
+
+      .text-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+        flex: 1;
+        min-width: 0;
+        text-align: left;
+      }
+
+      .tab-eyebrow {
+        text-transform: uppercase;
+        font-size: 0.6rem;
+        font-weight: 700;
+        letter-spacing: 0.8px;
+        color: #aaa;
+        margin: 0;
+        line-height: 1;
+      }
+
+      .tab-heading {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #999;
+        line-height: 1.2;
+        margin: 0;
+      }
+
+      .tab-subtitle {
+        font-size: 0.6rem;
+        font-weight: 400;
+        color: #999;
+        line-height: 1.1;
+        margin: 0;
+      }
+    }
+  }
+}
+
+// PrimeNG Drawer Global Styles
+.p-drawer {
+  background: #ffffff !important;
+  
+  .p-drawer-header {
+    background: #f8f9fa !important;
+  }
+  
+  .p-drawer-content {
+    background: #ffffff !important;
+  }
+}
+
+.p-drawer-mask {
+  background-color: rgba(0, 0, 0, 0.4) !important;
 }
